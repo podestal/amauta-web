@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom"
 import NotificationCard from "../components/ui/NotificationCard"
 import useNotificationsStore from "../hooks/store/useNotificationsStore"
+import Navigator from "../router/Navigator"
 
 const MainPage = () => {
 
@@ -17,6 +18,7 @@ const MainPage = () => {
         <div className="w-full min-h-screen max-w-[95%] sm:max-w-[600px] md:max-w-[800px] lg:max-w-[1024px] xl:max-w-[1200px] 2xl:max-w-[1280px] mx-auto">
           <Outlet />
         </div>
+        <Navigator />
     </div>
   )
 }
