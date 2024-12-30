@@ -29,7 +29,7 @@ const Clasrooms = () => {
         ''
         }
         <Students 
-            instructor={instructor}
+            classroom={instructor.clases_details[0].split('-').pop()}
         />
     </>
   )
