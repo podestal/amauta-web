@@ -5,6 +5,7 @@ import LoginPage from "../pages/LoginPage";
 import StudentsPage from "../pages/StudentsPage";
 import AttendancePage from "../pages/AttendancePage";
 import ProfilePage from "../pages/ProfilePage";
+import StudentsByClassroom from "../pages/StudentsByClassroom";
 
 const routes = createBrowserRouter([
     {
@@ -33,6 +34,13 @@ const routes = createBrowserRouter([
                     <ProfilePage />
                 </PrivateRoutes>
 
+            },
+            {
+                path: 'students',
+                element:
+                <PrivateRoutes>
+                    <StudentsByClassroom />
+                </PrivateRoutes>
             },
             {
                 path: "/login",

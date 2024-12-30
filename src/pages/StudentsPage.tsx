@@ -1,6 +1,8 @@
+import Clasrooms from "../components/api/ClassRooms/Clasrooms"
+
 const StudentsPage = () => {
   return (
-    <div>StudentsPage</div>
+    <Clasrooms />
   )
 }
 
