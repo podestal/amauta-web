@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import PrivateRoutes from "../components/auth/PrivateRoutes";
 import MainPage from "../pages/MainPage";
 import LoginPage from "../pages/LoginPage";
 import StudentsPage from "../pages/StudentsPage";
@@ -13,19 +14,29 @@ const routes = createBrowserRouter([
         children: [
             {
                 path: "/",
-                element: <LoginPage />
-            },
-            {
-                path: "/students",
-                element: <StudentsPage />
+                element: 
+                <PrivateRoutes>
+                    <StudentsPage />
+                </PrivateRoutes>
             },
             {
                 path: "/attendance",
-                element: <AttendancePage />
+                element: 
+                <PrivateRoutes>
+                    <AttendancePage />
+                </PrivateRoutes>
             },
             {
                 path: "/profile",
-                element: <ProfilePage />
+                element:
+                <PrivateRoutes>
+                    <ProfilePage />
+                </PrivateRoutes>
+
+            },
+            {
+                path: "/login",
+                element: <LoginPage />
             },
         ]
     }

@@ -6,7 +6,7 @@ const Navigator: React.FC = () => {
   return (
     <nav className="bg-white border-t fixed bottom-0 w-full flex justify-around py-2 shadow-md">
       <NavLink
-        to="/students"
+        to="/"
         className={({ isActive }) =>
           `flex flex-col items-center text-sm ${
             isActive ? 'text-blue-500' : 'text-gray-500'
