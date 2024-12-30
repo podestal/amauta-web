@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 
 const Navigator: React.FC = () => {
   return (
-    <nav className="bg-white border-t fixed bottom-0 w-full flex justify-around py-2 shadow-md">
+    <nav className="bg-slate-200 dark:bg-slate-800 fixed bottom-0 w-full flex justify-around py-2 shadow-md">
       <NavLink
         to="/"
         className={({ isActive }) =>

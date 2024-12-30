@@ -1,6 +1,10 @@
+import Logout from "../components/auth/Logout"
+
 const ProfilePage = () => {
   return (
-    <div>ProfilePage</div>
+    <div>
+        <Logout />
+    </div>
   )
 }
 
