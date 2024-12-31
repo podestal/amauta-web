@@ -3,6 +3,7 @@ import APIClient from "./apiClient"
 export interface SimpleAttendance {
     id: number
     status: string
+    observations: string
 }
 
 export interface Student {

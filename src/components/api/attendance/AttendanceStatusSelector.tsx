@@ -5,9 +5,10 @@ import useLanguageStore from "../../../hooks/store/useLanguageStore"
 
 interface Props {
     setSelectedStatus:  React.Dispatch<React.SetStateAction<string>>
+    selectedStatus: string
 }
 
-const AttendanceStatusSelector = ({ setSelectedStatus } : Props) => {
+const AttendanceStatusSelector = ({ setSelectedStatus, selectedStatus } : Props) => {
 
     const lan = useLanguageStore(s => s.lan)
     const attendanceStatus = [
@@ -38,7 +39,7 @@ const AttendanceStatusSelector = ({ setSelectedStatus } : Props) => {
         <Selector 
             values={attendanceStatus}
             setter={setSelectedStatus}
-            defaultValue={'O'}
+            defaultValue={selectedStatus}
             label={'Status'}
         />
     </div>

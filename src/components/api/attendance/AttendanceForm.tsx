@@ -8,24 +8,26 @@ import { UseMutationResult } from "@tanstack/react-query"
 import { CreateAttendanceData } from "../../../hooks/api/attendance/useCreateAttendance"
 import useAuthStore from "../../../hooks/store/useAuthStore"
 import useInstructorStore from "../../../hooks/store/useInstructorStore"
+import { SimpleAttendance } from "../../../services/api/studentsService"
 
 interface Props {
-    createAttendance: UseMutationResult<Attendance, Error, CreateAttendanceData>
+    createAttendance?: UseMutationResult<Attendance, Error, CreateAttendanceData>
     studentId: string
+    attendance?: SimpleAttendance
 }
 
-const AttendanceForm = ({ createAttendance, studentId }: Props) => {
+const AttendanceForm = ({ createAttendance, studentId, attendance }: Props) => {
 
     const lan = useLanguageStore(s => s.lan)
     const instructor = useInstructorStore(s => s.instructor)
     const access = useAuthStore(s => s.access) || ''
-    const [selectedStatus, setSelectedStatus] = useState('O')
-    const [observations, setObservations] = useState('')
+    const [selectedStatus, setSelectedStatus] = useState(attendance ? attendance.status : 'O')
+    const [observations, setObservations] = useState(attendance ? attendance.observations : '')
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         console.log('selectedStatus', selectedStatus)
-        createAttendance.mutate(
+        createAttendance && createAttendance.mutate(
             {attendance: {
                 status: selectedStatus, 
                 student: studentId, 
@@ -41,6 +43,7 @@ const AttendanceForm = ({ createAttendance, studentId }: Props) => {
         <h2 className="text-xl">{lan === 'EN' ? 'Register Attendance' : 'Registar Asistencia'}</h2>
         <AttendanceStatusSelector 
             setSelectedStatus={setSelectedStatus}
+            selectedStatus={selectedStatus}
         />
         <TextArea 
             placeholder={lan === 'EN' ? 'Observations' : 'Observaciones'}

@@ -1,13 +1,9 @@
 interface Props {
     lan: string
-    attendance: string | null
+    attendance: string 
 }
 
 const getAttendanceLabel = ({ lan, attendance }: Props) => {
-
-    if (attendance === null) {
-        return ''
-    }
 
     const attendanceLabels: Record<string, string> = {
         'O': lan === 'EN' ? 'On Time' : 'Temprano',
