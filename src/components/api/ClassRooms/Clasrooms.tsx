@@ -20,11 +20,10 @@ const Clasrooms = () => {
         ))}
         </div> 
         : 
-        ''
-        }
         <Students 
             classroom={instructor.clases_details[0].split('-').pop()}
         />
+        }
     </>
   )
 }

@@ -9,14 +9,16 @@ import { CreateAttendanceData } from "../../../hooks/api/attendance/useCreateAtt
 import useAuthStore from "../../../hooks/store/useAuthStore"
 import useInstructorStore from "../../../hooks/store/useInstructorStore"
 import { SimpleAttendance } from "../../../services/api/studentsService"
+import { UpdateAttendanceData } from "../../../hooks/api/attendance/useUpdateAttendance"
 
 interface Props {
     createAttendance?: UseMutationResult<Attendance, Error, CreateAttendanceData>
+    updateAttendance?: UseMutationResult<Attendance, Error, UpdateAttendanceData>
     studentId: string
     attendance?: SimpleAttendance
 }
 
-const AttendanceForm = ({ createAttendance, studentId, attendance }: Props) => {
+const AttendanceForm = ({ createAttendance, updateAttendance, studentId, attendance }: Props) => {
 
     const lan = useLanguageStore(s => s.lan)
     const instructor = useInstructorStore(s => s.instructor)
@@ -33,6 +35,15 @@ const AttendanceForm = ({ createAttendance, studentId, attendance }: Props) => {
                 student: studentId, 
                 created_by: `${instructor?.first_name} ${instructor?.last_name}`, 
                 observations}, access}
+        )
+
+        updateAttendance && updateAttendance.mutate(
+            {updates: {
+                status: selectedStatus,
+                student: studentId,
+                created_by: `${instructor?.first_name} ${instructor?.last_name}`,
+                observations
+            }, access}
         )
     }
 

@@ -2,7 +2,7 @@ import { UseMutationResult, useMutation, useQueryClient } from "@tanstack/react-
 import getAttendanceService, { Attendance, AttendanceCreateUpdate } from "../../../services/api/attendanceService"
 import { getStudentsCacheKey } from "../../../utils/cacheKeys"
 
-interface UpdateAttendanceData {
+export interface UpdateAttendanceData {
     access: string
     updates: AttendanceCreateUpdate
 }

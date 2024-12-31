@@ -8,8 +8,8 @@ interface Props {
 
 const StudentCard = ({ student, classroomId }: Props) => {
   return (
-    <div className="w-full flex  justify-between items-center mx-auto gap-4 mt-4">
-        <p className="text-xl col-span-2 text-left">{student.first_name} {student.last_name}</p>
+    <div className="w-full grid grid-cols-3 mx-auto gap-4 mt-4">
+        <p className="text-sm col-span-2 text-left my-auto">{student.first_name} {student.last_name}</p>
         <StudentAttendance 
             student={student}
             classroomId={classroomId}

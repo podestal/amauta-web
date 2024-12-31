@@ -10,7 +10,7 @@ interface Props {
 const StudentAttendance = ({ student, classroomId}: Props) => {
 
   return (
-    <div>
+    <div className="w-full">
         {student.attendance 
         ? 
         <UpdateAttendance 
