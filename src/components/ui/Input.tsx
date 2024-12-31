@@ -57,7 +57,6 @@ const Input = forwardRef<HTMLInputElement, Props>(({
 
     useEffect(() => {   
 
-     console.log('dishError',error ? true : false);
         if (!error) {
             setShowError(false)
         } else {
