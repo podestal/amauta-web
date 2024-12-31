@@ -7,16 +7,17 @@ import { Attendance } from "../../../services/api/attendanceService"
 import { UseMutationResult } from "@tanstack/react-query"
 import { CreateAttendanceData } from "../../../hooks/api/attendance/useCreateAttendance"
 import useAuthStore from "../../../hooks/store/useAuthStore"
+import useInstructorStore from "../../../hooks/store/useInstructorStore"
 
 interface Props {
     createAttendance: UseMutationResult<Attendance, Error, CreateAttendanceData>
     studentId: number
-    instructor: string
 }
 
-const AttendanceForm = ({ createAttendance, studentId, instructor }: Props) => {
+const AttendanceForm = ({ createAttendance, studentId }: Props) => {
 
     const lan = useLanguageStore(s => s.lan)
+    const instructor = useInstructorStore(s => s.instructor)
     const access = useAuthStore(s => s.access) || ''
     const [selectedStatus, setSelectedStatus] = useState('O')
     const [observations, setObservations] = useState('')
@@ -25,7 +26,11 @@ const AttendanceForm = ({ createAttendance, studentId, instructor }: Props) => {
         e.preventDefault()
         console.log('selectedStatus', selectedStatus)
         createAttendance.mutate(
-            {attendance: {status: selectedStatus, student: studentId, created_by: instructor, observations}, access}
+            {attendance: {
+                status: selectedStatus, 
+                student: studentId, 
+                created_by: `${instructor?.first_name} ${instructor?.last_name}`, 
+                observations}, access}
         )
     }
 

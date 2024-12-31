@@ -6,10 +6,9 @@ import useCreateAttendance from "../../../hooks/api/attendance/useCreateAttendan
 
 interface Props {
     studentId: number
-    instructor: string
 }
 
-const CreateAttendance = ({ studentId, instructor }: Props) => {
+const CreateAttendance = ({ studentId }: Props) => {
 
     const [open, setOpen] = useState(false)
     const createAttendance = useCreateAttendance()
@@ -29,7 +28,6 @@ const CreateAttendance = ({ studentId, instructor }: Props) => {
         <AttendanceForm 
             createAttendance={createAttendance}
             studentId={studentId}
-            instructor={instructor}
         />
     </Modal>
     </>

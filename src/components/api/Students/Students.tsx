@@ -6,10 +6,9 @@ import StudentFilter from "./StudentFilter"
 
 interface Props {
     classroom?: string
-    instructor: string
 }
 
-const Students = ({ classroom, instructor }: Props) => {
+const Students = ({ classroom }: Props) => {
 
     const [filter, setFilter] = useState('')
     const access = useAuthStore(s => s.access) || ''
@@ -35,7 +34,6 @@ const Students = ({ classroom, instructor }: Props) => {
             <StudentCard 
                 key={student.id}
                 student={student}
-                instructor={instructor}
             />
         ))}
     </div>

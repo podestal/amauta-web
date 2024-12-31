@@ -5,10 +5,9 @@ import CreateAttendance from "../attendance/CreateAttendance"
 
 interface Props {
     student: Student
-    instructor: string
 }
 
-const StudentAttendance = ({ student, instructor }: Props) => {
+const StudentAttendance = ({ student }: Props) => {
 
     const lan = useLanguageStore(s => s.lan)
     const attendance = student.attendance ? student.attendance?.status : ''
@@ -28,7 +27,6 @@ const StudentAttendance = ({ student, instructor }: Props) => {
         : 
         <CreateAttendance 
           studentId={student.id}
-          instructor={instructor}
         />}
     </div>
   )
