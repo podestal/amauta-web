@@ -6,10 +6,9 @@ export interface SimpleAttendance {
 }
 
 export interface Student {
-    id: number
+    uid: string
     first_name: string
     last_name: string
-    uid: string
     attendance: SimpleAttendance | null
 }
 

@@ -32,7 +32,7 @@ const Students = ({ classroom }: Props) => {
             .filter( student => `${student.first_name.toLowerCase()}${student.last_name.toLowerCase()}`.includes(filter.toLowerCase()))
             .map( student => (
             <StudentCard 
-                key={student.id}
+                key={student.uid}
                 student={student}
                 classroomId={classroomId}
             />

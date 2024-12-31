@@ -5,7 +5,7 @@ import AttendanceForm from "./AttendanceForm"
 import useCreateAttendance from "../../../hooks/api/attendance/useCreateAttendance"
 
 interface Props {
-    studentId: number
+    studentId: string
     classroomId: string
 }
 

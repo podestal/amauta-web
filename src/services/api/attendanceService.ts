@@ -2,7 +2,7 @@ import APIClient from "./apiClient"
 
 export interface Attendance {
     id: number
-    student: number
+    student: string
     status: string
     observations: string
     created_by: string

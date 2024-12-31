@@ -27,7 +27,7 @@ const StudentAttendance = ({ student, classroomId}: Props) => {
             `}>{attendanceLabel}</p>
         : 
         <CreateAttendance 
-          studentId={student.id}
+          studentId={student.uid}
           classroomId={classroomId}
         />}
     </div>

@@ -11,7 +11,7 @@ import useInstructorStore from "../../../hooks/store/useInstructorStore"
 
 interface Props {
     createAttendance: UseMutationResult<Attendance, Error, CreateAttendanceData>
-    studentId: number
+    studentId: string
 }
 
 const AttendanceForm = ({ createAttendance, studentId }: Props) => {
