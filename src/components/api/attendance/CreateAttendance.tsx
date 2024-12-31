@@ -6,12 +6,13 @@ import useCreateAttendance from "../../../hooks/api/attendance/useCreateAttendan
 
 interface Props {
     studentId: number
+    classroomId: string
 }
 
-const CreateAttendance = ({ studentId }: Props) => {
+const CreateAttendance = ({ studentId, classroomId }: Props) => {
 
     const [open, setOpen] = useState(false)
-    const createAttendance = useCreateAttendance()
+    const createAttendance = useCreateAttendance({ classroomId })
 
   return (
     <>

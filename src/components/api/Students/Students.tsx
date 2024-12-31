@@ -34,6 +34,7 @@ const Students = ({ classroom }: Props) => {
             <StudentCard 
                 key={student.id}
                 student={student}
+                classroomId={classroomId}
             />
         ))}
     </div>
