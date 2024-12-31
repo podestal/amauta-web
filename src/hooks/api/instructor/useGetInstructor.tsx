@@ -6,6 +6,7 @@ interface Props {
 }
 
 const useGetInstructor = ({ access }: Props): UseQueryResult<Instructor, Error> => {
+
     return useQuery({
         queryKey: ['instructor'],
         queryFn: () => instructorService.get(access),
