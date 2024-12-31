@@ -3,16 +3,30 @@ import useLanguageStore from "../../../hooks/store/useLanguageStore"
 import Button from "../../ui/Button"
 import TextArea from "../../ui/TextArea"
 import AttendanceStatusSelector from "./AttendanceStatusSelector"
+import { Attendance } from "../../../services/api/attendanceService"
+import { UseMutationResult } from "@tanstack/react-query"
+import { CreateAttendanceData } from "../../../hooks/api/attendance/useCreateAttendance"
+import useAuthStore from "../../../hooks/store/useAuthStore"
 
-const AttendanceForm = () => {
+interface Props {
+    createAttendance: UseMutationResult<Attendance, Error, CreateAttendanceData>
+    studentId: number
+    instructor: string
+}
+
+const AttendanceForm = ({ createAttendance, studentId, instructor }: Props) => {
 
     const lan = useLanguageStore(s => s.lan)
-    const [selectedStatus, setSelectedStatus] = useState('')
+    const access = useAuthStore(s => s.access) || ''
+    const [selectedStatus, setSelectedStatus] = useState('O')
+    const [observations, setObservations] = useState('')
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         console.log('selectedStatus', selectedStatus)
-        
+        createAttendance.mutate(
+            {attendance: {status: selectedStatus, student: studentId, created_by: instructor, observations}, access}
+        )
     }
 
   return (
@@ -25,6 +39,10 @@ const AttendanceForm = () => {
         />
         <TextArea 
             placeholder={lan === 'EN' ? 'Observations' : 'Observaciones'}
+            value={observations}
+            onChange={e => {
+                setObservations(e.target.value)
+            }}
         />
         <Button 
             label={lan === 'EN' ? 'Register' : 'Registrar'}

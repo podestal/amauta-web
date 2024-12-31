@@ -2,10 +2,17 @@ import { useState } from "react"
 import Button from "../../ui/Button"
 import Modal from "../../ui/Modal"
 import AttendanceForm from "./AttendanceForm"
+import useCreateAttendance from "../../../hooks/api/attendance/useCreateAttendance"
 
-const CreateAttendance = () => {
+interface Props {
+    studentId: number
+    instructor: string
+}
+
+const CreateAttendance = ({ studentId, instructor }: Props) => {
 
     const [open, setOpen] = useState(false)
+    const createAttendance = useCreateAttendance()
 
   return (
     <>
@@ -19,7 +26,11 @@ const CreateAttendance = () => {
         isOpen={open}
         onClose={() => setOpen(false)}
     >
-        <AttendanceForm />
+        <AttendanceForm 
+            createAttendance={createAttendance}
+            studentId={studentId}
+            instructor={instructor}
+        />
     </Modal>
     </>
   )
