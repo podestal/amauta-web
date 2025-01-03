@@ -1,6 +1,10 @@
+import InstallPWAButton from "../components/ui/InstallPWAButton"
+
 const DownloadappPage = () => {
   return (
-    <div>DownloadappPage</div>
+    <div>
+        <InstallPWAButton />
+    </div>
   )
 }
 

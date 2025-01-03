@@ -51,6 +51,10 @@ const routes = createBrowserRouter([
                 path: "/downloadapp",
                 element: <DownloadappPage />
             },
+            {
+                path: "/tesitng",
+                element: <div>Testing</div>
+            }
         ]
     }
 ])
