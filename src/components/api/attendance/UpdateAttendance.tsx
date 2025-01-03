@@ -23,7 +23,7 @@ const UpdateAttendance = ({ attendance, studentId, classroomId }: Props) => {
     <>
         <p 
             onClick={() => setOpen(true)}
-            className={`py-2 px-4 text-center font-bold rounded-2xl text-sm
+            className={`py-2 px-4 text-center font-bold rounded-2xl text-xs
             ${attendance.status === 'O' && 'bg-green-500'}
             ${attendance.status === 'L' && 'bg-amber-500'}
             ${attendance.status === 'N' && 'bg-red-500'}
