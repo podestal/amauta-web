@@ -6,7 +6,7 @@ import StudentsPage from "../pages/StudentsPage";
 import AttendancePage from "../pages/AttendancePage";
 import ProfilePage from "../pages/ProfilePage";
 import StudentsByClassroom from "../pages/StudentsByClassroom";
-import AnnouncementsPage from "../pages/AnnouncementsPage";
+import DownloadappPage from "../pages/DownloadappPage";
 
 const routes = createBrowserRouter([
     {
@@ -37,14 +37,6 @@ const routes = createBrowserRouter([
 
             },
             {
-                path: "/announcement",
-                element:
-                <PrivateRoutes>
-                    <AnnouncementsPage />
-                </PrivateRoutes>
-
-            },
-            {
                 path: 'students',
                 element:
                 <PrivateRoutes>
@@ -54,6 +46,10 @@ const routes = createBrowserRouter([
             {
                 path: "/login",
                 element: <LoginPage />
+            },
+            {
+                path: "/downloadapp",
+                element: <DownloadappPage />
             },
         ]
     }
