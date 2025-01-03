@@ -11,11 +11,11 @@ export interface Announcement {
 export type AnnouncementCreateUpdate = Omit<Announcement, 'id' | 'created_at'>
 
 interface Props {
-    announcementId?: string
+    byStudent?: boolean
 }
 
-const getAnnouncementService = ({ announcementId }: Props) => {
-    const URL = announcementId ? `announcement/${announcementId}/` : `announcement/`
+const getAnnouncementService = ({ byStudent }: Props) => {
+    const URL = byStudent ? `announcement/byStudent/`:  `announcement/`
     return new APIClient<Announcement, AnnouncementCreateUpdate>(URL)
 }
 

@@ -48,7 +48,6 @@ const Button = ({
         {loading 
         ? 
         <div className="flex justify-center items-center gap-2">
-            <p>Loading</p> 
             <RiLoader2Fill className="animate-spin"/> 
         </div>
         : 
