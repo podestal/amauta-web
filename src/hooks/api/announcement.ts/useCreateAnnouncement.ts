@@ -2,7 +2,7 @@ import { UseMutationResult, useMutation, useQueryClient } from "@tanstack/react-
 import getAnnouncementService, { Announcement, AnnouncementCreateUpdate } from "../../../services/api/announcementService"
 import { getAnnouncementsCacheKey } from "../../../utils/cacheKeys"
 
-interface CreateAnnouncementData {
+export interface CreateAnnouncementData {
     access: string
     announcement: AnnouncementCreateUpdate
 }

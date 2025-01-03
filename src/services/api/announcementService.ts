@@ -5,7 +5,7 @@ export interface Announcement {
     title: string
     description: string
     created_at: string
-    student: number
+    student: string
 }
 
 export type AnnouncementCreateUpdate = Omit<Announcement, 'id' | 'created_at'>

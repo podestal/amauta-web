@@ -1,11 +1,18 @@
 import { RiChat1Fill } from "@remixicon/react"
 import Modal from "../../ui/Modal"
 import { useState } from "react"
+import useCreateAnnouncement from "../../../hooks/api/announcement.ts/useCreateAnnouncement"
+import { Student } from "../../../services/api/studentsService"
+import AnnouncementForm from "./AnnouncementForm"
 
+interface Props {
+    student: Student
+}
 
-const CreateAnnouncement = () => {
+const CreateAnnouncement = ({ student }: Props) => {
 
     const [open, setOpen] = useState(false)
+    const CreateAnnouncement = useCreateAnnouncement({ studentId: student.uid })
 
   return (
     <>
@@ -17,9 +24,10 @@ const CreateAnnouncement = () => {
             isOpen={open}
             onClose={() => setOpen(false)}
         >
-            <div>
-                <h2>Nuevo Mensaje</h2>
-            </div>
+            <AnnouncementForm 
+                CreateAnnouncement={CreateAnnouncement}
+                student={student}
+            />
         </Modal>
     </>
   )

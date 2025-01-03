@@ -10,10 +10,13 @@ interface Props {
 const useGetStudents = ({ access, classroomId }: Props): UseQueryResult<Student[], Error> => {
 
     const STUDENT_CACHE_KEY = getStudentsCacheKey(classroomId)
+    const params = {
+        classroom: classroomId
+    }
 
     return useQuery({
         queryKey: STUDENT_CACHE_KEY,
-        queryFn: () => studentsService.get(access, classroomId)
+        queryFn: () => studentsService.get(access, params)
     })
 }
 

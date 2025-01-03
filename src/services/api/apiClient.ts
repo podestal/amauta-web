@@ -14,11 +14,11 @@ class APIClient<ResponseType, RequestType = ResponseType> {
         this.endpoint = endpoint
     }
     
-    get = (access?: string, classroom?: string) => {
+    get = (access?: string, params?: Record<string, string>) => {
 
         const config: any = {}
-        if (classroom) {
-            config.params = { classroom }
+        if (params) {
+            config.params = params
         }
         if (access) {
             config.headers = { ...config.headers, Authorization: `JWT ${access}` };
