@@ -1,4 +1,3 @@
-import { RiChat1Fill } from "@remixicon/react"
 import { Student } from "../../../services/api/studentsService"
 import StudentAttendance from "./StudentAttendance"
 import CreateAnnouncement from "../announcement/CreateAnnouncement"
