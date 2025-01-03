@@ -13,15 +13,6 @@ const MainPage = () => {
     const isLoading = useLoadingStore(s => s.isLoading)
     const access = useAuthStore(s => s.access)
 
-    //   useEffect(() => {
-    //   if (theme === 'dark') {
-    //     document.querySelector('html')?.classList.add('dark')
-    //     // document.querySelector('html')?.style('background-color: rgb(2 6 23);')
-    //   } else {
-    //     document.querySelector('html')?.classList.remove('dark')
-    //   }
-    // }, [theme])
-
     useEffect(() => {
       document.querySelector('html')?.classList.remove('dark')
     }, [])

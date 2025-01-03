@@ -4,6 +4,8 @@ import { useState } from "react"
 import CreateAnnouncement from "./CreateAnnouncement"
 import { Student } from "../../../services/api/studentsService"
 import AnnouncementsList from "./AnnouncementsList"
+import Tabs from "../../ui/Tabs"
+import useLanguageStore from "../../../hooks/store/useLanguageStore"
 
 interface Props {
     student: Student
@@ -11,6 +13,7 @@ interface Props {
 
 const Announcements = ({ student }: Props) => {
 
+    const lan = useLanguageStore(s => s.lan)
     const [open, setOpen] = useState(false)
 
   return (
@@ -24,12 +27,21 @@ const Announcements = ({ student }: Props) => {
             onClose={() => setOpen(false)}
         >
             <>
-                <CreateAnnouncement 
-                    student={student}
-                />
-                <AnnouncementsList 
-                    student={student}
-                    open={open}
+
+                <Tabs 
+                    tabs={[
+                        {
+                            label: lan === 'EN' ? 'Announcements' : 'Mensajes',
+                            content: <AnnouncementsList 
+                                student={student}
+                                open={open} />
+                        },
+                        {
+                            label: lan === 'EN' ? 'Create Announcement' : 'Crear Mensaje',
+                            content: <CreateAnnouncement 
+                                student={student} />
+                        }
+                    ]}
                 />
             </>
         </Modal>

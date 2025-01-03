@@ -9,6 +9,7 @@ import useAuthStore from "../../../hooks/store/useAuthStore"
 import { Student } from "../../../services/api/studentsService"
 import Button from "../../ui/Button"
 import useNotificationsStore from "../../../hooks/store/useNotificationsStore"
+import { motion } from "framer-motion"
 
 interface Props {
     CreateAnnouncement: UseMutationResult<Announcement, Error, CreateAnnouncementData>
@@ -70,32 +71,37 @@ const AnnouncementForm = ({ CreateAnnouncement, student }: Props) => {
     }
 
   return (
-    <form
-        onSubmit={handleSubmit}
-        className="flex flex-col justify-center item-start gap-6 w-[60%] mx-auto"
+    <motion.div
+        initial={{ y: "-100%", opacity: 0 }}
+        animate={{ y: 0, opacity: 1, transition: { duration: 0.5, ease: "easeOut" } }}
     >
-        <h2 className="text-2xl text-center">{lan === 'EN' ? 'New Message' : 'Nuevo Mensaje'}</h2>
-        <Input 
-            placeholder={lan === 'EN' ? 'Title' : 'Título'}
-            value={title}
-            onChange={e => {
-                title && setTitleError('')
-                setTitle(e.target.value)}}
-            error={titleError}
-        />
-        <TextArea 
-            placeholder={lan === 'EN' ? 'Description' : 'Descripción'}
-            value={description}
-            onChange={e => {
-                description && setDescriptionError('')
-                setDescription(e.target.value)}}
-            error={descriptionError}
-        />
-        <Button 
-            label={lan === 'EN' ? 'Send' : 'Enviar'}
-            loading={loading}
-        />
-    </form>
+        <form
+            onSubmit={handleSubmit}
+            className="flex flex-col justify-center item-start gap-6 w-[60%] mx-auto"
+        >
+            <h2 className="text-2xl text-center">{lan === 'EN' ? 'New Message' : 'Nuevo Mensaje'}</h2>
+            <Input 
+                placeholder={lan === 'EN' ? 'Title' : 'Título'}
+                value={title}
+                onChange={e => {
+                    title && setTitleError('')
+                    setTitle(e.target.value)}}
+                error={titleError}
+            />
+            <TextArea 
+                placeholder={lan === 'EN' ? 'Description' : 'Descripción'}
+                value={description}
+                onChange={e => {
+                    description && setDescriptionError('')
+                    setDescription(e.target.value)}}
+                error={descriptionError}
+            />
+            <Button 
+                label={lan === 'EN' ? 'Send' : 'Enviar'}
+                loading={loading}
+            />
+        </form>
+    </motion.div>
   )
 }
 
