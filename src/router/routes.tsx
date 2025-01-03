@@ -6,6 +6,7 @@ import StudentsPage from "../pages/StudentsPage";
 import AttendancePage from "../pages/AttendancePage";
 import ProfilePage from "../pages/ProfilePage";
 import StudentsByClassroom from "../pages/StudentsByClassroom";
+import AnnouncementsPage from "../pages/AnnouncementsPage";
 
 const routes = createBrowserRouter([
     {
@@ -32,6 +33,14 @@ const routes = createBrowserRouter([
                 element:
                 <PrivateRoutes>
                     <ProfilePage />
+                </PrivateRoutes>
+
+            },
+            {
+                path: "/announcement",
+                element:
+                <PrivateRoutes>
+                    <AnnouncementsPage />
                 </PrivateRoutes>
 
             },

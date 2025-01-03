@@ -1,4 +1,4 @@
-import { RiCalendarScheduleFill, RiFileUserFill, RiGraduationCapFill } from '@remixicon/react';
+import { RiCalendarScheduleFill, RiFileUserFill, RiGraduationCapFill, RiMessage2Fill } from '@remixicon/react';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
@@ -26,6 +26,17 @@ const Navigator: React.FC = () => {
       >
         <RiCalendarScheduleFill />
         <span>Attendance</span>
+      </NavLink>
+      <NavLink
+        to="/announcement"
+        className={({ isActive }) =>
+          `flex flex-col items-center text-sm ${
+            isActive ? 'text-blue-500' : 'text-gray-500'
+          }`
+        }
+      >
+        <RiMessage2Fill />
+        <span>Announcemnts</span>
       </NavLink>
       <NavLink
         to="/profile"
