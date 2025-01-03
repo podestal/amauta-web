@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import useLanguageStore from '../../hooks/store/useLanguageStore';
+import Button from './Button';
 
-const InstallPWAButton: React.FC = () => {
+const InstallPWAButton = () => {
     const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
     const [showButton, setShowButton] = useState(false);
+    const lan = useLanguageStore(s => s.lan)
 
     useEffect(() => {
-        // Listen for the `beforeinstallprompt` event
         const handleBeforeInstallPrompt = (e: Event) => {
-            e.preventDefault(); // Prevent the default mini-infobar
-            setDeferredPrompt(e as BeforeInstallPromptEvent); // Save the event for later use
-            setShowButton(true); // Show the install button
+            e.preventDefault(); 
+            setDeferredPrompt(e as BeforeInstallPromptEvent); 
+            setShowButton(true); 
         };
 
         window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
@@ -22,18 +24,15 @@ const InstallPWAButton: React.FC = () => {
     const handleInstallClick = async () => {
         if (!deferredPrompt) return;
 
-        // Trigger the installation prompt
         deferredPrompt.prompt();
         const choiceResult = await deferredPrompt.userChoice;
 
-        // Log the result of the user's choice
         if (choiceResult.outcome === 'accepted') {
             console.log('User accepted the install prompt');
         } else {
             console.log('User dismissed the install prompt');
         }
 
-        // Clear the deferred prompt after handling
         setDeferredPrompt(null);
         setShowButton(false);
     };
@@ -41,12 +40,10 @@ const InstallPWAButton: React.FC = () => {
     return (
         <>
             {showButton && (
-                <button
-                    onClick={handleInstallClick}
-                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-all"
-                >
-                    Install App
-                </button>
+                <Button 
+                  onClick={handleInstallClick}
+                  label={lan === 'EN' ? 'Install App' : 'Instalar App'}
+                />
             )}
         </>
     );
