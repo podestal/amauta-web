@@ -1,13 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Html5QrcodeScanner } from 'html5-qrcode';
 import useLanguageStore from '../../hooks/store/useLanguageStore';
+import Button from './Button';
 
 type QRScannerProps = {
   onScanSuccess: (decodedText: string) => void;
   onScanFailure?: (error: string) => void;
+  selectedStatus: string;
 };
 
-const QRScanner: React.FC<QRScannerProps> = ({ onScanSuccess, onScanFailure }) => {
+const QRScanner: React.FC<QRScannerProps> = ({ onScanSuccess, onScanFailure, selectedStatus }) => {
   const scannerRef = useRef<HTMLDivElement | null>(null);
   const [isScannerActive, setIsScannerActive] = useState(false);
   const lan = useLanguageStore((s) => s.lan)
@@ -43,14 +45,13 @@ const QRScanner: React.FC<QRScannerProps> = ({ onScanSuccess, onScanFailure }) =
   };
 
   return (
-    <div className="flex flex-col items-center">
-      <div id="qr-reader" ref={scannerRef} className="rounded-lg shadow-md h-[320px] w-[320px]"></div>
-      <button
+    <div className="flex flex-col items-center my-8">
+      <div id="qr-reader" ref={scannerRef} className="rounded-lg shadow-md h-[320px] w-[320px] mb-6"></div>
+      <Button
         onClick={toggleScanner}
-        className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-      >
-        {isScannerActive ? `${lan === 'EN' ? 'Stop Scanner' : 'Apagar Scanner'}` : `${lan === 'EN' ? 'Start Scanner' : 'Encender Scanner'}`}
-      </button>
+        disable={!selectedStatus || selectedStatus === '0'}
+        label= {isScannerActive ? `${lan === 'EN' ? 'Stop Scanner' : 'Apagar Scanner'}` : `${lan === 'EN' ? 'Start Scanner' : 'Encender Scanner'}`}
+      />
     </div>
   );
 };
