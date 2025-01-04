@@ -5,3 +5,7 @@ export const getStudentsCacheKey = ( classroom: string ) => {
 export const getAnnouncementsCacheKey = ( student: string ) => {
     return [`announcements ${student}`]
 }
+
+export const getAttendanceCacheKey = ( classroom: string ) => {
+    return [`attendance ${classroom}`]
+}
