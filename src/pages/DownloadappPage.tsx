@@ -1,9 +1,18 @@
 import InstallPWAButton from "../components/ui/InstallPWAButton";
 import { motion } from "framer-motion";
 import useLanguageStore from "../hooks/store/useLanguageStore";
+import { useEffect, useState } from "react";
 
 const DownloadappPage = () => {
   const lan = useLanguageStore((s) => s.lan);
+  const [isIOS, setIsIOS] = useState(false);
+
+  useEffect(() => {
+    const userAgent = window.navigator.userAgent;
+    const isIOSDevice =
+      /iPhone|iPad|iPod/i.test(userAgent) && (!window.navigator as any).standalone;
+    setIsIOS(isIOSDevice);
+  }, []);
 
   return (
     <div className="w-full relative min-h-screen bg-transparent flex flex-col items-center justify-center text-white px-4 sm:px-6 lg:px-10 overflow-hidden">
@@ -31,14 +40,29 @@ const DownloadappPage = () => {
           : "Experimenta las mejores características instalando nuestra app en tu dispositivo. ¡Es rápido, confiable y está hecho para ti!"}
       </motion.p>
 
-      <motion.div
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
-        className="flex justify-center"
-      >
-        <InstallPWAButton />
-      </motion.div>
+      {isIOS ? (
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
+          className="text-center bg-white text-black p-4 rounded-md shadow-lg"
+        >
+          <p className="text-sm sm:text-base">
+            {lan === "EN"
+              ? `To install the app on your iPhone or iPad, tap the "Share" button in Safari and then select "Add to Home Screen."`
+              : `Para instalar la aplicación en tu iPhone o iPad, toca el botón "Compartir" en Safari y luego selecciona "Añadir a la pantalla de inicio".`}
+          </p>
+        </motion.div>
+      ) : (
+        <motion.div
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
+          className="flex justify-center"
+        >
+          <InstallPWAButton />
+        </motion.div>
+      )}
     </div>
   );
 };
