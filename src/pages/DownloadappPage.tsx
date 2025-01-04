@@ -6,7 +6,7 @@ const DownloadappPage = () => {
   const lan = useLanguageStore((s) => s.lan);
 
   return (
-    <div className="relative min-h-screen bg-transparent flex flex-col items-center justify-center text-white px-4 sm:px-6 lg:px-10 overflow-hidden">
+    <div className="w-full relative min-h-screen bg-transparent flex flex-col items-center justify-center text-white px-4 sm:px-6 lg:px-10 overflow-hidden">
       <div className="absolute top-10 left-10 w-32 h-32 sm:w-40 sm:h-40 bg-blue-500 rounded-full filter blur-3xl opacity-50 animate-pulse"></div>
       <div className="absolute bottom-20 right-20 w-48 h-48 sm:w-60 sm:h-60 bg-pink-500 rounded-full filter blur-3xl opacity-50 animate-pulse"></div>
       <div className="absolute top-1/2 left-1/3 w-36 h-36 sm:w-48 sm:h-48 bg-purple-500 rounded-full filter blur-3xl opacity-50 animate-pulse"></div>
