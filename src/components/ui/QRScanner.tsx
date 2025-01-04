@@ -268,7 +268,7 @@ const QRScanner: React.FC<QRScannerProps> = ({ onScanSuccess, onScanFailure, sel
       )}
       <Button
         onClick={toggleScanner}
-        disable={!selectedStatus || selectedStatus === '0'}
+        disable={selectedStatus === '0'}
         label={
           isScannerActive
             ? lan === 'EN'

@@ -50,21 +50,24 @@ import { useState } from "react";
 import QRScanner from "../components/ui/QRScanner";
 import Selector from "../components/ui/Selector";
 import useLanguageStore from "../hooks/store/useLanguageStore";
-import { getAttendanceStatus } from "../utils/data";
+import { getAttendanceStatus, getInstructorClassrooms } from "../utils/data";
 import useCreateAttendance from "../hooks/api/attendance/useCreateAttendance";
 import useAuthStore from "../hooks/store/useAuthStore";
 import useInstructorStore from "../hooks/store/useInstructorStore";
 
 const AttendancePage = () => {
-  const [selectedStatus, setSelectedStatus] = useState('');
+
+  const instructor = useInstructorStore(s => s.instructor);
+  const [selectedStatus, setSelectedStatus] = useState('0');
+  const [selectedClassroom, setSelectedClassroom] = useState('0');
   const [isLoading, setIsLoading] = useState(false);
   const lan = useLanguageStore(s => s.lan);
   const attendanceStatus = getAttendanceStatus(lan);
+  const classrooms = instructor ? getInstructorClassrooms(instructor.clases_details, lan) : []
   const access = useAuthStore(s => s.access) || '';
   const createAttendance = useCreateAttendance({ classroomId: '1' });
-  const instructor = useInstructorStore(s => s.instructor);
 
-  console.log('instructor',instructor);
+  console.log('classroom',classrooms);
   
 
   const handleSuccess = (decodedText: string) => {
@@ -89,12 +92,20 @@ const AttendancePage = () => {
 
   return (
     <div className="w-full min-h-screen max-w-[95%] sm:max-w-[600px] md:max-w-[800px] lg:max-w-[1024px] xl:max-w-[1200px] 2xl:max-w-[1280px] mx-auto overflow-hidden h-screen flex flex-col justify-center items-center">
-      <h2 className="mb-20 text-4xl">Scanear Asistencia</h2>
+      <h2 className="mb-20 text-4xl">{lan === 'EN' ? 'Scann Attendance' : 'Scanear Asistencia'}</h2>
       <Selector 
         values={attendanceStatus}
         setter={setSelectedStatus}
+        defaultValue={selectedStatus}
         label="Status"
       />
+      {classrooms.length > 0 && 
+      <Selector 
+        values={classrooms}
+        setter={setSelectedClassroom}
+        defaultValue={selectedClassroom}
+        label={lan === 'EN' ? 'Classroom' : 'Salón'}
+      />}
       <QRScanner 
         onScanSuccess={handleSuccess}
         selectedStatus={selectedStatus}

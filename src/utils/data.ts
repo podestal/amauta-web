@@ -1,6 +1,12 @@
+import getClassroomDescription from "./getClassroomDescription";
+
 export const getAttendanceStatus = (lan: string) => {
 
     return [
+        {
+            id: '0',
+            name: lan === 'EN' ? 'Select' : 'Selecionar',
+        },
         {
             id: 'O',
             name: lan === 'EN' ? 'On Time' : 'Temprano',
@@ -23,3 +29,14 @@ export const getAttendanceStatus = (lan: string) => {
         },
     ]
 }
+
+export const getInstructorClassrooms = ((classrooms: string[], lan: string) => {
+    return classrooms.map(classroom => {
+        const [grade, section, level, id] = classroom.split("-");
+        const classRoomDescription = getClassroomDescription({ lan, grade, section, level })
+        return {
+            id: id,
+            name: classRoomDescription
+        }
+    })
+})
