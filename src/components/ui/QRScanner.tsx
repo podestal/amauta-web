@@ -173,9 +173,10 @@ type QRScannerProps = {
   onScanSuccess: (decodedText: string) => void;
   onScanFailure?: (error: string) => void;
   selectedStatus: string;
+  errorMessage: string
 };
 
-const QRScanner: React.FC<QRScannerProps> = ({ onScanSuccess, onScanFailure, selectedStatus }) => {
+const QRScanner: React.FC<QRScannerProps> = ({ onScanSuccess, onScanFailure, selectedStatus, errorMessage }) => {
   const scannerRef = useRef<HTMLDivElement | null>(null);
   const html5QrcodeRef = useRef<Html5Qrcode | null>(null);
   const [isScannerActive, setIsScannerActive] = useState(false);
@@ -254,18 +255,23 @@ const QRScanner: React.FC<QRScannerProps> = ({ onScanSuccess, onScanFailure, sel
         setIsScannerActive(false);
       }
     } else {
-      setIsScannerActive(true); // Activate the scanner
+      setIsScannerActive(true); 
     }
   };
 
   return (
     <div className="flex flex-col items-center my-8">
       <div id="qr-reader" ref={scannerRef} className="rounded-lg shadow-md h-[320px] w-[320px] mb-6"></div>
-      {feedbackMessage && (
-        <div className="text-green-600 font-semibold mb-4">
-          {feedbackMessage}
-        </div>
-      )}
+      {errorMessage
+      ? 
+      <div className="text-red-600 font-semibold mb-4">
+        {errorMessage}
+      </div> 
+      : 
+      <div className="text-green-600 font-semibold mb-4">
+        {feedbackMessage}
+      </div>
+      }
       <Button
         onClick={toggleScanner}
         disable={selectedStatus === '0'}

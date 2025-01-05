@@ -52,10 +52,10 @@ import useInstructorStore from "../hooks/store/useInstructorStore";
 import { useState } from "react";
 
 const AttendancePage = () => {
-  const instructor = useInstructorStore(s => s.instructor);
-  const [selectedClassroom, setSelectedClassroom] = useState('0');
-  const lan = useLanguageStore(s => s.lan);
-  const createAttendance = useCreateAttendance({ classroomId: '1' });
+  const instructor = useInstructorStore(s => s.instructor)
+  const lan = useLanguageStore(s => s.lan)
+  const createAttendance = useCreateAttendance({ classroomId: '1' })
+
 
 
 
@@ -64,8 +64,6 @@ const AttendancePage = () => {
       <h2 className="mb-20 text-4xl">{lan === 'EN' ? 'Scann Attendance' : 'Scanear Asistencia'}</h2>
       <AttendanceScanForm 
         createAttendance={createAttendance}
-        selectedClassroom={selectedClassroom}
-        setSelectedClassroom={setSelectedClassroom}
       />
     </div>
   );
