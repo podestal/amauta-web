@@ -209,7 +209,9 @@ const QRScanner: React.FC<QRScannerProps> = ({ onScanSuccess, onScanFailure, sel
           setTimeout(() => {
             setFeedbackMessage(null); // Clear feedback message
             setIsLocked(false); // Unlock the scanner
-          }, 2000); // Adjust delay as needed (e.g., 2 seconds)
+          }, 500); // Adjust delay as needed (e.g., 2 seconds)
+          setFeedbackMessage(null); // Clear feedback message
+          setIsLocked(false); // Unlock the scanner
         },
         (errorMessage) => {
           if (onScanFailure && !isLocked) onScanFailure(errorMessage);

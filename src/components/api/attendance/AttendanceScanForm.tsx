@@ -42,6 +42,9 @@ const AttendanceScanForm = ({ createAttendance }: Props) => {
 
         if (alreadyScanned) {
           setAlreadyScannedError(lan === 'EN' ? 'Student already scanned' : 'Estudiante ya fué escaneado')
+          setTimeout(() => {
+            setAlreadyScannedError('')
+          }, 2000)
           return
         }
 
