@@ -23,7 +23,7 @@ const Students = ({ classroom }: Props) => {
     if (isSuccess)
 
   return (
-    <div className="pt-10">
+    <div className="pt-10 pb-20">
         <h2 className="text-3xl font-bold text-center">Alumnos</h2>
         <StudentFilter 
             filter={filter}

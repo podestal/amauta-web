@@ -34,6 +34,11 @@ const AttendanceScanForm = ({ createAttendance }: Props) => {
 
     const [alreadyScannedError, setAlreadyScannedError] = useState('');
     
+    console.log('classrooms', classrooms.length);
+    console.log('instructor', instructor);
+
+    const showScanner = classrooms.length === 2 || selectedClassroom !== '0'
+    
 
     const handleSuccess = (decodedText: string) => {
 
@@ -63,6 +68,8 @@ const AttendanceScanForm = ({ createAttendance }: Props) => {
         });
       };
 
+      
+
 
   return (
     <div className="w-full">
@@ -72,14 +79,14 @@ const AttendanceScanForm = ({ createAttendance }: Props) => {
             defaultValue={selectedStatus}
             label="Status"
         />
-        {classrooms.length > 0 && 
+        {classrooms.length > 2 && 
         <Selector 
             values={classrooms}
             setter={setSelectedClassroom}
             defaultValue={selectedClassroom}
             label={lan === 'EN' ? 'Classroom' : 'Salón'}
         />}
-        {selectedClassroom !== '0' && 
+        {showScanner &&
         <AttendanceScanner 
             onScanSuccess={handleSuccess}
             selectedStatus={selectedStatus}
