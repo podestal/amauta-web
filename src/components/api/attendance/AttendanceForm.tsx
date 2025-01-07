@@ -34,7 +34,9 @@ const AttendanceForm = ({ createAttendance, updateAttendance, studentId, attenda
                 status: selectedStatus, 
                 student: studentId, 
                 created_by: `${instructor?.first_name} ${instructor?.last_name}`, 
-                observations}, access}
+                observations,
+                attendance_type: 'M',
+            }, access}
         )
 
         updateAttendance && updateAttendance.mutate(
@@ -42,7 +44,8 @@ const AttendanceForm = ({ createAttendance, updateAttendance, studentId, attenda
                 status: selectedStatus,
                 student: studentId,
                 created_by: `${instructor?.first_name} ${instructor?.last_name}`,
-                observations
+                observations,
+                attendance_type: 'M',
             }, access}
         )
     }

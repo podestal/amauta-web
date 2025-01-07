@@ -61,6 +61,7 @@ const AttendanceScanForm = ({ createAttendance }: Props) => {
             status: selectedStatus,
             student: decodedText,
             created_by: `${instructor?.first_name} ${instructor?.last_name}`,
+            attendance_type: 'A',
           },
           access,
         }, {

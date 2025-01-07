@@ -8,6 +8,7 @@ export interface Attendance {
     created_by: string
     created_at: Date
     updated_at: Date
+    attendance_type: 'M' | 'A' 
 }
 
 export type AttendanceCreateUpdate = Omit<Attendance, 'id' | 'created_at' | 'updated_at' | 'observations'> & {
