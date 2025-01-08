@@ -1,30 +1,26 @@
-import useGetInstructor from "../../hooks/api/instructor/useGetInstructor";
 import useAuthStore from "../../hooks/store/useAuthStore";
 import { Navigate } from "react-router-dom";
-import useInstructorStore from "../../hooks/store/useInstructorStore";
 import { useEffect } from "react";
 import useLoader from "../../hooks/ui/useLoader";
+import useGetProfileStore from "../../hooks/store/useGetProfileStore";
 
 interface Props {
   children: React.ReactElement;
 }
 
 const PrivateRoutes = ({ children }: Props) => {
-  const access = useAuthStore((s) => s.access) || "";
-  const {
-    data: instructor,
-    isLoading,
-    isError,
-    error,
-    isSuccess,
-  } = useGetInstructor({ access });
-  const setInstructor = useInstructorStore((s) => s.setInstructor);
+  
+  const access = useAuthStore((s) => s.access);
+  const { profile, getProfile, isLoading, error } = useGetProfileStore()
+
+
+  // fix bug
 
   useEffect(() => {
-    if (instructor) {
-      setInstructor(instructor);
+    if (access) {
+      getProfile(access)
     }
-  }, [instructor, setInstructor]);
+  }, [access])
 
   useLoader(isLoading);
 
@@ -36,12 +32,12 @@ const PrivateRoutes = ({ children }: Props) => {
     return <p>Loading...</p>;
   }
 
-  if (isError) {
-    console.error("Error fetching instructor:", error?.message);
+  if (error) {
+    console.error("Error fetching instructor:", error);
     return <Navigate to="/login" replace />;
   }
 
-  if (isSuccess && instructor) {
+  if (profile) {
     return children;
   }
 
