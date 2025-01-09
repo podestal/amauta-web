@@ -35,7 +35,7 @@ const TutorStudentCard = ({ student }: Props) => {
                 <RiArrowUpDoubleFill />
                 </motion.div>
             </div>
-            <p>{classroomDescription}</p>
+            <p className="dark:text-slate-300">{classroomDescription}</p>
         </div>
         {show && 
         <motion.div
@@ -49,23 +49,23 @@ const TutorStudentCard = ({ student }: Props) => {
             <div className="mb-6 w-[70%] flex flex-col gap-4 mx-auto">
                 <div className="flex justify-between">
                     <p>{lan === 'EN' ? 'On Time' : 'Temprano'}</p>
-                    <p>{onTime}</p>
+                    <p className="font-bold text-green-500">{onTime}</p>
                 </div>
-                <div className="flex justify-between">
-                    <p>{lan === 'EN' ? 'Excused' : 'Excusado'}</p>
-                    <p>{excused}</p>
-                </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between ">
                     <p>{lan === 'EN' ? 'Left Early' : 'Salió Temprano'}</p>
-                    <p>{leftEarly}</p>
+                    <p className="font-bold text-yellow-500">{leftEarly}</p>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between ">
                     <p>{lan === 'EN' ? 'Not Attended' : 'Falta'}</p>
-                    <p>{notAttended}</p>
+                    <p className="font-bold text-red-500">{notAttended}</p>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between ">
                     <p>{lan === 'EN' ? 'Late' : 'Tardanza'}</p>
-                    <p>{late}</p>
+                    <p className="font-bold text-amber-500">{late}</p>
+                </div>
+                <div className="flex justify-between ">
+                    <p>{lan === 'EN' ? 'Excused' : 'Excusado'}</p>
+                    <p className="font-bold text-green-500">{excused}</p>
                 </div>
                 <div className="mt-6">
                     <Button 
