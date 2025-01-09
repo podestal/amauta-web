@@ -1,4 +1,5 @@
 import APIClient from "./apiClient"
+import { Classroom } from "./classroomService"
 
 export interface SimpleAttendance {
     id: number
@@ -11,6 +12,8 @@ export interface Student {
     first_name: string
     last_name: string
     attendance: SimpleAttendance | null
+    attendances: SimpleAttendance[]
+    clase: Classroom
 }
 
 interface Props {
