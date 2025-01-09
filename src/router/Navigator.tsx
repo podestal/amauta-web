@@ -61,7 +61,7 @@ const Navigator: React.FC = () => {
             <span>{lan === 'EN' ? 'Progress' : 'Progreso' }</span>
           </NavLink>
           <NavLink
-            to="/announcements"
+            to="/announcement"
             className={({ isActive }) =>
               `flex flex-col items-center text-sm ${
                 isActive ? 'text-blue-500' : 'text-gray-500'

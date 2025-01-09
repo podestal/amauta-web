@@ -1,5 +1,6 @@
 import Clasrooms from "../components/api/ClassRooms/Clasrooms"
 import useGetProfileStore from "../hooks/store/useGetProfileStore"
+import TutorPage from "./TutorPage"
 
 const StudentsPage = () => {
 
@@ -14,7 +15,7 @@ const StudentsPage = () => {
     }
     {group === 'tutor' && 
     <div>
-      Tutors page  
+      <TutorPage />
     </div>}
     </>
   )
