@@ -3,6 +3,7 @@ import useGetAttendance from "../../../hooks/api/attendance/useGetAttendance";
 import useAuthStore from "../../../hooks/store/useAuthStore";
 import QRScanner from "../../ui/QRScanner";
 import { Attendance } from "../../../services/api/attendanceService";
+import useLoader from "../../../hooks/ui/useLoader";
 
 interface Props {
     onScanSuccess: (decodedText: string) => void
@@ -23,7 +24,7 @@ const AttendanceScanner = ({ onScanSuccess, selectedStatus, classroomId, setAtte
         }
     }, [attendances, setAttendances])
 
-    if (isLoading) return <p>Loading ...</p>
+    useLoader(isLoading)
 
     if (isError) return <p>Error: {error.message}</p>
 

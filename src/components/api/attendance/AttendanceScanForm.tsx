@@ -1,5 +1,4 @@
 import { useState } from "react";
-import useInstructorStore from "../../../hooks/store/useInstructorStore";
 import Selector from "../../ui/Selector"
 import useLanguageStore from "../../../hooks/store/useLanguageStore";
 import { getAttendanceStatus, getInstructorClassrooms } from "../../../utils/data";
@@ -9,6 +8,8 @@ import { Attendance } from "../../../services/api/attendanceService";
 import { UseMutationResult } from "@tanstack/react-query";
 import AttendanceScanner from "./AttendanceScanner";
 import { isAttendanceCreated } from "../../../utils/isAttendanceCreated";
+import { Instructor } from "../../../services/api/instructorService";
+import useGetProfileStore from "../../../hooks/store/useGetProfileStore";
 
 interface Props {
     createAttendance: UseMutationResult<Attendance, Error, CreateAttendanceData>
@@ -16,7 +17,8 @@ interface Props {
 
 const AttendanceScanForm = ({ createAttendance }: Props) => {
     
-    const instructor = useInstructorStore(s => s.instructor);
+    const profile = useGetProfileStore(s => s.profile)
+    const instructor = profile as Instructor
     const [selectedStatus, setSelectedStatus] = useState('0');
     const [selectedClassroom, setSelectedClassroom] = useState('0')
     const [attendances, setAttendances] = useState<Attendance[]>()
@@ -33,11 +35,10 @@ const AttendanceScanForm = ({ createAttendance }: Props) => {
     const access = useAuthStore(s => s.access) || '';
 
     const [alreadyScannedError, setAlreadyScannedError] = useState('');
-    
-    console.log('classrooms', classrooms.length);
-    console.log('instructor', instructor);
 
     const showScanner = classrooms.length === 2 || selectedClassroom !== '0'
+    
+    console.log('classrooms', classrooms);
     
 
     const handleSuccess = (decodedText: string) => {

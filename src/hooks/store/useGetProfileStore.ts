@@ -28,7 +28,7 @@ const useGetProfileStore = create<ProfileState>((set) => ({
     set({ isLoading: true, error: null });
 
     try {
-      // Fetch user data
+
       const userData = await userService.get(access);
       set({ user: userData });
       
@@ -36,7 +36,6 @@ const useGetProfileStore = create<ProfileState>((set) => ({
         const group = userData.groups[0];
 
         let profileData: Profile = null;
-        console.log('group', group);
         
         if (group === "instructor") {
           profileData = await instructorService.get(access);
