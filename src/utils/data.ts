@@ -31,6 +31,7 @@ export const getAttendanceStatus = (lan: string) => {
 }
 
 export const getInstructorClassrooms = ((classrooms: string[], lan: string) => {
+    if (!classrooms) return []
     return classrooms.map(classroom => {
         const [grade, section, level, id] = classroom.split("-");
         const classRoomDescription = getClassroomDescription({ lan, grade, section, level })

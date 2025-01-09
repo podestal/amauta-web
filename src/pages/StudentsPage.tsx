@@ -1,11 +1,22 @@
 import Clasrooms from "../components/api/ClassRooms/Clasrooms"
+import useGetProfileStore from "../hooks/store/useGetProfileStore"
 
 const StudentsPage = () => {
 
+  const group = useGetProfileStore(s=>s.user?.groups[0])
+
   return (
+    <>
+    {group === 'instructor' &&
     <div className="w-full max-w-[95%] sm:max-w-[600px] md:max-w-[800px] lg:max-w-[1024px] xl:max-w-[1200px] 2xl:max-w-[1280px] mx-auto overflow-hidden">
       <Clasrooms />
     </div>
+    }
+    {group === 'tutor' && 
+    <div>
+      Tutors page  
+    </div>}
+    </>
   )
 }
 
