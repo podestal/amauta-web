@@ -1,10 +1,13 @@
 import Students from "../Students/Students"
 import ClassroomCard from "./ClassroomCard"
-import useInstructorStore from "../../../hooks/store/useInstructorStore"
+import useGetProfileStore from "../../../hooks/store/useGetProfileStore"
+import { Instructor } from "../../../services/api/instructorService"
 
 const Clasrooms = () => {
 
-    const instructor = useInstructorStore(s => s.instructor)
+    const profile = useGetProfileStore(s => s.profile)
+
+    const instructor = profile as Instructor
 
     if (!instructor?.clases_details?.length) return <p>No classes available</p>;
     

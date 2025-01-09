@@ -1,75 +1,59 @@
-import { create } from 'zustand'
-import useGetUser from '../auth/useGetUser'
-import useGetInstructor from '../api/instructor/useGetInstructor'
-import useGetTutor from '../api/tutor/useGetTutor'
-import { User } from '../../services/auth/useService'
+import { create } from "zustand";
+import userService, { User } from "../../services/auth/useService";
+import instructorService, { Instructor } from "../../services/api/instructorService";
+import tutorService, { Tutor } from "../../services/api/tutorService";
+
+type Profile = Tutor | Instructor | null;
 
 interface ProfileState {
-    user: User | null
-    profile: any | null
-    isLoading: boolean
-    error: string | null
-    getProfile: (access: string) => void
+  user: User | null;
+  profile: Profile;
+  isLoading: boolean;
+  error: string | null;
+  getProfile: (access: string) => Promise<void>;
 }
 
-const useGetProfileStore = create<ProfileState>(set => ({
-    user: null,
-    profile: null,
-    isLoading: false,
-    error: null,
-    getProfile: async (access) => {
-        
-        
-        if (!access) {
-            set({ isLoading: false, error: "No access token" })
-            return
-        }
+const useGetProfileStore = create<ProfileState>((set) => ({
+  user: null,
+  profile: null,
+  isLoading: false,
+  error: null,
 
-        set({ isLoading: true, error: null })
-
-        const { data: userData, isLoading, isError, error, isSuccess } = useGetUser({access})
-
-        if (isLoading) {
-            set({ isLoading: true })
-        }
-
-        if (isError) {
-            set({ isLoading: false, error: error?.message })
-            return
-        }
-
-        if (isSuccess) {
-            set({ user: userData })
-            if (userData.groups.length > 0) {
-                const group = userData.groups[0]
-                if (group === 'instructor') {
-                    const { data: instructorData, isLoading, isError, error, isSuccess } = useGetInstructor({access})
-                    if (isLoading) {
-                        set({ isLoading: true })
-                    }
-                    if (isError) {
-                        set({ isLoading: false, error: error?.message })
-                        return
-                    }
-                    if (isSuccess) {
-                        set({ profile: instructorData })
-                    }
-                } else if (group === 'tutor') {
-                    const { data: tutorData, isLoading, isError, error, isSuccess } = useGetTutor({access})
-                    if (isLoading) {
-                        set({ isLoading: true })
-                    }
-                    if (isError) {
-                        set({ isLoading: false, error: error?.message })
-                        return
-                    }
-                    if (isSuccess) {
-                        set({ profile: tutorData })
-                    }
-                }
-            }
-        }
+  getProfile: async (access: string) => {
+    if (!access) {
+      set({ isLoading: false, error: "No access token" });
+      return;
     }
-}))
 
-export default useGetProfileStore
+    set({ isLoading: true, error: null });
+
+    try {
+      // Fetch user data
+      const userData = await userService.get(access);
+      set({ user: userData });
+      
+      if (userData.groups.length > 0) {
+        const group = userData.groups[0];
+
+        let profileData: Profile = null;
+        console.log('group', group);
+        
+        if (group === "instructor") {
+          profileData = await instructorService.get(access);
+        } else if (group === "tutor") {
+          profileData = await tutorService.get(access);
+        }
+
+        if (profileData) {
+          set({ profile: profileData });
+        }
+      }
+    } catch (error: any) {
+      set({ error: error.message });
+    } finally {
+      set({ isLoading: false });
+    }
+  },
+}));
+
+export default useGetProfileStore;

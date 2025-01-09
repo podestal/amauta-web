@@ -8,4 +8,6 @@ export interface Instructor {
     last_name: string
 }
 
-export default new APIClient<Instructor>('instructor/me/')
+const instructorService = new APIClient<Instructor>('instructor/me/')
+
+export default instructorService
