@@ -1,8 +1,10 @@
 import useAuthStore from "../../hooks/store/useAuthStore";
 import { Navigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import useGetProfileStore from "../../hooks/store/useGetProfileStore";
 import useLoader from "../../hooks/ui/useLoader";
+import useGetUser from "../../hooks/auth/useGetUser";
+import useGetProfile from "../../hooks/api/profile/useGetProfile";
 
 interface Props {
   children: React.ReactElement;
@@ -10,29 +12,27 @@ interface Props {
 
 const PrivateRoutes = ({ children }: Props) => {
   
-  const access = useAuthStore((s) => s.access);
-  const { profile, getProfile, isLoading, error } = useGetProfileStore()
-  const [isChecking, setIsChecking] = useState(true)
-
-
+  const access = useAuthStore((s) => s.access) || ''
+  const {setUser, setProfile} = useGetProfileStore()
+  const {data: user, isLoading: isLoadingUser, isError: isErrorUser, error: errorUser} = useGetUser({ access });
+  const {data: profile, isLoading: isLoadingProfile, isError: isErrorProfile, error: errorProfile, isSuccess} = useGetProfile({ access, profileName: user?.groups[0] || '' });
+  
   useEffect(() => {
-    const fetchProfile = async () => {
-      if (access && !profile) {
-        await getProfile(access)
-      }
-      setIsChecking(false)
-    }
-    fetchProfile()
-  }, [access])
+    user && setUser(user)
+    profile && setProfile(profile)
+  }, [profile, user])
 
-  useLoader(isLoading || isChecking)
+  useLoader(isLoadingUser || isLoadingProfile)
 
-  if (!access || !profile) {
-    console.log('error', error);
+  if (isErrorUser || isErrorProfile) {
+    console.log('error', errorUser || errorProfile);
     return <Navigate to="/login" replace />
   }
 
-  return children
+  if (isSuccess) {
+    return children;
+  }
+
 };
 
 export default PrivateRoutes;

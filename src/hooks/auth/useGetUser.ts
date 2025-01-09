@@ -8,7 +8,8 @@ interface Props {
 const useGetUser = ({ access }: Props): UseQueryResult<User, Error> => {
     return useQuery({
         queryKey: ['user'],
-        queryFn: () => userService.get(access)
+        queryFn: () => userService.get(access),
+        enabled: !!access,
     })
 }
 

@@ -29,8 +29,6 @@ const MainPage = () => {
         />}
         {isLoading && <Loader />}
         <Outlet />
-        {console.log('profile', profile)}
-        
         {profile && access && <Navigator />}
     </div>
   )
