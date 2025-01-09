@@ -6,12 +6,14 @@ import useAuthStore from "../hooks/store/useAuthStore"
 import useLoadingStore from "../hooks/store/useLoadingStore"
 import Loader from "../components/ui/Loader"
 import { useEffect } from "react"
+import useGetProfileStore from "../hooks/store/useGetProfileStore"
 
 const MainPage = () => {
 
     const { type, message, reset, show } = useNotificationsStore()
     const isLoading = useLoadingStore(s => s.isLoading)
     const access = useAuthStore(s => s.access)
+    const profile = useGetProfileStore(s => s.profile)
 
     useEffect(() => {
       document.querySelector('html')?.classList.remove('dark')
@@ -27,7 +29,9 @@ const MainPage = () => {
         />}
         {isLoading && <Loader />}
         <Outlet />
-        {access && <Navigator />}
+        {console.log('profile', profile)}
+        
+        {profile && access && <Navigator />}
     </div>
   )
 }
