@@ -1,92 +1,72 @@
-import { useState } from "react";
-
-export interface Attendance {
-    date: string; // Format: YYYY-MM-DD
-    status: 'Present' | 'Absent' | 'Late';
-    observation?: string;
-  }
-  
-export interface MonthlyAttendance {
-    month: string; // Format: YYYY-MM (e.g., 2024-12)
-    days: Attendance[];
-}
+import { useParams } from "react-router-dom";
+import useGetAttendance from "../../../hooks/api/attendance/useGetAttendance";
+import useAuthStore from "../../../hooks/store/useAuthStore";
+import useLoader from "../../../hooks/ui/useLoader";
+import { Attendance } from "../../../services/api/attendanceService";
+import useLanguageStore from "../../../hooks/store/useLanguageStore";
+import getAttendanceLabel from "../../../utils/getAttendanceLabel";
+import moment from "moment";
 
 interface Props {
-    day: Attendance;
+    attendance: Attendance;
   }
   
-  const DayAttendance: React.FC<Props> = ({ day }) => {
+  const DayAttendance: React.FC<Props> = ({ attendance }) => {
+
+    const lan = useLanguageStore(s=>s.lan)
+    const attendanceLabel = getAttendanceLabel({ lan, attendance: attendance.status })
+    const date = moment(attendance.created_at).format('DD-MM-YYYY')
+
     return (
-      <div className="flex justify-between items-center p-4 border-b">
-        <div>
-          <span className="font-bold">{day.date}</span>
-          <span className={`ml-2 ${day.status === 'Absent' ? 'text-red-500' : day.status === 'Late' ? 'text-yellow-500' : 'text-green-500'}`}>
-            {day.status}
+      <div className="flex flex-col justify-between items-start p-4 border-b gap-4">
+        <div className="w-full flex justify-between items-center">
+          <span className="font-bold">{date}</span>
+          <span className={`ml-2 
+                ${attendance.status === 'O' && 'text-green-500'}
+                ${attendance.status === 'L' && 'text-amber-500'}
+                ${attendance.status === 'N' && 'text-red-500'}
+                ${attendance.status === 'E' && 'text-green-500'}
+                ${attendance.status === 'T' && 'text-yellow-500'}
+            `}>
+            {attendanceLabel}
           </span>
         </div>
-        {day.observation && (
-          <div className="text-gray-500 italic">
-            Observation: {day.observation}
-          </div>
-        )}
+        <div className="text-gray-400 italic text-">
+            Observation: {attendance.observations ? attendance.observations : '-'}        
+        </div>
       </div>
     );
   };
   
-  const mockData: MonthlyAttendance[] = [
-    {
-      month: '2024-12',
-      days: [
-        { date: '2024-12-01', status: 'Present' },
-        { date: '2024-12-02', status: 'Absent', observation: 'Sick' },
-        { date: '2024-12-03', status: 'Late', observation: 'Missed the bus' },
-        // More days...
-      ],
-    },
-    {
-      month: '2024-11',
-      days: [
-        { date: '2024-11-01', status: 'Present' },
-        { date: '2024-11-02', status: 'Present' },
-        { date: '2024-11-03', status: 'Absent', observation: 'Family emergency' },
-        // More days...
-      ],
-    },
-  ];
 
 const TutorDetailedAttendance = () => {
-    const [selectedMonth, setSelectedMonth] = useState<string>('2024-12');
+    const params = useParams()
+    const lan = useLanguageStore(s=>s.lan)
+    const studentId = params.studentId
+    const access = useAuthStore(s=>s.access) || ''
+    
+    const {data: attendances, isLoading, isError, error, isSuccess} = useGetAttendance({ access, studentId })
+    
+    useLoader(isLoading)
 
-    const handleMonthChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-      setSelectedMonth(event.target.value);
-    };
-  
-    const attendanceForMonth = mockData.find((month) => month.month === selectedMonth);
-  
+    if (isError) return <p>Error: {error.message}</p>
+
+    if (isSuccess) 
+
     return (
       <div className="max-w-4xl mx-auto p-8 ">
-        <h1 className="text-2xl font-bold mb-4">Student Attendance</h1>
+        <h1 className="text-2xl font-bold mb-10 text-center">
+            {lan === 'EN' ? 'Attendance' : 'Asistencia'}
+        </h1>
         <div className="mb-4">
           <label className="font-medium text-lg">Select Month:</label>
-          <select
-            className="ml-2 p-2 border rounded"
-            value={selectedMonth}
-            onChange={handleMonthChange}
-          >
-            {mockData.map((month) => (
-              <option key={month.month} value={month.month}>
-                {month.month}
-              </option>
-            ))}
-          </select>
         </div>
-        {attendanceForMonth ? (
+        {attendances ? (
           <div className="dark:bg-slate-900 shadow rounded">
-            <h2 className="text-xl font-semibold p-4 border-b">
-              Attendance for {attendanceForMonth.month}
-            </h2>
-            {attendanceForMonth.days.map((day) => (
-              <DayAttendance key={day.date} day={day} />
+            {attendances.map((attendance) => (
+              <DayAttendance 
+                key={attendance.id} 
+                attendance={attendance} />
             ))}
           </div>
         ) : (

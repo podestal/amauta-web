@@ -18,12 +18,16 @@ export type AttendanceCreateUpdate = Omit<Attendance, 'id' | 'created_at' | 'upd
 interface Props {
     attendanceId?: number
     classroomId?: string
+    studentId?: string
 }
 
-const getAttendanceService = ({ attendanceId, classroomId }: Props) => {
+const getAttendanceService = ({ attendanceId, classroomId, studentId }: Props) => {
     let url = 'atendance/'
+    console.log('studentId', studentId);
+    
     if (attendanceId) url += `${attendanceId}/`
     if (classroomId) url += `byClassroom/`
+    if (studentId) url += `byStudent/`
     return new APIClient<Attendance, AttendanceCreateUpdate>(url)
 }
 

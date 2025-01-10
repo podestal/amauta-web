@@ -16,6 +16,7 @@ const TutorStudents = () => {
     if (isSuccess) 
   return (
     <div>
+        <h2 className="text-2xl font-bold mb-10 text-center">Alumnos</h2>
         {students?.map(student => (
             <TutorStudentCard 
                 key={student.uid}

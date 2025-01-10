@@ -24,7 +24,7 @@ const TutorStudentCard = ({ student }: Props) => {
     const toggleAnnouncement = () => setShow(!show)
     
   return (
-    <div>
+    <div className="border-b py-4 border-gray-400">
         <div className="flex flex-col gap-2 mb-10">
             <div className="w-full flex justify-between items-center">
                 <h2 className="text-3xl">{student.first_name} {student.last_name}</h2>

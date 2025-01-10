@@ -4,14 +4,19 @@ import {getAttendanceCacheKey} from "../../../utils/cacheKeys"
 
 interface Props {
     access: string
-    classroomId: string
+    classroomId?: string
+    studentId?: string
 }
 
-const useGetAttendance = ({ access, classroomId }: Props): UseQueryResult<Attendance[], Error> => {
-    const ATTENDANCE_CACHE_KEY = getAttendanceCacheKey(classroomId)
-    const attendanceService = getAttendanceService({ classroomId })
-    const params = {
-        classroom: classroomId
+const useGetAttendance = ({ access, classroomId, studentId }: Props): UseQueryResult<Attendance[], Error> => {
+    const ATTENDANCE_CACHE_KEY = getAttendanceCacheKey({ classroomId, studentId })
+    const attendanceService = getAttendanceService({ classroomId, studentId })
+
+    let params = {}
+    if (classroomId) {
+        params = { classroom: classroomId }
+    } else if (studentId) {
+        params = { student: studentId }
     }
 
     return useQuery({
