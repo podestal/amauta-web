@@ -6,6 +6,8 @@ import { Attendance } from "../../../services/api/attendanceService";
 import useLanguageStore from "../../../hooks/store/useLanguageStore";
 import getAttendanceLabel from "../../../utils/getAttendanceLabel";
 import moment from "moment";
+import MonthSelector from "../../ui/MonthSelector";
+import { useState } from "react";
 
 interface Props {
     attendance: Attendance;
@@ -32,7 +34,7 @@ interface Props {
           </span>
         </div>
         <div className="text-gray-400 italic text-">
-            Observation: {attendance.observations ? attendance.observations : '-'}        
+            {lan === 'EN' ? 'Observation' : 'Observaciones'}: {attendance.observations ? attendance.observations : '-'}        
         </div>
       </div>
     );
@@ -43,6 +45,9 @@ const TutorDetailedAttendance = () => {
     const params = useParams()
     const lan = useLanguageStore(s=>s.lan)
     const studentId = params.studentId
+
+    const [selectedMonth, setSelectedMonth] = useState('0')
+
     const access = useAuthStore(s=>s.access) || ''
     
     const {data: attendances, isLoading, isError, error, isSuccess} = useGetAttendance({ access, studentId })
@@ -58,8 +63,11 @@ const TutorDetailedAttendance = () => {
         <h1 className="text-2xl font-bold mb-10 text-center">
             {lan === 'EN' ? 'Attendance' : 'Asistencia'}
         </h1>
-        <div className="mb-4">
-          <label className="font-medium text-lg">Select Month:</label>
+        <div className="w-full my-4 flex justify-between items-center">
+          <label className="font-medium text-lg">{lan === 'EN' ? 'Select Month:' : 'Selecciona un Mes'}</label>
+          <MonthSelector 
+            setSelectedMonth={setSelectedMonth}
+          />
         </div>
         {attendances ? (
           <div className="dark:bg-slate-900 shadow rounded">
