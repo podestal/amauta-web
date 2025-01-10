@@ -6,6 +6,7 @@ import getClassroomDescription from "../../../utils/getClassroomDescription";
 import Button from "../../ui/Button";
 import { RiArrowUpDoubleFill } from "@remixicon/react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
     student: Student
@@ -17,6 +18,7 @@ const TutorStudentCard = ({ student }: Props) => {
     const { grade, section, level } = student.clase && student.clase
     const classroomDescription = getClassroomDescription({lan, grade, section, level})
     const {onTime, excused, leftEarly, notAttended, late} = getAttendanceStatusCount(student.attendances)
+    const navigate = useNavigate()
 
     const [show, setShow] = useState(false)
     const toggleAnnouncement = () => setShow(!show)
@@ -69,6 +71,7 @@ const TutorStudentCard = ({ student }: Props) => {
                 </div>
                 <div className="mt-6">
                     <Button 
+                        onClick={()=>{navigate(`/attendance/${student.uid}`)}}
                         label={lan === 'EN' ? 'View Details' : 'Ver Detalles'}
                     />
                 </div>

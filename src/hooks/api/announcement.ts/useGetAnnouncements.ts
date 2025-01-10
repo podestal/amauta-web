@@ -4,21 +4,23 @@ import { getAnnouncementsCacheKey } from "../../../utils/cacheKeys"
 
 interface Props {
     access: string
-    studentId: string
+    studentId?: string
     enable: boolean
+    byStudent?: boolean
+    byTutor?: boolean
 }
 
-const useGetAnnouncements = ({ access, studentId, enable }: Props): UseQueryResult<Announcement[], Error> => {
+const useGetAnnouncements = ({ access, studentId, enable, byStudent, byTutor }: Props): UseQueryResult<Announcement[], Error> => {
 
-    const ANNOUNCEMENTS_CACHE_KEY = getAnnouncementsCacheKey(studentId)
-    const announcementService = getAnnouncementService({ byStudent: true })
+    const ANNOUNCEMENTS_CACHE_KEY = getAnnouncementsCacheKey(studentId || 'tutor')
+    const announcementService = getAnnouncementService({ byStudent, byTutor })
     const params = {
-        student: studentId
+        student: studentId || ''
     }
 
     return useQuery({
         queryKey: ANNOUNCEMENTS_CACHE_KEY,
-        queryFn: () => announcementService.get(access, params),
+        queryFn: () => studentId ? announcementService.get(access, params) : announcementService.get(access),
         enabled: enable
     })
 }
