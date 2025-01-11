@@ -3,9 +3,10 @@ import Selector from "./Selector"
 
 interface Props {
     setSelectedMonth: React.Dispatch<React.SetStateAction<string>>
+    selectedMonth: string
 }
 
-const MonthSelector = ({ setSelectedMonth }: Props) => {
+const MonthSelector = ({ setSelectedMonth, selectedMonth }: Props) => {
 
     const lan = useLanguageStore(s => s.lan)
     const months = [
@@ -27,8 +28,7 @@ const MonthSelector = ({ setSelectedMonth }: Props) => {
     <Selector 
         values={months}
         setter={setSelectedMonth}
-        defaultValue="1"
-        
+        defaultValue={selectedMonth}
     />
   )
 }

@@ -66,6 +66,7 @@ const TutorDetailedAttendance = () => {
           <label className="font-medium text-lg">{lan === 'EN' ? 'Select Month:' : 'Selecciona un Mes'}</label>
           <MonthSelector 
             setSelectedMonth={setSelectedMonth}
+            selectedMonth={selectedMonth}
           />
         </div>
         {attendances ? (
