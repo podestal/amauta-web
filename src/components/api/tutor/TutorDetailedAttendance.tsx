@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom";
 import useGetAttendance from "../../../hooks/api/attendance/useGetAttendance";
 import useAuthStore from "../../../hooks/store/useAuthStore";
-import useLoader from "../../../hooks/ui/useLoader";
 import { Attendance } from "../../../services/api/attendanceService";
 import useLanguageStore from "../../../hooks/store/useLanguageStore";
 import getAttendanceLabel from "../../../utils/getAttendanceLabel";
@@ -45,14 +44,14 @@ const TutorDetailedAttendance = () => {
     const params = useParams()
     const lan = useLanguageStore(s=>s.lan)
     const studentId = params.studentId
-
-    const [selectedMonth, setSelectedMonth] = useState('0')
+    const mcurrentMnth = new Date().getMonth() + 1
+    const [selectedMonth, setSelectedMonth] = useState(mcurrentMnth.toString())
 
     const access = useAuthStore(s=>s.access) || ''
     
-    const {data: attendances, isLoading, isError, error, isSuccess} = useGetAttendance({ access, studentId })
+    const {data: attendances, isLoading, isError, error, isSuccess} = useGetAttendance({ access, studentId, month: selectedMonth })
     
-    useLoader(isLoading)
+    if (isLoading) return <h2 className="text-2xl animate-pulse text-center my-6">{lan === 'EN' ? 'Loading ...' : 'Cargando ...'}</h2>
 
     if (isError) return <p>Error: {error.message}</p>
 

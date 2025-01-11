@@ -6,17 +6,18 @@ interface Props {
     access: string
     classroomId?: string
     studentId?: string
+    month?: string
 }
 
-const useGetAttendance = ({ access, classroomId, studentId }: Props): UseQueryResult<Attendance[], Error> => {
-    const ATTENDANCE_CACHE_KEY = getAttendanceCacheKey({ classroomId, studentId })
+const useGetAttendance = ({ access, classroomId, studentId, month }: Props): UseQueryResult<Attendance[], Error> => {
+    const ATTENDANCE_CACHE_KEY = getAttendanceCacheKey({ classroomId, studentId, month })
     const attendanceService = getAttendanceService({ classroomId, studentId })
 
     let params = {}
     if (classroomId) {
         params = { classroom: classroomId }
     } else if (studentId) {
-        params = { student: studentId }
+        params = { student: studentId, month }
     }
 
     return useQuery({

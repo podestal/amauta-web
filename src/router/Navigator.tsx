@@ -10,7 +10,7 @@ const Navigator: React.FC = () => {
   const lan = useLanguageStore(s=>s.lan)
 
   return (
-    <nav className="bg-slate-200 dark:bg-slate-800 fixed bottom-0 w-full flex justify-around py-2 shadow-md">
+    <nav className="bg-slate-200 dark:bg-slate-800 fixed bottom-0 w-full flex justify-around py-2 shadow-md z-50">
       {group === 'instructor' &&
       <>
         <NavLink
