@@ -15,7 +15,6 @@ const PrivateRoutes = ({ children }: Props) => {
   
   const access = useAuthStore((s) => s.access) || ''
   const {setUser, setProfile} = useGetProfileStore()
-  access && usePushNotifications(access)
   const {data: user, isLoading: isLoadingUser, isError: isErrorUser, error: errorUser} = useGetUser({ access });
   const {data: profile, isLoading: isLoadingProfile, isError: isErrorProfile, error: errorProfile, isSuccess} = useGetProfile({ access, profileName: user?.groups[0] || '' });
   
@@ -23,6 +22,23 @@ const PrivateRoutes = ({ children }: Props) => {
     user && setUser(user)
     profile && setProfile(profile)
   }, [profile, user])
+
+  useEffect(() => {
+    if (access) {
+      usePushNotifications(access)
+    }
+  }, [access])
+
+    useEffect(() => {
+      Notification.requestPermission().then((permission) => {
+        console.log("Notification permission:", permission);
+        if (permission === "granted") {
+          console.log("Notifications enabled.");
+        } else {
+          console.log("Notifications disabled.");
+        }
+      });
+    }, []);
 
   useLoader(isLoadingUser || isLoadingProfile)
 
