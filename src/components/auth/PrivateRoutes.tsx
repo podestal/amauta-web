@@ -31,16 +31,30 @@ const PrivateRoutes = ({ children }: Props) => {
     }
   }, [access, tokenExpired])
 
-    useEffect(() => {
-      Notification.requestPermission().then((permission) => {
-        console.log("Notification permission:", permission);
-        if (permission === "granted") {
-          console.log("Notifications enabled.");
-        } else {
-          console.log("Notifications disabled.");
-        }
-      });
-    }, []);
+  useEffect(() => {
+    if ("Notification" in window) {
+      Notification && Notification.requestPermission()
+        .then((permission) => {
+          console.log("Notification permission:", permission);
+          if (permission === "granted") {
+            console.log("Notifications enabled.");
+          } else if (permission === "denied") {
+            console.warn("User denied notifications.");
+          }
+        })
+        .catch((error) => {
+          console.error("Error requesting notification permission:", error);
+        });
+    } else {
+      console.warn("Notifications are not supported in this browser.");
+    }
+  
+    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+    if (isSafari) {
+      console.warn("Safari detected: Notifications might require the site to be added as a PWA.");
+    }
+  }, [])
+  
 
   useLoader(isLoadingUser || isLoadingProfile)
   

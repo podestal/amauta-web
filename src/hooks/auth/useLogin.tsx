@@ -13,14 +13,14 @@ interface DecodedToken {
   }
 
 const useLogin = (): UseMutationResult<JWT, Error, LoginData> => {
-    const {setTokens, setUserId} = useAuthStore() 
+    const {setTokens, setUserId, clearTokens} = useAuthStore() 
 
     return useMutation({
 
         mutationFn: (data: LoginData) => loginService.post(data.credentials), 
         onSuccess: (jwtData: JWT) => {
             const decoded = jwtDecode<DecodedToken>(jwtData.access)
-            
+            clearTokens()
             setTokens(jwtData.access, jwtData.refresh)
             setUserId(decoded.user_id)
         },

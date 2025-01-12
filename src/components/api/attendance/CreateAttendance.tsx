@@ -20,7 +20,7 @@ const CreateAttendance = ({ studentId, classroomId }: Props) => {
     <div className="w-full text-center">
         <p 
             onClick={() => setOpen(true)}
-            className={`w-full py-2 px-4 text-center font-bold rounded-2xl text-xs bg-slate-700`}>
+            className={`w-full py-2 px-4 text-center font-bold rounded-2xl text-xs bg-slate-400 dark:bg-slate-700`}>
                 {lan === 'EN' ? 'Register' : 'Registrar'}
         </p>
     </div>

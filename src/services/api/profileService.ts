@@ -9,7 +9,7 @@ interface Props {
 }
 
 const getProfileService = ({ profileName }: Props) => {
-    const url = `${profileName}/me`
+    const url = `${profileName}/me/`
     return new APIClient<Profile>(url)
 }
 
