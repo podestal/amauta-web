@@ -5,8 +5,8 @@ import useGetProfileStore from "../../hooks/store/useGetProfileStore";
 import useLoader from "../../hooks/ui/useLoader";
 import useGetUser from "../../hooks/auth/useGetUser";
 import useGetProfile from "../../hooks/api/profile/useGetProfile";
-import usePushNotifications from "../../hooks/notifications/usePushNotifications";
 import isTokenExpired from "../../utils/isTokenExpired";
+import useRegisterDeviceToken from "../../hooks/notifications/useRegisterDeviceToken";
 
 interface Props {
   children: React.ReactElement;
@@ -27,7 +27,7 @@ const PrivateRoutes = ({ children }: Props) => {
 
   useEffect(() => {
     if (access && !tokenExpired) {
-      usePushNotifications(access)
+      useRegisterDeviceToken(access)
     }
   }, [access, tokenExpired])
 
