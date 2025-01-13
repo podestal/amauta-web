@@ -6,7 +6,9 @@ import useLoader from "../../hooks/ui/useLoader";
 import useGetUser from "../../hooks/auth/useGetUser";
 import useGetProfile from "../../hooks/api/profile/useGetProfile";
 import isTokenExpired from "../../utils/isTokenExpired";
-import useRegisterDeviceToken from "../../hooks/notifications/useRegisterDeviceToken";
+import useFirebaseMessaging from "../../hooks/notifications/useFirebaseMessaging";
+import axios from "axios";
+import { getDeviceType } from "../../utils/getDeviceType";
 
 interface Props {
   children: React.ReactElement;
@@ -17,6 +19,7 @@ const PrivateRoutes = ({ children }: Props) => {
   const access = useAuthStore((s) => s.access) || ''
   const tokenExpired = isTokenExpired(access)
   const {setUser, setProfile} = useGetProfileStore()
+  const deviceToken = useFirebaseMessaging()
   const {data: user, isLoading: isLoadingUser, isError: isErrorUser, error: errorUser} = useGetUser({ access });
   const {data: profile, isLoading: isLoadingProfile, isError: isErrorProfile, error: errorProfile, isSuccess} = useGetProfile({ access, profileName: user?.groups[0] || '' });
   
@@ -26,10 +29,32 @@ const PrivateRoutes = ({ children }: Props) => {
   }, [profile, user])
 
   useEffect(() => {
-    if (access && !tokenExpired) {
-      useRegisterDeviceToken(access)
+    if (access && !tokenExpired && deviceToken) {
+      console.log('deviceToken', deviceToken);
+      const deviceType = getDeviceType()
+      const registerDevice = async () => {
+        try {
+          await axios.post(
+            import.meta.env.VITE_FCM_URL,
+            {
+              device_token: deviceToken,
+              device_type: deviceType,
+            },
+            {
+              headers: {
+                Authorization: `JWT ${access}`, // Adjust authentication mechanism
+              },
+            }
+          );
+          console.log("Device token registered successfully!");
+        } catch (error) {
+          console.error("Error registering device token:", error);
+        }
+      };
+
+      registerDevice();
     }
-  }, [access, tokenExpired])
+  }, [access, tokenExpired, deviceToken])
 
   useEffect(() => {
     if ("Notification" in window) {

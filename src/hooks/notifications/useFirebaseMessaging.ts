@@ -8,7 +8,7 @@ const useFirebaseMessaging = () => {
   useEffect(() => {
     const fetchDeviceToken = async () => {
       try {
-        const token = await getToken(messaging, { vapidKey: "YOUR_PUBLIC_VAPID_KEY" });
+        const token = await getToken(messaging, { vapidKey: 'BDAN00wTLH-XVyTRWt3CHay7yro3uQkM20cOqGbdDuiHmbnEybWUibZzJKoMYIhmq6r0XPGuhvGymVPkgUMezT0'});
         if (token) {
           setDeviceToken(token);
           console.log("Device token:", token);

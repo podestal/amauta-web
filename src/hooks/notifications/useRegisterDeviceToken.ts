@@ -1,10 +1,13 @@
 import { useEffect } from "react";
-import useFirebaseMessaging from "./useFirebaseMessaging";
 import { getDeviceType } from "../../utils/getDeviceType";
 import axios from "axios";
 
-const useRegisterDeviceToken = (access: string) => {
-  const deviceToken = useFirebaseMessaging();
+interface Props {
+    deviceToken: string;
+    access: string;
+}
+
+const useRegisterDeviceToken = ({ deviceToken, access }: Props) => {
   const deviceType = getDeviceType();
 
   useEffect(() => {
