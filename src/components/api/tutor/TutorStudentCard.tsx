@@ -7,6 +7,7 @@ import Button from "../../ui/Button";
 import { RiArrowUpDoubleFill } from "@remixicon/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import AttendanceSummaryChart from "../../ui/AttendanceSummaryChart";
 
 interface Props {
     student: Student
@@ -48,27 +49,18 @@ const TutorStudentCard = ({ student }: Props) => {
             }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
         >
-            <div className="mb-6 w-[70%] flex flex-col gap-4 mx-auto">
-                <div className="flex justify-between">
-                    <p>{lan === 'EN' ? 'On Time' : 'Temprano'}</p>
-                    <p className="font-bold text-green-500">{onTime}</p>
-                </div>
-                <div className="flex justify-between ">
-                    <p>{lan === 'EN' ? 'Left Early' : 'Salió Temprano'}</p>
-                    <p className="font-bold text-yellow-500">{leftEarly}</p>
-                </div>
-                <div className="flex justify-between ">
-                    <p>{lan === 'EN' ? 'Not Attended' : 'Falta'}</p>
-                    <p className="font-bold text-red-500">{notAttended}</p>
-                </div>
-                <div className="flex justify-between ">
-                    <p>{lan === 'EN' ? 'Late' : 'Tardanza'}</p>
-                    <p className="font-bold text-amber-500">{late}</p>
-                </div>
-                <div className="flex justify-between ">
-                    <p>{lan === 'EN' ? 'Excused' : 'Excusado'}</p>
-                    <p className="font-bold text-green-500">{excused}</p>
-                </div>
+            <div className="mb-6 w-[90%] flex flex-col gap-4 mx-auto">
+                <AttendanceSummaryChart 
+                    onTime={onTime}
+                    leftEarly={leftEarly}
+                    notAttended={notAttended}
+                    late={late}
+                    excused={excused}
+                    lan={lan}
+                    show={show}
+                    student={student}
+                    navigate={navigate}
+                />
                 <div className="mt-6">
                     <Button 
                         onClick={()=>{navigate(`/attendance/${student.uid}`)}}
