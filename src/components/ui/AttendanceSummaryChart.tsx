@@ -88,23 +88,25 @@ const AttendanceSummaryChart: React.FC<AttendanceProps> = ({
       <motion.div
         initial="hidden"
         animate="visible"
-        transition={{ staggerChildren: 0.1 }} // Stagger animation for each item
+        transition={{ staggerChildren: 0.1 }} 
         className="space-y-2"
         >
             {[
-                { color: "bg-green-500", label: lan === "EN" ? "On Time" : "Temprano" },
-                { color: "bg-yellow-500", label: lan === "EN" ? "Left Early" : "Salió Temprano" },
-                { color: "bg-red-500", label: lan === "EN" ? "Not Attended" : "Falta" },
-                { color: "bg-amber-500", label: lan === "EN" ? "Late" : "Tardanza" },
-                { color: "bg-green-800", label: lan === "EN" ? "Excused" : "Excusado" },
+                { color: "bg-green-500", label: lan === "EN" ? "On Time" : "Temprano", count: onTime },
+                { color: "bg-yellow-500", label: lan === "EN" ? "Left Early" : "Salió Temprano", count: leftEarly },
+                { color: "bg-red-500", label: lan === "EN" ? "Not Attended" : "Falta", count: notAttended },
+                { color: "bg-amber-500", label: lan === "EN" ? "Late" : "Tardanza", count: late },
+                { color: "bg-green-800", label: lan === "EN" ? "Excused" : "Excusado", count: excused },
             ].map((item, index) => (
                 <motion.div
-                key={index}
-                className="flex items-center gap-2 w-full"
-                variants={itemVariants} // Apply animation to each item
-                >
-                <div className={`${item.color} w-[10px] h-[10px] rounded-full`} />
-                <span className="ml-2 text-xs">{item.label}</span>
+                    key={index}
+                    className="flex items-center gap-2 w-full"
+                    variants={itemVariants} 
+                    >
+                    <div className={`${item.color} w-[20px] h-[20px] rounded-full flex items-center justify-center`}>
+                        <p className="text-xs font-bold text-slate-100">{item.count}</p>
+                    </div>
+                    <span className="ml-2 text-xs">{item.label}</span>
                 </motion.div>
             ))}
         </motion.div>
