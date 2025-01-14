@@ -14,9 +14,12 @@ const AnnouncementCard = ({ announcement }: Props) => {
     const toggleAnnouncement = () => setShow(!show)
     const createdAt = moment(announcement.created_at).format('DD-MM-YYYY')
 
+    console.log('announcement', announcement)
+    
+
     const itemVariants = {
-        hidden: { opacity: 0, x: 50 }, // Starts off-screen to the right
-        visible: { opacity: 1, x: 0 }, // Slides into place
+        hidden: { opacity: 0, x: 50 }, 
+        visible: { opacity: 1, x: 0 }, 
       };
 
   return (
@@ -28,7 +31,7 @@ const AnnouncementCard = ({ announcement }: Props) => {
             <motion.div
                 className="cursor-pointer dark:hover:text-neutral-400 hover:text-slate-800 "
                 onClick={toggleAnnouncement}
-                animate={{ rotate: show ? 180 : 0 }} // Smooth rotation
+                animate={{ rotate: show ? 180 : 0 }} 
                 transition={{ duration: 0.3 }}
             >
                 <RiArrowUpDoubleFill />

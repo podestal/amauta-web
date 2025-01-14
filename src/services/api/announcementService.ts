@@ -5,10 +5,13 @@ export interface Announcement {
     title: string
     description: string
     created_at: string
+    created_by: string
     student: string
 }
 
-export type AnnouncementCreateUpdate = Omit<Announcement, 'id' | 'created_at'>
+export type AnnouncementCreateUpdate = Omit<Announcement, 'id' | 'created_at' | 'created_by'> & {
+    created_by?: string
+}
 
 interface Props {
     byStudent?: boolean

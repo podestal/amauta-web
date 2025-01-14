@@ -1,6 +1,6 @@
 import Logout from "../components/auth/Logout"
 import Avatar from "../components/ui/Avatar"
-import Button from "../components/ui/Button"
+// import Button from "../components/ui/Button"
 import useGetProfileStore from "../hooks/store/useGetProfileStore"
 
 const ProfilePage = () => {

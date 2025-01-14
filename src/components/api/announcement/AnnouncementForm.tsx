@@ -10,6 +10,7 @@ import { Student } from "../../../services/api/studentsService"
 import Button from "../../ui/Button"
 import useNotificationsStore from "../../../hooks/store/useNotificationsStore"
 import { motion } from "framer-motion"
+import useGetProfileStore from "../../../hooks/store/useGetProfileStore"
 
 interface Props {
     CreateAnnouncement: UseMutationResult<Announcement, Error, CreateAnnouncementData>
@@ -21,6 +22,7 @@ const AnnouncementForm = ({ CreateAnnouncement, student }: Props) => {
     const lan = useLanguageStore(s => s.lan)
     const access = useAuthStore(s => s.access) || ''
     const { setType, setShow, setMessage } = useNotificationsStore()
+    const profile = useGetProfileStore(s => s.profile)
 
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
@@ -51,7 +53,8 @@ const AnnouncementForm = ({ CreateAnnouncement, student }: Props) => {
                 announcement: {
                     title,
                     description,
-                    student: student.uid
+                    student: student.uid,
+                    created_by: profile?.first_name + ' ' + profile?.last_name
                 }
             },
             {
