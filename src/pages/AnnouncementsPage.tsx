@@ -1,3 +1,4 @@
+import { motion } from "framer-motion"
 import AnnouncementCard from "../components/api/announcement/AnnouncementCard"
 import useGetAnnouncements from "../hooks/api/announcement.ts/useGetAnnouncements"
 import useAuthStore from "../hooks/store/useAuthStore"
@@ -23,14 +24,23 @@ const AnnouncementsPage = () => {
         ? 
         <h2 className="text-3xl text-center font-bold">{lan === 'EN' ? 'No Announcements' : 'Sin Mensajes'}</h2> 
         : 
-        <div>
+        <div
+        
+        >
           <h2 className="text-2xl text-center font-bold mb-10">Anuncios</h2>
-          {announcements.map(announcement => (
-            <AnnouncementCard 
-              key={announcement.id} 
-              announcement={announcement} 
-            />
-          ))}
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            transition={{ staggerChildren: 0.1 }}
+          >
+            {announcements.map(announcement => (
+              <AnnouncementCard 
+                key={announcement.id} 
+                announcement={announcement} 
+              />
+            ))}
+          </motion.div>
+
         </div>
         }
     </div>

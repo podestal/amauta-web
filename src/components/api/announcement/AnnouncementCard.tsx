@@ -14,8 +14,15 @@ const AnnouncementCard = ({ announcement }: Props) => {
     const toggleAnnouncement = () => setShow(!show)
     const createdAt = moment(announcement.created_at).format('DD-MM-YYYY')
 
+    const itemVariants = {
+        hidden: { opacity: 0, x: 50 }, // Starts off-screen to the right
+        visible: { opacity: 1, x: 0 }, // Slides into place
+      };
+
   return (
-    <div className="w-full flex flex-col gap-2">
+    <motion.div 
+        variants={itemVariants}
+        className="w-full flex flex-col gap-2">
         <div className="w-full flex justify-between items-center">
             <h3 className="text-xl">{announcement.title}</h3>
             <motion.div
@@ -38,7 +45,7 @@ const AnnouncementCard = ({ announcement }: Props) => {
             <p className="text-xs">{announcement.description}</p>
             <p className="text-xs mt-2 text-right dark:text-slate-300">{createdAt}</p>
         </motion.div>
-    </div>
+    </motion.div>
   )
 }
 

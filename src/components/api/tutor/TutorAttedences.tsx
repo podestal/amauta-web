@@ -16,8 +16,8 @@ const TutorAttedences = ({ studentId, selectedMonth }: Props) => {
     const lan = useLanguageStore(s=>s.lan)
 
     const itemVariants = {
-        hidden: { opacity: 0, x: 50 }, // Starts off-screen to the right
-        visible: { opacity: 1, x: 0 }, // Slides into place
+        hidden: { opacity: 0, x: 50 }, 
+        visible: { opacity: 1, x: 0 }, 
       };
     
     const {data: attendances, isLoading, isError, error, isSuccess} = useGetAttendance({ access, studentId, month: selectedMonth })
@@ -29,7 +29,7 @@ const TutorAttedences = ({ studentId, selectedMonth }: Props) => {
     if (isSuccess) 
 
   return (
-    <>
+    <div className="w-full overflow-y-scroll">
         {attendances.length > 0 ? (
           <motion.div 
             initial="hidden"
@@ -53,7 +53,7 @@ const TutorAttedences = ({ studentId, selectedMonth }: Props) => {
             </p>
           </motion.div>
         )}
-    </>
+    </div>
   )
 }
 
