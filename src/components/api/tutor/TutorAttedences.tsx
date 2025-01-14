@@ -29,31 +29,34 @@ const TutorAttedences = ({ studentId, selectedMonth }: Props) => {
     if (isSuccess) 
 
   return (
-    <div className="w-full overflow-y-scroll">
-        {attendances.length > 0 ? (
-          <motion.div 
-            initial="hidden"
-            animate="visible"
-            transition={{ staggerChildren: 0.1 }}
-            className="dark:bg-slate-900 shadow rounded">
-            {attendances.map((attendance) => (
-              <DayAttendance 
-                key={attendance.id} 
-                attendance={attendance} />
-            ))}
-          </motion.div>
-        ) : (
-          <motion.div 
-            variants={itemVariants}
-            initial="hidden"
-            animate="visible"
-            className="text-center my-10">
-            <p>
-                {lan === 'EN' ? 'No attendance records for this month.' : 'No hay registros de asistencia para este mes.'}
-            </p>
-          </motion.div>
-        )}
-    </div>
+    <>
+      {attendances.length > 0 ? (
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          transition={{ staggerChildren: 0.1 }}
+          className="dark:bg-slate-900 shadow rounded overflow-y-scroll mb-10 h-[700px] max-h-[80vh]"
+        >
+          {attendances.map((attendance) => (
+            <DayAttendance key={attendance.id} attendance={attendance} />
+          ))}
+        </motion.div>
+      ) : (
+        <motion.div
+          variants={itemVariants}
+          initial="hidden"
+          animate="visible"
+          className="text-center my-10"
+        >
+          <p>
+            {lan === 'EN'
+              ? 'No attendance records for this month.'
+              : 'No hay registros de asistencia para este mes.'}
+          </p>
+        </motion.div>
+      )}
+    </>
+
   )
 }
 

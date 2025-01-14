@@ -4,6 +4,7 @@ import useAuthStore from "../../../hooks/store/useAuthStore"
 import StudentCard from "./StudentCard"
 import StudentFilter from "./StudentFilter"
 import useLoader from "../../../hooks/ui/useLoader"
+import { motion } from "framer-motion"
 
 interface Props {
     classroom?: string
@@ -29,15 +30,21 @@ const Students = ({ classroom }: Props) => {
             filter={filter}
             setFilter={setFilter}
         />
-        {students
-            .filter( student => `${student.first_name.toLowerCase()}${student.last_name.toLowerCase()}`.includes(filter.toLowerCase()))
-            .map( student => (
-            <StudentCard 
-                key={student.uid}
-                student={student}
-                classroomId={classroomId}
-            />
-        ))}
+        <motion.div
+            initial="hidden"
+            animate="visible"
+            transition={{ staggerChildren: 0.1 }}
+        >
+            {students
+                .filter( student => `${student.first_name.toLowerCase()}${student.last_name.toLowerCase()}`.includes(filter.toLowerCase()))
+                .map( student => (
+                <StudentCard 
+                    key={student.uid}
+                    student={student}
+                    classroomId={classroomId}
+                />
+            ))}
+        </motion.div>
     </div>
   )
 }

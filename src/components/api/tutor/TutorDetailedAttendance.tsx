@@ -20,8 +20,8 @@ const TutorDetailedAttendance = () => {
         <h1 className="text-2xl font-bold mb-10 text-center">
             {lan === 'EN' ? 'Attendance' : 'Asistencia'}
         </h1>
-        <div className="w-full my-4 flex justify-between items-center">
-          <label className="font-medium text-lg">{lan === 'EN' ? 'Select Month:' : 'Selecciona un Mes'}</label>
+        <div className="w-full my-4 flex justify-center items-center mx-auto">
+          <label className="text-md">{lan === 'EN' ? 'Month:' : 'Mes'}</label>
           <MonthSelector 
             setSelectedMonth={setSelectedMonth}
             selectedMonth={selectedMonth}
