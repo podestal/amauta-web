@@ -29,13 +29,13 @@ const TutorAttedences = ({ studentId, selectedMonth }: Props) => {
     if (isSuccess) 
 
   return (
-    <div className="w-full mb-20">
+    <>
       {attendances.length > 0 ? (
         <motion.div
           initial="hidden"
           animate="visible"
           transition={{ staggerChildren: 0.1 }}
-          className="dark:bg-slate-900 shadow rounded overflow-y-scroll mb-10 h-[700px]"
+          className="dark:bg-slate-900 shadow rounded overflow-y-scroll max-h-screen"
         >
           {attendances.map((attendance) => (
             <DayAttendance key={attendance.id} attendance={attendance} />
@@ -55,7 +55,7 @@ const TutorAttedences = ({ studentId, selectedMonth }: Props) => {
           </p>
         </motion.div>
       )}
-    </div>
+    </>
 
   )
 }

@@ -28,9 +28,7 @@ const MainPage = () => {
             reset={reset}
         />}
         {isLoading && <Loader />}
-        <div className="min-h-screen">
-          <Outlet />
-        </div>
+        <Outlet />
         {profile && access && <Navigator />}
     </div>
   )

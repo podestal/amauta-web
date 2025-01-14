@@ -16,7 +16,7 @@ const TutorDetailedAttendance = () => {
     return (
       <motion.div 
         
-        className="max-w-4xl mx-auto p-8 ">
+        className="max-w-4xl mx-auto px-4 h-screen overflow-y-scroll">
         <h1 className="text-2xl font-bold mb-10 text-center">
             {lan === 'EN' ? 'Attendance' : 'Asistencia'}
         </h1>
@@ -27,10 +27,12 @@ const TutorDetailedAttendance = () => {
             selectedMonth={selectedMonth}
           />
         </div>
-        <TutorAttedences 
-          studentId={studentId}
-          selectedMonth={selectedMonth}
-        />
+        <div className="pb-[200px]"> 
+          <TutorAttedences 
+            studentId={studentId}
+            selectedMonth={selectedMonth}
+          />
+        </div>
       </motion.div>
     );
 }
