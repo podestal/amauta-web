@@ -23,7 +23,6 @@ interface Props {
 
 const getAttendanceService = ({ attendanceId, classroomId, studentId }: Props) => {
     let url = 'atendance/'
-    console.log('studentId', studentId);
     
     if (attendanceId) url += `${attendanceId}/`
     if (classroomId) url += `byClassroom/`

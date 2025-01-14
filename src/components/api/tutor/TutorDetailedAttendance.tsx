@@ -21,7 +21,7 @@ const TutorDetailedAttendance = () => {
             {lan === 'EN' ? 'Attendance' : 'Asistencia'}
         </h1>
         <div className="w-full my-4 flex justify-center items-center mx-auto">
-          <label className="text-md">{lan === 'EN' ? 'Month:' : 'Mes'}</label>
+          {/* <label className="text-md">{lan === 'EN' ? 'Month:' : 'Mes'}</label> */}
           <MonthSelector 
             setSelectedMonth={setSelectedMonth}
             selectedMonth={selectedMonth}

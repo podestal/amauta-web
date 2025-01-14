@@ -6,7 +6,7 @@ import { Attendance } from "../../../services/api/attendanceService";
 import useLoader from "../../../hooks/ui/useLoader";
 
 interface Props {
-    onScanSuccess: (decodedText: string) => void
+    onScanSuccess: (decodedText: string, stopScanner: any, resumeScanner: any) => void
     selectedStatus: string
     classroomId: string
     setAttendances: React.Dispatch<React.SetStateAction<Attendance[] | undefined>>
@@ -16,6 +16,8 @@ interface Props {
 const AttendanceScanner = ({ onScanSuccess, selectedStatus, classroomId, setAttendances, errorMessage }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
+    console.log('classroomId', classroomId);
+    
     const { data: attendances, isLoading, isError, error, isSuccess } = useGetAttendance({ access, classroomId })
 
     useEffect(() => {

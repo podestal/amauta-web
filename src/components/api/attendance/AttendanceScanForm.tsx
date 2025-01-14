@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Selector from "../../ui/Selector"
 import useLanguageStore from "../../../hooks/store/useLanguageStore";
 import { getAttendanceStatus, getInstructorClassrooms } from "../../../utils/data";
@@ -19,10 +19,12 @@ const AttendanceScanForm = ({ createAttendance }: Props) => {
     
     const profile = useGetProfileStore(s => s.profile)
     const instructor = profile as Instructor
+    // const classroomId = instructor?.clases_details.length === 1 ? instructor?.clases_details[0].split('-').pop() : '0'
     const [selectedStatus, setSelectedStatus] = useState('0');
-    const [selectedClassroom, setSelectedClassroom] = useState('0')
+    
     const [successMsg, setSuccessMsg] = useState('');
     const [attendances, setAttendances] = useState<Attendance[]>()
+    const [selectedClassroom, setSelectedClassroom] = useState('0');
     const [isLoading, setIsLoading] = useState(false);
     const lan = useLanguageStore(s => s.lan);
     const attendanceStatus = getAttendanceStatus(lan);
@@ -36,20 +38,29 @@ const AttendanceScanForm = ({ createAttendance }: Props) => {
     const access = useAuthStore(s => s.access) || '';
 
     const [alreadyScannedError, setAlreadyScannedError] = useState('');
-
     const showScanner = classrooms.length === 2 || selectedClassroom !== '0'
 
-    const handleSuccess = (decodedText: string) => {
+
+    useEffect(() => {
+      if (instructor && instructor?.clases_details.length === 1) {
+        const classroomId = instructor?.clases_details[0].split('-').pop()
+        classroomId && setSelectedClassroom(classroomId)
+      }
+    }, [instructor, selectedClassroom, setSelectedClassroom])
+
+    const handleSuccess = (decodedText: string, stopScanner: any, resumeScanner: any) => {
       const [studentUid, studentName] = decodedText.split('-')
-
+      stopScanner()
       setAlreadyScannedError('')
+        
         const alreadyScanned = attendances && isAttendanceCreated(attendances, studentUid)
-
+        
         if (alreadyScanned) {
           setAlreadyScannedError(lan === 'EN' ? 'Student already scanned' : 'Estudiante ya fué escaneado')
           setTimeout(() => {
             setAlreadyScannedError('')
-          }, 2000)
+            resumeScanner()
+          }, 1000)
           return
         }
 
@@ -69,9 +80,16 @@ const AttendanceScanForm = ({ createAttendance }: Props) => {
             setSuccessMsg(lan ==='EN' ? `Attendance created for ${studentName}` : `Asistencia creada para ${studentName}`)
             setTimeout(() => {
               setSuccessMsg('')
-            }, 2000)
+            }, 1000)
+            
           },
-          onSettled: () => setIsLoading(false),
+          onSettled: () => {
+            setIsLoading(false)
+            setTimeout(() => {
+              resumeScanner()
+            }, 1000)
+          },
+
         });
       };
 
