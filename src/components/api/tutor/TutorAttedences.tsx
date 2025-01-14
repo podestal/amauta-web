@@ -35,7 +35,7 @@ const TutorAttedences = ({ studentId, selectedMonth }: Props) => {
           initial="hidden"
           animate="visible"
           transition={{ staggerChildren: 0.1 }}
-          className="dark:bg-slate-900 shadow rounded overflow-y-scroll max-h-screen"
+          className="dark:bg-slate-900 shadow rounded overflow-y-scroll h-[600px]"
         >
           {attendances.map((attendance) => (
             <DayAttendance key={attendance.id} attendance={attendance} />
