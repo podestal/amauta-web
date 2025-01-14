@@ -21,6 +21,7 @@ const AttendanceScanForm = ({ createAttendance }: Props) => {
     const instructor = profile as Instructor
     const [selectedStatus, setSelectedStatus] = useState('0');
     const [selectedClassroom, setSelectedClassroom] = useState('0')
+    const [successMsg, setSuccessMsg] = useState('');
     const [attendances, setAttendances] = useState<Attendance[]>()
     const [isLoading, setIsLoading] = useState(false);
     const lan = useLanguageStore(s => s.lan);
@@ -37,14 +38,12 @@ const AttendanceScanForm = ({ createAttendance }: Props) => {
     const [alreadyScannedError, setAlreadyScannedError] = useState('');
 
     const showScanner = classrooms.length === 2 || selectedClassroom !== '0'
-    
-    console.log('classrooms', classrooms);
-    
 
     const handleSuccess = (decodedText: string) => {
+      const [studentUid, studentName] = decodedText.split('-')
 
       setAlreadyScannedError('')
-        const alreadyScanned = attendances && isAttendanceCreated(attendances, decodedText)
+        const alreadyScanned = attendances && isAttendanceCreated(attendances, studentUid)
 
         if (alreadyScanned) {
           setAlreadyScannedError(lan === 'EN' ? 'Student already scanned' : 'Estudiante ya fué escaneado')
@@ -60,12 +59,18 @@ const AttendanceScanForm = ({ createAttendance }: Props) => {
         createAttendance.mutate({
           attendance: {
             status: selectedStatus,
-            student: decodedText,
+            student: studentUid,
             created_by: `${instructor?.first_name} ${instructor?.last_name}`,
             attendance_type: 'A',
           },
           access,
         }, {
+          onSuccess: () => {
+            setSuccessMsg(lan ==='EN' ? `Attendance created for ${studentName}` : `Asistencia creada para ${studentName}`)
+            setTimeout(() => {
+              setSuccessMsg('')
+            }, 2000)
+          },
           onSettled: () => setIsLoading(false),
         });
       };
@@ -99,6 +104,11 @@ const AttendanceScanForm = ({ createAttendance }: Props) => {
         {isLoading && (
             <div className="text-blue-600 font-semibold mt-4">
             {lan === 'EN' ? 'Creating Attendance...' : 'Creando Asistencia...'}
+            </div>
+        )}
+        {successMsg && (
+            <div className="text-green-600 font-semibold mt-4">
+            {successMsg}
             </div>
         )}
     </div>

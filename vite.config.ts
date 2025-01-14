@@ -14,7 +14,7 @@ export default defineConfig({
         description: "Amauta Web Application",
         icons: [
           {
-            src: "/icons/amautapp.png",
+            src: "/icons/amautapp-logo.svg",
             sizes: "512x512",
             type: "image/png",
             purpose: "any maskable",

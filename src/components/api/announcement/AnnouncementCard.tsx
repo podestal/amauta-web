@@ -27,7 +27,7 @@ const AnnouncementCard = ({ announcement }: Props) => {
         variants={itemVariants}
         className="w-full flex flex-col gap-2">
         <div className="w-full flex justify-between items-center">
-            <h3 className="text-xl">{announcement.title}</h3>
+            <h3 className="text-xl">{announcement.created_by}</h3>
             <motion.div
                 className="cursor-pointer dark:hover:text-neutral-400 hover:text-slate-800 "
                 onClick={toggleAnnouncement}
