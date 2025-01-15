@@ -16,6 +16,7 @@ interface Props {
 }
 
 const AttendanceScanForm = ({ createAttendance }: Props) => {
+
   const profile = useGetProfileStore((s) => s.profile);
   const instructor = profile as Instructor;
   const [selectedStatus, setSelectedStatus] = useState("0");
@@ -92,6 +93,9 @@ const AttendanceScanForm = ({ createAttendance }: Props) => {
 
   return (
     <div className="w-full">
+      <div className="w-full flex justify-center">
+        {successMsg && <div className="text-green-600 font-semibold mb-4 absolute top-10 text-center">{successMsg}</div>}
+      </div>
       <Selector
         values={attendanceStatus}
         setter={setSelectedStatus}

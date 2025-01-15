@@ -15,7 +15,6 @@ const QRScanner: React.FC<QRScannerProps> = ({ onScanSuccess, onScanFailure, sel
   const html5QrcodeRef = useRef<Html5Qrcode | null>(null);
   const [isScannerActive, setIsScannerActive] = useState(false);
   const [isLocked, setIsLocked] = useState(false);
-  const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
   const lan = useLanguageStore((s) => s.lan);
 
   const stopScanner = async () => {
@@ -80,19 +79,17 @@ const QRScanner: React.FC<QRScannerProps> = ({ onScanSuccess, onScanFailure, sel
         async (decodedText) => {
           if (isLocked) return;
           setIsLocked(true);
-          setFeedbackMessage(lan === 'EN' ? 'QR Code Scanned Successfully!' : '¡Código QR escaneado con éxito!');
-
           try {
             await onScanSuccess(decodedText, pauseScanner, resumeScanner);
           } catch (error) {
             console.error('Error during QR code processing:', error);
           } finally {
-            setFeedbackMessage(null);
             setIsLocked(false);
           }
         },
         (errorMessage) => {
-          if (onScanFailure && !isLocked) onScanFailure(errorMessage);
+          if (onScanFailure && !isLocked) {
+            onScanFailure(errorMessage)};
         }
       )
       .catch((error) => console.error('Failed to start QR scanner:', error));
@@ -108,26 +105,28 @@ const QRScanner: React.FC<QRScannerProps> = ({ onScanSuccess, onScanFailure, sel
   };
 
   return (
-    <div className="flex flex-col items-center my-8 relative">
-      {errorMessage && <div className="text-red-600 font-semibold mb-4 absolute top-10">{errorMessage}</div>}
-      {feedbackMessage && <div className="text-green-600 font-semibold mb-4 absolute top-10">{feedbackMessage}</div>}
-      <>
-      <div id="qr-reader" ref={scannerRef} className="rounded-lg shadow-md h-[220px] w-[220px] mb-12"></div>
-      <Button
-        onClick={toggleScanner}
-        disable={!selectedStatus || selectedStatus === '0'}
-        label={
-          isScannerActive
-            ? lan === 'EN'
-              ? 'Stop Scanner'
-              : 'Apagar Scanner'
-            : lan === 'EN'
-            ? 'Start Scanner'
-            : 'Encender Scanner'
-        }
-      />
-      </>
-      
+    <div className='w-full'>
+      <div className='w-full flex justify-center items-center'>
+        {errorMessage && <div className="text-red-600 font-semibold mb-4 absolute top-10 text-center">{errorMessage}</div>}
+      </div>
+      <div className="flex flex-col items-center my-8 relative">
+        <>
+        <div id="qr-reader" ref={scannerRef} className="rounded-lg shadow-md h-[220px] w-[220px] mb-12"></div>
+        <Button
+          onClick={toggleScanner}
+          disable={!selectedStatus || selectedStatus === '0'}
+          label={
+            isScannerActive
+              ? lan === 'EN'
+                ? 'Stop Scanner'
+                : 'Apagar Scanner'
+              : lan === 'EN'
+              ? 'Start Scanner'
+              : 'Encender Scanner'
+          }
+        />
+        </>
+      </div>
     </div>
   );
 };

@@ -26,13 +26,14 @@ interface Props {
 }
 
 const NotificationCard = ({ type, message, reset }: Props) => {
+
   const [animateOut, setAnimateOut] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setAnimateOut(true);
       setTimeout(() => reset(), 500);
-    }, 3000);
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, [reset]);
