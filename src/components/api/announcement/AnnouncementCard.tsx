@@ -26,10 +26,13 @@ const AnnouncementCard = ({ announcement }: Props) => {
     <motion.div 
         variants={itemVariants}
         className="w-full flex flex-col gap-2">
-        <div className="w-full flex justify-between items-center">
-            <h3 className="text-xl">{announcement.created_by}</h3>
+        <div className="w-full flex justify-between items-start">
+            <div className="flex flex-col gap-1">
+                <h3 className="text-xl">De: {announcement.created_by}</h3>
+                <h3 className="text-xl">Asunto: {announcement.title}</h3>
+            </div>
             <motion.div
-                className="cursor-pointer dark:hover:text-neutral-400 hover:text-slate-800 "
+                className="cursor-pointer dark:hover:text-neutral-400 hover:text-slate-800"
                 onClick={toggleAnnouncement}
                 animate={{ rotate: show ? 180 : 0 }} 
                 transition={{ duration: 0.3 }}
