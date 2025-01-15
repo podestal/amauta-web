@@ -23,6 +23,23 @@ const QRScanner: React.FC<QRScannerProps> = ({ onScanSuccess, onScanFailure, sel
       const state = html5QrcodeRef.current.getState();
       if (state === Html5QrcodeScannerState.SCANNING || state === Html5QrcodeScannerState.PAUSED) {
         try {
+          await html5QrcodeRef.current.stop();
+          await html5QrcodeRef.current.clear();
+          console.log('Scanner stopped and cleared.');
+        } catch (error) {
+          console.error('Failed to stop QR scanner:', error);
+        }
+      } else {
+        console.warn('Scanner is not running or paused. No need to stop.');
+      }
+    }
+  }
+
+  const pauseScanner = async () => {
+    if (html5QrcodeRef.current) {
+      const state = html5QrcodeRef.current.getState();
+      if (state === Html5QrcodeScannerState.SCANNING || state === Html5QrcodeScannerState.PAUSED) {
+        try {
           await html5QrcodeRef.current.pause();
           console.log('Scanner stopped and cleared.');
         } catch (error) {
@@ -59,14 +76,14 @@ const QRScanner: React.FC<QRScannerProps> = ({ onScanSuccess, onScanFailure, sel
     html5Qrcode
       .start(
         { facingMode: 'environment' },
-        { fps: 10, qrbox: { width: 220, height: 220 } },
+        { fps: 10, qrbox: { width: 180, height: 180 } },
         async (decodedText) => {
           if (isLocked) return;
           setIsLocked(true);
           setFeedbackMessage(lan === 'EN' ? 'QR Code Scanned Successfully!' : '¡Código QR escaneado con éxito!');
 
           try {
-            await onScanSuccess(decodedText, stopScanner, resumeScanner);
+            await onScanSuccess(decodedText, pauseScanner, resumeScanner);
           } catch (error) {
             console.error('Error during QR code processing:', error);
           } finally {
@@ -91,13 +108,11 @@ const QRScanner: React.FC<QRScannerProps> = ({ onScanSuccess, onScanFailure, sel
   };
 
   return (
-    <div className="flex flex-col items-center my-8">
-      <div id="qr-reader" ref={scannerRef} className="rounded-lg shadow-md h-[320px] w-[320px] mb-6"></div>
-      {errorMessage ? (
-        <div className="text-red-600 font-semibold mb-4">{errorMessage}</div>
-      ) : (
-        feedbackMessage && <div className="text-green-600 font-semibold mb-4">{feedbackMessage}</div>
-      )}
+    <div className="flex flex-col items-center my-8 relative">
+      {errorMessage && <div className="text-red-600 font-semibold mb-4 absolute top-10">{errorMessage}</div>}
+      {feedbackMessage && <div className="text-green-600 font-semibold mb-4 absolute top-10">{feedbackMessage}</div>}
+      <>
+      <div id="qr-reader" ref={scannerRef} className="rounded-lg shadow-md h-[220px] w-[220px] mb-12"></div>
       <Button
         onClick={toggleScanner}
         disable={!selectedStatus || selectedStatus === '0'}
@@ -111,6 +126,8 @@ const QRScanner: React.FC<QRScannerProps> = ({ onScanSuccess, onScanFailure, sel
             : 'Encender Scanner'
         }
       />
+      </>
+      
     </div>
   );
 };

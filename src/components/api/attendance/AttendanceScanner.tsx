@@ -9,7 +9,7 @@ interface Props {
     onScanSuccess: (decodedText: string, stopScanner: any, resumeScanner: any) => void
     selectedStatus: string
     classroomId: string
-    setAttendances: React.Dispatch<React.SetStateAction<Attendance[] | undefined>>
+    setAttendances: React.Dispatch<React.SetStateAction<Attendance[]>>
     errorMessage: string
 }
 
