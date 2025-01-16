@@ -19,6 +19,7 @@ const AttendanceScanForm = ({ createAttendance }: Props) => {
 
   const profile = useGetProfileStore((s) => s.profile);
   const instructor = profile as Instructor;
+  const [selectedKind, setSelectedKind] = useState("I");
   const [selectedStatus, setSelectedStatus] = useState("0");
   const [successMsg, setSuccessMsg] = useState("");
   const [attendances, setAttendances] = useState<Attendance[]>([]);
@@ -26,6 +27,16 @@ const AttendanceScanForm = ({ createAttendance }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const lan = useLanguageStore((s) => s.lan);
   const attendanceStatus = getAttendanceStatus(lan);
+  const kind = [
+    {
+      id:'I',
+      name: lan === 'EN' ? 'Entrance' : 'Entrada',
+    },
+    {
+      id:'O',
+      name: lan === 'EN' ? 'Exit' : 'Salida',
+    }
+  ]
   const classrooms = [
     {
       id: "0",
@@ -50,7 +61,7 @@ const AttendanceScanForm = ({ createAttendance }: Props) => {
     stopScanner();
     setAlreadyScannedError("");
 
-    const alreadyScanned = attendances && isAttendanceCreated(attendances, studentUid);
+    const alreadyScanned = attendances && isAttendanceCreated(attendances, studentUid, selectedKind);
     if (alreadyScanned) {
       setAlreadyScannedError(lan === "EN" ? "Student already scanned" : "Estudiante ya fué escaneado");
       setTimeout(() => {
@@ -59,6 +70,8 @@ const AttendanceScanForm = ({ createAttendance }: Props) => {
       }, 1000);
       return;
     }
+    
+    
 
     setIsLoading(true);
     createAttendance.mutate(
@@ -68,6 +81,7 @@ const AttendanceScanForm = ({ createAttendance }: Props) => {
           student: studentUid,
           created_by: `${instructor?.first_name} ${instructor?.last_name}`,
           attendance_type: "A",
+          kind: selectedKind,
         },
         access,
       },
@@ -96,6 +110,12 @@ const AttendanceScanForm = ({ createAttendance }: Props) => {
       <div className="w-full flex justify-center">
         {successMsg && <div className="text-green-600 font-semibold mb-4 absolute top-10 text-center">{successMsg}</div>}
       </div>
+      <Selector
+        values={kind}
+        setter={setSelectedKind}
+        defaultValue={selectedKind}
+        label={lan === "EN" ? "Kind" : "Tipo"}
+      />
       <Selector
         values={attendanceStatus}
         setter={setSelectedStatus}

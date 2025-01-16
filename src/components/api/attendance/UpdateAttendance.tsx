@@ -7,29 +7,39 @@ import AttendanceForm from "./AttendanceForm"
 import useUpdateAttendance from "../../../hooks/api/attendance/useUpdateAttendance"
 
 interface Props {
-    attendance: SimpleAttendance
+    attendances: SimpleAttendance[]
     studentId: string
     classroomId: string
 }
 
-const UpdateAttendance = ({ attendance, studentId, classroomId }: Props) => {
+const UpdateAttendance = ({ attendances, studentId, classroomId }: Props) => {
 
+    console.log('attendances', attendances);
+    
     const [open, setOpen] = useState(false)
     const lan = useLanguageStore(s => s.lan)
-    const attendanceLabel = getAttendanceLabel({ lan, attendance: attendance.status })
-    const updateAttendance = useUpdateAttendance({ attendanceId: attendance.id, classroomId })
+    const entrance = attendances && attendances[0]
+    const exit = attendances && attendances[1]
+    const attendanceLabelEntrance = entrance && getAttendanceLabel({ lan, attendance: entrance.status })
+    const attendanceLabelExit = exit && getAttendanceLabel({ lan, attendance: exit.status })
+    const updateAttendanceEntrance = entrance && useUpdateAttendance({ attendanceId: entrance.id, classroomId })
+    const updateAttendanceExit =  exit && useUpdateAttendance({ attendanceId: exit.id, classroomId })
 
   return (
     <>
+    <>
+        {entrance 
+        ? 
+        <>
         <p 
             onClick={() => setOpen(true)}
             className={`py-2 px-4 text-center font-bold rounded-2xl text-xs
-            ${attendance.status === 'O' && 'bg-green-500'}
-            ${attendance.status === 'L' && 'bg-amber-500'}
-            ${attendance.status === 'N' && 'bg-red-500'}
-            ${attendance.status === 'E' && 'bg-green-500'}
-            ${attendance.status === 'T' && 'bg-yellow-500'}
-            `}>{attendanceLabel}
+            ${entrance.status === 'O' && 'bg-green-500'}
+            ${entrance.status === 'L' && 'bg-amber-500'}
+            ${entrance.status === 'N' && 'bg-red-500'}
+            ${entrance.status === 'E' && 'bg-green-500'}
+            ${entrance.status === 'T' && 'bg-yellow-500'}
+            `}>{attendanceLabelEntrance}
         </p>
         <Modal 
             isOpen={open}
@@ -37,10 +47,47 @@ const UpdateAttendance = ({ attendance, studentId, classroomId }: Props) => {
         >
             <AttendanceForm 
                 studentId={studentId}
-                attendance={attendance}
-                updateAttendance={updateAttendance}
+                attendance={entrance}
+                updateAttendance={updateAttendanceEntrance}
             />
         </Modal>
+        </>
+        : 
+        <>
+            <p className="py-2 px-4 text-center font-bold rounded-2xl text-xs bg-slate-500">Registrar</p>
+        </>
+        }
+
+    </>
+    {exit 
+    ? 
+    <>
+        <p 
+            onClick={() => setOpen(true)}
+            className={`py-2 px-4 text-center font-bold rounded-2xl text-xs
+            ${exit.status === 'O' && 'bg-green-500'}
+            ${exit.status === 'L' && 'bg-amber-500'}
+            ${exit.status === 'N' && 'bg-red-500'}
+            ${exit.status === 'E' && 'bg-green-500'}
+            ${exit.status === 'T' && 'bg-yellow-500'}
+            `}>{attendanceLabelExit}
+        </p>
+        <Modal 
+            isOpen={open}
+            onClose={() => setOpen(false)}
+        >
+            <AttendanceForm 
+                studentId={studentId}
+                attendance={exit}
+                updateAttendance={updateAttendanceExit}
+            />
+        </Modal>
+    </> 
+    : 
+    <>
+        <p className="py-2 px-4 text-center font-bold rounded-2xl text-xs bg-slate-500">Registrar</p>
+    </>
+    }
     </>
   )
 }

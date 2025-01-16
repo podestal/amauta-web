@@ -9,12 +9,15 @@ interface Props {
 
 const StudentAttendance = ({ student, classroomId}: Props) => {
 
+  console.log('student', student.attendances);
+  
+
   return (
     <div className="w-full">
-        {student.attendance 
+        {student.attendance
         ? 
         <UpdateAttendance 
-          attendance={student.attendance}
+          attendances={student.attendance}
           studentId={student.uid}
           classroomId={classroomId}
         />

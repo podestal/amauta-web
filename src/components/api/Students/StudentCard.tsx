@@ -10,6 +10,8 @@ interface Props {
 
 const StudentCard = ({ student, classroomId }: Props) => {
 
+  console.log('student', student);
+  
   const itemVariants = {
     hidden: { opacity: 0, x: 50 }, 
     visible: { opacity: 1, x: 0 }, 
@@ -18,7 +20,7 @@ const StudentCard = ({ student, classroomId }: Props) => {
   return (
     <motion.div 
       variants={itemVariants}
-      className="w-full grid grid-cols-3 mx-auto gap-4 mt-4">
+      className="w-full flex flex-col mx-auto gap-4 mt-4 border-b border-gray-300 dark:border-gray-700 pb-4">
       <div className="flex items-center justify-start gap-4 col-span-2 ">
         <Announcements 
           student={student}

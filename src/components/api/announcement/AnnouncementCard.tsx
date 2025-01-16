@@ -29,7 +29,7 @@ const AnnouncementCard = ({ announcement }: Props) => {
         <div className="w-full flex justify-between items-start">
             <div className="flex flex-col gap-1">
                 <h3 className="text-xl">De: {announcement.created_by}</h3>
-                <h3 className="text-xl">Asunto: {announcement.title}</h3>
+                <h3 className="text-md text-slate-300">Asunto: {announcement.title}</h3>
             </div>
             <motion.div
                 className="cursor-pointer dark:hover:text-neutral-400 hover:text-slate-800"

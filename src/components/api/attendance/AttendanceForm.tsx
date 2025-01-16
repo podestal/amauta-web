@@ -17,9 +17,10 @@ interface Props {
     updateAttendance?: UseMutationResult<Attendance, Error, UpdateAttendanceData>
     studentId: string
     attendance?: SimpleAttendance
+    attendanceKind: string
 }
 
-const AttendanceForm = ({ createAttendance, updateAttendance, studentId, attendance }: Props) => {
+const AttendanceForm = ({ createAttendance, updateAttendance, studentId, attendance, attendanceKind }: Props) => {
 
     const lan = useLanguageStore(s => s.lan)
     const profile = useGetProfileStore(s => s.profile)
@@ -38,6 +39,7 @@ const AttendanceForm = ({ createAttendance, updateAttendance, studentId, attenda
                 created_by: `${instructor?.first_name} ${instructor?.last_name}`, 
                 observations,
                 attendance_type: 'M',
+                kind: attendanceKind
             }, access}
         )
 
@@ -48,6 +50,7 @@ const AttendanceForm = ({ createAttendance, updateAttendance, studentId, attenda
                 created_by: `${instructor?.first_name} ${instructor?.last_name}`,
                 observations,
                 attendance_type: 'M',
+                kind: attendanceKind
             }, access}
         )
     }

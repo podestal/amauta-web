@@ -11,7 +11,7 @@ export interface Student {
     uid: string
     first_name: string
     last_name: string
-    attendance: SimpleAttendance | null
+    attendance: SimpleAttendance[] | null
     attendances: SimpleAttendance[]
     clase: Classroom
 }

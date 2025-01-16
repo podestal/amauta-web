@@ -13,15 +13,25 @@ const CreateAttendance = ({ studentId, classroomId }: Props) => {
 
     const [open, setOpen] = useState(false)
     const createAttendance = useCreateAttendance({ classroomId })
+    const [attendanceKind, setAttendanceKind] = useState('')
     const lan = useLanguageStore(s => s.lan)
 
   return (
     <>
-    <div className="w-full text-center">
+    <div className="w-[80%] flex justify-start items-center gap-4">
         <p 
-            onClick={() => setOpen(true)}
-            className={`w-full py-2 px-4 text-center font-bold rounded-2xl text-xs bg-slate-400 dark:bg-slate-700`}>
-                {lan === 'EN' ? 'Register' : 'Registrar'}
+            onClick={() => {
+                setAttendanceKind('I')
+                setOpen(true)}}
+            className={`w-full cursor-pointer py-2 px-4 text-center font-bold rounded-2xl text-xs bg-slate-400 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600`}>
+                {lan === 'EN' ? 'Register Entance' : 'Registrar Entrada'}
+        </p>
+        <p 
+            onClick={() => {
+                setAttendanceKind('O')
+                setOpen(true)}}
+            className={`w-full cursor-pointer py-2 px-4 text-center font-bold rounded-2xl text-xs bg-slate-400 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600`}>
+                {lan === 'EN' ? 'Register Exit' : 'Registrar Salida'}
         </p>
     </div>
     <Modal
@@ -31,6 +41,7 @@ const CreateAttendance = ({ studentId, classroomId }: Props) => {
         <AttendanceForm 
             createAttendance={createAttendance}
             studentId={studentId}
+            attendanceKind={attendanceKind}
         />
     </Modal>
     </>

@@ -9,10 +9,12 @@ export interface Attendance {
     created_at: Date
     updated_at: Date
     attendance_type: 'M' | 'A' 
+    kind: string
 }
 
-export type AttendanceCreateUpdate = Omit<Attendance, 'id' | 'created_at' | 'updated_at' | 'observations'> & {
+export type AttendanceCreateUpdate = Omit<Attendance, 'id' | 'created_at' | 'updated_at' | 'observations' | 'kind'> & {
     observations?: string
+    kind?: string
 }
 
 interface Props {
