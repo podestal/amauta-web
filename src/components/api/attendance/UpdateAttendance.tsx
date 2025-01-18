@@ -49,6 +49,7 @@ const UpdateAttendance = ({ attendances, studentId, classroomId }: Props) => {
                 studentId={studentId}
                 attendance={entrance}
                 updateAttendance={updateAttendanceEntrance}
+                attendanceKind="I"
             />
         </Modal>
         </>
@@ -80,6 +81,7 @@ const UpdateAttendance = ({ attendances, studentId, classroomId }: Props) => {
                 studentId={studentId}
                 attendance={exit}
                 updateAttendance={updateAttendanceExit}
+                attendanceKind="O"
             />
         </Modal>
     </> 
