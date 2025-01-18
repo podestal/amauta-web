@@ -11,6 +11,7 @@ import { SimpleAttendance } from "../../../services/api/studentsService"
 import { UpdateAttendanceData } from "../../../hooks/api/attendance/useUpdateAttendance"
 import useGetProfileStore from "../../../hooks/store/useGetProfileStore"
 import { Instructor } from "../../../services/api/instructorService"
+import useNotificationsStore from "../../../hooks/store/useNotificationsStore"
 
 interface Props {
     createAttendance?: UseMutationResult<Attendance, Error, CreateAttendanceData>
@@ -18,14 +19,16 @@ interface Props {
     studentId: string
     attendance?: SimpleAttendance
     attendanceKind: string
+    setOpen:  React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const AttendanceForm = ({ createAttendance, updateAttendance, studentId, attendance, attendanceKind }: Props) => {
+const AttendanceForm = ({ createAttendance, updateAttendance, studentId, attendance, attendanceKind, setOpen }: Props) => {
 
     const lan = useLanguageStore(s => s.lan)
     const profile = useGetProfileStore(s => s.profile)
     const instructor = profile as Instructor
     const access = useAuthStore(s => s.access) || ''
+    const { setMessage, setShow, setType } = useNotificationsStore()
     const [selectedStatus, setSelectedStatus] = useState(attendance ? attendance.status : 'O')
     const [observations, setObservations] = useState(attendance ? attendance.observations : '')
 
@@ -40,7 +43,20 @@ const AttendanceForm = ({ createAttendance, updateAttendance, studentId, attenda
                 observations,
                 attendance_type: 'M',
                 kind: attendanceKind
-            }, access}
+            }, access},
+            {
+                onSuccess: () => {
+                    setOpen(false)
+                    setType('success')
+                    setShow(true)
+                    setMessage(lan === 'EN' ? 'Attendance registered successfully!' : 'Asistencia registrada exitosamente!')
+                },
+                onError: () => {
+                    setType('error')
+                    setShow(true)
+                    setMessage(lan === 'EN' ? 'Error registering attendance' : 'Error registrando asistencia')
+                }
+            }
         )
 
         updateAttendance && updateAttendance.mutate(

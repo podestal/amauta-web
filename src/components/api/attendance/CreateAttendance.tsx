@@ -42,6 +42,7 @@ const CreateAttendance = ({ studentId, classroomId }: Props) => {
             createAttendance={createAttendance}
             studentId={studentId}
             attendanceKind={attendanceKind}
+            setOpen={setOpen}
         />
     </Modal>
     </>
