@@ -14,22 +14,10 @@ const StudentAttendance = ({ student, classroomId}: Props) => {
   console.log('attendances', student.attendances);
   const lan = useLanguageStore(s => s.lan)
   const attendances: { [key: string]: SimpleAttendance } = student.attendances
+  
 
   return (
     <div className="w-full">
-        {/* {student.attendances
-        ? 
-        <UpdateAttendance 
-          attendances={student.attendances}
-          studentId={student.uid}
-          classroomId={classroomId}
-        />
-        : 
-        <CreateAttendance 
-          studentId={student.uid}
-          classroomId={classroomId}
-          kind="I"
-        />} */}
         <div className="grid grid-cols-2 mx-6">
           {attendances['In'] 
           ? 
@@ -37,6 +25,7 @@ const StudentAttendance = ({ student, classroomId}: Props) => {
             attendance={attendances['In']}
             studentId={student.uid}
             classroomId={classroomId}
+            kind="I"
           /> 
           : 
           <CreateAttendance 
@@ -45,12 +34,21 @@ const StudentAttendance = ({ student, classroomId}: Props) => {
             kind="I"
             label={lan === 'EN' ? 'Register Entance' : 'Registrar Entrada'}
           />}
+          {attendances['Out'] 
+          ?
+          <UpdateAttendance 
+            attendance={attendances['Out']}
+            studentId={student.uid}
+            classroomId={classroomId}
+            kind="O"
+          /> 
+          : 
           <CreateAttendance 
             studentId={student.uid}
             classroomId={classroomId}
             kind="O"
             label={lan === 'EN' ? 'Register Exit' : 'Registrar Salida'}
-          />
+          />}
         </div>
     </div>
   )

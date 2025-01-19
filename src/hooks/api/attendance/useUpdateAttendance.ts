@@ -14,6 +14,8 @@ interface Props {
 
 const useUpdateAttendance = ({ attendanceId, classroomId }: Props): UseMutationResult<Attendance, Error, UpdateAttendanceData> => {
 
+    console.log('attendanceId', attendanceId);
+    
     const attendanceService = getAttendanceService({ attendanceId })
     const STUDENT_CACHE_KEY = getStudentsCacheKey(classroomId)
     const queryClient = useQueryClient()

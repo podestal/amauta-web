@@ -5,21 +5,25 @@ import getAttendanceLabel from "../../../utils/getAttendanceLabel"
 import Modal from "../../ui/Modal"
 import AttendanceForm from "./AttendanceForm"
 import useUpdateAttendance from "../../../hooks/api/attendance/useUpdateAttendance"
+import useCreateAttendance from "../../../hooks/api/attendance/useCreateAttendance"
 
 interface Props {
     attendance: SimpleAttendance
     studentId: string
     classroomId: string
+    kind: string
 }
 
-const UpdateAttendance = ({ attendance, studentId, classroomId }: Props) => {
-
-    console.log('attendances', attendance);
+const UpdateAttendance = ({ attendance, studentId, classroomId, kind}: Props) => {
     
     const [open, setOpen] = useState(false)
     const lan = useLanguageStore(s => s.lan)
+    console.log('attendance', attendance.id);
+    
+    
     const attendanceLabel = getAttendanceLabel({ lan, attendance: attendance.status })
     const updateAttendance = useUpdateAttendance({ attendanceId: attendance.id, classroomId })
+    const createAttendance = useCreateAttendance({ classroomId }) 
 
   return (
     <>
@@ -37,13 +41,23 @@ const UpdateAttendance = ({ attendance, studentId, classroomId }: Props) => {
             isOpen={open}
             onClose={() => setOpen(false)}
         >
+            {attendance.id ? 
             <AttendanceForm 
                 studentId={studentId}
                 attendance={attendance}
                 updateAttendance={updateAttendance}
-                attendanceKind="I"
+                attendanceKind={kind}
                 setOpen={setOpen}
             />
+            :
+            <AttendanceForm 
+                studentId={studentId}
+                attendance={attendance}
+                createAttendance={createAttendance}
+                attendanceKind={kind}
+                setOpen={setOpen}
+            />
+            }
         </Modal>
     </>
   )

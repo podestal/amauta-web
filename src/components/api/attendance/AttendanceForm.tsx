@@ -67,7 +67,20 @@ const AttendanceForm = ({ createAttendance, updateAttendance, studentId, attenda
                 observations,
                 attendance_type: 'M',
                 kind: attendanceKind
-            }, access}
+            }, access},
+            {
+                onSuccess: () => {
+                    setOpen(false)
+                    setType('success')
+                    setShow(true)
+                    setMessage(lan === 'EN' ? 'Attendance updated successfully!' : 'Asistencia actualizada exitosamente!')
+                },
+                onError: () => {
+                    setType('error')
+                    setShow(true)
+                    setMessage(lan === 'EN' ? 'Error updating attendance' : 'Error actualizando asistencia')
+                }
+            }
         )
     }
 
