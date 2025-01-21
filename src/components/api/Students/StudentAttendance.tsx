@@ -1,6 +1,5 @@
 import useLanguageStore from "../../../hooks/store/useLanguageStore"
 import { Student } from "../../../services/api/studentsService"
-import { SimpleAttendance } from "../../../services/api/studentsService"
 import CreateAttendance from "../attendance/CreateAttendance"
 import UpdateAttendance from "../attendance/UpdateAttendance"
 
@@ -11,18 +10,18 @@ interface Props {
 
 const StudentAttendance = ({ student, classroomId}: Props) => {
 
-  console.log('attendances', student.attendances);
   const lan = useLanguageStore(s => s.lan)
-  const attendances: { [key: string]: SimpleAttendance } = student.attendances
+  const attendancesIn = student.attendances_in
+  const attendancesOut = student.attendances_out
   
 
   return (
     <div className="w-full">
         <div className="grid grid-cols-2 mx-6">
-          {attendances['In'] 
+          {attendancesIn
           ? 
           <UpdateAttendance 
-            attendance={attendances['In']}
+            attendance={attendancesIn}
             studentId={student.uid}
             classroomId={classroomId}
             kind="I"
@@ -34,10 +33,10 @@ const StudentAttendance = ({ student, classroomId}: Props) => {
             kind="I"
             label={lan === 'EN' ? 'Register Entance' : 'Registrar Entrada'}
           />}
-          {attendances['Out'] 
+          {attendancesOut
           ?
           <UpdateAttendance 
-            attendance={attendances['Out']}
+            attendance={attendancesOut}
             studentId={student.uid}
             classroomId={classroomId}
             kind="O"

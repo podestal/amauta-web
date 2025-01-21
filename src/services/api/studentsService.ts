@@ -12,7 +12,8 @@ export interface Student {
     first_name: string
     last_name: string
     attendance: SimpleAttendance[] | null
-    attendances: { [key: string]: SimpleAttendance }
+    attendances_in: SimpleAttendance
+    attendances_out: SimpleAttendance
     clase: Classroom
 }
 
