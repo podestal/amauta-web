@@ -3,10 +3,17 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import useGetProfileStore from '../hooks/store/useGetProfileStore';
 import useLanguageStore from '../hooks/store/useLanguageStore';
+import { Instructor } from '../services/api/instructorService';
+import { canCreateUpdateAttendance } from '../utils/canUpdateCreateAttendance';
 
 const Navigator: React.FC = () => {
 
   const group = useGetProfileStore(s=>s.user?.groups[0])
+  const profile = useGetProfileStore(s=>s.profile)
+  const instructor = group === 'instructor' && profile as Instructor
+
+  const createUpdateAttendance = instructor && canCreateUpdateAttendance(instructor.clases_details)
+  
   const lan = useLanguageStore(s=>s.lan)
 
   return (
@@ -36,7 +43,7 @@ const Navigator: React.FC = () => {
           <span>{lan === 'EN' ? 'Profile' : 'Perfil' }</span>
         </NavLink>
       </>}
-      {group === 'instructor' &&
+      {instructor &&
       <>
         <NavLink
           to="/"
@@ -49,7 +56,7 @@ const Navigator: React.FC = () => {
           <RiGraduationCapFill />
           <span>{lan === 'EN' ? 'Students' : 'Alumnos'}</span>
         </NavLink>
-        <NavLink
+        {createUpdateAttendance && <NavLink
           to="/attendance"
           className={({ isActive }) =>
             `flex flex-col items-center text-sm ${
@@ -59,7 +66,7 @@ const Navigator: React.FC = () => {
         >
           <RiCalendarScheduleFill />
           <span>{lan === 'EN' ? 'Attendance' : 'Asistencia' }</span>
-        </NavLink>
+        </NavLink>}
         <NavLink
           to="/profile"
           className={({ isActive }) =>

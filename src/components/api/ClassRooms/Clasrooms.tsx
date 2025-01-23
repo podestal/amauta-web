@@ -23,8 +23,7 @@ const Clasrooms = () => {
         : []
 
     if (!classrooms?.length) return <p>{lan === 'EN' ? 'No classes available' : 'No hay clases disponibles'}</p>;
-    
-    
+
   return (
     <div className="mb-32">
         {classrooms.length > 1 
