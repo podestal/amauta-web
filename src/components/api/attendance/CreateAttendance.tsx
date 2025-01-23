@@ -8,9 +8,10 @@ interface Props {
     classroomId: string
     kind: string
     label: string
+    canModifyAttendance: boolean
 }
 
-const CreateAttendance = ({ studentId, classroomId, kind, label }: Props) => {
+const CreateAttendance = ({ studentId, classroomId, kind, label, canModifyAttendance=true }: Props) => {
 
     const [open, setOpen] = useState(false)
     const createAttendance = useCreateAttendance({ classroomId })
@@ -20,7 +21,7 @@ const CreateAttendance = ({ studentId, classroomId, kind, label }: Props) => {
     <div className="flex justify-start items-center gap-4">
         <p 
             onClick={() => {
-                setOpen(true)}}
+                canModifyAttendance && setOpen(true)}}
             className={`w-full cursor-pointer py-2 px-4 text-center font-bold rounded-2xl text-xs bg-slate-400 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600`}>
                 {label}
         </p>

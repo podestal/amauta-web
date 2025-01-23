@@ -40,6 +40,7 @@ const Clasrooms = () => {
     : 
         <Students 
             classroom={classrooms[0].split('-').pop()}
+            level={classrooms[0].split('-')[2]}
         />}
     </div>
   )

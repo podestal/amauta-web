@@ -12,9 +12,10 @@ interface Props {
     studentId: string
     classroomId: string
     kind: string
+    canModifyAttendance: boolean
 }
 
-const UpdateAttendance = ({ attendance, studentId, classroomId, kind}: Props) => {
+const UpdateAttendance = ({ attendance, studentId, classroomId, kind, canModifyAttendance=true}: Props) => {
     
     const [open, setOpen] = useState(false)
     const lan = useLanguageStore(s => s.lan)
@@ -28,7 +29,8 @@ const UpdateAttendance = ({ attendance, studentId, classroomId, kind}: Props) =>
   return (
     <>
         <p 
-            onClick={() => setOpen(true)}
+            onClick={() => {
+                canModifyAttendance && setOpen(true)}}
             className={`py-2 text-center font-bold rounded-2xl text-xs
             ${attendance.status === 'O' && 'bg-green-500'}
             ${attendance.status === 'L' && 'bg-amber-500'}

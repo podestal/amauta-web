@@ -6,11 +6,10 @@ import { motion } from "framer-motion"
 interface Props {
     student: Student
     classroomId: string
+    canModifyAttendance: boolean
 }
 
-const StudentCard = ({ student, classroomId }: Props) => {
-
-  console.log('student', student);
+const StudentCard = ({ student, classroomId, canModifyAttendance=true }: Props) => {
   
   const itemVariants = {
     hidden: { opacity: 0, x: 50 }, 
@@ -30,6 +29,7 @@ const StudentCard = ({ student, classroomId }: Props) => {
       <StudentAttendance 
           student={student}
           classroomId={classroomId}
+          canModifyAttendance={canModifyAttendance}
       />
     </motion.div>
   )

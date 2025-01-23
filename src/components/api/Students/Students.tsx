@@ -5,16 +5,25 @@ import StudentCard from "./StudentCard"
 import StudentFilter from "./StudentFilter"
 import useLoader from "../../../hooks/ui/useLoader"
 import { motion } from "framer-motion"
+import { useLocation } from "react-router-dom"
+import useGetProfileStore from "../../../hooks/store/useGetProfileStore"
+import { Instructor } from "../../../services/api/instructorService"
 
 interface Props {
     classroom?: string
+    level?: string
 }
 
-const Students = ({ classroom }: Props) => {
+const Students = ({ classroom, level }: Props) => {
 
     const [filter, setFilter] = useState('')
     const access = useAuthStore(s => s.access) || ''
     const classroomId = classroom ? classroom : ''
+    const currentLevel = useLocation().state?.level || level
+    const group = useGetProfileStore(s => s.user?.groups[0])
+    const profile = useGetProfileStore(s => s.profile)
+    const instructor = group === 'instructor' && profile as Instructor
+    const canModifyAttendance = instructor && currentLevel === 'P'
     const {data: students, isLoading, isError, error, isSuccess} = useGetStudents({ access, classroomId })
 
     useLoader(isLoading)
@@ -42,6 +51,7 @@ const Students = ({ classroom }: Props) => {
                     key={student.uid}
                     student={student}
                     classroomId={classroomId}
+                    canModifyAttendance={instructor ? canModifyAttendance : true}
                 />
             ))}
         </motion.div>

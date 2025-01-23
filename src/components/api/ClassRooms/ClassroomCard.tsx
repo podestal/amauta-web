@@ -14,7 +14,7 @@ const ClassroomCard = ({classroom}: Props) => {
     const navigate = useNavigate()
 
     const handleNavigate = () => {
-      navigate(`/students?classroom=${id}`)
+      navigate(`/students?classroom=${id}`, { state: { level}})
     }
     
     
