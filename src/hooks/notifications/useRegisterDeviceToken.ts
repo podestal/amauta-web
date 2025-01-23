@@ -22,7 +22,7 @@ const useRegisterDeviceToken = ({ deviceToken, access }: Props) => {
             },
             {
               headers: {
-                Authorization: `JWT ${access}`, // Adjust authentication mechanism
+                Authorization: `JWT ${access}`, 
               },
             }
           );

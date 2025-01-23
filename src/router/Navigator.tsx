@@ -11,6 +11,31 @@ const Navigator: React.FC = () => {
 
   return (
     <nav className="bg-slate-200 dark:bg-slate-800 fixed bottom-0 w-full flex justify-around py-2 shadow-md z-50">
+      {group === 'assistant' &&
+      <>
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
+            `flex flex-col items-center text-sm ${
+              isActive ? 'text-blue-500' : 'text-gray-500'
+            }`
+          }
+        >
+          <RiGraduationCapFill />
+          <span>{lan === 'EN' ? 'Students' : 'Alumnos'}</span>
+        </NavLink>
+        <NavLink
+          to="/profile"
+          className={({ isActive }) =>
+            `flex flex-col items-center text-sm ${
+              isActive ? 'text-blue-500' : 'text-gray-500'
+            }`
+          }
+        >
+          <RiFileUserFill />
+          <span>{lan === 'EN' ? 'Profile' : 'Perfil' }</span>
+        </NavLink>
+      </>}
       {group === 'instructor' &&
       <>
         <NavLink

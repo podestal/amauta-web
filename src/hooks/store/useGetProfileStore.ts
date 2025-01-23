@@ -2,8 +2,9 @@ import { create } from "zustand";
 import { User } from "../../services/auth/useService";
 import { Tutor } from "../../services/api/tutorService";
 import { Instructor } from "../../services/api/instructorService";
+import { Assistant } from "../../services/api/assistantService";
 
-type Profile = Tutor | Instructor | null;
+type Profile = Tutor | Instructor | Assistant | null;
 
 interface ProfileState {
   user: User | null;
