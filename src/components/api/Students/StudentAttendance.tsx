@@ -44,12 +44,12 @@ const StudentAttendance = ({ student, classroomId, canModifyAttendance}: Props) 
           {renderAttendanceAction(
             student.attendances_in,
             "I",
-            lan === "EN" ? `${canModifyAttendance ? 'Register Entrance' : 'No Attendance'}` : `${canModifyAttendance ? 'Registrar Entrada' : 'Sin Asistencia'}`
+            lan === "EN" ? `${canModifyAttendance ? 'Entrance' : 'No Attendance'}` : `${canModifyAttendance ? 'Entrada' : 'Sin Asistencia'}`
           )}
           {renderAttendanceAction(
             student.attendances_out,
             "O",
-            lan === "EN" ? `${canModifyAttendance ? 'Register Exit' : 'No Attendance'}`: `${canModifyAttendance ? 'Registrar Salida' : 'Sin Asistencia'}`
+            lan === "EN" ? `${canModifyAttendance ? 'Exit' : 'No Attendance'}`: `${canModifyAttendance ? 'Salida' : 'Sin Asistencia'}`
           )}
         </div>
     </div>

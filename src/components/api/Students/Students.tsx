@@ -43,6 +43,7 @@ const Students = ({ classroom, level }: Props) => {
             initial="hidden"
             animate="visible"
             transition={{ staggerChildren: 0.1 }}
+            className="flex flex-col justify-center items-center gap-6"
         >
             {students
                 .filter( student => `${student.first_name.toLowerCase()}${student.last_name.toLowerCase()}`.includes(filter.toLowerCase()))

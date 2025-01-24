@@ -15,6 +15,7 @@ export interface Student {
     attendances_in: SimpleAttendance
     attendances_out: SimpleAttendance
     clase: Classroom
+    picture: string
 }
 
 interface Props {
