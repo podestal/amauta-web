@@ -14,7 +14,7 @@ const AnnouncementsList = ({ student, open }: Props) => {
 
     const lan = useLanguageStore(s => s.lan)
     const access = useAuthStore(s => s.access) || ''
-    const { data: announcements, isLoading, isError, error, isSuccess } = useGetAnnouncements({ access, studentId: student.uid, enable: open })
+    const { data: announcements, isLoading, isError, error, isSuccess } = useGetAnnouncements({ access, studentId: student.uid, enable: open, byStudent: true })
     
     if (isLoading) return <p>Loading...</p>
 

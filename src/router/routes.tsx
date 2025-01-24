@@ -9,6 +9,7 @@ import StudentsByClassroom from "../pages/StudentsByClassroom";
 import DownloadappPage from "../pages/DownloadappPage";
 import AnnouncementsPage from "../pages/AnnouncementsPage";
 import DetailedAttendancePage from "../pages/DetailedAttendancePage";
+import ReportsPage from "../pages/ReportsPage";
 
 const routes = createBrowserRouter([
     {
@@ -57,6 +58,13 @@ const routes = createBrowserRouter([
                 element: 
                 <PrivateRoutes>
                     <DetailedAttendancePage />
+                </PrivateRoutes>
+            },
+            {
+                path: 'reports',
+                element:
+                <PrivateRoutes>
+                    <ReportsPage />
                 </PrivateRoutes>
             },
             {

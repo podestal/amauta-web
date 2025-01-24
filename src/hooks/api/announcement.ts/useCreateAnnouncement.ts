@@ -19,8 +19,11 @@ const useCreateAnnouncement = ({ studentId }: Props): UseMutationResult<Announce
     return useMutation({
         mutationFn: (data: CreateAnnouncementData) => announcementService.post(data.announcement, data.access),
         onSuccess: res => {
-            console.log(res)
-            queryClient.invalidateQueries({ queryKey: ANNOUNCEMENTS_CACHE_KEY })
+            queryClient.setQueryData<Announcement[]>(ANNOUNCEMENTS_CACHE_KEY, oldData => {
+                if (!oldData) return []
+                const newData = [res, ...oldData]
+                return newData
+            })
         },
         onError: err => {
             console.log(err)
