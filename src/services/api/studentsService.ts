@@ -3,7 +3,7 @@ import { Classroom } from "./classroomService"
 
 export interface SimpleAttendance {
     id: number
-    status: string
+    status: 'N' | 'E' | 'L' | 'T' | 'O'
     observations: string
 }
 

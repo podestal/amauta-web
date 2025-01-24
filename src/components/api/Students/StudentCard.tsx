@@ -3,6 +3,7 @@ import StudentAttendance from "./StudentAttendance"
 import Announcements from "../announcement/Announcements"
 import { motion } from "framer-motion"
 
+
 interface Props {
     student: Student
     classroomId: string
@@ -24,7 +25,7 @@ const StudentCard = ({ student, classroomId, canModifyAttendance=true }: Props) 
         <Announcements 
           student={student}
         />
-        <p className="text-sm text-left my-auto">{student.first_name} {student.last_name}</p>
+        <p className="text-lg text-left my-auto font-bold">{student.first_name} {student.last_name}</p>
       </div>
       <StudentAttendance 
           student={student}

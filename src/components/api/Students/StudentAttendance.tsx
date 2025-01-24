@@ -40,7 +40,7 @@ const StudentAttendance = ({ student, classroomId, canModifyAttendance}: Props) 
 
   return (
     <div className="w-full">
-        <div className="grid grid-cols-2 mx-6">
+        <div className="grid grid-cols-2 mx-6 gap-6">
           {renderAttendanceAction(
             student.attendances_in,
             "I",

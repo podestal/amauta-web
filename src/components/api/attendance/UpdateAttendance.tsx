@@ -6,6 +6,7 @@ import Modal from "../../ui/Modal"
 import AttendanceForm from "./AttendanceForm"
 import useUpdateAttendance from "../../../hooks/api/attendance/useUpdateAttendance"
 import useCreateAttendance from "../../../hooks/api/attendance/useCreateAttendance"
+import AttendanceStatus from "./AttendanceStatus"
 
 interface Props {
     attendance: SimpleAttendance
@@ -28,17 +29,13 @@ const UpdateAttendance = ({ attendance, studentId, classroomId, kind, canModifyA
 
   return (
     <>
-        <p 
+        <AttendanceStatus 
+            status={attendance.status}
+            label={attendanceLabel}
+            canModify={canModifyAttendance}
             onClick={() => {
                 canModifyAttendance && setOpen(true)}}
-            className={`py-2 text-center font-bold rounded-2xl text-xs
-            ${attendance.status === 'O' && 'bg-green-500'}
-            ${attendance.status === 'L' && 'bg-amber-500'}
-            ${attendance.status === 'N' && 'bg-red-500'}
-            ${attendance.status === 'E' && 'bg-green-500'}
-            ${attendance.status === 'T' && 'bg-yellow-500'}
-            `}>{attendanceLabel}
-        </p>
+        />
         <Modal 
             isOpen={open}
             onClose={() => setOpen(false)}

@@ -19,12 +19,28 @@ const CreateAttendance = ({ studentId, classroomId, kind, label, canModifyAttend
   return (
     <>
     <div className="flex justify-start items-center gap-4">
-        <p 
-            onClick={() => {
-                canModifyAttendance && setOpen(true)}}
-            className={`w-full cursor-pointer py-2 px-4 text-center font-bold rounded-2xl text-xs bg-slate-400 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600`}>
-                {label}
-        </p>
+    <p
+        onClick={() => canModifyAttendance && setOpen(true)}
+        className={`w-full cursor-pointer py-4 px-6 text-center font-semibold text-sm rounded-xl bg-gradient-to-r from-gray-400 via-gray-500 to-gray-600 text-white shadow-lg transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-xl dark:from-gray-700 dark:via-gray-800 dark:to-gray-900`}
+    >
+        <span className="flex items-center justify-center gap-2">
+            <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="currentColor"
+            className="w-5 h-5"
+            >
+            <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15.75 9V5.25M8.25 9V5.25M3 12h18M4.5 18h15"
+            />
+            </svg>
+            {label}
+        </span>
+    </p>
     </div>
     <Modal
         isOpen={open}
