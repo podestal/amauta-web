@@ -4,6 +4,7 @@ import useGetProfileStore from "../../../hooks/store/useGetProfileStore"
 import { Instructor } from "../../../services/api/instructorService"
 import { Assistant } from "../../../services/api/assistantService"
 import useLanguageStore from "../../../hooks/store/useLanguageStore"
+import { motion } from "framer-motion"
 
 const Clasrooms = () => {
 
@@ -28,15 +29,19 @@ const Clasrooms = () => {
     <div className="mb-32">
         {classrooms.length > 1 
         ?
-        <div className="flex flex-col justify-start items-center gap-6 w-[90%] mx-auto">
-            <h2 className="text-2xl font-bold text-center">Clases</h2>
+        <motion.div 
+            initial="hidden"
+            animate="visible"
+            transition={{ staggerChildren: 0.1 }}
+            className="flex flex-col justify-start items-center gap-6 w-[90%] mx-auto">
+            <h2 className="text-4xl font-bold text-center">Clases</h2>
             {classrooms.map( clasroom => (
                 <ClassroomCard 
                     key={clasroom}
                     classroom={clasroom}
                 />
             ))}
-        </div> 
+        </motion.div> 
     : 
         <Students 
             classroom={classrooms[0].split('-').pop()}

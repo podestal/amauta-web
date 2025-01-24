@@ -20,7 +20,7 @@ const StudentCard = ({ student, classroomId, canModifyAttendance=true }: Props) 
   return (
     <motion.div 
       variants={itemVariants}
-      className="w-full flex flex-col mx-auto gap-4 mt-4 border-b border-gray-300 dark:border-gray-700 pb-4 bg-white dark:bg-gray-800 shadow-md rounded-lg p-4"
+      className="w-full flex flex-col mx-auto gap-4 mt-4 border-b border-gray-300 dark:border-gray-700 pb-4  shadow-md rounded-lg p-4"
     >
       {/* Top Section: Avatar and Student Info */}
       <div className="flex items-center gap-4">

@@ -20,7 +20,8 @@ const Announcements = ({ student }: Props) => {
     <>
         <RiChat1Fill 
             onClick={() => setOpen(true)}
-            className="text-2xl text-blue-700 cursor-pointer hover:text-blue-600"
+            className="text-blue-700 cursor-pointer hover:text-blue-600"
+            size={30}
         />
         <Modal
             isOpen={open}
