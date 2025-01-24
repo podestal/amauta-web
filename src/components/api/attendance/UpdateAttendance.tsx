@@ -20,7 +20,6 @@ const UpdateAttendance = ({ attendance, studentId, classroomId, kind, canModifyA
     
     const [open, setOpen] = useState(false)
     const lan = useLanguageStore(s => s.lan)
-    console.log('attendance', attendance.id);
     
     
     const attendanceLabel = getAttendanceLabel({ lan, attendance: attendance.status })
