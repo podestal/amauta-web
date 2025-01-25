@@ -22,13 +22,16 @@ const gradesSecondary = [
     { id: '5', name: 'Quinto'},
 ]
 
-const AttendanceFilters = () => {
+interface Props {
+    setSelectedClassroom: React.Dispatch<React.SetStateAction<string>>
+}
+
+const AttendanceFilters = ({ setSelectedClassroom }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
 
     const [selectedLevel, setSelectedLevel] = useState('P')
     const [selectedGrade, setSelectedGrade] = useState('1')
-    const [selectedClassroom, setSelectedClassroom] = useState('A')
 
     const { data: classrooms, isLoading, isError, error, isSuccess } = useGetClassroom({ access })
 
@@ -57,7 +60,6 @@ const AttendanceFilters = () => {
         />
         <ClasroomSelector 
             setSelectedClassroom={setSelectedClassroom}
-            selectedClassroom={selectedClassroom}
             classrooms={classrooms
                 .filter(classroom => classroom.grade === selectedGrade && classroom.level === selectedLevel)
             }
