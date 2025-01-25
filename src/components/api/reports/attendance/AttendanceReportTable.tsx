@@ -17,7 +17,7 @@ const AttendanceReportTable = ({ selectedClassroom }: Props) => {
 
     if (isError) return <p>Error {error.message}</p>
 
-    if (isSuccess)
+    if (isSuccess && students.length > 0)
 
   return (
     <>
@@ -56,6 +56,7 @@ const AttendanceReportTable = ({ selectedClassroom }: Props) => {
                 <p>{lan === 'EN' ? 'Fri' : 'Vie'}</p>
             </div>
         </div>
+        {/* <>{console.log('students', students)}</> */}
         {students.map( student => (
             <div 
                 key={student.uid}
@@ -83,30 +84,31 @@ const AttendanceReportTable = ({ selectedClassroom }: Props) => {
                     <p>{student.last_name}</p>
                 </div>
                 <div className="w-full flex justify-left items-center gap-2">
-                    <div className="w-8 h-8 bg-red-600 shadow-xl shadow-red-600" />
-                    <div className="w-8 h-8 bg-red-600 shadow-xl shadow-red-600" />
+                    <div className="w-8 h-8 bg-red-600 shadow-xl shadow-red-600 rounded-lg" />
+                    <div className="w-8 h-8 bg-red-600 shadow-xl shadow-red-600 rounded-lg" />
                 </div>
                 <div className="w-full flex justify-left items-center gap-2">
-                    <div className="w-8 h-8 bg-red-600 shadow-xl shadow-red-600" />
-                    <div className="w-8 h-8 bg-red-600 shadow-xl shadow-red-600" />
+                    <div className="w-8 h-8 bg-red-600 shadow-xl shadow-red-600 rounded-lg" />
+                    <div className="w-8 h-8 bg-red-600 shadow-xl shadow-red-600 rounded-lg" />
                 </div>
                 <div className="w-full flex justify-left items-center gap-2">
-                    <div className="w-8 h-8 bg-red-600 shadow-xl shadow-red-600" />
-                    <div className="w-8 h-8 bg-red-600 shadow-xl shadow-red-600" />
+                    <div className="w-8 h-8 bg-red-600 shadow-xl shadow-red-600 rounded-lg" />
+                    <div className="w-8 h-8 bg-red-600 shadow-xl shadow-red-600 rounded-lg" />
                 </div>
                 <div className="w-full flex justify-left items-center gap-2">
-                    <div className="w-8 h-8 bg-red-600 shadow-xl shadow-red-600" />
-                    <div className="w-8 h-8 bg-red-600 shadow-xl shadow-red-600" />
+                    <div className="w-8 h-8 bg-red-600 shadow-xl shadow-red-600 rounded-lg" />
+                    <div className="w-8 h-8 bg-red-600 shadow-xl shadow-red-600 rounded-lg" />
                 </div>
                 <div className="w-full flex justify-left items-center gap-2">
-                    <div className="w-8 h-8 bg-red-600" />
-                    <div className="w-8 h-8 bg-red-600" />
+                    <div className="w-8 h-8 bg-red-600 shadow-xl shadow-red-600 rounded-lg" />
+                    <div className="w-8 h-8 bg-red-600 shadow-xl shadow-red-600 rounded-lg" />
                 </div>
             </div>
         ))}
         
     </>
   )
+  else return <p className="text-2xl text-center my-10">{lan === 'EN' ? 'No students found in this classroom' : 'No se encontraron alumnos en esta clase'}</p>
 }
 
 export default AttendanceReportTable
