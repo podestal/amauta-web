@@ -18,15 +18,17 @@ const ReportsPage = () => {
 
   return (
     <div className="w-full max-w-[95%] sm:max-w-[600px] md:max-w-[800px] lg:max-w-[1024px] xl:max-w-[1200px] 2xl:max-w-[1380px] mx-auto overflow-hidden">
+        <div className="w-full flex justify-between items-center gap-4 py-4">
+            <p>Clase</p>
+            <p>Section</p>
+            <p>Weekly/Monthly</p>
+        </div>
         <div className="w-full grid grid-cols-12 dark:bg-slate-900 bg-gray-200 font-bold px-2 py-6">
             <div className="flex py-1 text-left hover:text-slate-700 dark:hover:text-slate-300 cursor-pointer">
                 
             </div>
             <div className="flex py-1 text-left hover:text-slate-700 dark:hover:text-slate-300 cursor-pointer">
                 <p>{lan === 'EN' ? 'UID' : 'UID'}</p> 
-                <RiArrowDownSFill 
-                    // className={`${sortKey === 'name' && sortOrder === 'desc' ? 'rotate-180' : ''}`}
-                />
             </div>
             <div className="flex py-1 text-left col-span-2 hover:text-slate-700 dark:hover:text-slate-300 cursor-pointer">
                 <p>{lan === 'EN' ? 'Name' : 'Nombres'}</p>
@@ -60,7 +62,7 @@ const ReportsPage = () => {
             <div 
                 key={student.uid}
                 className="w-full grid grid-cols-12 px-2 py-4 font-palanquin text-left hover:bg-slate-100 dark:hover:bg-slate-900">
-                <div className="w-12 h-12 flex items-center justify-center bg-gray-200 dark:bg-gray-600 rounded-full text-gray-700 dark:text-gray-300 font-bold text-lg overflow-hidden">
+                <div className="w-12 h-12 flex items-center justify-center bg-gradient-to-r from-blue-800 to-slate-900 rounded-full dark:text-slate-50 font-bold text-md overflow-hidden">
                     {student.picture ? (
                         <img 
                         src={student.picture || `https://ui-avatars.com/api/?name=${student.first_name}+${student.last_name}&background=random`} 
