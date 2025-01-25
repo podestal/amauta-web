@@ -3,6 +3,7 @@ import useLanguageStore from "../hooks/store/useLanguageStore"
 import useAuthStore from "../hooks/store/useAuthStore"
 import useGetStudents from "../hooks/api/student/useGetStudents"
 import useLoader from "../hooks/ui/useLoader"
+import AttendanceFilters from "../components/api/reports/attendance/AttendanceFilters"
 
 const ReportsPage = () => {
 
@@ -18,11 +19,9 @@ const ReportsPage = () => {
 
   return (
     <div className="w-full max-w-[95%] sm:max-w-[600px] md:max-w-[800px] lg:max-w-[1024px] xl:max-w-[1200px] 2xl:max-w-[1380px] mx-auto overflow-hidden">
-        <div className="w-full flex justify-between items-center gap-4 py-4">
-            <p>Clase</p>
-            <p>Section</p>
-            <p>Weekly/Monthly</p>
-        </div>
+        <AttendanceFilters 
+        
+        />
         <div className="w-full grid grid-cols-12 dark:bg-slate-900 bg-gray-200 font-bold px-2 py-6">
             <div className="flex py-1 text-left hover:text-slate-700 dark:hover:text-slate-300 cursor-pointer">
                 

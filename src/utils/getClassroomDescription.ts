@@ -5,6 +5,19 @@ interface Props {
     level: string
 }
 
+export const getClassroomGrade = (lan: string, grade: string) => {
+    const gradeConverter: Record<string, string> = {
+        '1': lan === 'EN' ? 'First' : 'Primero',
+        '2': lan === 'EN' ? 'Second' : 'Segundo',
+        '3': lan === 'EN' ? 'Third' : 'Tercero',
+        '4': lan === 'EN' ? 'Fourth' : 'Cuarto',
+        '5': lan === 'EN' ? 'Fifth' : 'Quinto',
+        '6': lan === 'EN' ? 'Sixth' : 'Sexto',
+    }
+
+    return gradeConverter[grade]
+}
+
 const getClassroomDescription = ({lan, grade, section, level }: Props)  => {
     const gradeConverter: Record<string, string> = {
         '1': lan === 'EN' ? 'First' : 'Primero',

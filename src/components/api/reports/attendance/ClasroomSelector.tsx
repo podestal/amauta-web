@@ -1,12 +1,23 @@
-import useAuthStore from "../../../../hooks/store/useAuthStore"
+import { Classroom } from "../../../../services/api/classroomService"
+import Selector from "../../../ui/Selector"
 
-const ClasroomSelector = () => {
+interface Props {
+    setSelectedClassroom: (status: string) => void
+    selectedClassroom: string
+    classrooms: Classroom[]
+}
 
-    const access = useAuthStore(s => s.access) || ''
-    // const {} = 
-
+const ClasroomSelector = ({ selectedClassroom, setSelectedClassroom, classrooms }: Props) => {
+    
   return (
-    <div>ClasroomSelector</div>
+    <div>
+        <Selector 
+            values={classrooms.map(classroom => ({ id: classroom.id.toString(), name:classroom.section }))}
+            setter={setSelectedClassroom}
+            defaultValue={selectedClassroom}
+            label="Sección"
+        />
+    </div>
   )
 }
 

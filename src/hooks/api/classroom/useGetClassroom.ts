@@ -5,7 +5,7 @@ interface Props {
     access: string
 }
 
-const useGetClassroom = ({ access }: Props): UseQueryResult<Classroom, Error> => {
+const useGetClassroom = ({ access }: Props): UseQueryResult<Classroom[], Error> => {
 
     const classroomService = getClassroomService()
     return useQuery({
