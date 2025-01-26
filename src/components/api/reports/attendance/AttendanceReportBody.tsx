@@ -66,17 +66,17 @@ const AttendanceReportBody = ({ weekDays, selectedClassroom, selectedWeek }: Pro
                     <div key={index} className="w-full flex justify-left items-center gap-2">
                         <div
                             className={`w-8 h-8 flex justify-center items-center ${
-                                attendanceIn ? statusStyles[attendanceIn.status] : "bg-gray-600"
+                                attendanceIn ? statusStyles[attendanceIn.status] : "dark:bg-gray-700 bg-gray-400"
                             } rounded-lg`}
                         >
-                            {attendanceIn ? attendanceIn.status : "-"}
+                           
                         </div>
                         <div
                             className={`w-8 h-8 flex justify-center items-center ${
-                                attendanceOut ? statusStyles[attendanceOut.status] : "bg-gray-600"
+                                attendanceOut ? statusStyles[attendanceOut.status] : "dark:bg-gray-700 bg-gray-400"
                             } rounded-lg`}
                         >
-                            {attendanceOut ? attendanceOut.status : "-"}
+                           
                         </div>
                     </div>
                 );

@@ -2,6 +2,7 @@ import { useState } from "react"
 import moment from "moment"
 import AttendanceReportHeader from "./AttendanceReportHeader"
 import AttendanceReportBody from "./AttendanceReportBody"
+import AttendanceLegend from "./AttendanceLegend"
 
 interface Props {
     selectedClassroom: string
@@ -23,6 +24,9 @@ const AttendanceReportTable = ({ selectedClassroom }: Props) => {
 
   return (
     <>
+        <AttendanceLegend 
+            
+        />
         <AttendanceReportHeader 
             weekDays={weekDays}
             selectedWeek={selectedWeek}

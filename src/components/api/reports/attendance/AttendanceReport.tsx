@@ -23,9 +23,6 @@ const AttendanceReport = () => {
             setSelectedClassroom={setSelectedClassroom}
         />
         <AttendanceSummary />
-        <div className="w-full my-12">
-          Leyenda
-        </div>
         {selectedClassroom && 
         
         <AttendanceReportTable 
