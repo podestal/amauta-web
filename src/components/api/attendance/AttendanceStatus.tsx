@@ -17,7 +17,7 @@ interface AttendanceStatusProps {
     'O': 'bg-green-500 shadow-green-500 text-green-100',
     'L': 'bg-orange-500 shadow-amber-500 text-amber-100',
     'N': 'bg-red-500 shadow-red-500 text-red-100',
-    'E': 'bg-green-700 shadow-green-500 text-green-100',
+    'E': 'bg-green-700 shadow-green-700 text-green-200',
     'T': 'bg-yellow-400 shadow-yellow-500 text-yellow-100',
 };
   

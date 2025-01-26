@@ -10,6 +10,7 @@ const AttendanceReport = () => {
 
     const lan = useLanguageStore(s => s.lan)
     const [selectedClassroom, setSelectedClassroom] = useState('')
+    const [selectedType, setSelectedType] = useState('2')
 
     console.log('selectedClassroom', selectedClassroom);
     
@@ -21,12 +22,15 @@ const AttendanceReport = () => {
         <h2 className="text-4xl mb-16 text-center font-bold">{lan === 'EN' ? 'Attendance Report' : 'Reporte de Asistencia'}</h2>
         <AttendanceFilters 
             setSelectedClassroom={setSelectedClassroom}
+            selectedType={selectedType}
+            setSelectedType={setSelectedType}
         />
         <AttendanceSummary />
         {selectedClassroom && 
         
         <AttendanceReportTable 
             selectedClassroom={selectedClassroom}
+            selectedType={selectedType}
         />}
         
     </div>

@@ -8,15 +8,30 @@ interface Props {
     tutor?: boolean
     month?: string
     week?: string
+    day?: string
 }
 
-const useGetStudents = ({ access, classroomId, tutor, month, week }: Props): UseQueryResult<Student[], Error> => {
+const useGetStudents = ({ access, classroomId, tutor, month, week, day }: Props): UseQueryResult<Student[], Error> => {
 
     const studentService = getStudentService({ tutor })
-    const studentCacheKeyTime = week ? `${classroomId} ${week}` : `${classroomId} ${month}`
-    const STUDENT_CACHE_KEY = getStudentsCacheKey(studentCacheKeyTime || 'tutor')
-    let params: { classroom: string; month?: string; week?: string } = { classroom: classroomId || '' }
 
+    let studentCacheKeyTime = `${classroomId}`
+
+    if (day) {
+        studentCacheKeyTime = `${classroomId} ${day} ${month}`
+    } else if (week) {
+        studentCacheKeyTime = `${classroomId} ${week}`
+    } else if (month) {
+        studentCacheKeyTime = `${classroomId} ${month}`
+    }
+
+
+    console.log('studentCacheKeyTime', studentCacheKeyTime)
+    
+    const STUDENT_CACHE_KEY = getStudentsCacheKey(studentCacheKeyTime || 'tutor')
+    let params: { classroom: string; day?: string; month?: string; week?: string } = { classroom: classroomId || '' }
+
+    if (day) params = {...params, day: day}
     if (month) params = {...params, month: month}
     if (week) params = {...params, week: week}
 

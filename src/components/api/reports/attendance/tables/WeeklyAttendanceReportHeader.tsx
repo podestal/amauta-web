@@ -1,5 +1,5 @@
 import { RiArrowDownSFill, RiArrowLeftCircleFill, RiArrowRightCircleFill } from "@remixicon/react"
-import useLanguageStore from "../../../../hooks/store/useLanguageStore"
+import useLanguageStore from "../../../../../hooks/store/useLanguageStore"
 
 interface Props {
     weekDays: moment.Moment[]
@@ -15,8 +15,7 @@ const daysInSpanish: Record<string, string> = {
     'Fri': 'Vie',
 }
 
-const AttendanceReportHeader = ({ weekDays, selectedWeek, setSelectedWeek }: Props) => {
-
+const WeeklyAttendanceReportHeader = ({ weekDays, selectedWeek, setSelectedWeek }: Props) => {
     const lan = useLanguageStore(s => s.lan)
 
     const handleNextWeek = () => {
@@ -79,4 +78,4 @@ const AttendanceReportHeader = ({ weekDays, selectedWeek, setSelectedWeek }: Pro
   )
 }
 
-export default AttendanceReportHeader
+export default WeeklyAttendanceReportHeader
