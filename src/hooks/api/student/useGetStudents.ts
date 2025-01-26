@@ -13,7 +13,8 @@ interface Props {
 const useGetStudents = ({ access, classroomId, tutor, month, week }: Props): UseQueryResult<Student[], Error> => {
 
     const studentService = getStudentService({ tutor })
-    const STUDENT_CACHE_KEY = getStudentsCacheKey(classroomId || 'tutor')
+    const studentCacheKeyTime = week ? `${classroomId} ${week}` : `${classroomId} ${month}`
+    const STUDENT_CACHE_KEY = getStudentsCacheKey(studentCacheKeyTime || 'tutor')
     let params: { classroom: string; month?: string; week?: string } = { classroom: classroomId || '' }
 
     if (month) params = {...params, month: month}
