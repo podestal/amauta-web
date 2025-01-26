@@ -28,8 +28,8 @@ const useCreateAttendance = ({ classroomId }: Props): UseMutationResult<Attendan
                     ?
                     {
                         ...student,
-                        attendances_in: res.kind === 'I' ? res as SimpleAttendance : student.attendances_in, 
-                        attendances_out: res.kind === 'O' ? res as SimpleAttendance : student.attendances_out
+                        attendances_in: res.kind === 'I' ? [res as SimpleAttendance] : student.attendances_in, 
+                        attendances_out: res.kind === 'O' ? [res as SimpleAttendance] : student.attendances_out
                     } : student
                 )
                 return newData

@@ -12,6 +12,8 @@ interface Props {
 const StudentAttendance = ({ student, classroomId, canModifyAttendance}: Props) => {
 
   const lan = useLanguageStore(s => s.lan)
+  const attendanceIn: SimpleAttendance = student.attendances_in[0]
+  const attendanceOut: SimpleAttendance = student.attendances_out[0]
 
   const renderAttendanceAction = ( attendance: SimpleAttendance, kind: string, label: string) => {
     return attendance 
@@ -42,12 +44,12 @@ const StudentAttendance = ({ student, classroomId, canModifyAttendance}: Props) 
     <div className="w-full">
         <div className="grid grid-cols-2 mx-6 gap-6">
           {renderAttendanceAction(
-            student.attendances_in,
+            attendanceIn,
             "I",
             lan === "EN" ? `${canModifyAttendance ? 'Entrance' : 'No Attendance'}` : `${canModifyAttendance ? 'Entrada' : 'Sin Asistencia'}`
           )}
           {renderAttendanceAction(
-            student.attendances_out,
+            attendanceOut,
             "O",
             lan === "EN" ? `${canModifyAttendance ? 'Exit' : 'No Attendance'}`: `${canModifyAttendance ? 'Salida' : 'Sin Asistencia'}`
           )}

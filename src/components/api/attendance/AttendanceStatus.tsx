@@ -12,15 +12,16 @@ interface AttendanceStatusProps {
     E: '🛡️', // Excused
     T: '⚠️', // Tardy
   };
+
+  export const statusStyles: Record<string, string> = {
+    'O': 'bg-green-500 shadow-green-500 text-green-100',
+    'L': 'bg-amber-500 shadow-amber-500 text-amber-100',
+    'N': 'bg-red-500 shadow-red-500 text-red-100',
+    'E': 'bg-green-500 shadow-green-500 text-green-100',
+    'T': 'bg-yellow-500 shadow-yellow-500 text-yellow-100',
+};
   
   const AttendanceStatus = ({ status, label, canModify, onClick }: AttendanceStatusProps) => {
-    const statusStyles: Record<string, string> = {
-        'O': 'bg-green-500 shadow-green-500 text-green-100',
-        'L': 'bg-amber-500 shadow-amber-500 text-amber-100',
-        'N': 'bg-red-500 shadow-red-500 text-red-100',
-        'E': 'bg-green-500 shadow-green-500 text-green-100',
-        'T': 'bg-yellow-500 shadow-yellow-500 text-yellow-100',
-    };
   
     return (
         <p

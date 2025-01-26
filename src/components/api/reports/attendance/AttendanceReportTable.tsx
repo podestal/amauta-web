@@ -2,6 +2,7 @@ import { RiArrowDownSFill } from "@remixicon/react"
 import useLanguageStore from "../../../../hooks/store/useLanguageStore"
 import useAuthStore from "../../../../hooks/store/useAuthStore"
 import useGetStudents from "../../../../hooks/api/student/useGetStudents"
+import { statusStyles } from "../../attendance/AttendanceStatus"
 
 interface Props {
     selectedClassroom: string
@@ -11,7 +12,7 @@ const AttendanceReportTable = ({ selectedClassroom }: Props) => {
 
     const lan = useLanguageStore(s => s.lan)
     const access = useAuthStore(s => s.access) || ''
-    const { data: students, isLoading, isError, error, isSuccess } = useGetStudents({ access, classroomId: selectedClassroom })
+    const { data: students, isLoading, isError, error, isSuccess } = useGetStudents({ access, classroomId: selectedClassroom, week: '1' })
 
     if (isLoading) return <p className="text-2xl text-center my-10 animate-pulse">{lan === 'EN' ? 'Loading ...' : 'Cargando ...'}</p>
 
@@ -41,19 +42,19 @@ const AttendanceReportTable = ({ selectedClassroom }: Props) => {
                 />
             </div>
             <div className="flex py-1 text-left hover:text-slate-700 dark:hover:text-slate-300 cursor-pointer">
-                <p>{lan === 'EN' ? 'Mon' : 'Lun'}</p>
+                <p>{lan === 'EN' ? 'Mon' : 'Lun 20'}</p>
             </div>
             <div className="flex py-1 text-left hover:text-slate-700 dark:hover:text-slate-300 cursor-pointer">
-                <p>{lan === 'EN' ? 'Tue' : 'Mar'}</p>
+                <p>{lan === 'EN' ? 'Tue' : 'Mar 21'}</p>
             </div>
             <div className="flex py-1 text-left hover:text-slate-700 dark:hover:text-slate-300 cursor-pointer">
-                <p>{lan === 'EN' ? 'Wed' : 'Mie'}</p>
+                <p>{lan === 'EN' ? 'Wed' : 'Mie 22'}</p>
             </div>
             <div className="flex py-1 text-left hover:text-slate-700 dark:hover:text-slate-300 cursor-pointer">
-                <p>{lan === 'EN' ? 'Thu' : 'Jue'}</p>
+                <p>{lan === 'EN' ? 'Thu' : 'Jue 23'}</p>
             </div>
             <div className="flex py-1 text-left hover:text-slate-700 dark:hover:text-slate-300 cursor-pointer">
-                <p>{lan === 'EN' ? 'Fri' : 'Vie'}</p>
+                <p>{lan === 'EN' ? 'Fri' : 'Vie 24'}</p>
             </div>
         </div>
         {/* <>{console.log('students', students)}</> */}
@@ -83,26 +84,16 @@ const AttendanceReportTable = ({ selectedClassroom }: Props) => {
                 <div className="flex justify-start items-center col-span-2">
                     <p>{student.last_name}</p>
                 </div>
-                <div className="w-full flex justify-left items-center gap-2">
-                    <div className="w-8 h-8 bg-red-600 shadow-xl shadow-red-600 rounded-lg" />
-                    <div className="w-8 h-8 bg-red-600 shadow-xl shadow-red-600 rounded-lg" />
-                </div>
-                <div className="w-full flex justify-left items-center gap-2">
-                    <div className="w-8 h-8 bg-red-600 shadow-xl shadow-red-600 rounded-lg" />
-                    <div className="w-8 h-8 bg-red-600 shadow-xl shadow-red-600 rounded-lg" />
-                </div>
-                <div className="w-full flex justify-left items-center gap-2">
-                    <div className="w-8 h-8 bg-red-600 shadow-xl shadow-red-600 rounded-lg" />
-                    <div className="w-8 h-8 bg-red-600 shadow-xl shadow-red-600 rounded-lg" />
-                </div>
-                <div className="w-full flex justify-left items-center gap-2">
-                    <div className="w-8 h-8 bg-red-600 shadow-xl shadow-red-600 rounded-lg" />
-                    <div className="w-8 h-8 bg-red-600 shadow-xl shadow-red-600 rounded-lg" />
-                </div>
-                <div className="w-full flex justify-left items-center gap-2">
-                    <div className="w-8 h-8 bg-red-600 shadow-xl shadow-red-600 rounded-lg" />
-                    <div className="w-8 h-8 bg-red-600 shadow-xl shadow-red-600 rounded-lg" />
-                </div>
+                    {student.attendances_in && student.attendances_in.map((attendance_in, index) => (
+                        <div key={index}  className="w-full flex justify-left items-center gap-2">
+                            <div className={`w-8 h-8 flex justify-center items-center ${statusStyles[attendance_in.status]} rounded-lg`}>
+                                {attendance_in.status}
+                            </div>
+                            <div className={`w-8 h-8 flex justify-center items-center ${statusStyles[student.attendances_out[index].status]} rounded-lg`}>
+                                {student.attendances_out[index].status}
+                            </div>
+                        </div>
+                    ))}
             </div>
         ))}
         

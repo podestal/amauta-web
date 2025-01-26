@@ -28,8 +28,8 @@ const useUpdateAttendance = ({ attendanceId, classroomId }: Props): UseMutationR
                     if (student.uid === res.student) {
                         return {
                             ...student,
-                            attendances_in: res.kind === 'I' ? res as SimpleAttendance : student.attendances_in, 
-                            attendances_out: res.kind === 'O' ? res as SimpleAttendance : student.attendances_out
+                            attendances_in: res.kind === 'I' ? [res as SimpleAttendance] : student.attendances_in, 
+                            attendances_out: res.kind === 'O' ? [res as SimpleAttendance] : student.attendances_out
                         }
                     }
                     return student
