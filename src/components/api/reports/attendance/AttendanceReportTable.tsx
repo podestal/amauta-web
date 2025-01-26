@@ -42,7 +42,7 @@ const AttendanceReportTable = ({ selectedClassroom }: Props) => {
         }
     }
 
-    const weekDays = getWeekDays(parseInt(selectedWeek))
+    const weekDays = getWeekDays(parseInt(selectedWeek) +1)
 
     if (isLoading) return <p className="text-2xl text-center my-10 animate-pulse">{lan === 'EN' ? 'Loading ...' : 'Cargando ...'}</p>
 
@@ -78,25 +78,17 @@ const AttendanceReportTable = ({ selectedClassroom }: Props) => {
                 />
             </div>
             {weekDays.map((day, index) => (
-                <div key={index} className="flex py-1 text-left hover:text-slate-700 dark:hover:text-slate-300 cursor-pointer">
-                    <p>{lan === 'EN' ? day.format('ddd') : day.format('ddd')}</p>
-                </div>
+                <div
+                key={index}
+                className="flex py-1 text-left hover:text-slate-700 dark:hover:text-slate-300 cursor-pointer"
+            >
+                <p>
+                    {lan === "EN"
+                        ? day.format("ddd DD")
+                        : day.locale("es").format("ddd DD")} 
+                </p>
+            </div>
             ))}
-            {/* <div className="flex py-1 text-left hover:text-slate-700 dark:hover:text-slate-300 cursor-pointer">
-                <p>{lan === 'EN' ? 'Mon' : 'Lun 20'}</p>
-            </div>
-            <div className="flex py-1 text-left hover:text-slate-700 dark:hover:text-slate-300 cursor-pointer">
-                <p>{lan === 'EN' ? 'Tue' : 'Mar 21'}</p>
-            </div>
-            <div className="flex py-1 text-left hover:text-slate-700 dark:hover:text-slate-300 cursor-pointer">
-                <p>{lan === 'EN' ? 'Wed' : 'Mie 22'}</p>
-            </div>
-            <div className="flex py-1 text-left hover:text-slate-700 dark:hover:text-slate-300 cursor-pointer">
-                <p>{lan === 'EN' ? 'Thu' : 'Jue 23'}</p>
-            </div>
-            <div className="flex py-1 text-left hover:text-slate-700 dark:hover:text-slate-300 cursor-pointer">
-                <p>{lan === 'EN' ? 'Fri' : 'Vie 24'}</p>
-            </div> */}
             <div>
                 <RiArrowRightCircleFill 
                     className="text-blue-600 hover:text-blue-800 cursor-pointer"
@@ -104,7 +96,6 @@ const AttendanceReportTable = ({ selectedClassroom }: Props) => {
                 />
             </div>
         </div>
-        {/* <>{console.log('students', students)}</> */}
         {students.map( student => (
             <div 
                 key={student.uid}
@@ -134,16 +125,33 @@ const AttendanceReportTable = ({ selectedClassroom }: Props) => {
                 <div>
                     
                 </div>
-                {student.attendances_in && student.attendances_in.map((attendance_in, index) => (
-                    <div key={index}  className="w-full flex justify-left items-center gap-2">
-                        <div className={`w-8 h-8 flex justify-center items-center ${statusStyles[attendance_in.status]} rounded-lg`}>
-                            {attendance_in.status}
+                {weekDays.map((day, index) => {
+                    const attendanceIn = student.attendances_in.find((attendance) =>
+                        moment(attendance.created_at).isSame(day, "day")
+                    );
+                    const attendanceOut = student.attendances_out.find((attendance) =>
+                        moment(attendance.created_at).isSame(day, "day")
+                    );
+
+                    return (
+                        <div key={index} className="w-full flex justify-left items-center gap-2">
+                            <div
+                                className={`w-8 h-8 flex justify-center items-center ${
+                                    attendanceIn ? statusStyles[attendanceIn.status] : "bg-gray-600"
+                                } rounded-lg`}
+                            >
+                                {attendanceIn ? attendanceIn.status : "-"}
+                            </div>
+                            <div
+                                className={`w-8 h-8 flex justify-center items-center ${
+                                    attendanceOut ? statusStyles[attendanceOut.status] : "bg-gray-600"
+                                } rounded-lg`}
+                            >
+                                {attendanceOut ? attendanceOut.status : "-"}
+                            </div>
                         </div>
-                        <div className={`w-8 h-8 flex justify-center items-center ${statusStyles[student.attendances_out[index].status]} rounded-lg`}>
-                            {student.attendances_out[index].status}
-                        </div>
-                    </div>
-                ))}
+                    );
+                })}
                 <div>
 
                 </div>

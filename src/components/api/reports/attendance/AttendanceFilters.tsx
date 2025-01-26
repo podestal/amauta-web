@@ -32,6 +32,7 @@ const AttendanceFilters = ({ setSelectedClassroom }: Props) => {
 
     const [selectedLevel, setSelectedLevel] = useState('P')
     const [selectedGrade, setSelectedGrade] = useState('1')
+    const [selectedType, setSelectedType] = useState('2')
 
     const { data: classrooms, isLoading, isError, error, isSuccess } = useGetClassroom({ access })
 
@@ -64,7 +65,16 @@ const AttendanceFilters = ({ setSelectedClassroom }: Props) => {
                 .filter(classroom => classroom.grade === selectedGrade && classroom.level === selectedLevel)
             }
         />
-        <p>Monthly</p>
+        <Selector 
+            values={[
+                {id: '1', name: 'Mensual'},
+                {id: '2', name: 'Semanal'},
+                {id: '3', name: 'Diaria'},
+            ]}
+            setter={setSelectedType}
+            defaultValue={selectedType}
+            label="Tipo"
+        />
     </div>
   )
 }
