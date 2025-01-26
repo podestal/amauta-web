@@ -2,6 +2,7 @@ import AttendanceFilters from "./AttendanceFilters"
 import { useState } from "react"
 import AttendanceReportTable from "./AttendanceReportTable"
 import useLanguageStore from "../../../../hooks/store/useLanguageStore"
+import AttendanceSummary from "./AttendanceSummary"
 
 
 
@@ -21,6 +22,7 @@ const AttendanceReport = () => {
         <AttendanceFilters 
             setSelectedClassroom={setSelectedClassroom}
         />
+        <AttendanceSummary />
         {selectedClassroom && 
         <AttendanceReportTable 
             selectedClassroom={selectedClassroom}
