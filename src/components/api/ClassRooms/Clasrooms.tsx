@@ -27,14 +27,15 @@ const Clasrooms = () => {
 
   return (
     <div className="mb-32">
+        <h2 className="text-4xl font-bold text-center mb-10">Clases</h2>
         {classrooms.length > 1 
         ?
         <motion.div 
             initial="hidden"
             animate="visible"
             transition={{ staggerChildren: 0.1 }}
-            className="flex flex-col justify-start items-center gap-6 w-[90%] mx-auto">
-            <h2 className="text-4xl font-bold text-center">Clases</h2>
+            className="flex flex-col lg:grid md:grid-cols-2 lg:grid-cols-3 justify-start items-center gap-6 w-[90%] mx-auto">
+            
             {classrooms.map( clasroom => (
                 <ClassroomCard 
                     key={clasroom}

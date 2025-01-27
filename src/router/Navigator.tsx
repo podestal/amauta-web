@@ -32,6 +32,17 @@ const Navigator: React.FC = () => {
           <span>{lan === 'EN' ? 'Students' : 'Alumnos'}</span>
         </NavLink>
         <NavLink
+          to="/attendance"
+          className={({ isActive }) =>
+            `flex flex-col items-center text-sm ${
+              isActive ? 'text-blue-500' : 'text-gray-500'
+            }`
+          }
+        >
+          <RiCalendarScheduleFill />
+          <span>{lan === 'EN' ? 'Attendance' : 'Asistencia' }</span>
+        </NavLink>
+        <NavLink
           to="/profile"
           className={({ isActive }) =>
             `flex flex-col items-center text-sm ${

@@ -40,16 +40,24 @@ const StudentCard = ({ student, classroomId, canModifyAttendance=true }: Props) 
         </div>
 
         {/* Student Name */}
-        <div className="w-full flex justify-between">
+        <div className="w-full flex justify-between lg:grid lg:grid-cols-4 gap-4">
           <p className="text-lg font-bold text-gray-900 dark:text-gray-100">
             {student.first_name} {student.last_name}
           </p>
+          
           <Announcements student={student} />
+          <div className="max-lg:hidden col-span-2">
+            <StudentAttendance 
+              student={student}
+              classroomId={classroomId}
+              canModifyAttendance={canModifyAttendance}
+            />
+          </div>
         </div>
       </div>
 
       {/* Student Attendance Section */}
-      <div className="mt-4">
+      <div className="mt-4 lg:hidden">
         <StudentAttendance 
           student={student}
           classroomId={classroomId}
