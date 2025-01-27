@@ -20,9 +20,6 @@ const AttendanceSummary = ({ selectedClassroom, selectedWeek, selectedDay, curre
 
     const lan = useLanguageStore(s => s.lan)
     const access = useAuthStore(s => s.access) || ''
-    // console.log('week', selectedWeek);
-    // console.log('day', selectedDay);
-    // console.log('month', currentMonth);
     
     const {data: attendances, isLoading, isError, error, isSuccess} = useGetAttendance({ access, classroomId:selectedClassroom, day: selectedDay, month: currentMonth, week: selectedWeek })
 

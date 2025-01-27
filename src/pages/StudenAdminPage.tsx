@@ -1,11 +1,11 @@
-import AttendanceReport from "../components/api/reports/attendance/AttendanceReport"
+import CreateStudent from "../components/api/Students/CreateStudent"
 
-const ReportsPage = () => {
+const StudenAdminPage = () => {
   return (
     <div className="w-full max-w-[95%] sm:max-w-[600px] md:max-w-[800px] lg:max-w-[1024px] xl:max-w-[1200px] 2xl:max-w-[1380px] mx-auto">
-        <AttendanceReport />
+        <CreateStudent />
     </div>
   )
 }
 
-export default ReportsPage
+export default StudenAdminPage

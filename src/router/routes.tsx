@@ -10,6 +10,7 @@ import DownloadappPage from "../pages/DownloadappPage";
 import AnnouncementsPage from "../pages/AnnouncementsPage";
 import DetailedAttendancePage from "../pages/DetailedAttendancePage";
 import ReportsPage from "../pages/ReportsPage";
+import StudenAdminPage from "../pages/StudenAdminPage";
 
 const routes = createBrowserRouter([
     {
@@ -65,6 +66,13 @@ const routes = createBrowserRouter([
                 element:
                 <PrivateRoutes>
                     <ReportsPage />
+                </PrivateRoutes>
+            },
+            {
+                path: 'student-admin',
+                element:
+                <PrivateRoutes>
+                    <StudenAdminPage />
                 </PrivateRoutes>
             },
             {

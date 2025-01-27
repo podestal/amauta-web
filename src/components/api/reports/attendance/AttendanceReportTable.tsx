@@ -38,7 +38,7 @@ const AttendanceReportTable = ({
         return moment().date(day).month(month - 1)
     }
 
-    const weekDays = getWeekDays(parseInt(selectedWeek) +1)
+    const weekDays = getWeekDays(parseInt(selectedWeek))
 
 
   return (
