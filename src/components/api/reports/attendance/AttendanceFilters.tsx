@@ -4,6 +4,7 @@ import useLoader from "../../../../hooks/ui/useLoader"
 import useGetClassroom from "../../../../hooks/api/classroom/useGetClassroom"
 import ClasroomSelector from "./ClasroomSelector"
 import Selector from "../../../ui/Selector"
+import { motion } from "framer-motion"
 
 const gradesPrimary = [
     { id: '1', name: 'Primero'},
@@ -21,6 +22,11 @@ const gradesSecondary = [
     { id: '4', name: 'Cuarto'},
     { id: '5', name: 'Quinto'},
 ]
+
+const variants = {
+    hidden: { opacity: 0, y: -50 },
+    visible: { opacity: 1, y: 0 },
+}
 
 interface Props {
     setSelectedClassroom: React.Dispatch<React.SetStateAction<string>>
@@ -44,7 +50,12 @@ const AttendanceFilters = ({ setSelectedClassroom, selectedType, setSelectedType
     if (isSuccess)
 
   return (
-    <div className="w-full grid grid-cols-4 gap-12 py-4">
+    <motion.div 
+        initial="hidden"
+        animate="visible"
+        variants={variants}
+        transition={{ duration: 0.5 }}
+        className="w-full grid grid-cols-4 gap-12 py-4">
         <Selector 
             values={[
                 { id: 'P', name: 'Primaria' },
@@ -76,7 +87,7 @@ const AttendanceFilters = ({ setSelectedClassroom, selectedType, setSelectedType
             defaultValue={selectedType}
             label="Tipo"
         />
-    </div>
+    </motion.div>
   )
 }
 

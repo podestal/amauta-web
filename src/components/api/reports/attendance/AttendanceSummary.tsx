@@ -1,3 +1,4 @@
+import { motion } from "framer-motion"
 import useGetAttendance from "../../../../hooks/api/attendance/useGetAttendance"
 import useAuthStore from "../../../../hooks/store/useAuthStore"
 import useLanguageStore from "../../../../hooks/store/useLanguageStore"
@@ -10,11 +11,15 @@ interface Props {
     currentMonth?: string
 }
 
-// O: '✅', // On Time
-// L: '⏰', // Late
-// N: '❌', // No Show
-// E: '🛡️', // Excused
-// T: '⚠️', // Tardy
+const variantsDown = {
+    hidden: { opacity: 0, y: -50 },
+    visible: { opacity: 1, y: 0 },
+}
+
+const variantsUp = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0 },
+}
 
 const AttendanceSummary = ({ selectedClassroom, selectedWeek, selectedDay, currentMonth }: Props) => {
 
@@ -32,7 +37,12 @@ const AttendanceSummary = ({ selectedClassroom, selectedWeek, selectedDay, curre
   return (
     <div className="w-full my-12 mx-auto flex flex-col gap-12">
         {/* <>{console.log(attendances)}</> */}
-        <div className="flex justify-between items-center gap-12">
+        <motion.div 
+            initial="hidden"
+            animate="visible"
+            variants={variantsDown}
+            transition={{ duration: 0.5 }}
+            className="flex justify-between items-center gap-12">
             <AttendanceSummaryCard 
                 attendances={attendances}
                 status="O"
@@ -45,8 +55,13 @@ const AttendanceSummary = ({ selectedClassroom, selectedWeek, selectedDay, curre
                 attendances={attendances}
                 status="E"
             />
-        </div>
-        <div className="flex justify-evenly items-center gap-12">
+        </motion.div>
+        <motion.div 
+            initial="hidden"
+            animate="visible"
+            variants={variantsUp}
+            transition={{ duration: 0.5 }}
+            className="flex justify-evenly items-center gap-12">
             <AttendanceSummaryCard 
                 attendances={attendances}
                 status="L"
@@ -55,7 +70,7 @@ const AttendanceSummary = ({ selectedClassroom, selectedWeek, selectedDay, curre
                 attendances={attendances}
                 status="T"
             />
-        </div>
+        </motion.div>
     </div>
   )
 }

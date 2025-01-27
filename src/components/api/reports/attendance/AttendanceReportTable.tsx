@@ -4,6 +4,7 @@ import WeeklyAttendanceReportHeader from "./tables/WeeklyAttendanceReportHeader"
 import WeeklyAttendanceReportBody from "./tables/WeeklyAttendanceReportBody"
 import DailyAttendanceReportHeader from "./tables/DailyAttendanceReportHeader"
 import DailyAttendanceReportBody from "./tables/DailyAttendanceReportBody"
+import { motion } from "framer-motion"
 
 interface Props {
     selectedClassroom: string
@@ -14,6 +15,11 @@ interface Props {
     setSelectedDay: React.Dispatch<React.SetStateAction<string>>
     currentMonth: string
     setCurrentMonth: React.Dispatch<React.SetStateAction<string>>
+}
+
+const variants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0 },
 }
 
 const AttendanceReportTable = ({ 
@@ -42,7 +48,12 @@ const AttendanceReportTable = ({
 
 
   return (
-    <>
+    <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={variants}
+        transition={{ duration: 0.5 }}
+    >
         <AttendanceLegend 
 
         />
@@ -76,7 +87,7 @@ const AttendanceReportTable = ({
             />
         </>
         }
-    </>
+    </motion.div>
   )
 }
 
