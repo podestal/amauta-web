@@ -5,7 +5,9 @@ import AttendanceSummaryCard from "./AttendanceSummaryCard"
 
 interface Props {
     selectedClassroom: string
-    selectedWeek: string
+    selectedWeek?: string
+    selectedDay?: string
+    currentMonth?: string
 }
 
 // O: '✅', // On Time
@@ -14,11 +16,15 @@ interface Props {
 // E: '🛡️', // Excused
 // T: '⚠️', // Tardy
 
-const AttendanceSummary = ({ selectedClassroom, selectedWeek }: Props) => {
+const AttendanceSummary = ({ selectedClassroom, selectedWeek, selectedDay, currentMonth }: Props) => {
 
     const lan = useLanguageStore(s => s.lan)
     const access = useAuthStore(s => s.access) || ''
-    const {data: attendances, isLoading, isError, error, isSuccess} = useGetAttendance({ access, classroomId:selectedClassroom, week: selectedWeek})
+    // console.log('week', selectedWeek);
+    // console.log('day', selectedDay);
+    // console.log('month', currentMonth);
+    
+    const {data: attendances, isLoading, isError, error, isSuccess} = useGetAttendance({ access, classroomId:selectedClassroom, day: selectedDay, month: currentMonth, week: selectedWeek })
 
     if (isLoading) return <p className="text-2xl text-center my-10 animate-pulse">{lan === 'EN' ? 'Loading ...' : 'Cargando ...'}</p>
 
@@ -27,7 +33,7 @@ const AttendanceSummary = ({ selectedClassroom, selectedWeek }: Props) => {
     if (isSuccess)
 
   return (
-    <div className="w-[90%] my-12 mx-auto flex flex-col gap-12">
+    <div className="w-full my-12 mx-auto flex flex-col gap-12">
         {/* <>{console.log(attendances)}</> */}
         <div className="flex justify-between items-center gap-12">
             <AttendanceSummaryCard 

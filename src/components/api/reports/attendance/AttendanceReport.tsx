@@ -11,8 +11,11 @@ const AttendanceReport = () => {
 
     const lan = useLanguageStore(s => s.lan)
     const [selectedWeek, setSelectedWeek] = useState(moment().week().toString())
+    const [selectedDay, setSelectedDay] = useState(moment().date().toString())
+    const [currentMonth, setCurrentMonth] = useState((moment().month() + 1).toString())
     const [selectedClassroom, setSelectedClassroom] = useState('')
     const [selectedType, setSelectedType] = useState('2')
+    
 
     console.log('selectedClassroom', selectedClassroom);
     
@@ -29,15 +32,26 @@ const AttendanceReport = () => {
         />
         {selectedClassroom && 
         <>
+          {selectedType === '2' && 
           <AttendanceSummary 
             selectedClassroom={selectedClassroom}
             selectedWeek={selectedWeek}
-          />
+          />}
+          {selectedType === '3' && 
+          <AttendanceSummary 
+            selectedClassroom={selectedClassroom}
+            selectedDay={selectedDay}
+            currentMonth={currentMonth}
+          />}
           <AttendanceReportTable 
             selectedClassroom={selectedClassroom}
             selectedType={selectedType}
             selectedWeek={selectedWeek}
             setSelectedWeek={setSelectedWeek}
+            selectedDay={selectedDay}
+            setSelectedDay={setSelectedDay}
+            currentMonth={currentMonth}
+            setCurrentMonth={setCurrentMonth}
           />
         </>
         }

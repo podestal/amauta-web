@@ -1,4 +1,3 @@
-import { useState } from "react"
 import moment from "moment"
 import AttendanceLegend from "./AttendanceLegend"
 import WeeklyAttendanceReportHeader from "./tables/WeeklyAttendanceReportHeader"
@@ -11,12 +10,23 @@ interface Props {
     selectedType: string
     selectedWeek: string
     setSelectedWeek: React.Dispatch<React.SetStateAction<string>>
+    selectedDay: string
+    setSelectedDay: React.Dispatch<React.SetStateAction<string>>
+    currentMonth: string
+    setCurrentMonth: React.Dispatch<React.SetStateAction<string>>
 }
 
-const AttendanceReportTable = ({ selectedClassroom, selectedType, selectedWeek,  setSelectedWeek }: Props) => {
+const AttendanceReportTable = ({ 
+    selectedClassroom, 
+    selectedType, 
+    selectedWeek,  
+    setSelectedWeek,
+    selectedDay,
+    setSelectedDay,
+    currentMonth,
+    setCurrentMonth,
+}: Props) => {
 
-    const [selectedDay, setSelectedDay] = useState(moment().date().toString())
-    const [currentMonth, setCurrentMonth] = useState((moment().month() + 1).toString())
 
     const getWeekDays = (week: number) => {
         const year = moment().year()

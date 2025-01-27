@@ -9,17 +9,16 @@ export const getAnnouncementsCacheKey = ( student: string ) => {
 interface AttendanceCacheProps {
     classroomId?: string
     studentId?: string
+    time?: string
     month?: string
-    week?: string
 }
 
-export const getAttendanceCacheKey = ( {classroomId, studentId, month, week }: AttendanceCacheProps ) => {
+export const getAttendanceCacheKey = ( {classroomId, studentId, time, month }: AttendanceCacheProps ) => {
 
     if (classroomId) {
-        return [`attendance ${classroomId} ${week}`]
-    } else if (studentId) {
-        console.log('attendance cache', [`attendance ${studentId} ${month}`]);
-        
+        return [`attendance ${classroomId} ${time}`]
+    } 
+    else if (studentId) {
         return [`attendance ${studentId} ${month}`]
     }
     return [`attendance`]
