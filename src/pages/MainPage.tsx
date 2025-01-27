@@ -7,6 +7,7 @@ import useLoadingStore from "../hooks/store/useLoadingStore"
 import Loader from "../components/ui/Loader"
 import { useEffect } from "react"
 import useGetProfileStore from "../hooks/store/useGetProfileStore"
+import SideBar from "../router/SideBar"
 
 const MainPage = () => {
 
@@ -21,14 +22,18 @@ const MainPage = () => {
 
   return (
     <div className="min-h-screen dark:bg-slate-950 dark:text-slate-50 bg-white text-black mx-auto relative">
-        {show && 
-        <NotificationCard 
-            type={type}
-            message={message}
-            reset={reset}
-        />}
-        {isLoading && <Loader />}
-        <Outlet />
+        {profile && access && <SideBar profile={profile}/>}
+        <div className="flex-1 ml-0 lg:ml-64">
+          {show && 
+          <NotificationCard 
+              type={type}
+              message={message}
+              reset={reset}
+          />}
+          {isLoading && <Loader />}
+          <Outlet />
+        </div>
+        
         {profile && access && <Navigator />}
     </div>
   )
