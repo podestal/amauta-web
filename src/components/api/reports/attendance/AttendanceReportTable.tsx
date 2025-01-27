@@ -9,11 +9,12 @@ import DailyAttendanceReportBody from "./tables/DailyAttendanceReportBody"
 interface Props {
     selectedClassroom: string
     selectedType: string
+    selectedWeek: string
+    setSelectedWeek: React.Dispatch<React.SetStateAction<string>>
 }
 
-const AttendanceReportTable = ({ selectedClassroom, selectedType }: Props) => {
+const AttendanceReportTable = ({ selectedClassroom, selectedType, selectedWeek,  setSelectedWeek }: Props) => {
 
-    const [selectedWeek, setSelectedWeek] = useState(moment().week().toString())
     const [selectedDay, setSelectedDay] = useState(moment().date().toString())
     const [currentMonth, setCurrentMonth] = useState((moment().month() + 1).toString())
 

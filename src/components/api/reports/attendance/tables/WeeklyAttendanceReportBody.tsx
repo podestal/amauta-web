@@ -24,6 +24,7 @@ const WeeklyAttendanceReportBody = ({ weekDays, selectedClassroom, selectedWeek 
 
   return (
     <>
+    {/* <>{console.log('students', students)}</> */}
     {students.map( student => (
         <div 
             key={student.uid}

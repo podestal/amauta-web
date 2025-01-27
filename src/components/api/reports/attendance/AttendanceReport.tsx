@@ -3,12 +3,14 @@ import { useState } from "react"
 import AttendanceReportTable from "./AttendanceReportTable"
 import useLanguageStore from "../../../../hooks/store/useLanguageStore"
 import AttendanceSummary from "./AttendanceSummary"
+import moment from "moment"
 
 
 
 const AttendanceReport = () => {
 
     const lan = useLanguageStore(s => s.lan)
+    const [selectedWeek, setSelectedWeek] = useState(moment().week().toString())
     const [selectedClassroom, setSelectedClassroom] = useState('')
     const [selectedType, setSelectedType] = useState('2')
 
@@ -25,13 +27,20 @@ const AttendanceReport = () => {
             selectedType={selectedType}
             setSelectedType={setSelectedType}
         />
-        <AttendanceSummary />
         {selectedClassroom && 
-        
-        <AttendanceReportTable 
+        <>
+          <AttendanceSummary 
+            selectedClassroom={selectedClassroom}
+            selectedWeek={selectedWeek}
+          />
+          <AttendanceReportTable 
             selectedClassroom={selectedClassroom}
             selectedType={selectedType}
-        />}
+            selectedWeek={selectedWeek}
+            setSelectedWeek={setSelectedWeek}
+          />
+        </>
+        }
         
     </div>
   )

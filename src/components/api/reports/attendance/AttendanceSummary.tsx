@@ -1,22 +1,57 @@
+import useGetAttendance from "../../../../hooks/api/attendance/useGetAttendance"
+import useAuthStore from "../../../../hooks/store/useAuthStore"
 import useLanguageStore from "../../../../hooks/store/useLanguageStore"
+import AttendanceSummaryCard from "./AttendanceSummaryCard"
 
-const AttendanceSummary = () => {
+interface Props {
+    selectedClassroom: string
+    selectedWeek: string
+}
+
+// O: '✅', // On Time
+// L: '⏰', // Late
+// N: '❌', // No Show
+// E: '🛡️', // Excused
+// T: '⚠️', // Tardy
+
+const AttendanceSummary = ({ selectedClassroom, selectedWeek }: Props) => {
 
     const lan = useLanguageStore(s => s.lan)
+    const access = useAuthStore(s => s.access) || ''
+    const {data: attendances, isLoading, isError, error, isSuccess} = useGetAttendance({ access, classroomId:selectedClassroom, week: selectedWeek})
+
+    if (isLoading) return <p className="text-2xl text-center my-10 animate-pulse">{lan === 'EN' ? 'Loading ...' : 'Cargando ...'}</p>
+
+    if (isError) return <p>Error {error.message}</p>
+
+    if (isSuccess)
 
   return (
-    <div className="w-[90%] flex justify-between items-center gap-12 my-12 mx-auto">
-        <div className="h-[200px] w-full  bg-green-600 shadow-2xl shadow-slate-400 rounded-3xl flex flex-col justify-center items-center gap-6">
-            <h2 className="text-xl text-slate-200 font-semibold">{lan === 'EN' ? 'Total Excused' : 'Excusado Total'}</h2>
-            <p className="text-6xl font-bold">45 | 33%</p>
+    <div className="w-[90%] my-12 mx-auto flex flex-col gap-12">
+        {/* <>{console.log(attendances)}</> */}
+        <div className="flex justify-between items-center gap-12">
+            <AttendanceSummaryCard 
+                attendances={attendances}
+                status="O"
+            />
+            <AttendanceSummaryCard 
+                attendances={attendances}
+                status="N"
+            />
+            <AttendanceSummaryCard 
+                attendances={attendances}
+                status="E"
+            />
         </div>
-        <div className="h-[200px] w-full bg-red-600 shadow-2xl shadow-slate-400 rounded-3xl flex flex-col justify-center items-center gap-6">
-            <h2 className="text-xl text-slate-200 font-semibold">{lan === 'EN' ? 'Total No Show' : 'Faltas Total'}</h2>
-            <p className="text-6xl font-bold">12 | 20%</p>
-        </div>
-        <div className="h-[200px] w-full bg-amber-500 shadow-2xl shadow-slate-400 rounded-3xl flex flex-col justify-center items-center gap-6">
-            <h2 className="text-xl text-slate-200 font-semibold">{lan === 'EN' ? 'Total Late' : 'Tardanzas Total'}</h2>
-            <p className="text-6xl font-bold">22 | 15%</p>
+        <div className="flex justify-evenly items-center gap-12">
+            <AttendanceSummaryCard 
+                attendances={attendances}
+                status="L"
+            />
+            <AttendanceSummaryCard 
+                attendances={attendances}
+                status="T"
+            />
         </div>
     </div>
   )
