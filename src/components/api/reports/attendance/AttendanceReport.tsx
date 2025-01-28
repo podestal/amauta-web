@@ -14,6 +14,8 @@ const AttendanceReport = () => {
     const [selectedDay, setSelectedDay] = useState(moment().date().toString())
     const [currentMonth, setCurrentMonth] = useState((moment().month() + 1).toString())
     const [selectedClassroom, setSelectedClassroom] = useState('')
+    console.log('currentMonth', currentMonth);
+    const [selectedMonth, setSelectedMonth] = useState(currentMonth)
     const [selectedType, setSelectedType] = useState('2')
     
 
@@ -41,8 +43,14 @@ const AttendanceReport = () => {
           <AttendanceSummary 
             selectedClassroom={selectedClassroom}
             selectedDay={selectedDay}
-            currentMonth={currentMonth}
+            currentMonth={selectedMonth}
           />}
+          {selectedType === '1' &&
+          <AttendanceSummary 
+            selectedClassroom={selectedClassroom}
+            currentMonth={selectedMonth}
+          />
+          }
           <AttendanceReportTable 
             selectedClassroom={selectedClassroom}
             selectedType={selectedType}
@@ -52,6 +60,8 @@ const AttendanceReport = () => {
             setSelectedDay={setSelectedDay}
             currentMonth={currentMonth}
             setCurrentMonth={setCurrentMonth}
+            selectedMonth={selectedMonth}
+            setSelectedMonth={setSelectedMonth}
           />
         </>
         }

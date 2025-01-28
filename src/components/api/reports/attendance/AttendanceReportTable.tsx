@@ -5,6 +5,7 @@ import WeeklyAttendanceReportBody from "./tables/WeeklyAttendanceReportBody"
 import DailyAttendanceReportHeader from "./tables/DailyAttendanceReportHeader"
 import DailyAttendanceReportBody from "./tables/DailyAttendanceReportBody"
 import { motion } from "framer-motion"
+import MonthlyAttendanceReportHeader from "./tables/MonthlyAttendanceReportHeader"
 
 interface Props {
     selectedClassroom: string
@@ -15,6 +16,9 @@ interface Props {
     setSelectedDay: React.Dispatch<React.SetStateAction<string>>
     currentMonth: string
     setCurrentMonth: React.Dispatch<React.SetStateAction<string>>
+    selectedMonth: string
+    setSelectedMonth: React.Dispatch<React.SetStateAction<string>>
+
 }
 
 const variants = {
@@ -31,6 +35,9 @@ const AttendanceReportTable = ({
     setSelectedDay,
     currentMonth,
     setCurrentMonth,
+    selectedMonth,
+    setSelectedMonth,
+
 }: Props) => {
 
 
@@ -54,9 +61,7 @@ const AttendanceReportTable = ({
         variants={variants}
         transition={{ duration: 0.5 }}
     >
-        <AttendanceLegend 
-
-        />
+        <AttendanceLegend />
         {selectedType === '3' &&
         <>
             <DailyAttendanceReportHeader 
@@ -86,6 +91,15 @@ const AttendanceReportTable = ({
                 selectedWeek={selectedWeek}
             />
         </>
+        }
+        {
+            selectedType === '1' &&
+            <>
+                <MonthlyAttendanceReportHeader 
+                    selectedMonth={selectedMonth}
+                    setSelectedMonth={setSelectedMonth}
+                />
+            </>
         }
     </motion.div>
   )
