@@ -14,15 +14,8 @@ const AttendanceReport = () => {
     const [selectedDay, setSelectedDay] = useState(moment().date().toString())
     const [currentMonth, setCurrentMonth] = useState((moment().month() + 1).toString())
     const [selectedClassroom, setSelectedClassroom] = useState('')
-    console.log('currentMonth', currentMonth);
     const [selectedMonth, setSelectedMonth] = useState(currentMonth)
     const [selectedType, setSelectedType] = useState('2')
-    
-
-    console.log('selectedClassroom', selectedClassroom);
-    console.log('days in month', moment(`${new Date().getFullYear()}-${selectedMonth}`).daysInMonth());
-    
-
 
 
   return (

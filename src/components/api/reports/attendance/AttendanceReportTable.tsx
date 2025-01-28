@@ -6,6 +6,7 @@ import DailyAttendanceReportHeader from "./tables/DailyAttendanceReportHeader"
 import DailyAttendanceReportBody from "./tables/DailyAttendanceReportBody"
 import { motion } from "framer-motion"
 import MonthlyAttendanceReportHeader from "./tables/MonthlyAttendanceReportHeader"
+import MonthlyAttendanceReportBody from "./tables/MonthlyAttendanceReportBody"
 
 interface Props {
     selectedClassroom: string
@@ -93,11 +94,15 @@ const AttendanceReportTable = ({
         </>
         }
         {
-            selectedType === '1' &&
+        selectedType === '1' &&
             <>
                 <MonthlyAttendanceReportHeader 
                     selectedMonth={selectedMonth}
                     setSelectedMonth={setSelectedMonth}
+                />
+                <MonthlyAttendanceReportBody 
+                    selectedClassroom={selectedClassroom}
+                    selectedMonth={selectedMonth}
                 />
             </>
         }

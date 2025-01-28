@@ -24,9 +24,6 @@ const useGetStudents = ({ access, classroomId, tutor, month, week, day }: Props)
     } else if (month) {
         studentCacheKeyTime = `${classroomId} ${month}`
     }
-
-
-    console.log('studentCacheKeyTime', studentCacheKeyTime)
     
     const STUDENT_CACHE_KEY = getStudentsCacheKey(studentCacheKeyTime || 'tutor')
     let params: { classroom: string; day?: string; month?: string; week?: string } = { classroom: classroomId || '' }

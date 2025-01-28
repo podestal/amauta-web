@@ -1,6 +1,7 @@
 import { RiArrowDownSFill } from "@remixicon/react"
 import useLanguageStore from "../../../../../hooks/store/useLanguageStore"
 import Selector from "../../../../ui/Selector"
+import moment from "moment"
 
 interface Props {
     selectedMonth: string
@@ -25,7 +26,8 @@ const monthsData = [
 const MonthlyAttendanceReportHeader = ({ selectedMonth, setSelectedMonth }: Props) => {
 
     const lan = useLanguageStore(s => s.lan)
-    const days = Array.from({ length: 31 }, (_, i) => i + 1)
+    const totalDays =  moment(`${new Date().getFullYear()}-${selectedMonth}`).daysInMonth()
+    const days = Array.from({ length: totalDays }, (_, i) => i + 1)
 
   return (
 <div className="w-full grid grid-cols-12 dark:bg-slate-900 bg-gray-200 font-bold px-2 py-6">
