@@ -12,7 +12,7 @@ interface Props {
 }
 
 const useGetAttendance = ({ access, classroomId, studentId, month, week, day }: Props): UseQueryResult<Attendance[], Error> => {
-    // const ATTENDANCE_CACHE_KEY = getAttendanceCacheKey({ classroomId, studentId, month })
+
     const attendanceService = getAttendanceService({ classroomId, studentId })
 
     let attendanceCacheKey = ['']

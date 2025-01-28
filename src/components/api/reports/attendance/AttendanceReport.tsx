@@ -20,6 +20,7 @@ const AttendanceReport = () => {
     
 
     console.log('selectedClassroom', selectedClassroom);
+    console.log('days in month', moment(`${new Date().getFullYear()}-${selectedMonth}`).daysInMonth());
     
 
 
