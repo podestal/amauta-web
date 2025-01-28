@@ -1,7 +1,7 @@
 import { RiArrowDownSFill } from "@remixicon/react"
 import useLanguageStore from "../../../../../hooks/store/useLanguageStore"
 import Selector from "../../../../ui/Selector"
-import moment from "moment"
+import getDaysOfMonth from "../../../../../utils/getDaysOfMonth"
 
 interface Props {
     selectedMonth: string
@@ -26,11 +26,10 @@ const monthsData = [
 const MonthlyAttendanceReportHeader = ({ selectedMonth, setSelectedMonth }: Props) => {
 
     const lan = useLanguageStore(s => s.lan)
-    const totalDays =  moment(`${new Date().getFullYear()}-${selectedMonth}`).daysInMonth()
-    const days = Array.from({ length: totalDays }, (_, i) => i + 1)
+    const days = getDaysOfMonth(parseInt(selectedMonth))
 
   return (
-<div className="w-full grid grid-cols-12 dark:bg-slate-900 bg-gray-200 font-bold px-2 py-6">
+<div className="w-full grid grid-cols-12 dark:bg-slate-900 bg-gray-200 font-bold px-2 pt-6">
 
         <div className="flex py-1 text-left hover:text-slate-700 dark:hover:text-slate-300 cursor-pointer">
             <p>{lan === 'EN' ? 'UID' : 'UID'}</p> 
@@ -58,7 +57,7 @@ const MonthlyAttendanceReportHeader = ({ selectedMonth, setSelectedMonth }: Prop
             <div className="grid grid-cols-31">
                 {days.map(day => (
                     <div key={day} className="flex justify-center items-center w-8 h-8 bg-slate-800">
-                        <p className="text-xs">{day}</p>
+                        <p className="text-xs text-center">{day}</p>
                     </div>
                 ))}
             </div>

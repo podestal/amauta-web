@@ -1,6 +1,8 @@
+import moment from "moment"
 import useGetStudents from "../../../../../hooks/api/student/useGetStudents"
 import useAuthStore from "../../../../../hooks/store/useAuthStore"
 import useLanguageStore from "../../../../../hooks/store/useLanguageStore"
+import { statusStyles } from "../../../attendance/AttendanceStatus"
 
 interface Props {
     selectedClassroom: string
@@ -11,6 +13,11 @@ const MonthlyAttendanceReportBody = ({ selectedClassroom, selectedMonth }: Props
 
     const access = useAuthStore(s => s.access) || ''
     const lan = useLanguageStore(s => s.lan)
+    const year = new Date().getFullYear()
+    const totalDays = moment(`${year}-${selectedMonth}`, "YYYY-M").daysInMonth()
+    const days =  Array.from({ length: totalDays }, (_, i) => 
+        moment(`${year}-${selectedMonth}-${i + 1}`, "YYYY-M-D") // Create a moment instance for each day
+    )
 
     const { data: students, isLoading, isError, error, isSuccess } = useGetStudents({ access, classroomId: selectedClassroom, month: selectedMonth })
 
@@ -37,8 +44,30 @@ const MonthlyAttendanceReportBody = ({ selectedClassroom, selectedMonth }: Props
                 <div className="flex justify-start items-start col-span-2">
                     <p>{student.last_name}</p>
                 </div>
-                <div className="w-full col-span-7 flex flex-col justify-center items-center gap-4">
-                    
+                <div className="w-full col-span-7 gap-4">
+                    <div className="grid grid-cols-31 text-center">
+                        {days.map(day => {
+                            const attendanceIn = student.attendances_in.find(attendance => moment(attendance.created_at).isSame(day, "day"))
+                            const attendanceOut = student.attendances_out.find(attendance => moment(attendance.created_at).isSame(day, "day"))
+                            return (
+
+                                
+                                <div 
+                                    className="flex flex-col justify-center items-center"
+                                    key={attendanceIn?.id} >
+                                    <div 
+                                        className={` w-8 h-4 border-2 border-slate-950 ${attendanceIn?.status ? statusStyles[attendanceIn.status] : 'dark:bg-gray-700 bg-gray-400'}`}>
+                                            <p className="text-xs"></p>
+                                    </div>
+                                    <div 
+                                        className={` w-8 h-4 border-2 border-slate-950 ${attendanceOut?.status ? statusStyles[attendanceOut.status] : 'dark:bg-gray-700 bg-gray-400'}`}>
+                                            <p className="text-xs"></p>
+                                    </div>
+                                </div>
+                            
+                            )
+                        })}
+                    </div>
                 </div>
             </div>
         ))}
