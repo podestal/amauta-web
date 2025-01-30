@@ -69,14 +69,14 @@ const WeeklyAttendanceReportBody = ({ weekDays, selectedClassroom, selectedWeek 
                                 attendanceIn ? statusStyles[attendanceIn.status] : "dark:bg-gray-700 bg-gray-400"
                             } rounded-lg`}
                         >
-                           
+                           <p className="text-white font-bold">E</p>
                         </div>
                         <div
                             className={`w-8 h-8 flex justify-center items-center ${
                                 attendanceOut ? statusStyles[attendanceOut.status] : "dark:bg-gray-700 bg-gray-400"
                             } rounded-lg`}
                         >
-                           
+                            <p className="text-white font-bold">S</p>
                         </div>
                     </div>
                 );

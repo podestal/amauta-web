@@ -56,12 +56,12 @@ const MonthlyAttendanceReportBody = ({ selectedClassroom, selectedMonth }: Props
                                     className="flex flex-col justify-center items-center"
                                     key={attendanceIn?.id} >
                                     <div 
-                                        className={` w-8 h-4 border-2 border-slate-950 ${attendanceIn?.status ? statusStyles[attendanceIn.status] : 'dark:bg-gray-700 bg-gray-400'}`}>
-                                            <p className="text-xs"></p>
+                                        className={` w-8 h-4 flex justify-center items-center border-2 border-slate-950 ${attendanceIn?.status ? statusStyles[attendanceIn.status] : 'dark:bg-gray-700 bg-gray-400'}`}>
+                                            <p className="text-[.6rem] font-bold text-white">E</p>
                                     </div>
                                     <div 
-                                        className={` w-8 h-4 border-2 border-slate-950 ${attendanceOut?.status ? statusStyles[attendanceOut.status] : 'dark:bg-gray-700 bg-gray-400'}`}>
-                                            <p className="text-xs"></p>
+                                        className={` w-8 h-4 flex justify-center items-center border-2 border-slate-950 ${attendanceOut?.status ? statusStyles[attendanceOut.status] : 'dark:bg-gray-700 bg-gray-400'}`}>
+                                            <p className="text-[.6rem] font-bold text-white">S</p>
                                     </div>
                                 </div>
                             
