@@ -11,6 +11,26 @@ interface Props {
   classrooms: Classroom[]
 }
 
+const languages = [
+  {id: 'N', name: 'Ninguna'},
+  {id: 'S', name: 'Español'},
+  {id: 'E', name: 'Inglés'},
+  {id: 'Q', name: 'Quechua'},
+  {id: 'A', name: 'Aymara'}
+]
+
+const religions = [
+  {id: 'C', name: 'Católica'},
+  {id: 'E', name: 'Evangélica'},
+  {id: 'J', name: 'Judía'},
+  {id: 'I', name: 'Musulmana'},
+  {id: 'B', name: 'Budista'},
+  {id: 'M', name: 'Mormona'},
+  {id: 'T', name: 'Testigos de Jehová'},
+  {id: 'R', name: 'Cristiana'},
+  {id: 'O', name: 'Otra'}
+]
+
 const StudentForm = ({ setPage, classrooms }: Props) => {
 
   const lan = useLanguageStore(s => s.lan)
@@ -25,21 +45,25 @@ const StudentForm = ({ setPage, classrooms }: Props) => {
   // CLASSROOM
   const [level, setLevel] = useState('')
   const [grade, setGrade] = useState('')
-  const [section, setSection] = useState('A')
+  const [section, setSection] = useState('')
 
   // LANGUAGE
   const [mainLanguage, setMainLanguage] = useState('S')
-  const [secondLanguage, setSecondLanguage] = useState('')
+  const [secondLanguage, setSecondLanguage] = useState('N')
 
   // FAMILY DATA
   const [brothers, setBrothers] = useState('')
   const [place, setPlace] = useState('')
   const [religion, setReligion] = useState('C')
+  const [livesWith, setLivesWith] = useState('')
 
   // CONTACT
   const [address, setAddress] = useState('')
   const [phone, setPhone] = useState('')
   const [cellphone, setCellphone] = useState('')
+
+  // HEALTH
+  const [insurance, setInsurance] = useState('')
 
   // ERROR HANDLING
   const [dniError, setDniError] = useState('')
@@ -48,9 +72,18 @@ const StudentForm = ({ setPage, classrooms }: Props) => {
   const [motherLastNameError, setMotherLastNameError] = useState('')
   const [namesError, setNamesError] = useState('')
 
+  const [levelError, setLevelError] = useState('')
+  const [gradeError, setGradeError] = useState('')
+  const [sectionError, setSectionError] = useState('')
+
+  const [religionError, setReligionError] = useState('')
+
   const [addressError, setAddressError] = useState('')
   const [phoneError, setPhoneError] = useState('')
   const [cellphoneError, setCellphoneError] = useState('')
+
+  const [insuranceError, setInsuranceError] = useState('')
+  const [livesWithError, setLivesWithError] = useState('')
 
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -87,6 +120,42 @@ const StudentForm = ({ setPage, classrooms }: Props) => {
       return
     }
 
+    if (level === '' || level === '0') {
+      setLevelError('El nivel es requerido')
+      return
+    }
+
+    if (grade === '' || grade === '0') {
+      setGradeError('El grado es requerido')
+      return
+    }
+
+    if (section === '' || section === '0') {
+      setSectionError('La sección es requerida')
+      return
+    }
+
+    if (religion === '' || religion === '0') {
+      setReligionError('La religión es requerida')
+      return
+    }
+
+    if (address === '') {
+      setAddressError('La dirección es requerida')
+      return
+    }
+
+    if (phone === '' || cellphone === '') {
+      phone && setPhoneError('El teléfono es requerido')
+      setPhoneError('El teléfono es requerido')
+      return
+    }
+
+    if (phone === '' && cellphone === '') {
+      setPhoneError('El teléfono es requerido')
+      setCellphoneError('El celular es requerido')
+      return
+    }
 
     setPage(prev => prev + 1)
     
@@ -94,7 +163,12 @@ const StudentForm = ({ setPage, classrooms }: Props) => {
   }
 
   return (
-    <form 
+    <motion.div
+      initial={{opacity: 0, x: 50}}
+      animate={{opacity: 1, x: 0}}
+      transition={{duration: 0.5}}
+    >
+      <form 
       onSubmit={handleSubmit}
       className="flex flex-col gap-12 py-12">
         <div className="w-full border-b-2 dark:border-gray-600 border-gray-300 mb-16">
@@ -159,6 +233,9 @@ const StudentForm = ({ setPage, classrooms }: Props) => {
               lan={lan}
               setter={setLevel}
               label="Nivel"
+              error={levelError}
+              value={level}
+              setError={setLevelError}
             />
           </div>
           {level && <motion.div
@@ -174,6 +251,9 @@ const StudentForm = ({ setPage, classrooms }: Props) => {
               lan={lan}
               setter={setGrade}
               label="Grado"
+              error={gradeError}
+              value={grade}
+              setError={setGradeError}
             />
           </motion.div>}
           {grade && <motion.div
@@ -183,9 +263,12 @@ const StudentForm = ({ setPage, classrooms }: Props) => {
           >
             <Selector 
               values={classrooms.filter(c => c.grade === grade && c.level === level).map(c => ({id: c.section, name: c.section}))}
-              defaultValue={section}
               setter={setSection}
+              lan={lan}
               label="Sección"
+              error={sectionError}
+              value={section}
+              setError={setSectionError}
             />
           </motion.div>}
         </div>
@@ -211,13 +294,13 @@ const StudentForm = ({ setPage, classrooms }: Props) => {
     AYMARA_LANGUAGE = 'A' */}
         <div className="grid grid-cols-3 gap-4 items-start">
           <Selector 
-            values={[{id: 'S', name: 'Español'}, {id: 'E', name: 'Inglés'}, {id: 'Q', name: 'Quechua'}, {id: 'A', name: 'Aymara'}]}
+            values={languages.filter(l => l.id !== 'N')}
             setter={setMainLanguage}
             defaultValue={mainLanguage}
             label="Lengua Materna"
           />
           <Selector 
-            values={[{id: 'S', name: 'Español'}, {id: 'E', name: 'Inglés'}, {id: 'Q', name: 'Quechua'}, {id: 'A', name: 'Aymara'}]}
+            values={languages.filter(l => l.id !== mainLanguage)}
             setter={setSecondLanguage}
             defaultValue={secondLanguage}
             label="Segunda Lengua"
@@ -230,25 +313,18 @@ const StudentForm = ({ setPage, classrooms }: Props) => {
             label='Lugar que ocupa'
           /> */}
           <Selector 
-            values={[
-              {id: 'C', name: 'Católica'},
-              {id: 'E', name: 'Evangélica'},
-              {id: 'J', name: 'Judía'},
-              {id: 'I', name: 'Musulmana'},
-              {id: 'B', name: 'Budista'},
-              {id: 'M', name: 'Mormona'},
-              {id: 'T', name: 'Testigos de Jehová'},
-              {id: 'R', name: 'Cristiana'},
-              {id: 'O', name: 'Otra'}
-            ]}
+            values={religions}
             label="Religión"
             setter={setReligion}
-            defaultValue={religion}
+            lan={lan}
+            error={religionError}
+            setError={setReligionError}
+            value={religion}
           />
         </div>
         <div className="grid grid-cols-3 gap-4">
           <Input 
-            label="Dirección Domociliaria"
+            label="Dirección de Domicilio"
             value={address}
             onChange={e => {
               address && setAddressError('')
@@ -276,19 +352,36 @@ const StudentForm = ({ setPage, classrooms }: Props) => {
           />
           {/* <p>Croquis (google maps)</p> */}
         </div>
-        <div className="grid grid-cols-5 gap-4">
-          <p>Seguro:</p>
-          <p>{'Essalud ( )'}</p>
-          <p>{'SIS ( )'}</p>
-          <p>{'Privado ( )'}</p>
-          <p>{'Sin seguro ( )'}</p>
+        <div className="grid grid-cols-3 gap-4">
+          <Selector 
+            values={[{id: 'E', name: 'Essalud'}, {id: 'P', name: 'Privado'}, {id: 'S', name: 'SIS'}, {id: 'N', name: 'Sin Seguro'}]}
+            setter={setInsurance}
+            label="Seguro"
+            lan={lan}
+          />
+          <Selector 
+            values={[{id: 'P', name: 'Padre'}, {id: 'M', name: 'Madre'}, {id: 'A', name: 'Apoderado'}]}
+            setter={setLivesWith}
+            label="Con quién vive"
+            lan={lan}
+          />
         </div>
-        <div className="grid grid-cols-4 gap-4">
-          <p>Con quién vive</p>
-          <p>{'Mamá ( )'}</p>
-          <p>{'Papá ( )'}</p>
-          <p>{'Apoderado ( ): Nombre'}</p>
-        </div>
+        {livesWith === 'A' &&
+        <motion.div 
+          initial={{opacity: 0, x: 50}}
+          animate={{opacity: 1, x: 0}}
+          transition={{duration: 0.5}}
+          className="w-full grid grid-cols-2">
+          <Input 
+            label="Nombre del apoderado"
+            placeholder="Nombre ..."
+          />
+        </motion.div>}
+{/* 
+        ESSALUD_INSURANCE = 'E'
+    PRIVATE_INSURANCE = 'P'
+    SIS_INSURANCE = 'S' */}
+        
         {/* <div className="w-full grid grid-cols-3 gap-4">
           <Input 
             label="Peso Actual"
@@ -319,10 +412,11 @@ const StudentForm = ({ setPage, classrooms }: Props) => {
           <Button 
             label="Siguiente"
             onClick={handleSubmit}
-            type="submit"
+            type="button"
           />
         </div> 
     </form>
+    </motion.div>
   )
 }
 

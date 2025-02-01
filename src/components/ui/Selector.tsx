@@ -6,10 +6,12 @@ interface Item {
 interface Props<T extends Item> {
     values: T[] // Array of generic items
     defaultValue?: string // Default selected value, corresponds to item id
+    value?: string // Selected value, corresponds to item id
     setter: (value: string) => void // Function to update the selected value
     label?: string // Text that indicate the type of the selector
     all?: boolean // Boolean that conditionally renders all values
     error?: string
+    setError?: (value: string) => void
     lan?: string
 }
 
@@ -45,7 +47,16 @@ const styles = {
 }
 
 // Selector component that uses a generic type T, extending the Item interface
-const Selector = <T extends Item>({ values, defaultValue, setter, label, all, error, lan='EN' }: Props<T>) => {
+const Selector = <T extends Item>({ 
+  values, 
+  defaultValue, 
+  value, 
+  setter, 
+  label, 
+  all, 
+  error, 
+  setError, 
+  lan='EN' }: Props<T>) => {
   
     return (
         <div className="lg:w-full w-[60%] flex flex-col mx-auto justify-center items-center gap-4">
@@ -55,7 +66,12 @@ const Selector = <T extends Item>({ values, defaultValue, setter, label, all, er
             <style dangerouslySetInnerHTML={{ __html: styles.animation }} />
             <select
                 defaultValue={defaultValue} // Set the default selected value
-                onChange={e => setter(e.target.value)} // Call setter with selected value
+                onChange={e => {
+                  if(setError) {
+                    value && setError('')
+                  }
+                  setter(e.target.value)
+                }}
                 className={`dark:bg-gray-950 bg-slate-100  rounded-lg w-full dark:text-slate-50 text-xs pl-2 py-[8px] border-2 ${error ? 'border-red-600 shake' : ' border-neutral-400 dark:border-gray-800'}`}
             >
                 {all 
@@ -73,6 +89,7 @@ const Selector = <T extends Item>({ values, defaultValue, setter, label, all, er
                     </option>
                 ))}
             </select>
+            {error && <p className="text-xs text-red-500 mx-2">{error}</p>}
         </div>      
     )
 }

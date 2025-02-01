@@ -3,12 +3,13 @@ import StudentForm from "./forms/StudentForm"
 import useGetClassroom from "../../../hooks/api/classroom/useGetClassroom"
 import useAuthStore from "../../../hooks/store/useAuthStore"
 import useLoader from "../../../hooks/ui/useLoader"
+import StudentHealthForm from "./forms/StudentHealthForm"
 
 const CreateStudent = () => {
 
   const access = useAuthStore(s => s.access) || ''
   const {data: classrooms, isLoading, isError, error, isSuccess} = useGetClassroom({access})
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState(2)
 
   useLoader(isLoading)
 
@@ -24,7 +25,10 @@ const CreateStudent = () => {
         setPage={setPage}
         classrooms={classrooms}
       />}
-      {page === 2 && <p>Page 2</p>}
+      {page === 2 && 
+      <StudentHealthForm 
+        setPage={setPage}
+      />}
     </div>
   )
 }
