@@ -36,12 +36,21 @@ const StudentForm = ({ setPage, classrooms }: Props) => {
   const [place, setPlace] = useState('')
   const [religion, setReligion] = useState('C')
 
+  // CONTACT
+  const [address, setAddress] = useState('')
+  const [phone, setPhone] = useState('')
+  const [cellphone, setCellphone] = useState('')
+
   // ERROR HANDLING
   const [dniError, setDniError] = useState('')
   const [oldSchoolError, setOldSchoolError] = useState('')
   const [fatherLastNameError, setFatherLastNameError] = useState('')
   const [motherLastNameError, setMotherLastNameError] = useState('')
   const [namesError, setNamesError] = useState('')
+
+  const [addressError, setAddressError] = useState('')
+  const [phoneError, setPhoneError] = useState('')
+  const [cellphoneError, setCellphoneError] = useState('')
 
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -122,6 +131,7 @@ const StudentForm = ({ setPage, classrooms }: Props) => {
               fatherLastName && setFatherLastNameError('')
               setFatherLastName(e.target.value)}}
             error={fatherLastNameError}
+            placeholder="Apellido Paterno ..."
           />
           <Input 
             label="Apellido Materno"
@@ -130,6 +140,7 @@ const StudentForm = ({ setPage, classrooms }: Props) => {
               motherLastName && setMotherLastNameError('')
               setMotherLastName(e.target.value)}}
             error={motherLastNameError}
+            placeholder="Apellido Materno ..."
           />
           <Input 
             label="Nombres"
@@ -138,6 +149,7 @@ const StudentForm = ({ setPage, classrooms }: Props) => {
               names && setNamesError('')
               setNames(e.target.value)}}
             error={namesError}
+            placeholder="Nombres ..."
           />
         </div>
         <div className="w-full grid grid-cols-3 gap-4">
@@ -197,27 +209,26 @@ const StudentForm = ({ setPage, classrooms }: Props) => {
     ENGLISH_LANGUAGE = 'E'
     QUECHUA_LANGUAGE = 'Q'
     AYMARA_LANGUAGE = 'A' */}
-        <div className="grid grid-cols-4 gap-4 items-start">
-          <div className="flex flex-col gap-4">
-            <Selector 
-              values={[{id: 'S', name: 'Español'}, {id: 'E', name: 'Inglés'}, {id: 'Q', name: 'Quechua'}, {id: 'A', name: 'Aymara'}]}
-              setter={setMainLanguage}
-              defaultValue={mainLanguage}
-              label="Lengua Materna"
-            />
-            <Selector 
-              values={[{id: 'S', name: 'Español'}, {id: 'E', name: 'Inglés'}, {id: 'Q', name: 'Quechua'}, {id: 'A', name: 'Aymara'}]}
-              setter={setSecondLanguage}
-              defaultValue={secondLanguage}
-              label="Segunda Lengua"
-            />
-          </div>
-          <Input 
+        <div className="grid grid-cols-3 gap-4 items-start">
+          <Selector 
+            values={[{id: 'S', name: 'Español'}, {id: 'E', name: 'Inglés'}, {id: 'Q', name: 'Quechua'}, {id: 'A', name: 'Aymara'}]}
+            setter={setMainLanguage}
+            defaultValue={mainLanguage}
+            label="Lengua Materna"
+          />
+          <Selector 
+            values={[{id: 'S', name: 'Español'}, {id: 'E', name: 'Inglés'}, {id: 'Q', name: 'Quechua'}, {id: 'A', name: 'Aymara'}]}
+            setter={setSecondLanguage}
+            defaultValue={secondLanguage}
+            label="Segunda Lengua"
+            lan={lan}
+          />
+          {/* <Input 
             label='Número de Hermanos'
           />
           <Input 
             label='Lugar que ocupa'
-          />
+          /> */}
           <Selector 
             values={[
               {id: 'C', name: 'Católica'},
@@ -235,17 +246,35 @@ const StudentForm = ({ setPage, classrooms }: Props) => {
             defaultValue={religion}
           />
         </div>
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-3 gap-4">
           <Input 
             label="Dirección Domociliaria"
+            value={address}
+            onChange={e => {
+              address && setAddressError('')
+              setAddress(e.target.value)}}
+            error={addressError}
+            placeholder="Dirección ..."
           />
           <Input
             label="Teléfono"
+            value={phone}
+            onChange={e => {
+              phone && setPhoneError('')
+              setPhone(e.target.value)}}
+            error={phoneError}
+            placeholder="Teléfono ..."
           />
           <Input
             label="Celular"
+            value={cellphone}
+            onChange={e => {
+              cellphone && setCellphoneError('')
+              setCellphone(e.target.value)}}
+            error={cellphoneError}
+            placeholder="Celular ..."
           />
-          <p>Croquis (google maps)</p>
+          {/* <p>Croquis (google maps)</p> */}
         </div>
         <div className="grid grid-cols-5 gap-4">
           <p>Seguro:</p>
