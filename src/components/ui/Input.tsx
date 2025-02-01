@@ -1,9 +1,10 @@
 import React, { Dispatch, SetStateAction, useState, forwardRef, useEffect } from "react";
-import { RiEyeFill, RiEyeOffFill } from "@remixicon/react";
+import { RiErrorWarningFill, RiEyeFill, RiEyeOffFill } from "@remixicon/react";
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
     placeholder?: string
     error?: string
+    setError?: Dispatch<SetStateAction<string>>
     type?: string
     value?: string | number
     setValue?: Dispatch<SetStateAction<string>>
@@ -39,12 +40,21 @@ const styles = {
     .shake {
       animation: bounce 0.4s;
     }
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    input[type="number"] {
+        -moz-appearance: textfield;
+    }
   `
 }
 
 const Input = forwardRef<HTMLInputElement, Props>(({
     placeholder,
     error,
+    setError,
     type = "text",
     value,
     setValue,
@@ -87,6 +97,7 @@ const Input = forwardRef<HTMLInputElement, Props>(({
         } else {
             setShowError(false)
         }
+        
     }
 
     return (
@@ -118,6 +129,11 @@ const Input = forwardRef<HTMLInputElement, Props>(({
                         )}
                     </button>
                 )}
+                {error &&
+                <RiErrorWarningFill 
+                className={`absolute ${label ? 'inset-y-12' : 'inset-y-2'} right-0 pr-3 flex items-center text-red-500`}
+                size={30}
+            />}
             </div>
             {showError && <p className="text-xs text-red-500 mx-2">{error}</p>}
         </div>

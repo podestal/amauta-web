@@ -3,6 +3,8 @@ import Button from "../../../ui/Button"
 import Input from "../../../ui/Input"
 import Selector from "../../../ui/Selector"
 import { Classroom } from "../../../../services/api/classroomService"
+import useLanguageStore from "../../../../hooks/store/useLanguageStore"
+import { motion } from "framer-motion"
 
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>
@@ -10,6 +12,8 @@ interface Props {
 }
 
 const StudentForm = ({ setPage, classrooms }: Props) => {
+
+  const lan = useLanguageStore(s => s.lan)
 
   // PERSONAL DATA
   const [dni, setDni] = useState('')
@@ -19,8 +23,8 @@ const StudentForm = ({ setPage, classrooms }: Props) => {
   const [motherLastName, setMotherLastName] = useState('')
 
   // CLASSROOM
-  const [level, setLevel] = useState('P')
-  const [grade, setGrade] = useState('1')
+  const [level, setLevel] = useState('')
+  const [grade, setGrade] = useState('')
   const [section, setSection] = useState('A')
 
   // LANGUAGE
@@ -32,15 +36,50 @@ const StudentForm = ({ setPage, classrooms }: Props) => {
   const [place, setPlace] = useState('')
   const [religion, setReligion] = useState('C')
 
+  // ERROR HANDLING
+  const [dniError, setDniError] = useState('')
+  const [oldSchoolError, setOldSchoolError] = useState('')
+  const [fatherLastNameError, setFatherLastNameError] = useState('')
+  const [motherLastNameError, setMotherLastNameError] = useState('')
+  const [namesError, setNamesError] = useState('')
+
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     const classroomId = classrooms.find(c => c.grade === grade && c.section === section && c.level === level)?.id
-    console.log('classroomId', classroomId)
     
-    console.log('submit')
-    console.log(dni)
-    console.log('Classroom', `${grade}-${section}-${level}`);
+    if (dni === '') {
+      setDniError('El DNI es requerido')
+      return
+    }
+
+    if (dni.length > 8) {
+      setDniError('El DNI debe tener 8 dígitos')
+      return
+    }
+
+    if (oldSchool === '') {
+      setOldSchoolError('La IE de procedencia es requerida')
+      return
+    }
+
+    if (fatherLastName === '') {
+      setFatherLastNameError('El apellido paterno es requerido')
+      return
+    }
+
+    if (motherLastName === '') {
+      setMotherLastNameError('El apellido materno es requerido')
+      return
+    }
+
+    if (names === '') {
+      setNamesError('El nombre es requerido')
+      return
+    }
+
+
+    setPage(prev => prev + 1)
     
     
   }
@@ -48,50 +87,30 @@ const StudentForm = ({ setPage, classrooms }: Props) => {
   return (
     <form 
       onSubmit={handleSubmit}
-      className="flex flex-col gap-6 py-12">
+      className="flex flex-col gap-12 py-12">
         <div className="w-full border-b-2 dark:border-gray-600 border-gray-300 mb-16">
           <h2 className="text-2xl text-left font-semibold mb-6">Datos Personales</h2>
         </div>
-        <div className="w-full grid grid-cols-6 gap-4">
+        <div className="w-full grid grid-cols-3 gap-4">
           <Input 
               label="DNI"
               value={dni}
-              onChange={(e) => setDni(e.target.value)}
+              onChange={(e) => {
+                dni && setDniError('')
+                setDni(e.target.value)}}
               placeholder="DNI ..."
+              type="number"
+              error={dniError}
           />
           <div className="col-span-2">
             <Input 
                 label="IE de Procedencia"
                 value={oldSchool}
-                onChange={(e) => setOldSchool(e.target.value)}
+                onChange={(e) => {
+                  oldSchool && setOldSchoolError('')
+                  setOldSchool(e.target.value)}}
                 placeholder="IE de Procedencia ..."
-            />
-          </div>
-          <div>
-            <Selector 
-              values={[{id: 'P', name: 'Primaria'}, {id: 'S', name: 'Secundaria'}]}
-              defaultValue={level}
-              setter={setLevel}
-              label="Nivel"
-            />
-          </div>
-          <div>
-            <Selector 
-              values={level === 'P' 
-                ? [{id: '1', name: '1'}, {id: '2', name: '2'}, {id: '3', name: '3'}, {id: '4', name: '4'}, {id: '5', name: '5'}, {id: '6', name: '6'}]
-                : [{id: '1', name: '1'}, {id: '2', name: '2'}, {id: '3', name: '3'}, {id: '4', name: '4'}, {id: '5', name: '5'}]
-              }
-              defaultValue={grade}
-              setter={setGrade}
-              label="Grado"
-            />
-          </div>
-          <div>
-            <Selector 
-              values={classrooms.filter(c => c.grade === grade && c.level === level).map(c => ({id: c.section, name: c.section}))}
-              defaultValue={section}
-              setter={setSection}
-              label="Sección"
+                error={oldSchoolError}
             />
           </div>
         </div>
@@ -99,18 +118,64 @@ const StudentForm = ({ setPage, classrooms }: Props) => {
           <Input 
             label="Apellido Paterno"
             value={fatherLastName}
-            onChange={e => setFatherLastName(e.target.value)}
+            onChange={e => {
+              fatherLastName && setFatherLastNameError('')
+              setFatherLastName(e.target.value)}}
+            error={fatherLastNameError}
           />
           <Input 
             label="Apellido Materno"
             value={motherLastName}
-            onChange={e => setMotherLastName(e.target.value)}
+            onChange={e => {
+              motherLastName && setMotherLastNameError('')
+              setMotherLastName(e.target.value)}}
+            error={motherLastNameError}
           />
           <Input 
             label="Nombres"
             value={names}
-            onChange={e => setNames(e.target.value)}
+            onChange={e => {
+              names && setNamesError('')
+              setNames(e.target.value)}}
+            error={namesError}
           />
+        </div>
+        <div className="w-full grid grid-cols-3 gap-4">
+          <div>
+            <Selector 
+              values={[{id: 'P', name: 'Primaria'}, {id: 'S', name: 'Secundaria'}]}
+              lan={lan}
+              setter={setLevel}
+              label="Nivel"
+            />
+          </div>
+          {level && <motion.div
+            initial={{opacity: 0, x: 50}}
+            animate={{opacity: 1, x: 0}}
+            transition={{duration: 0.5}}
+          >
+            <Selector 
+              values={level === 'P' 
+                ? [{id: '1', name: '1'}, {id: '2', name: '2'}, {id: '3', name: '3'}, {id: '4', name: '4'}, {id: '5', name: '5'}, {id: '6', name: '6'}]
+                : [{id: '1', name: '1'}, {id: '2', name: '2'}, {id: '3', name: '3'}, {id: '4', name: '4'}, {id: '5', name: '5'}]
+              }
+              lan={lan}
+              setter={setGrade}
+              label="Grado"
+            />
+          </motion.div>}
+          {grade && <motion.div
+            initial={{opacity: 0, x: 50}}
+            animate={{opacity: 1, x: 0}}
+            transition={{duration: 0.5}}
+          >
+            <Selector 
+              values={classrooms.filter(c => c.grade === grade && c.level === level).map(c => ({id: c.section, name: c.section}))}
+              defaultValue={section}
+              setter={setSection}
+              label="Sección"
+            />
+          </motion.div>}
         </div>
         {/* <div className="grid grid-cols-4 gap-4">
           <p>Nació de parto natural:</p>
@@ -224,10 +289,7 @@ const StudentForm = ({ setPage, classrooms }: Props) => {
         <div className="my-8 w-full flex justify-end">
           <Button 
             label="Siguiente"
-            onClick={e => {
-              setPage(prev => prev + 1)
-              handleSubmit(e)
-            }}
+            onClick={handleSubmit}
             type="submit"
           />
         </div> 
