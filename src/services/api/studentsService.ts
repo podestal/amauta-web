@@ -44,16 +44,26 @@ export interface Student {
     lives_with: string
 }
 
-export type StudentCreateUpdate = Omit<Student, 'uid' | 'attendance' | 'attendances_in' | 'attendances_out' | 'picture' | 'map_location'>
+export type StudentCreateUpdate = Omit<Student, 'uid' | 'attendance' | 'attendances_in' | 'attendances_out' | 'picture' | 'map_location' | 'clase'> & {
+    uid?: string
+    clase?: number
+}
 
 interface Props {
     tutor?: boolean
+    all?: boolean
 }
 
-const getStudentService = ({ tutor }: Props) => {
+const getStudentService = ({ tutor, all }: Props) => {
 
-    const URL = tutor ? `student/byTutor/` : `student/byClassroom/`
-    return new APIClient<Student, StudentCreateUpdate>(URL)
+    let url = `student/byClassroom/`
+    if (tutor) {
+        url = `student/byTutor/`
+    } else if (all) {
+        url = `student/`
+    }
+
+    return new APIClient<Student, StudentCreateUpdate>(url)
 
 }
 export default getStudentService

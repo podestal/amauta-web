@@ -5,6 +5,8 @@ import Selector from "../../../ui/Selector"
 import { Classroom } from "../../../../services/api/classroomService"
 import useLanguageStore from "../../../../hooks/store/useLanguageStore"
 import { motion } from "framer-motion"
+import useCreateStudent from "../../../../hooks/api/student/useCreateStudent"
+import useAuthStore from "../../../../hooks/store/useAuthStore"
 
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>
@@ -34,6 +36,8 @@ const religions = [
 const StudentForm = ({ setPage, classrooms }: Props) => {
 
   const lan = useLanguageStore(s => s.lan)
+  const access = useAuthStore(s => s.access) || ''
+  const createStudent = useCreateStudent()
 
   // PERSONAL DATA
   const [dni, setDni] = useState('')
@@ -52,10 +56,11 @@ const StudentForm = ({ setPage, classrooms }: Props) => {
   const [secondLanguage, setSecondLanguage] = useState('N')
 
   // FAMILY DATA
-  const [brothers, setBrothers] = useState('')
-  const [place, setPlace] = useState('')
+  const [brothers, setBrothers] = useState('2')
+  const [place, setPlace] = useState('1')
   const [religion, setReligion] = useState('C')
   const [livesWith, setLivesWith] = useState('')
+  const [tutorName, setTutorName] = useState('')
 
   // CONTACT
   const [address, setAddress] = useState('')
@@ -84,6 +89,8 @@ const StudentForm = ({ setPage, classrooms }: Props) => {
 
   const [insuranceError, setInsuranceError] = useState('')
   const [livesWithError, setLivesWithError] = useState('')
+  const [tutorNameError, setTutorNameError] = useState('')
+
 
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -145,21 +152,53 @@ const StudentForm = ({ setPage, classrooms }: Props) => {
       return
     }
 
-    if (phone === '' || cellphone === '') {
-      phone && setPhoneError('El teléfono es requerido')
-      setPhoneError('El teléfono es requerido')
-      return
-    }
-
     if (phone === '' && cellphone === '') {
       setPhoneError('El teléfono es requerido')
       setCellphoneError('El celular es requerido')
       return
     }
 
-    setPage(prev => prev + 1)
-    
-    
+    if (insurance === '' || insurance === '0') {
+      setInsuranceError('El seguro es requerido')
+      return
+    }
+
+    if (livesWith === '' || livesWith === '0') {
+      setLivesWithError('Con quién vive es requerido')
+      return
+    }
+
+    if (livesWith === 'A' && tutorName === '') {
+      setTutorNameError('El nombre del apoderado es requerido')
+      return
+    }
+
+    const livesWithName = livesWith === 'A' ? tutorName : livesWith
+
+    createStudent.mutate({
+      student: {
+        uid: dni,
+        prev_school: oldSchool,
+        first_name: names,
+        last_name: `${fatherLastName} ${motherLastName}`,
+        clase: classroomId,
+        main_language: mainLanguage,
+        second_language: secondLanguage === 'N' ? '' : secondLanguage,
+        number_of_siblings: parseInt(brothers),
+        place_in_family: parseInt(place),
+        religion,
+        address,
+        phone_number: phone,
+        celphone_number: cellphone,
+        insurance,
+        lives_with: livesWithName,
+      },
+      access
+    }, {
+      onSuccess: () => {
+        setPage(prev => prev + 1)
+      }
+    })    
   }
 
   return (
@@ -272,26 +311,6 @@ const StudentForm = ({ setPage, classrooms }: Props) => {
             />
           </motion.div>}
         </div>
-        {/* <div className="grid grid-cols-4 gap-4">
-          <p>Nació de parto natural:</p>
-          <p>{'Si ( )'}</p>
-          <p>{'No ( )'}</p>
-          <p>Fecha de nacimiento (calendat)</p>
-          <Input 
-            label="Departamento"
-          />
-          <Input 
-            label="Provincia"
-          />
-          <Input 
-            label="Distrito"
-          />
-        </div> */}
-{/* 
-    SPANISH_LANGUAGE = 'S'
-    ENGLISH_LANGUAGE = 'E'
-    QUECHUA_LANGUAGE = 'Q'
-    AYMARA_LANGUAGE = 'A' */}
         <div className="grid grid-cols-3 gap-4 items-start">
           <Selector 
             values={languages.filter(l => l.id !== 'N')}
@@ -306,12 +325,6 @@ const StudentForm = ({ setPage, classrooms }: Props) => {
             label="Segunda Lengua"
             lan={lan}
           />
-          {/* <Input 
-            label='Número de Hermanos'
-          />
-          <Input 
-            label='Lugar que ocupa'
-          /> */}
           <Selector 
             values={religions}
             label="Religión"
@@ -350,7 +363,6 @@ const StudentForm = ({ setPage, classrooms }: Props) => {
             error={cellphoneError}
             placeholder="Celular ..."
           />
-          {/* <p>Croquis (google maps)</p> */}
         </div>
         <div className="grid grid-cols-3 gap-4">
           <Selector 
@@ -358,12 +370,18 @@ const StudentForm = ({ setPage, classrooms }: Props) => {
             setter={setInsurance}
             label="Seguro"
             lan={lan}
+            error={insuranceError}
+            setError={setInsuranceError}
+            value={insurance}
           />
           <Selector 
-            values={[{id: 'P', name: 'Padre'}, {id: 'M', name: 'Madre'}, {id: 'A', name: 'Apoderado'}]}
+            values={[{id: 'Padre', name: 'Padre'}, {id: 'Madre', name: 'Madre'}, {id: 'A', name: 'Apoderado'}]}
             setter={setLivesWith}
             label="Con quién vive"
             lan={lan}
+            error={livesWithError}
+            setError={setLivesWithError}
+            value={livesWith}
           />
         </div>
         {livesWith === 'A' &&
@@ -375,44 +393,18 @@ const StudentForm = ({ setPage, classrooms }: Props) => {
           <Input 
             label="Nombre del apoderado"
             placeholder="Nombre ..."
+            value={tutorName}
+            onChange={e =>{
+              tutorName && setTutorNameError('')
+              setTutorName(e.target.value)}}
+            error={tutorNameError}
           />
         </motion.div>}
-{/* 
-        ESSALUD_INSURANCE = 'E'
-    PRIVATE_INSURANCE = 'P'
-    SIS_INSURANCE = 'S' */}
-        
-        {/* <div className="w-full grid grid-cols-3 gap-4">
-          <Input 
-            label="Peso Actual"
-          />
-          <Input 
-            label="Talla Actual"
-          />
-          <TextArea 
-            placeholder="Sufre de alguna enfermedad"
-          />
-        </div> */}
-        {/* <div className="w-full border-b-2 dark:border-gray-600 border-gray-300 my-16">
-          <h2 className="text-2xl text-left font-semibold mb-6">En Caso de Emergencia</h2>
-        </div>
-        <div className="grid grid-cols-3 gap-4">
-          <Input 
-            label="Dirección"
-          />
-          <Input 
-            label="Teléfono"
-          />
-          <Input 
-            label="Preguntar por:"
-          />
-        </div>
-        */}
         <div className="my-8 w-full flex justify-end">
           <Button 
             label="Siguiente"
-            onClick={() => setPage(prev => prev + 1)}
-            type="button"
+            onClick={handleSubmit}
+            type="submit"
           />
         </div> 
     </form>
