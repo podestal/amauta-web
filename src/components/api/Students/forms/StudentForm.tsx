@@ -171,7 +171,7 @@ const StudentForm = ({ setPage, classrooms }: Props) => {
       <form 
       onSubmit={handleSubmit}
       className="flex flex-col gap-12 py-12">
-        <div className="w-full border-b-2 dark:border-gray-600 border-gray-300 mb-16">
+        <div className="w-full border-b-2 dark:border-gray-600 border-gray-300 mb-12">
           <h2 className="text-2xl text-left font-semibold mb-6">Datos Personales</h2>
         </div>
         <div className="w-full grid grid-cols-3 gap-4">

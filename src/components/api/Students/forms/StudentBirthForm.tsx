@@ -31,7 +31,7 @@ const StudentBirthForm = ({ setPage }: Props) => {
         transition={{duration: 0.5}}
     >
         <form>
-            <div className="w-full border-b-2 dark:border-gray-600 border-gray-300 mb-16">
+            <div className="w-full border-b-2 dark:border-gray-600 border-gray-300 mb-12">
                 <h2 className="text-2xl text-left font-semibold mb-6">Información de Nacimiento</h2>
             </div>
             <div className="grid grid-cols-3 gap-6 mb-12">
