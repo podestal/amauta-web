@@ -11,7 +11,7 @@ const CreateStudent = () => {
 
   const access = useAuthStore(s => s.access) || ''
   const {data: classrooms, isLoading, isError, error, isSuccess} = useGetClassroom({access})
-  const [page, setPage] = useState(2)
+  const [page, setPage] = useState(1)
 
   useLoader(isLoading)
 

@@ -43,10 +43,11 @@ const AttendanceReportTable = ({
 
 
     const getWeekDays = (week: number) => {
-        const year = moment().year()
-        const startOfWeek = moment().year(year).week(week).startOf('isoWeek')
-        return Array.from({ length: 5 }, (_, i) => startOfWeek.clone().add(i, 'days'))
-    }
+        const year = moment().year();
+        const startOfWeek = moment().year(year).week(week).startOf('week'); 
+        return Array.from({ length: 5 }, (_, i) => startOfWeek.clone().add(i + 1, 'days')); 
+    };
+    
 
     const getDay = (day: number, month: number) => {
         return moment().date(day).month(month - 1)

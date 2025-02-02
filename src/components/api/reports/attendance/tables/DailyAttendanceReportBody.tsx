@@ -76,6 +76,7 @@ const DailyAttendanceReportBody = ({ selectedClassroom, selectedDay, currentMont
                     <div className="py-4 px-4 text-center font-bold rounded-2xl text-xs cursor-pointer flex items-center justify-center space-x-2 dark:bg-gray-700 bg-gray-400 shadow-2xl shadow-slate-500">Sin Datos</div>}
                 </div>
                 <div className="col-span-3 overflow-scroll flex flex-col gap-2">
+                    
                     {/* <p className="text-xs">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident dolorem soluta beatae exercitationem modi vitae quisquam aut rerum consectetur itaque. Vel nobis ratione eum atque, a cupiditate enim velit eligendi.</p> */}
                     {student.attendances_in.length > 0 && <p className="text-xs"><span className="font-bold">Observaciones Entrada:</span> {student.attendances_in[0].observations ? student.attendances_in[0].observations : '-' }</p>}
                     {student.attendances_out.length > 0 && <p className="text-xs"><span className="font-bold">Observaciones Salida:</span> {student.attendances_out[0].observations ? student.attendances_out[0].observations : '-'}</p>}

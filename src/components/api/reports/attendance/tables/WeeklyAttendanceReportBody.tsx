@@ -13,6 +13,12 @@ interface Props {
 const WeeklyAttendanceReportBody = ({ weekDays, selectedClassroom, selectedWeek }: Props) => {
     const access = useAuthStore(s => s.access) || ''
     const lan = useLanguageStore(s => s.lan)
+    console.log(moment().week());
+    
+    console.log('weekDays', weekDays);
+    console.log('is same',moment('2025-01-01T00:00:00-05:00').isSame(weekDays[0], "day"));
+    
+    
 
     const { data: students, isLoading, isError, error, isSuccess } = useGetStudents({ access, classroomId: selectedClassroom, week: selectedWeek })
 
@@ -24,6 +30,7 @@ const WeeklyAttendanceReportBody = ({ weekDays, selectedClassroom, selectedWeek 
 
   return (
     <>
+    <>{console.log('students', students)}</>
     {/* <>{console.log('students', students)}</> */}
     {students.map( student => (
         <div 
@@ -55,12 +62,22 @@ const WeeklyAttendanceReportBody = ({ weekDays, selectedClassroom, selectedWeek 
                 
             </div>
             {weekDays.map((day, index) => {
-                const attendanceIn = student.attendances_in.find((attendance) =>
-                    moment(attendance.created_at).isSame(day, "day")
+                const attendanceIn = student.attendances_in.find((attendance) => {
+                    // console.log('attendance', attendance)
+                    // console.log('day', day)
+                    // console.log('moment(attendance.created_at)', moment(attendance.created_at).isSame(day, "day"));
+                    
+                    
+                    return moment(attendance.created_at).isSame(day, "day")
+                }
+                    
                 );
                 const attendanceOut = student.attendances_out.find((attendance) =>
                     moment(attendance.created_at).isSame(day, "day")
                 );
+
+                console.log('attendanceIn', attendanceIn);
+                
 
                 return (
                     <div key={index} className="w-full flex justify-left items-center gap-2">
