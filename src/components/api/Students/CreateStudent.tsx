@@ -4,6 +4,7 @@ import useGetClassroom from "../../../hooks/api/classroom/useGetClassroom"
 import useAuthStore from "../../../hooks/store/useAuthStore"
 import useLoader from "../../../hooks/ui/useLoader"
 import StudentHealthForm from "./forms/StudentHealthForm"
+import StudentBirthForm from "./forms/StudentBirthForm"
 
 const CreateStudent = () => {
 
@@ -27,6 +28,10 @@ const CreateStudent = () => {
       />}
       {page === 2 && 
       <StudentHealthForm 
+        setPage={setPage}
+      />}
+      {page === 3 &&
+      <StudentBirthForm 
         setPage={setPage}
       />}
     </div>

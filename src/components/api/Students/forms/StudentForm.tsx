@@ -411,7 +411,7 @@ const StudentForm = ({ setPage, classrooms }: Props) => {
         <div className="my-8 w-full flex justify-end">
           <Button 
             label="Siguiente"
-            onClick={handleSubmit}
+            onClick={() => setPage(prev => prev + 1)}
             type="button"
           />
         </div> 
