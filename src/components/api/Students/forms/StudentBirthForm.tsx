@@ -3,18 +3,10 @@ import Button from '../../../ui/Button'
 import Input from '../../../ui/Input'
 import { useState } from 'react'
 import Selector from '../../../ui/Selector'
-import Calendar from '../../../ui/Calendar'
 
 interface Props {
     setPage: React.Dispatch<React.SetStateAction<number>>
 }
-
-// date_of_birth = models.DateField()
-// student = models.OneToOneField(Student, on_delete=models.CASCADE, related_name='birth_info')
-// state = models.CharField(max_length=255)
-// county = models.CharField(max_length=255)
-// city = models.CharField(max_length=255)
-// natural_birth = models.BooleanField(default=True)
 
 const StudentBirthForm = ({ setPage }: Props) => {
 

@@ -1,5 +1,8 @@
 import APIClient from "./apiClient"
+import { BirthInfo } from "./birthInfo"
 import { Classroom } from "./classroomService"
+import { EmergencyContact } from "./emergencyContact"
+import { HealthInfo } from "./healthInfo"
 
 export interface SimpleAttendance {
     id: number
@@ -42,9 +45,24 @@ export interface Student {
     map_location: string
     insurance: string
     lives_with: string
+    health_info:HealthInfo | null
+    birth_info: BirthInfo | null
+    emergency_contact: EmergencyContact | null
 }
 
-export type StudentCreateUpdate = Omit<Student, 'uid' | 'attendance' | 'attendances_in' | 'attendances_out' | 'picture' | 'map_location' | 'clase'> & {
+export type StudentCreateUpdate = Omit<
+    Student, 
+        'uid' | 
+        'attendance' | 
+        'attendances_in' | 
+        'attendances_out' | 
+        'picture' | 
+        'map_location' | 
+        'clase' |
+        'health_info' |
+        'birth_info' |
+        'emergency_contact'
+    > & {
     uid?: string
     clase?: number
 }

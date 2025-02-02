@@ -5,9 +5,10 @@ import StudentCard from "./StudentCard"
 import StudentFilter from "./StudentFilter"
 import useLoader from "../../../hooks/ui/useLoader"
 import { motion } from "framer-motion"
-import { useLocation } from "react-router-dom"
+import { useLocation, useParams } from "react-router-dom"
 import useGetProfileStore from "../../../hooks/store/useGetProfileStore"
 import { Instructor } from "../../../services/api/instructorService"
+import StudentAdminCard from "./StudentAdminCard"
 
 interface Props {
     classroom?: string
@@ -18,7 +19,7 @@ const Students = ({ classroom, level }: Props) => {
 
     const [filter, setFilter] = useState('')
     const access = useAuthStore(s => s.access) || ''
-    const classroomId = classroom ? classroom : ''
+    const classroomId = classroom ? classroom : useLocation().state?.classroom
     const currentLevel = useLocation().state?.level || level
     const group = useGetProfileStore(s => s.user?.groups[0])
     const profile = useGetProfileStore(s => s.profile)
@@ -48,11 +49,15 @@ const Students = ({ classroom, level }: Props) => {
             {students
                 .filter( student => `${student.first_name.toLowerCase()}${student.last_name.toLowerCase()}`.includes(filter.toLowerCase()))
                 .map( student => (
-                <StudentCard 
-                    key={student.uid}
+                // Add a differentaition for admin and instructor
+                // <StudentCard 
+                //     key={student.uid}
+                //     student={student}
+                //     classroomId={classroomId}
+                //     canModifyAttendance={instructor ? canModifyAttendance : true}
+                // />
+                <StudentAdminCard 
                     student={student}
-                    classroomId={classroomId}
-                    canModifyAttendance={instructor ? canModifyAttendance : true}
                 />
             ))}
         </motion.div>

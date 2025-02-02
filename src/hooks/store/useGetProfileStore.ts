@@ -3,8 +3,9 @@ import { User } from "../../services/auth/useService";
 import { Tutor } from "../../services/api/tutorService";
 import { Instructor } from "../../services/api/instructorService";
 import { Assistant } from "../../services/api/assistantService";
+import { Admin } from "../../services/api/adminService";
 
-type Profile = Tutor | Instructor | Assistant | null;
+type Profile = Tutor | Instructor | Assistant | Admin | null;
 
 interface ProfileState {
   user: User | null;
