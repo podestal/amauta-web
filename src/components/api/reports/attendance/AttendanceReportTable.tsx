@@ -50,7 +50,7 @@ const AttendanceReportTable = ({
     
 
     const getDay = (day: number, month: number) => {
-        return moment().date(day).month(month - 1)
+        return moment().set({year: moment().year(), date: day, month: month - 1})
     }
 
     const weekDays = getWeekDays(parseInt(selectedWeek))

@@ -39,27 +39,22 @@ const DailyAttendanceReportHeader = ({ selectedDay, setSelectedDay, getDay, curr
 
     const lan = useLanguageStore(s => s.lan)
     let day = getDay(parseInt(selectedDay), parseInt(currentMonth))
-    
 
     const handleNextDay = () => {
-        // Start from the current full date
-        let fullDate = moment().set({ date: parseInt(selectedDay), month: parseInt(currentMonth) - 1 });
-        fullDate = fullDate.add(1, 'days'); // Move to the next day
-    
-        setSelectedDay(fullDate.date().toString()); // Update the selected day
-        setCurrentMonth((fullDate.month() + 1).toString()); // Update the current month (moment months are 0-indexed)
 
-        console.log('day', day);
+        let fullDate = moment().set({ date: parseInt(selectedDay), month: parseInt(currentMonth) - 1 })
+        fullDate = fullDate.add(1, 'days')
+        setSelectedDay(fullDate.date().toString())
+        setCurrentMonth((fullDate.month() + 1).toString())
         
     };
     
     const handlePreviousDay = () => {
-        // Start from the current full date
-        let fullDate = moment().set({ date: parseInt(selectedDay), month: parseInt(currentMonth) - 1 });
-        fullDate = fullDate.subtract(1, 'days'); // Move to the previous day
-    
-        setSelectedDay(fullDate.date().toString()); // Update the selected day
-        setCurrentMonth((fullDate.month() + 1).toString()); // Update the current month (moment months are 0-indexed)
+
+        let fullDate = moment().set({ date: parseInt(selectedDay), month: parseInt(currentMonth) - 1 })
+        fullDate = fullDate.subtract(1, 'days')
+        setSelectedDay(fullDate.date().toString())
+        setCurrentMonth((fullDate.month() + 1).toString())
     };
 
   return (
@@ -89,6 +84,7 @@ const DailyAttendanceReportHeader = ({ selectedDay, setSelectedDay, getDay, curr
             <p>{lan === 'EN' ? 'Exit' : 'Salida'}</p> 
         </div>
         <div className="w-[70%] mx-auto col-span-2 flex justify-between items-center dark:hover:text-slate-300">
+            <p>{selectedDay}</p>
             <RiArrowLeftCircleFill 
                 className="text-blue-600 hover:text-blue-800 cursor-pointer"
                 onClick={handlePreviousDay}
