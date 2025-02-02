@@ -56,8 +56,8 @@ const StudentForm = ({ setPage, classrooms }: Props) => {
   const [secondLanguage, setSecondLanguage] = useState('N')
 
   // FAMILY DATA
-  const [brothers, setBrothers] = useState('2')
-  const [place, setPlace] = useState('1')
+  const [brothers, setBrothers] = useState('')
+  const [place, setPlace] = useState('')
   const [religion, setReligion] = useState('C')
   const [livesWith, setLivesWith] = useState('')
   const [tutorName, setTutorName] = useState('')
@@ -184,8 +184,8 @@ const StudentForm = ({ setPage, classrooms }: Props) => {
         clase: classroomId,
         main_language: mainLanguage,
         second_language: secondLanguage === 'N' ? '' : secondLanguage,
-        number_of_siblings: parseInt(brothers),
-        place_in_family: parseInt(place),
+        number_of_siblings: parseInt(brothers) || 0,
+        place_in_family: parseInt(place) || 0,
         religion,
         address,
         phone_number: phone,
@@ -363,6 +363,20 @@ const StudentForm = ({ setPage, classrooms }: Props) => {
             error={cellphoneError}
             placeholder="Celular ..."
           />
+        </div>
+        <div className="grid grid-cols-3 gap-4">
+            <Input 
+              label="Número de Hermanos"
+              placeholder="Número ..."
+              value={brothers}
+              onChange={e => setBrothers(e.target.value)}
+            />
+            <Input 
+              label="Lugar en la Familia"
+              placeholder="Lugar ..."
+              value={place}
+              onChange={e => setPlace(e.target.value)}
+            />
         </div>
         <div className="grid grid-cols-3 gap-4">
           <Selector 
