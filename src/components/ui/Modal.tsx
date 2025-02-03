@@ -20,7 +20,7 @@ interface ModalProps {
   whole?: boolean;
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
+const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, whole }) => {
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape') onClose();
@@ -40,7 +40,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
       <style dangerouslySetInnerHTML={{ __html: styles.modalAnimation }} />
 
       <div
-        className="relative dark:bg-slate-950 bg-white rounded-lg shadow-lg p-6 max-w-lg w-full scale-transition"
+        className={`relative dark:bg-slate-950 bg-white rounded-lg shadow-lg p-6 ${whole ? 'mr-10 ml-72' : 'max-w-lg'} w-full scale-transition`}
         style={{ maxHeight: '90vh', overflowY: 'auto' }}
         onClick={(e) => e.stopPropagation()}
       >

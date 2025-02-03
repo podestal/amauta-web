@@ -5,10 +5,12 @@ import useLoader from "../../../hooks/ui/useLoader"
 import StudentAdminCard from "./StudentAdminCard"
 import Input from "../../ui/Input"
 import Button from "../../ui/Button"
+import Modal from "../../ui/Modal"
 
 const StudentsAdmin = () => {
 
     const access = useAuthStore(s => s.access) || ''
+    const [open, setOpen] = useState(false)
     const [studentFilter, setStudentFilter] = useState('')
     const { data: students, isLoading, isError, error, isSuccess } = useGetStudents({ access, all: true })
 
@@ -19,6 +21,7 @@ const StudentsAdmin = () => {
     if (isSuccess)
 
   return (
+    <>
     <div className="pt-10 pb-20 flex flex-col gap-8 justify-center items-center">
         <div className="w-full grid grid-cols-3 gap-4">
             <h2 className="text-4xl text-center">Alumnos</h2>
@@ -26,6 +29,7 @@ const StudentsAdmin = () => {
             <div>
             <Button 
                 label="Nuevo alumno"
+                onClick={() => setOpen(true)}
             />
             </div>
         </div>
@@ -54,6 +58,17 @@ const StudentsAdmin = () => {
             ))}
         </div>
     </div>
+    <Modal 
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        whole
+    >
+
+        <div className="w-full h-screen">
+            sdfasfdsd
+        </div>
+    </Modal>
+    </>
   )
 }
 
