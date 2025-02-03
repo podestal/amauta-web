@@ -24,14 +24,13 @@ const StudentsAdmin = () => {
   return (
     <>
     <div className="pt-10 pb-20 flex flex-col gap-8 justify-center items-center">
-        <div className="w-full grid grid-cols-3 gap-4">
-            <h2 className="text-4xl text-center">Alumnos</h2>
-            <div></div>
+        <div className="w-full flex justify-between items-start gap-4">
+            <h2 className="text-5xl font-bold">Alumnos</h2>
             <div>
-            <Button 
-                label="Nuevo alumno"
-                onClick={() => setOpen(true)}
-            />
+                <Button 
+                    label="Nuevo alumno"
+                    onClick={() => setOpen(true)}
+                />
             </div>
         </div>
         <Input 
