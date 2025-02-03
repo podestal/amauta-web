@@ -87,8 +87,34 @@ const StudentInfo = ({ student }: Props) => {
             </div>
         </div>
         <h2 className="text-xl font-bold my-2">Información de Nacimiento</h2>
+        <div className="w-full flex flex-col gap-4 my-6">
+            <div className="w-full grid grid-cols-4 gap-4">
+                <p>Fecha de Nacimiento: {student.birth_info?.date_of_birth || '29/03/1991'}</p>
+                <p>Departamento: {student.birth_info?.state || 'Arequipa'}</p>
+                <p>Provincia: {student.birth_info?.county || 'Islay'}</p>
+                <p>Distrito: {student.birth_info?.city || 'Mollendo'}</p>
+            </div>
+            <div className="w-full grid grid-cols-4 gap-4">
+                <p>Parto Natural: {student.birth_info?.natural_birth ? 'Si' : 'No'}</p>
+            </div>
+        </div>
         <h2 className="text-xl font-bold my-2">Información de Salud</h2>
+        <div className="w-full flex flex-col gap-4 my-6">
+            <div className="w-full grid grid-cols-4 gap-4">
+                <p>Seguro Médico: {student.insurance || 'SIS'}</p>
+                <p>Peso: {student.health_info?.weight ? `${student.health_info?.weight}Kg` : '45Kg'}</p>
+                <p>Estatura: {student.health_info?.height ? `${student.health_info?.height}cm` : '1.69cm'}</p>
+                <p>Enfermedades: {student.health_info?.illness || 'Ninguna'}</p>
+            </div>
+        </div>
         <h2 className="text-xl font-bold my-2">Contacto de Emergecia</h2>
+        <div className="w-full flex flex-col gap-4 my-6">
+            <div className="w-full grid grid-cols-4 gap-4">
+                <p>Nombre: {student.emergency_contact?.name || 'Juan Perez'}</p>
+                <p>Teléfono: {student.emergency_contact?.phone_number || '123456'}</p>
+                <p>Dirección: {student.emergency_contact?.address || 'Avenida Cortes 245'}</p>
+            </div>
+        </div>
     </div>
   )
 }

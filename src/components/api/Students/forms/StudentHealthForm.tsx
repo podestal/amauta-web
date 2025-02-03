@@ -6,17 +6,16 @@ import { motion } from "framer-motion"
 
 interface Props {
     setPage: React.Dispatch<React.SetStateAction<number>>
+    studentId: string
 }
 
-const StudentHealthForm = ({ setPage }: Props) => {
+const StudentHealthForm = ({ setPage, studentId }: Props) => {
 
     const [weight, setWeight] = useState('')
     const [height, setHeight] = useState('')
     const [illness, setIllness] = useState('')
-
-    // const handleSubmit = (e: React.FormEvent) => {
-    //     e.preventDefault()
-    // }
+    console.log('studentId', studentId)
+    
 
   return (
     <motion.div

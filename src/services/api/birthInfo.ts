@@ -16,6 +16,10 @@ export interface BirthInfo {
     natural_birth: boolean
 }
 
-export type BirthInfoCreateUpdate = Omit<BirthInfo, 'id'>
+export type BirthInfoCreateUpdate = Omit<BirthInfo, 'id'> & {
+    student: string
+}
 
-export default new APIClient<BirthInfo, BirthInfoCreateUpdate>('birth-info/')
+const birthInfoService = new APIClient<BirthInfo, BirthInfoCreateUpdate>('birth-info/')
+
+export default birthInfoService

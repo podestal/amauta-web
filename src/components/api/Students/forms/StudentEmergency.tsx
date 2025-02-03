@@ -5,13 +5,14 @@ import Input from "../../../ui/Input"
 
 interface Props {
     setPage: React.Dispatch<React.SetStateAction<number>>
+    studentId: string
 }
 
 // name = models.CharField(max_length=255)
 // phone_number = models.CharField(max_length=255)
 // address = models.TextField()
 
-const StudentEmergency = ({ setPage }: Props) => {
+const StudentEmergency = ({ setPage, studentId }: Props) => {
 
     const [name, setName] = useState('')
     const [phoneNumber, setPhoneNumber] = useState('')
@@ -21,6 +22,9 @@ const StudentEmergency = ({ setPage }: Props) => {
     const [nameError, setNameError] = useState('')
     const [phoneNumberError, setPhoneNumberError] = useState('')
     const [addressError, setAddressError] = useState('')
+
+    console.log('studentId', studentId)
+    
 
   return (
     <motion.div

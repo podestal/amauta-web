@@ -10,6 +10,7 @@ import StudentEmergency from "./forms/StudentEmergency"
 const CreateStudent = () => {
 
   const access = useAuthStore(s => s.access) || ''
+  const [studentId, setStudentId] = useState('')
   const {data: classrooms, isLoading, isError, error, isSuccess} = useGetClassroom({access})
   const [page, setPage] = useState(1)
 
@@ -26,14 +27,17 @@ const CreateStudent = () => {
       <StudentForm 
         setPage={setPage}
         classrooms={classrooms}
+        setStudentId={setStudentId}
       />}
       {page === 2 && 
       <StudentHealthForm 
         setPage={setPage}
+        studentId={studentId}
       />}
       {page === 3 &&
       <StudentBirthForm 
         setPage={setPage}
+        studentId={studentId}
       />}
       {page === 4 &&
       <StudentEmergency 

@@ -11,6 +11,7 @@ import useAuthStore from "../../../../hooks/store/useAuthStore"
 interface Props {
   setPage: React.Dispatch<React.SetStateAction<number>>
   classrooms: Classroom[]
+  setStudentId: React.Dispatch<React.SetStateAction<string>>
 }
 
 const languages = [
@@ -33,7 +34,7 @@ const religions = [
   {id: 'O', name: 'Otra'}
 ]
 
-const StudentForm = ({ setPage, classrooms }: Props) => {
+const StudentForm = ({ setPage, classrooms, setStudentId }: Props) => {
 
   const lan = useLanguageStore(s => s.lan)
   const access = useAuthStore(s => s.access) || ''
@@ -195,8 +196,9 @@ const StudentForm = ({ setPage, classrooms }: Props) => {
       },
       access
     }, {
-      onSuccess: () => {
+      onSuccess: res => {
         setPage(prev => prev + 1)
+        setStudentId(res.uid)
       }
     })    
   }
