@@ -6,9 +6,15 @@ interface Props {
 
 const StudentAdminCard = ({ student }: Props) => {
   return (
-    <div>
-        <>{console.log(student)}</>
-        <p>{student.first_name}</p>
+    <div className="w-full grid grid-cols-7 gap-6">
+        
+        <div className="col-span-3">
+          <p className="">{student.first_name} {student.last_name}</p>
+        </div>
+        <div></div>
+        <div className={`w-[40%] h-4 ${student.birth_info ? 'bg-green-600' : 'bg-amber-600'}`}/>
+        <div className={`w-[40%] h-4 ${student.health_info ? 'bg-green-600' : 'bg-amber-600'}`}/>
+        <div className={`w-[40%] h-4 ${student.emergency_contact ? 'bg-green-600' : 'bg-amber-600'}`}/>
     </div>
   )
 }

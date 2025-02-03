@@ -9,11 +9,12 @@ interface Props {
     month?: string
     week?: string
     day?: string
+    all?: boolean
 }
 
-const useGetStudents = ({ access, classroomId, tutor, month, week, day }: Props): UseQueryResult<Student[], Error> => {
+const useGetStudents = ({ access, classroomId, tutor, month, week, day, all }: Props): UseQueryResult<Student[], Error> => {
 
-    const studentService = getStudentService({ tutor })
+    const studentService = getStudentService({ tutor, all })
 
     let studentCacheKeyTime = `${classroomId}`
 
