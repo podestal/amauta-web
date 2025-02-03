@@ -6,6 +6,7 @@ import StudentAdminCard from "./StudentAdminCard"
 import Input from "../../ui/Input"
 import Button from "../../ui/Button"
 import Modal from "../../ui/Modal"
+import CreateStudent from "./CreateStudent"
 
 const StudentsAdmin = () => {
 
@@ -63,10 +64,7 @@ const StudentsAdmin = () => {
         onClose={() => setOpen(false)}
         whole
     >
-
-        <div className="w-full h-screen">
-            sdfasfdsd
-        </div>
+        <CreateStudent />
     </Modal>
     </>
   )

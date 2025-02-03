@@ -6,7 +6,7 @@ interface Props {
 
 const StudentAdminCard = ({ student }: Props) => {
   return (
-    <div className="w-full grid grid-cols-7 gap-6">
+    <div className="w-full grid grid-cols-7 gap-6 hover:bg-slate-200 dark:hover:bg-slate-900 p-4 rounded-xl cursor-pointer">
         
         <div className="col-span-3">
           <p className="">{student.first_name} {student.last_name}</p>

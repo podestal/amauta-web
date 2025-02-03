@@ -21,7 +21,7 @@ const CreateStudent = () => {
 
   return (
     <div className="pt-12">
-      <h2 className="text-4xl mb-16 text-center font-bold">Ficha de Inscripción</h2>
+      <h2 className="text-4xl mb-4 text-center font-bold">Ficha de Inscripción</h2>
       {page === 1 && 
       <StudentForm 
         setPage={setPage}
