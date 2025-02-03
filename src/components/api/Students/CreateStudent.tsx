@@ -42,6 +42,7 @@ const CreateStudent = () => {
       {page === 4 &&
       <StudentEmergency 
         setPage={setPage}
+        studentId={studentId}
       />
       }
     </div>

@@ -1,9 +1,5 @@
 import APIClient from "./apiClient"
 
-// weight = models.FloatField(null=True, blank=True)
-// height = models.FloatField(null=True, blank=True)
-// illness = models.TextField(null=True, blank=True)
-
 export interface HealthInfo {
     id: string
     weight: number
@@ -11,7 +7,11 @@ export interface HealthInfo {
     illness: string
 }
 
-export type HealthInfoCreateUpdate = Omit<HealthInfo, 'id'>
+export type HealthInfoCreateUpdate = Omit<HealthInfo, 'id'> & {
+    student: string
+}
 
-export default new APIClient<HealthInfo, HealthInfoCreateUpdate>('health-info/')
+const healthInfoService = new APIClient<HealthInfo, HealthInfoCreateUpdate>('health-info/')
+
+export default healthInfoService
 
