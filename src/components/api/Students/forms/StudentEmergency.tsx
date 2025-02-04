@@ -6,7 +6,7 @@ import useAuthStore from "../../../../hooks/store/useAuthStore"
 import { CreateEmergencyContactData } from "../../../../hooks/api/student/studentInfo/useCreateEmergencyContact"
 import { EmergencyContact } from "../../../../services/api/emergencyContact"
 import { UseMutationResult } from "@tanstack/react-query"
-import { UpdateEmergencyContactData } from "../../../../hooks/api/student/studentInfo/useUpdateEmergencyContact"
+import useUpdateEmergencyContact from "../../../../hooks/api/student/studentInfo/useUpdateEmergencyContact"
 import useNotificationsStore from "../../../../hooks/store/useNotificationsStore"
 
 interface Props {
@@ -16,7 +16,6 @@ interface Props {
     emergencyContact?: EmergencyContact
     setOpen?: React.Dispatch<React.SetStateAction<boolean>>
     createEmergencyContact?: UseMutationResult<EmergencyContact, Error, CreateEmergencyContactData>
-    updateEmergencyContact?: UseMutationResult<EmergencyContact, Error, UpdateEmergencyContactData>
 }
 
 const StudentEmergency = ({ 
@@ -26,11 +25,11 @@ const StudentEmergency = ({
     emergencyContact,
     setOpen,
     createEmergencyContact,
-    updateEmergencyContact,
 }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
     const { setMessage, setShow, setType } = useNotificationsStore()
+    const updateEmergencyContact = emergencyContact && useUpdateEmergencyContact({ emergencyContactId: emergencyContact.id })
 
     const [name, setName] = useState(emergencyContact ? emergencyContact.name : '')
     const [phoneNumber, setPhoneNumber] = useState(emergencyContact ? emergencyContact.phone_number : '')
@@ -70,7 +69,11 @@ const StudentEmergency = ({
         }, 
         {
             onSuccess: () => {
-                setPage && setPage(prev => prev + 1)}
+                setOpen && setOpen(false)
+                setType('success')
+                setShow(true)
+                setMessage('Información de estudiante guardada exitosamente!')
+            }
         })
 
         updateEmergencyContact && updateEmergencyContact.mutate({

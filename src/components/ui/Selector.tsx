@@ -7,7 +7,7 @@ interface Props<T extends Item> {
     values: T[] // Array of generic items
     defaultValue?: string // Default selected value, corresponds to item id
     value?: string // Selected value, corresponds to item id
-    setter: (value: string) => void // Function to update the selected value
+    setter: (value: any) => void // Function to update the selected value
     label?: string // Text that indicate the type of the selector
     all?: boolean // Boolean that conditionally renders all values
     error?: string

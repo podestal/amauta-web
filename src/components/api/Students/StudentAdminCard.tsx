@@ -10,9 +10,6 @@ import StudentHealthForm from "./forms/StudentHealthForm"
 import StudentForm from "./forms/StudentForm"
 import { Classroom } from "../../../services/api/classroomService"
 import useUpdateStudent from "../../../hooks/api/student/useUpdateStudent"
-import useUpdateBirthInfo from "../../../hooks/api/student/studentInfo/useUpdateBirthInfo"
-import useUpdateHealthInfo from "../../../hooks/api/student/studentInfo/useUpdateHealthInfo"
-import useUpdateEmergencyContact from "../../../hooks/api/student/studentInfo/useUpdateEmergencyContact"
 
 interface Props {
     student: Student
@@ -30,10 +27,6 @@ const StudentAdminCard = ({ student, classrooms }: Props) => {
 
   // MUTATIONS
   const updateStudent = useUpdateStudent({ studentId: student.uid })
-  const updateBirthInfo = birthInfo ? useUpdateBirthInfo({ birthInfoId: birthInfo.id }) : undefined
-  const updateHealthInfo = healthInfo ? useUpdateHealthInfo({ healthInfoId: healthInfo.id }) : undefined
-  const updateEmergencyContact = emergencyContact ? useUpdateEmergencyContact({ emergencyContactId: emergencyContact.id }) : undefined
-
 
   return (
     <>
@@ -90,7 +83,7 @@ const StudentAdminCard = ({ student, classrooms }: Props) => {
         setPage={() => {}}
         nextPrev={false}
         birthInfo={birthInfo}
-        updateBirthInfo={updateBirthInfo}
+        setOpen={setOpen}
       />}
       {renderComponent === 'healthInfo' &&
       <StudentHealthForm 
@@ -98,7 +91,6 @@ const StudentAdminCard = ({ student, classrooms }: Props) => {
         setPage={() => {}}
         nextPrev={false}
         healthInfo={healthInfo}
-        updateHealthInfo={updateHealthInfo}
         setOpen={setOpen}
       />}
       {renderComponent === 'emergencyContact' &&
@@ -107,7 +99,6 @@ const StudentAdminCard = ({ student, classrooms }: Props) => {
         setPage={() => {}}
         nextPrev={false}
         emergencyContact={emergencyContact}
-        updateEmergencyContact={updateEmergencyContact}
         setOpen={setOpen}
       />}
       {renderComponent === 'studentForm' &&

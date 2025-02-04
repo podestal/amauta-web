@@ -5,7 +5,7 @@ import { getAttendanceStatus } from "../../../utils/data"
 
 
 interface Props {
-    setSelectedStatus:  React.Dispatch<React.SetStateAction<string>>
+    setSelectedStatus:  React.Dispatch<React.SetStateAction<"N" | "E" | "T" | "O" | "L">>
     selectedStatus: string
 }
 

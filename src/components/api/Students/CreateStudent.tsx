@@ -11,9 +11,10 @@ import useCreateEmergencyContact from "../../../hooks/api/student/studentInfo/us
 
 interface Props {
   classrooms: Classroom[]
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const CreateStudent = ({ classrooms }: Props) => {
+const CreateStudent = ({ classrooms, setOpen }: Props) => {
 
   const [studentId, setStudentId] = useState('')
   const [page, setPage] = useState(1)
@@ -53,6 +54,7 @@ const CreateStudent = ({ classrooms }: Props) => {
         setPage={setPage}
         studentId={studentId}
         createEmergencyContact={createEmergencyContact}
+        setOpen={setOpen}
       />
       }
     </div>

@@ -7,7 +7,7 @@ import { CreateHealthInfoData } from "../../../../hooks/api/student/studentInfo/
 import useAuthStore from "../../../../hooks/store/useAuthStore"
 import { UseMutationResult } from "@tanstack/react-query"
 import { HealthInfo } from "../../../../services/api/healthInfo"
-import { UpdateHealthInfoData } from "../../../../hooks/api/student/studentInfo/useUpdateHealthInfo"
+import useUpdateHealthInfo from "../../../../hooks/api/student/studentInfo/useUpdateHealthInfo"
 import useNotificationsStore from "../../../../hooks/store/useNotificationsStore"
 
 interface Props {
@@ -16,7 +16,6 @@ interface Props {
     nextPrev?: boolean
     healthInfo?: HealthInfo
     createHealthInfo?: UseMutationResult<HealthInfo, Error, CreateHealthInfoData>
-    updateHealthInfo?: UseMutationResult<HealthInfo, Error, UpdateHealthInfoData>
     setOpen?: React.Dispatch<React.SetStateAction<boolean>>
 }
 
@@ -26,12 +25,13 @@ const StudentHealthForm = ({
     nextPrev=true, 
     healthInfo,
     createHealthInfo,
-    updateHealthInfo,
     setOpen,
 }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
     const { setMessage, setShow, setType } = useNotificationsStore()
+    const updateHealthInfo = healthInfo && useUpdateHealthInfo({ healthInfoId: healthInfo.id })
+
     const [weight, setWeight] = useState(healthInfo ? `${healthInfo.weight}` : '')
     const [height, setHeight] = useState(healthInfo ? `${healthInfo.height}` : '')
     const [illness, setIllness] = useState(healthInfo ? healthInfo.illness : '')

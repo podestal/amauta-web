@@ -70,6 +70,7 @@ const StudentsAdmin = () => {
     >
         <CreateStudent 
             classrooms={classrooms}
+            setOpen={setOpen}
         />
     </Modal>
     </>

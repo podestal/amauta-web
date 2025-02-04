@@ -8,15 +8,16 @@ import useAuthStore from '../../../../hooks/store/useAuthStore'
 import moment from 'moment'
 import { BirthInfo } from '../../../../services/api/birthInfo'
 import { UseMutationResult } from '@tanstack/react-query'
-import { UpdateBirthInfoData } from '../../../../hooks/api/student/studentInfo/useUpdateBirthInfo'
+import useUpdateBirthInfo from '../../../../hooks/api/student/studentInfo/useUpdateBirthInfo'
+import useNotificationsStore from '../../../../hooks/store/useNotificationsStore'
 
 interface Props {
     setPage: React.Dispatch<React.SetStateAction<number>>
     studentId: string
     nextPrev?: boolean
     birthInfo?: BirthInfo
+    setOpen?: React.Dispatch<React.SetStateAction<boolean>>
     createBirthInfo?: UseMutationResult<BirthInfo, Error, CreateBirthInfoData>
-    updateBirthInfo?: UseMutationResult<BirthInfo, Error, UpdateBirthInfoData>
 }
 
 const StudentBirthForm = ({ 
@@ -24,15 +25,18 @@ const StudentBirthForm = ({
     studentId, 
     nextPrev=true, 
     birthInfo, 
+    setOpen,
     createBirthInfo,
-    updateBirthInfo,
 }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
+    const { setMessage, setShow, setType } = useNotificationsStore()
+    const updateBirthInfo = birthInfo && useUpdateBirthInfo({ birthInfoId: birthInfo.id })
+
     const [state, setState] = useState(birthInfo ? birthInfo.state : '')
     const [county, setCounty] = useState(birthInfo ? birthInfo.county : '')
     const [city, setCity] = useState(birthInfo ? birthInfo.city : '')
-    const [naturalBirth, setNaturalBirth] = useState(birthInfo ? `${birthInfo ? '1' : '2'}` : '1')
+    const [naturalBirth, setNaturalBirth] = useState(birthInfo ? `${birthInfo.natural_birth ? '1' : '2'}` : '1')
     const [dateOfBirth, setDateOfBirth] = useState(birthInfo ? moment(birthInfo.date_of_birth).format('YYYY-MM-DD') : '')
 
     // Error handling
@@ -91,6 +95,13 @@ const StudentBirthForm = ({
                 student: studentId
             },
             access
+        }, {
+            onSuccess: () => {
+                setOpen && setOpen(false)
+                setType('success')
+                setShow(true)
+                setMessage('Información de salud actualizada exitosamente!')
+            }
         })
     }
 
