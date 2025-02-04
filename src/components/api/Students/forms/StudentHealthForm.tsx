@@ -3,6 +3,8 @@ import Button from "../../../ui/Button"
 import Input from "../../../ui/Input"
 import TextArea from "../../../ui/TextArea"
 import { motion } from "framer-motion"
+import useCreateHealthInfo from "../../../../hooks/api/student/studentInfo/useCreateHealthInfo"
+import useAuthStore from "../../../../hooks/store/useAuthStore"
 
 interface Props {
     setPage: React.Dispatch<React.SetStateAction<number>>
@@ -11,10 +13,28 @@ interface Props {
 
 const StudentHealthForm = ({ setPage, studentId }: Props) => {
 
+    const access = useAuthStore(s => s.access) || ''
     const [weight, setWeight] = useState('')
     const [height, setHeight] = useState('')
     const [illness, setIllness] = useState('')
+    const createHealthInfo = useCreateHealthInfo()
     console.log('studentId', studentId)
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+            e.preventDefault()
+            createHealthInfo.mutate({
+                healthInfo: {
+                    weight: parseInt(weight),
+                    height: parseInt(height),
+                    illness,
+                    student: studentId
+                },
+                access
+            }, 
+            {
+                onSuccess: () => setPage(prev => prev + 1)
+            }
+        )}
     
 
   return (
@@ -23,7 +43,7 @@ const StudentHealthForm = ({ setPage, studentId }: Props) => {
         animate={{opacity: 1, x: 0}}
         transition={{duration: 0.5}}
     >
-        <form>
+        <form onSubmit={handleSubmit}>
             <div className="w-full border-b-2 dark:border-gray-600 border-gray-300 mb-12">
                 <h2 className="text-2xl text-left font-semibold mb-6">Información de Salud</h2>
             </div>
