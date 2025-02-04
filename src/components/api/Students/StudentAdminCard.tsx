@@ -7,12 +7,15 @@ import { RiBookletFill } from "@remixicon/react"
 import StudentEmergency from "./forms/StudentEmergency"
 import StudentBirthForm from "./forms/StudentBirthForm"
 import StudentHealthForm from "./forms/StudentHealthForm"
+import StudentForm from "./forms/StudentForm"
+import { Classroom } from "../../../services/api/classroomService"
 
 interface Props {
     student: Student
+    classrooms: Classroom[]
 }
 
-const StudentAdminCard = ({ student }: Props) => {
+const StudentAdminCard = ({ student, classrooms }: Props) => {
 
   const [open, setOpen] = useState(false)
   const [renderComponent, setRenderComponent] = useState('')
@@ -31,7 +34,13 @@ const StudentAdminCard = ({ student }: Props) => {
           />
           <p className="">{student.first_name} {student.last_name}</p>
         </div>
-        <div></div>
+        <div 
+            className="dark:bg-neutral-400 bg-neutral-200 dark:hover:bg-neutral-500 hover:bg-neutral-300 cursor-pointer"
+            onClick={() => {
+              setRenderComponent('studentForm')
+              setOpen(true)
+            }}
+        />
         <div 
           onClick={() => {
             setRenderComponent('birthInfo')
@@ -76,6 +85,13 @@ const StudentAdminCard = ({ student }: Props) => {
       <StudentEmergency 
         studentId={student.uid}
         setPage={() => {}}
+      />}
+      {renderComponent === 'studentForm' &&
+      <StudentForm
+        classrooms={classrooms}
+        setStudentId={() => {}}
+        setPage={() => {}}
+        student={student}
       />}
     </Modal>
     </>

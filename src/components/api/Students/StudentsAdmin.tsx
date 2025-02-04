@@ -1,5 +1,6 @@
 import { useState } from "react"
 import useGetStudents from "../../../hooks/api/student/useGetStudents"
+import useGetClassroom from "../../../hooks/api/classroom/useGetClassroom"
 import useAuthStore from "../../../hooks/store/useAuthStore"
 import useLoader from "../../../hooks/ui/useLoader"
 import StudentAdminCard from "./StudentAdminCard"
@@ -13,13 +14,16 @@ const StudentsAdmin = () => {
     const access = useAuthStore(s => s.access) || ''
     const [open, setOpen] = useState(false)
     const [studentFilter, setStudentFilter] = useState('')
-    const { data: students, isLoading, isError, error, isSuccess } = useGetStudents({ access, all: true })
+    const { data: classrooms, isLoading: loadingClassrooms, isError: isErrorClassroom, error: classroomError, isSuccess: classroomSuccess } = useGetClassroom({ access })
+    const { data: students, isLoading: loadingStudents, isError: isErrorStudents, error: studentsError, isSuccess: studentsSuccess } = useGetStudents({ access, all: true })
 
-    useLoader(isLoading)
+    useLoader(loadingStudents)
 
-    if (isError) return <p>Error {error.message}</p>
+    useLoader(loadingClassrooms)
 
-    if (isSuccess)
+    if (isErrorStudents || isErrorClassroom) return <p>Error {studentsError ? studentsError.message: classroomError?.message}</p>
+
+    if (studentsSuccess && classroomSuccess)
 
   return (
     <>
@@ -54,6 +58,7 @@ const StudentsAdmin = () => {
                 <StudentAdminCard 
                     key={student.uid}
                     student={student}
+                    classrooms={classrooms}
                 />
             ))}
         </div>
@@ -63,7 +68,9 @@ const StudentsAdmin = () => {
         onClose={() => setOpen(false)}
         whole
     >
-        <CreateStudent />
+        <CreateStudent 
+            classrooms={classrooms}
+        />
     </Modal>
     </>
   )

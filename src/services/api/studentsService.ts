@@ -35,6 +35,7 @@ export interface Student {
     health_info:HealthInfo | null
     birth_info: BirthInfo | null
     emergency_contact: EmergencyContact | null
+    tutor_name: string
 }
 
 export type StudentCreateUpdate = Omit<
@@ -48,10 +49,12 @@ export type StudentCreateUpdate = Omit<
         'clase' |
         'health_info' |
         'birth_info' |
-        'emergency_contact'
+        'emergency_contact' |
+        'tutor_name'
     > & {
     uid?: string
     clase?: number
+    tutor_name?: string
 }
 
 interface Props {

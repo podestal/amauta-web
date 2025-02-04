@@ -7,11 +7,13 @@ import useLanguageStore from "../../../../hooks/store/useLanguageStore"
 import { motion } from "framer-motion"
 import useCreateStudent from "../../../../hooks/api/student/useCreateStudent"
 import useAuthStore from "../../../../hooks/store/useAuthStore"
+import { Student } from "../../../../services/api/studentsService"
 
 interface Props {
-  setPage: React.Dispatch<React.SetStateAction<number>>
+  setPage?: React.Dispatch<React.SetStateAction<number>>
   classrooms: Classroom[]
   setStudentId: React.Dispatch<React.SetStateAction<string>>
+  student?: Student
 }
 
 const languages = [
@@ -34,42 +36,42 @@ const religions = [
   {id: 'O', name: 'Otra'}
 ]
 
-const StudentForm = ({ setPage, classrooms, setStudentId }: Props) => {
+const StudentForm = ({ setPage, classrooms, setStudentId, student }: Props) => {
 
   const lan = useLanguageStore(s => s.lan)
   const access = useAuthStore(s => s.access) || ''
   const createStudent = useCreateStudent()
 
   // PERSONAL DATA
-  const [dni, setDni] = useState('')
-  const [oldSchool, setOldSchool] = useState('')
-  const [names, setNames] = useState('')
-  const [fatherLastName, setFatherLastName] = useState('')
-  const [motherLastName, setMotherLastName] = useState('')
+  const [dni, setDni] = useState(student ? student.uid : '')
+  const [oldSchool, setOldSchool] = useState(student ? student.prev_school : '')
+  const [names, setNames] = useState(student ? student.first_name : '')
+  const [fatherLastName, setFatherLastName] = useState(student ? student.last_name.split(' ')[0] : '')
+  const [motherLastName, setMotherLastName] = useState(student ? student.last_name.split(' ')[1] : '')
 
   // CLASSROOM
-  const [level, setLevel] = useState('')
-  const [grade, setGrade] = useState('')
-  const [section, setSection] = useState('')
+  const [level, setLevel] = useState(student ? student.clase.level : '')
+  const [grade, setGrade] = useState(student ? student.clase.grade : '')
+  const [section, setSection] = useState(student ? student.clase.section : '')
 
   // LANGUAGE
-  const [mainLanguage, setMainLanguage] = useState('S')
-  const [secondLanguage, setSecondLanguage] = useState('N')
+  const [mainLanguage, setMainLanguage] = useState(student ? student.main_language : 'S')
+  const [secondLanguage, setSecondLanguage] = useState(student ? student.second_language : 'N')
 
   // FAMILY DATA
-  const [brothers, setBrothers] = useState('')
-  const [place, setPlace] = useState('')
+  const [brothers, setBrothers] = useState(student ? student.number_of_siblings : 0)
+  const [place, setPlace] = useState( student ? student.place_in_family : 0)
   const [religion, setReligion] = useState('C')
-  const [livesWith, setLivesWith] = useState('')
-  const [tutorName, setTutorName] = useState('')
+  const [livesWith, setLivesWith] = useState(student ? student.lives_with : '')
+  const [tutorName, setTutorName] = useState(student ? student.tutor_name : '')
 
   // CONTACT
-  const [address, setAddress] = useState('')
-  const [phone, setPhone] = useState('')
-  const [cellphone, setCellphone] = useState('')
+  const [address, setAddress] = useState(student ? student.address : '')
+  const [phone, setPhone] = useState(student ? student.phone_number : '')
+  const [cellphone, setCellphone] = useState(student ? student.celphone_number : '')
 
   // HEALTH
-  const [insurance, setInsurance] = useState('')
+  const [insurance, setInsurance] = useState(student ? student.insurance : '')
 
   // ERROR HANDLING
   const [dniError, setDniError] = useState('')
@@ -96,7 +98,7 @@ const StudentForm = ({ setPage, classrooms, setStudentId }: Props) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    const classroomId = classrooms.find(c => c.grade === grade && c.section === section && c.level === level)?.id
+    const classroomId = classrooms && classrooms.find(c => c.grade === grade && c.section === section && c.level === level)?.id
     
     if (dni === '') {
       setDniError('El DNI es requerido')
@@ -185,8 +187,8 @@ const StudentForm = ({ setPage, classrooms, setStudentId }: Props) => {
         clase: classroomId,
         main_language: mainLanguage,
         second_language: secondLanguage === 'N' ? '' : secondLanguage,
-        number_of_siblings: parseInt(brothers) || 0,
-        place_in_family: parseInt(place) || 0,
+        number_of_siblings: brothers,
+        place_in_family: place,
         religion,
         address,
         phone_number: phone,
@@ -197,7 +199,7 @@ const StudentForm = ({ setPage, classrooms, setStudentId }: Props) => {
       access
     }, {
       onSuccess: res => {
-        setPage(prev => prev + 1)
+        setPage && setPage(prev => prev + 1)
         setStudentId(res.uid)
       }
     })    
@@ -277,6 +279,7 @@ const StudentForm = ({ setPage, classrooms, setStudentId }: Props) => {
               error={levelError}
               value={level}
               setError={setLevelError}
+              defaultValue={level && level}
             />
           </div>
           {level && <motion.div
@@ -295,6 +298,7 @@ const StudentForm = ({ setPage, classrooms, setStudentId }: Props) => {
               error={gradeError}
               value={grade}
               setError={setGradeError}
+              defaultValue={grade && grade}
             />
           </motion.div>}
           {grade && <motion.div
@@ -310,6 +314,7 @@ const StudentForm = ({ setPage, classrooms, setStudentId }: Props) => {
               error={sectionError}
               value={section}
               setError={setSectionError}
+              defaultValue={section && section}
             />
           </motion.div>}
         </div>
@@ -319,11 +324,12 @@ const StudentForm = ({ setPage, classrooms, setStudentId }: Props) => {
             setter={setMainLanguage}
             defaultValue={mainLanguage}
             label="Lengua Materna"
+
           />
           <Selector 
             values={languages.filter(l => l.id !== mainLanguage)}
             setter={setSecondLanguage}
-            defaultValue={secondLanguage}
+            defaultValue={secondLanguage ? secondLanguage : 'N'}
             label="Segunda Lengua"
             lan={lan}
           />
@@ -335,6 +341,7 @@ const StudentForm = ({ setPage, classrooms, setStudentId }: Props) => {
             error={religionError}
             setError={setReligionError}
             value={religion}
+            defaultValue={religion && religion}
           />
         </div>
         <div className="grid grid-cols-3 gap-4">
@@ -371,13 +378,15 @@ const StudentForm = ({ setPage, classrooms, setStudentId }: Props) => {
               label="Número de Hermanos"
               placeholder="Número ..."
               value={brothers}
-              onChange={e => setBrothers(e.target.value)}
+              onChange={e => setBrothers(Number(e.target.value))}
+              type="number"
             />
             <Input 
               label="Lugar en la Familia"
               placeholder="Lugar ..."
               value={place}
-              onChange={e => setPlace(e.target.value)}
+              onChange={e => setPlace(Number(e.target.value))}
+              type="number"
             />
         </div>
         <div className="grid grid-cols-3 gap-4">
@@ -389,6 +398,7 @@ const StudentForm = ({ setPage, classrooms, setStudentId }: Props) => {
             error={insuranceError}
             setError={setInsuranceError}
             value={insurance}
+            defaultValue={insurance && insurance}
           />
           <Selector 
             values={[{id: 'Padre', name: 'Padre'}, {id: 'Madre', name: 'Madre'}, {id: 'A', name: 'Apoderado'}]}
@@ -398,6 +408,7 @@ const StudentForm = ({ setPage, classrooms, setStudentId }: Props) => {
             error={livesWithError}
             setError={setLivesWithError}
             value={livesWith}
+            defaultValue={livesWith && livesWith}
           />
         </div>
         {livesWith === 'A' &&

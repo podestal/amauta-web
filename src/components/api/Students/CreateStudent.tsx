@@ -1,28 +1,24 @@
 import { useState } from "react"
 import StudentForm from "./forms/StudentForm"
-import useGetClassroom from "../../../hooks/api/classroom/useGetClassroom"
-import useAuthStore from "../../../hooks/store/useAuthStore"
-import useLoader from "../../../hooks/ui/useLoader"
 import StudentHealthForm from "./forms/StudentHealthForm"
 import StudentBirthForm from "./forms/StudentBirthForm"
 import StudentEmergency from "./forms/StudentEmergency"
 import moment from "moment"
+import { Classroom } from "../../../services/api/classroomService"
 
-const CreateStudent = () => {
+interface Props {
+  classrooms: Classroom[]
+}
 
-  const access = useAuthStore(s => s.access) || ''
+const CreateStudent = ({ classrooms }: Props) => {
+
   const [studentId, setStudentId] = useState('')
 
   console.log(moment('1991-03-29').format('YYYY-MM-DD'),);
   
-  const {data: classrooms, isLoading, isError, error, isSuccess} = useGetClassroom({access})
   const [page, setPage] = useState(1)
 
-  useLoader(isLoading)
 
-  if (isError) return <p>Error: {error.message}</p>
-
-  if (isSuccess)
 
   return (
     <div className="pt-12">
