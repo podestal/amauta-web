@@ -11,6 +11,8 @@ import StudentForm from "./forms/StudentForm"
 import { Classroom } from "../../../services/api/classroomService"
 import useUpdateStudent from "../../../hooks/api/student/useUpdateStudent"
 import useUpdateBirthInfo from "../../../hooks/api/student/studentInfo/useUpdateBirthInfo"
+import useUpdateHealthInfo from "../../../hooks/api/student/studentInfo/useUpdateHealthInfo"
+import useUpdateEmergencyContact from "../../../hooks/api/student/studentInfo/useUpdateEmergencyContact"
 
 interface Props {
     student: Student
@@ -23,10 +25,14 @@ const StudentAdminCard = ({ student, classrooms }: Props) => {
   const [renderComponent, setRenderComponent] = useState('')
 
   const birthInfo = student.birth_info ? student.birth_info : undefined
+  const healthInfo = student.health_info ? student.health_info : undefined
+  const emergencyContact = student.emergency_contact ? student.emergency_contact : undefined
 
   // MUTATIONS
   const updateStudent = useUpdateStudent({ studentId: student.uid })
   const updateBirthInfo = birthInfo ? useUpdateBirthInfo({ birthInfoId: birthInfo.id }) : undefined
+  const updateHealthInfo = healthInfo ? useUpdateHealthInfo({ healthInfoId: healthInfo.id }) : undefined
+  const updateEmergencyContact = emergencyContact ? useUpdateEmergencyContact({ emergencyContactId: emergencyContact.id }) : undefined
 
 
   return (
@@ -59,15 +65,15 @@ const StudentAdminCard = ({ student, classrooms }: Props) => {
         <div 
           onClick={() => {
             setRenderComponent('healthInfo')
-            !student.health_info && setOpen(true)
+            setOpen(true)
           }}
-          className={`w-[40%] h-4 ${student.health_info ? 'bg-green-600' : 'dark:bg-neutral-400 bg-neutral-200 dark:hover:bg-neutral-500 hover:bg-neutral-300 cursor-pointer'}`}/>
+          className={`w-[40%] h-4 ${student.health_info ? 'bg-green-600 hover:bg-green-700' : 'dark:bg-neutral-400 bg-neutral-200 dark:hover:bg-neutral-500 hover:bg-neutral-300'} cursor-pointer`}/>
         <div 
           onClick={() => {
             setRenderComponent('emergencyContact')
-            !student.emergency_contact && setOpen(true)
+            setOpen(true)
           }}
-          className={`w-[40%] h-4 ${student.emergency_contact ? 'bg-green-600' : 'dark:bg-neutral-400 bg-neutral-200 dark:hover:bg-neutral-500 hover:bg-neutral-300 cursor-pointer'}`}/>
+          className={`w-[40%] h-4 ${student.emergency_contact ? 'bg-green-600 hover:bg-green-700' : 'dark:bg-neutral-400 bg-neutral-200 dark:hover:bg-neutral-500 hover:bg-neutral-300'} cursor-pointer`}/>
     </div>
     <Modal 
       isOpen={open}
@@ -91,12 +97,18 @@ const StudentAdminCard = ({ student, classrooms }: Props) => {
         studentId={student.uid}
         setPage={() => {}}
         nextPrev={false}
+        healthInfo={healthInfo}
+        updateHealthInfo={updateHealthInfo}
+        setOpen={setOpen}
       />}
       {renderComponent === 'emergencyContact' &&
       <StudentEmergency 
         studentId={student.uid}
         setPage={() => {}}
         nextPrev={false}
+        emergencyContact={emergencyContact}
+        updateEmergencyContact={updateEmergencyContact}
+        setOpen={setOpen}
       />}
       {renderComponent === 'studentForm' &&
       <StudentForm

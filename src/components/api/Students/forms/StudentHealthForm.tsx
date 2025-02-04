@@ -3,29 +3,45 @@ import Button from "../../../ui/Button"
 import Input from "../../../ui/Input"
 import TextArea from "../../../ui/TextArea"
 import { motion } from "framer-motion"
-import useCreateHealthInfo from "../../../../hooks/api/student/studentInfo/useCreateHealthInfo"
+import { CreateHealthInfoData } from "../../../../hooks/api/student/studentInfo/useCreateHealthInfo"
 import useAuthStore from "../../../../hooks/store/useAuthStore"
+import { UseMutationResult } from "@tanstack/react-query"
+import { HealthInfo } from "../../../../services/api/healthInfo"
+import { UpdateHealthInfoData } from "../../../../hooks/api/student/studentInfo/useUpdateHealthInfo"
+import useNotificationsStore from "../../../../hooks/store/useNotificationsStore"
 
 interface Props {
     setPage: React.Dispatch<React.SetStateAction<number>>
     studentId: string
     nextPrev?: boolean
+    healthInfo?: HealthInfo
+    createHealthInfo?: UseMutationResult<HealthInfo, Error, CreateHealthInfoData>
+    updateHealthInfo?: UseMutationResult<HealthInfo, Error, UpdateHealthInfoData>
+    setOpen?: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const StudentHealthForm = ({ setPage, studentId, nextPrev=true }: Props) => {
+const StudentHealthForm = ({ 
+    setPage, 
+    studentId, 
+    nextPrev=true, 
+    healthInfo,
+    createHealthInfo,
+    updateHealthInfo,
+    setOpen,
+}: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
-    const [weight, setWeight] = useState('')
-    const [height, setHeight] = useState('')
-    const [illness, setIllness] = useState('')
-    const createHealthInfo = useCreateHealthInfo()
+    const { setMessage, setShow, setType } = useNotificationsStore()
+    const [weight, setWeight] = useState(healthInfo ? `${healthInfo.weight}` : '')
+    const [height, setHeight] = useState(healthInfo ? `${healthInfo.height}` : '')
+    const [illness, setIllness] = useState(healthInfo ? healthInfo.illness : '')
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
             e.preventDefault()
-            createHealthInfo.mutate({
+            createHealthInfo && createHealthInfo.mutate({
                 healthInfo: {
-                    weight: parseInt(weight),
-                    height: parseInt(height),
+                    weight: parseFloat(weight),
+                    height: parseFloat(height),
                     illness,
                     student: studentId
                 },
@@ -34,7 +50,25 @@ const StudentHealthForm = ({ setPage, studentId, nextPrev=true }: Props) => {
             {
                 onSuccess: () => setPage(prev => prev + 1)
             }
-        )}
+        )
+        updateHealthInfo && updateHealthInfo.mutate({  
+            healthInfo: {
+                weight: parseFloat(weight),
+                height: parseFloat(height),
+                illness,
+                student: studentId
+            },
+            access
+        }, {
+            onSuccess: () => {
+                setOpen && setOpen(false)
+                setType('success')
+                setShow(true)
+                setMessage('Información de salud actualizada exitosamente!')
+            }
+        }
+        )
+    }
     
 
   return (
@@ -84,7 +118,7 @@ const StudentHealthForm = ({ setPage, studentId, nextPrev=true }: Props) => {
             :
             <div className='w-full justify-end flex mt-12'>
                 <Button 
-                    label="Enviar"
+                    label={healthInfo ? 'Guardar' : 'Enviar'}
                     type="submit"
                 />
             </div>

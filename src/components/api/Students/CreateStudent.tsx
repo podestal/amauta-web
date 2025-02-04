@@ -6,6 +6,8 @@ import StudentEmergency from "./forms/StudentEmergency"
 import { Classroom } from "../../../services/api/classroomService"
 import useCreateStudent from "../../../hooks/api/student/useCreateStudent"
 import useCreateBirthInfo from "../../../hooks/api/student/studentInfo/useCreateBirthInfo"
+import useCreateHealthInfo from "../../../hooks/api/student/studentInfo/useCreateHealthInfo"
+import useCreateEmergencyContact from "../../../hooks/api/student/studentInfo/useCreateEmergencyContact"
 
 interface Props {
   classrooms: Classroom[]
@@ -19,6 +21,8 @@ const CreateStudent = ({ classrooms }: Props) => {
 
   // MORE INFO
   const createBirthInfo = useCreateBirthInfo()
+  const createHealthInfo = useCreateHealthInfo()
+  const createEmergencyContact = useCreateEmergencyContact()
 
 
 
@@ -36,6 +40,7 @@ const CreateStudent = ({ classrooms }: Props) => {
       <StudentHealthForm 
         setPage={setPage}
         studentId={studentId}
+        createHealthInfo={createHealthInfo}
       />}
       {page === 3 &&
       <StudentBirthForm 
@@ -47,6 +52,7 @@ const CreateStudent = ({ classrooms }: Props) => {
       <StudentEmergency 
         setPage={setPage}
         studentId={studentId}
+        createEmergencyContact={createEmergencyContact}
       />
       }
     </div>

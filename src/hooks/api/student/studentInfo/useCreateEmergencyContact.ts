@@ -1,14 +1,15 @@
 import { UseMutationResult, useMutation, useQueryClient } from "@tanstack/react-query"
-import emergencyContactService, { EmergencyContact, EmergencyContactCreateUpdate } from "../../../../services/api/emergencyContact"
+import getEmergencyContactService, {EmergencyContact, EmergencyContactCreateUpdate} from "../../../../services/api/emergencyContact"
 import { getStudentsCacheKey } from "../../../../utils/cacheKeys"
 
-interface CreateEmergencyContactData {
+export interface CreateEmergencyContactData {
     access: string
     emergencyContact: EmergencyContactCreateUpdate
 }
 
 const useCreateEmergencyContact = (): UseMutationResult<EmergencyContact, Error, CreateEmergencyContactData> => {
     const queryClient = useQueryClient()
+    const emergencyContactService = getEmergencyContactService({})
     return useMutation({
         mutationFn: (data: CreateEmergencyContactData) => emergencyContactService.post(data.emergencyContact, data.access),
         onSuccess: res => {

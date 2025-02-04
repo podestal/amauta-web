@@ -3,34 +3,43 @@ import Button from "../../../ui/Button"
 import { useState } from "react"
 import Input from "../../../ui/Input"
 import useAuthStore from "../../../../hooks/store/useAuthStore"
-import useCreateEmergencyContact from "../../../../hooks/api/student/studentInfo/useCreateEmergencyContact"
+import { CreateEmergencyContactData } from "../../../../hooks/api/student/studentInfo/useCreateEmergencyContact"
+import { EmergencyContact } from "../../../../services/api/emergencyContact"
+import { UseMutationResult } from "@tanstack/react-query"
+import { UpdateEmergencyContactData } from "../../../../hooks/api/student/studentInfo/useUpdateEmergencyContact"
+import useNotificationsStore from "../../../../hooks/store/useNotificationsStore"
 
 interface Props {
     setPage: React.Dispatch<React.SetStateAction<number>>
     studentId: string
     nextPrev?: boolean
+    emergencyContact?: EmergencyContact
+    setOpen?: React.Dispatch<React.SetStateAction<boolean>>
+    createEmergencyContact?: UseMutationResult<EmergencyContact, Error, CreateEmergencyContactData>
+    updateEmergencyContact?: UseMutationResult<EmergencyContact, Error, UpdateEmergencyContactData>
 }
 
-// name = models.CharField(max_length=255)
-// phone_number = models.CharField(max_length=255)
-// address = models.TextField()
-
-const StudentEmergency = ({ setPage, studentId, nextPrev=true }: Props) => {
+const StudentEmergency = ({ 
+    setPage, 
+    studentId, 
+    nextPrev=true,
+    emergencyContact,
+    setOpen,
+    createEmergencyContact,
+    updateEmergencyContact,
+}: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
+    const { setMessage, setShow, setType } = useNotificationsStore()
 
-    const [name, setName] = useState('')
-    const [phoneNumber, setPhoneNumber] = useState('')
-    const [address, setAddress] = useState('')
+    const [name, setName] = useState(emergencyContact ? emergencyContact.name : '')
+    const [phoneNumber, setPhoneNumber] = useState(emergencyContact ? emergencyContact.phone_number : '')
+    const [address, setAddress] = useState(emergencyContact ? emergencyContact.address : '')
 
     // Error handling
     const [nameError, setNameError] = useState('')
     const [phoneNumberError, setPhoneNumberError] = useState('')
     const [addressError, setAddressError] = useState('')
-
-    const createEmergencyContact = useCreateEmergencyContact()
-
-    console.log('studentId', studentId)
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -50,7 +59,7 @@ const StudentEmergency = ({ setPage, studentId, nextPrev=true }: Props) => {
             return
         }
 
-        createEmergencyContact.mutate({
+        createEmergencyContact && createEmergencyContact.mutate({
             emergencyContact: {
                 name,
                 phone_number: phoneNumber,
@@ -60,7 +69,25 @@ const StudentEmergency = ({ setPage, studentId, nextPrev=true }: Props) => {
             access
         }, 
         {
-            onSuccess: () => setPage(prev => prev + 1)
+            onSuccess: () => {
+                setPage && setPage(prev => prev + 1)}
+        })
+
+        updateEmergencyContact && updateEmergencyContact.mutate({
+            emergencyContact: {
+                name,
+                phone_number: phoneNumber,
+                address,
+                student: studentId
+            },
+            access
+        }, {
+            onSuccess: () => {
+                setOpen && setOpen(false)
+                setType('success')
+                setShow(true)
+                setMessage('Información de salud actualizada exitosamente!')
+            }
         })
     }
 

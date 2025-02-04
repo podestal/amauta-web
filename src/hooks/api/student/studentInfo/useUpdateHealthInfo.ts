@@ -2,16 +2,23 @@ import { UseMutationResult, useMutation, useQueryClient } from "@tanstack/react-
 import getHealthInfoService, { HealthInfo, HealthInfoCreateUpdate } from "../../../../services/api/healthInfo"
 import { getStudentsCacheKey } from "../../../../utils/cacheKeys"
 
-export interface CreateHealthInfoData {
+export interface UpdateHealthInfoData {
     access: string
     healthInfo: HealthInfoCreateUpdate
 }
 
-const useCreateHealthInfo = (): UseMutationResult<HealthInfo, Error, CreateHealthInfoData> => {
+interface Props {
+    studentId?: string
+    healthInfoId: string
+}
+
+const useUpdateHealthInfo = ({ studentId, healthInfoId }: Props): UseMutationResult<HealthInfo, Error, UpdateHealthInfoData> => {
     const queryClient = useQueryClient()
-    const healthInfoService = getHealthInfoService({})
+    const healthInfoService = getHealthInfoService({ healthInfoId })
+    console.log('studentId', studentId)
+    
     return useMutation({
-        mutationFn: (data: CreateHealthInfoData) => healthInfoService.post(data.healthInfo, data.access),
+        mutationFn: (data: UpdateHealthInfoData) => healthInfoService.update(data.healthInfo, data.access),
         onSuccess: res => {
             console.log('res',res)
             queryClient.invalidateQueries({ queryKey: getStudentsCacheKey(('all')) })
@@ -22,4 +29,4 @@ const useCreateHealthInfo = (): UseMutationResult<HealthInfo, Error, CreateHealt
     })
 }
 
-export default useCreateHealthInfo
+export default useUpdateHealthInfo
