@@ -10,9 +10,10 @@ import moment from 'moment'
 interface Props {
     setPage: React.Dispatch<React.SetStateAction<number>>
     studentId: string
+    nextPrev?: boolean
 }
 
-const StudentBirthForm = ({ setPage, studentId }: Props) => {
+const StudentBirthForm = ({ setPage, studentId, nextPrev=true }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
     const [state, setState] = useState('')
@@ -87,6 +88,8 @@ const StudentBirthForm = ({ setPage, studentId }: Props) => {
                     defaultValue={naturalBirth}
                 />
             </div>
+            {nextPrev 
+            ? 
             <div className="flex justify-between items-center gap-4 mt-12">
                 <Button 
                     label="Anterior"
@@ -98,6 +101,14 @@ const StudentBirthForm = ({ setPage, studentId }: Props) => {
                     type="submit"
                 />
             </div>
+            :
+            <div className='w-full justify-end flex mt-12'>
+                <Button 
+                    label="Enviar"
+                    type="submit"
+                />
+            </div>
+            }
         </form>
     </motion.div>
   )

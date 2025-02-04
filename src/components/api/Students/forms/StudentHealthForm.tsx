@@ -9,16 +9,16 @@ import useAuthStore from "../../../../hooks/store/useAuthStore"
 interface Props {
     setPage: React.Dispatch<React.SetStateAction<number>>
     studentId: string
+    nextPrev?: boolean
 }
 
-const StudentHealthForm = ({ setPage, studentId }: Props) => {
+const StudentHealthForm = ({ setPage, studentId, nextPrev=true }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
     const [weight, setWeight] = useState('')
     const [height, setHeight] = useState('')
     const [illness, setIllness] = useState('')
     const createHealthInfo = useCreateHealthInfo()
-    console.log('studentId', studentId)
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
             e.preventDefault()
@@ -68,7 +68,9 @@ const StudentHealthForm = ({ setPage, studentId }: Props) => {
                     onChange={(e) => setIllness(e.target.value)}
                 />
             </div>
-            <div className="flex justify-between items-center gap-4">
+            {nextPrev 
+            ? 
+            <div className="flex justify-between items-center gap-4 mt-12">
                 <Button 
                     label="Anterior"
                     onClick={() => setPage(prev => prev - 1)}
@@ -79,6 +81,14 @@ const StudentHealthForm = ({ setPage, studentId }: Props) => {
                     type="submit"
                 />
             </div>
+            :
+            <div className='w-full justify-end flex mt-12'>
+                <Button 
+                    label="Enviar"
+                    type="submit"
+                />
+            </div>
+            }
         </form>
     </motion.div>
   )

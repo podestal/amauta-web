@@ -16,7 +16,7 @@ const useGetStudents = ({ access, classroomId, tutor, month, week, day, all }: P
 
     const studentService = getStudentService({ tutor, all })
 
-    let studentCacheKeyTime = `${classroomId}`
+    let studentCacheKeyTime = classroomId ? `${classroomId}` : 'all'
 
     if (day) {
         studentCacheKeyTime = `${classroomId} ${day} ${month}`
