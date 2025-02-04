@@ -10,6 +10,7 @@ import StudentHealthForm from "./forms/StudentHealthForm"
 import StudentForm from "./forms/StudentForm"
 import { Classroom } from "../../../services/api/classroomService"
 import useUpdateStudent from "../../../hooks/api/student/useUpdateStudent"
+import useUpdateBirthInfo from "../../../hooks/api/student/studentInfo/useUpdateBirthInfo"
 
 interface Props {
     student: Student
@@ -20,7 +21,13 @@ const StudentAdminCard = ({ student, classrooms }: Props) => {
 
   const [open, setOpen] = useState(false)
   const [renderComponent, setRenderComponent] = useState('')
+
+  const birthInfo = student.birth_info ? student.birth_info : undefined
+
+  // MUTATIONS
   const updateStudent = useUpdateStudent({ studentId: student.uid })
+  const updateBirthInfo = birthInfo ? useUpdateBirthInfo({ birthInfoId: birthInfo.id }) : undefined
+
 
   return (
     <>
@@ -46,9 +53,9 @@ const StudentAdminCard = ({ student, classrooms }: Props) => {
         <div 
           onClick={() => {
             setRenderComponent('birthInfo')
-            !student.birth_info && setOpen(true)
+            setOpen(true)
           }}
-          className={`w-[40%] h-4 ${student.birth_info ? 'bg-green-600' : 'dark:bg-neutral-400 bg-neutral-200 dark:hover:bg-neutral-500 hover:bg-neutral-300 cursor-pointer'}`}/>
+          className={`w-[40%] h-4 ${student.birth_info ? 'bg-green-600 hover:bg-green-700' : 'dark:bg-neutral-400 bg-neutral-200 dark:hover:bg-neutral-500 hover:bg-neutral-300'} cursor-pointer`}/>
         <div 
           onClick={() => {
             setRenderComponent('healthInfo')
@@ -76,6 +83,8 @@ const StudentAdminCard = ({ student, classrooms }: Props) => {
         studentId={student.uid}
         setPage={() => {}}
         nextPrev={false}
+        birthInfo={birthInfo}
+        updateBirthInfo={updateBirthInfo}
       />}
       {renderComponent === 'healthInfo' &&
       <StudentHealthForm 

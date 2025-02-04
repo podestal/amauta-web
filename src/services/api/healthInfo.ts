@@ -11,7 +11,14 @@ export type HealthInfoCreateUpdate = Omit<HealthInfo, 'id'> & {
     student: string
 }
 
-const healthInfoService = new APIClient<HealthInfo, HealthInfoCreateUpdate>('health-info/')
+interface Props {
+    healthInfoId?: string
+}
 
-export default healthInfoService
+const getHealthInfoService = ({ healthInfoId }: Props) => {
+    const url = healthInfoId ? `health-info/${healthInfoId}/` : 'health-info/'
+    return new APIClient<HealthInfo, HealthInfoCreateUpdate>(url)
+}
+
+export default getHealthInfoService
 

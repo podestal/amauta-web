@@ -11,6 +11,13 @@ export type EmergencyContactCreateUpdate = Omit<EmergencyContact, 'id'> & {
     student: string
 }
 
-const emergencyContactService = new APIClient<EmergencyContact, EmergencyContactCreateUpdate>('emergency-contact/')
+interface Props {
+    emergencyContactId?: string
+}
 
-export default emergencyContactService
+const getEmergencyContactService = ({ emergencyContactId }: Props) => {
+    const url = emergencyContactId ? `emergency-contact/${emergencyContactId}/` : 'emergency-contact/'
+    return new APIClient<EmergencyContact, EmergencyContactCreateUpdate>(url)
+}
+
+export default getEmergencyContactService

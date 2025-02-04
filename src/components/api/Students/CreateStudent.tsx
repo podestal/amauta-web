@@ -5,6 +5,7 @@ import StudentBirthForm from "./forms/StudentBirthForm"
 import StudentEmergency from "./forms/StudentEmergency"
 import { Classroom } from "../../../services/api/classroomService"
 import useCreateStudent from "../../../hooks/api/student/useCreateStudent"
+import useCreateBirthInfo from "../../../hooks/api/student/studentInfo/useCreateBirthInfo"
 
 interface Props {
   classrooms: Classroom[]
@@ -15,6 +16,9 @@ const CreateStudent = ({ classrooms }: Props) => {
   const [studentId, setStudentId] = useState('')
   const [page, setPage] = useState(1)
   const createStudent = useCreateStudent()
+
+  // MORE INFO
+  const createBirthInfo = useCreateBirthInfo()
 
 
 
@@ -37,6 +41,7 @@ const CreateStudent = ({ classrooms }: Props) => {
       <StudentBirthForm 
         setPage={setPage}
         studentId={studentId}
+        createBirthInfo={createBirthInfo}
       />}
       {page === 4 &&
       <StudentEmergency 

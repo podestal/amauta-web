@@ -1,12 +1,5 @@
 import APIClient from "./apiClient"
 
-// date_of_birth = models.DateField()
-// student = models.OneToOneField(Student, on_delete=models.CASCADE, related_name='birth_info')
-// state = models.CharField(max_length=255)
-// county = models.CharField(max_length=255)
-// city = models.CharField(max_length=255)
-// natural_birth = models.BooleanField(default=True)
-
 export interface BirthInfo {
     id: string
     date_of_birth: string
@@ -20,6 +13,13 @@ export type BirthInfoCreateUpdate = Omit<BirthInfo, 'id'> & {
     student: string
 }
 
-const birthInfoService = new APIClient<BirthInfo, BirthInfoCreateUpdate>('birth-info/')
+interface Props {
+    birthInfoId?: string
+}
 
-export default birthInfoService
+const getBirthInfoService = ({ birthInfoId }: Props) => {
+    const url = birthInfoId ? `birth-info/${birthInfoId}/` : 'birth-info/'
+    return new APIClient<BirthInfo, BirthInfoCreateUpdate>(url)
+}
+
+export default getBirthInfoService

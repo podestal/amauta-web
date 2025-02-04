@@ -3,29 +3,85 @@ import Button from '../../../ui/Button'
 import Input from '../../../ui/Input'
 import { useState } from 'react'
 import Selector from '../../../ui/Selector'
-import useCreateBirthInfo from '../../../../hooks/api/student/studentInfo/useCreateBirthInfo'
+import { CreateBirthInfoData } from '../../../../hooks/api/student/studentInfo/useCreateBirthInfo'
 import useAuthStore from '../../../../hooks/store/useAuthStore'
 import moment from 'moment'
+import { BirthInfo } from '../../../../services/api/birthInfo'
+import { UseMutationResult } from '@tanstack/react-query'
+import { UpdateBirthInfoData } from '../../../../hooks/api/student/studentInfo/useUpdateBirthInfo'
 
 interface Props {
     setPage: React.Dispatch<React.SetStateAction<number>>
     studentId: string
     nextPrev?: boolean
+    birthInfo?: BirthInfo
+    createBirthInfo?: UseMutationResult<BirthInfo, Error, CreateBirthInfoData>
+    updateBirthInfo?: UseMutationResult<BirthInfo, Error, UpdateBirthInfoData>
 }
 
-const StudentBirthForm = ({ setPage, studentId, nextPrev=true }: Props) => {
+const StudentBirthForm = ({ 
+    setPage, 
+    studentId, 
+    nextPrev=true, 
+    birthInfo, 
+    createBirthInfo,
+    updateBirthInfo,
+}: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
-    const [state, setState] = useState('')
-    const [county, setCounty] = useState('')
-    const [city, setCity] = useState('')
-    const [naturalBirth, setNaturalBirth] = useState('1')
-    const [dateOfBirth, setDateOfBirth] = useState('')
-    const createBirthInfo = useCreateBirthInfo()
+    const [state, setState] = useState(birthInfo ? birthInfo.state : '')
+    const [county, setCounty] = useState(birthInfo ? birthInfo.county : '')
+    const [city, setCity] = useState(birthInfo ? birthInfo.city : '')
+    const [naturalBirth, setNaturalBirth] = useState(birthInfo ? `${birthInfo ? '1' : '2'}` : '1')
+    const [dateOfBirth, setDateOfBirth] = useState(birthInfo ? moment(birthInfo.date_of_birth).format('YYYY-MM-DD') : '')
+
+    // Error handling
+
+    const [stateError, setStateError] = useState('')
+    const [countyError, setCountyError] = useState('')
+    const [cityError, setCityError] = useState('')
+    const [dateOfBirthError, setDateOfBirthError] = useState('')
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        createBirthInfo.mutate({
+
+        if (!state) {
+            setStateError('Este campo es requerido')
+            return
+        }
+
+        if (!county) {
+            setCountyError('Este campo es requerido')
+            return
+        }
+
+        if (!city) {
+            setCityError('Este campo es requerido')
+            return
+        }
+
+        if (!dateOfBirth) {
+            setDateOfBirthError('Este campo es requerido')
+            return
+        }
+
+        createBirthInfo && createBirthInfo.mutate({
+            birthInfo: {
+                state,
+                county,
+                city,
+                natural_birth: naturalBirth === '1',
+                date_of_birth: moment(dateOfBirth).format('YYYY-MM-DD'),
+                student: studentId
+            },
+            access
+        }, {
+            onSuccess: () => {
+                setPage(prev => prev + 1)
+            }
+        })
+
+        updateBirthInfo && updateBirthInfo.mutate({
             birthInfo: {
                 state,
                 county,
@@ -36,7 +92,6 @@ const StudentBirthForm = ({ setPage, studentId, nextPrev=true }: Props) => {
             },
             access
         })
-        setPage(prev => prev + 1)
     }
 
   return (
@@ -58,6 +113,7 @@ const StudentBirthForm = ({ setPage, studentId, nextPrev=true }: Props) => {
                     value={state}
                     onChange={(e) => setState(e.target.value)}
                     label="Estado"
+                    error={stateError}
                 />
                 <Input 
                     type="text"
@@ -65,6 +121,7 @@ const StudentBirthForm = ({ setPage, studentId, nextPrev=true }: Props) => {
                     value={county}
                     onChange={(e) => setCounty(e.target.value)}
                     label="Provincia"
+                    error={countyError}
                 />
                 <Input 
                     type="text"
@@ -72,6 +129,7 @@ const StudentBirthForm = ({ setPage, studentId, nextPrev=true }: Props) => {
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
                     label="Ciudad"
+                    error={cityError}
                 />
             </div>
             <div className='grid grid-cols-3 gap-6'>
@@ -80,6 +138,7 @@ const StudentBirthForm = ({ setPage, studentId, nextPrev=true }: Props) => {
                     label='AAAA-MM-DD'
                     value={dateOfBirth}
                     setValue={setDateOfBirth}
+                    error={dateOfBirthError}
                 />
                 <Selector 
                     values={[{id: '1', name: 'Si'}, {id: '2', name: 'No'}]}
@@ -104,7 +163,7 @@ const StudentBirthForm = ({ setPage, studentId, nextPrev=true }: Props) => {
             :
             <div className='w-full justify-end flex mt-12'>
                 <Button 
-                    label="Enviar"
+                    label={birthInfo ? 'Guardar' : "Enviar"}
                     type="submit"
                 />
             </div>
