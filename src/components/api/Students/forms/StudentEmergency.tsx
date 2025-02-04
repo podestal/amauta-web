@@ -3,7 +3,7 @@ import Button from "../../../ui/Button"
 import { useState } from "react"
 import Input from "../../../ui/Input"
 import useAuthStore from "../../../../hooks/store/useAuthStore"
-import { CreateEmergencyContactData } from "../../../../hooks/api/student/studentInfo/useCreateEmergencyContact"
+import useCreateEmergencyContact, { CreateEmergencyContactData } from "../../../../hooks/api/student/studentInfo/useCreateEmergencyContact"
 import { EmergencyContact } from "../../../../services/api/emergencyContact"
 import { UseMutationResult } from "@tanstack/react-query"
 import useUpdateEmergencyContact from "../../../../hooks/api/student/studentInfo/useUpdateEmergencyContact"
@@ -30,6 +30,7 @@ const StudentEmergency = ({
     const access = useAuthStore(s => s.access) || ''
     const { setMessage, setShow, setType } = useNotificationsStore()
     const updateEmergencyContact = emergencyContact && useUpdateEmergencyContact({ emergencyContactId: emergencyContact.id })
+    const createEmergencyContactInternal = !createEmergencyContact && !updateEmergencyContact && useCreateEmergencyContact()
 
     const [name, setName] = useState(emergencyContact ? emergencyContact.name : '')
     const [phoneNumber, setPhoneNumber] = useState(emergencyContact ? emergencyContact.phone_number : '')
@@ -90,6 +91,24 @@ const StudentEmergency = ({
                 setType('success')
                 setShow(true)
                 setMessage('Información de salud actualizada exitosamente!')
+            }
+        })
+
+        createEmergencyContactInternal && createEmergencyContactInternal.mutate({
+            emergencyContact: {
+                name,
+                phone_number: phoneNumber,
+                address,
+                student: studentId
+            },
+            access
+        }, 
+        {
+            onSuccess: () => {
+                setOpen && setOpen(false)
+                setType('success')
+                setShow(true)
+                setMessage('Información de estudiante guardada exitosamente!')
             }
         })
     }

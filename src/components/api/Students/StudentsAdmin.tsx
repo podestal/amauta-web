@@ -44,12 +44,13 @@ const StudentsAdmin = () => {
             }}
             placeholder="Buscar por nombre"
         />
-        <div className="w-full grid grid-cols-7 text-lg font-bold gap-6">
+        <div className="w-full grid grid-cols-8 text-lg font-bold gap-6">
             <p className=" col-span-3">Nombres y Apellidos</p>
-            <p>Datos Personales</p>
+            <p>Información Personal</p>
             <p className="">Información de nacimiento</p>
             <p className="">Información de salud</p>
             <p className="">Contacto de emergencia</p>
+            <p>Información de Apoderados</p>
         </div>
         <div className="w-full flex flex-col gap-2">
             {students

@@ -3,7 +3,7 @@ import Button from "../../../ui/Button"
 import Input from "../../../ui/Input"
 import TextArea from "../../../ui/TextArea"
 import { motion } from "framer-motion"
-import { CreateHealthInfoData } from "../../../../hooks/api/student/studentInfo/useCreateHealthInfo"
+import useCreateHealthInfo, { CreateHealthInfoData } from "../../../../hooks/api/student/studentInfo/useCreateHealthInfo"
 import useAuthStore from "../../../../hooks/store/useAuthStore"
 import { UseMutationResult } from "@tanstack/react-query"
 import { HealthInfo } from "../../../../services/api/healthInfo"
@@ -31,6 +31,7 @@ const StudentHealthForm = ({
     const access = useAuthStore(s => s.access) || ''
     const { setMessage, setShow, setType } = useNotificationsStore()
     const updateHealthInfo = healthInfo && useUpdateHealthInfo({ healthInfoId: healthInfo.id })
+    const createHealthInfoInternal = !createHealthInfo && !updateHealthInfo && useCreateHealthInfo()
 
     const [weight, setWeight] = useState(healthInfo ? `${healthInfo.weight}` : '')
     const [height, setHeight] = useState(healthInfo ? `${healthInfo.height}` : '')
@@ -38,7 +39,7 @@ const StudentHealthForm = ({
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
             e.preventDefault()
-            createHealthInfo && createHealthInfo.mutate({
+        createHealthInfo && createHealthInfo.mutate({
                 healthInfo: {
                     weight: parseFloat(weight),
                     height: parseFloat(height),
@@ -66,8 +67,23 @@ const StudentHealthForm = ({
                 setShow(true)
                 setMessage('Información de salud actualizada exitosamente!')
             }
-        }
-        )
+        })
+        createHealthInfoInternal && createHealthInfoInternal.mutate({  
+            healthInfo: {
+                weight: parseFloat(weight),
+                height: parseFloat(height),
+                illness,
+                student: studentId
+            },
+            access
+        }, {
+            onSuccess: () => {
+                setOpen && setOpen(false)
+                setType('success')
+                setShow(true)
+                setMessage('Información de salud guardada exitosamente!')
+            }
+        })
     }
     
 

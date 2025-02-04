@@ -3,7 +3,7 @@ import Button from '../../../ui/Button'
 import Input from '../../../ui/Input'
 import { useState } from 'react'
 import Selector from '../../../ui/Selector'
-import { CreateBirthInfoData } from '../../../../hooks/api/student/studentInfo/useCreateBirthInfo'
+import useCreateBirthInfo, { CreateBirthInfoData } from '../../../../hooks/api/student/studentInfo/useCreateBirthInfo'
 import useAuthStore from '../../../../hooks/store/useAuthStore'
 import moment from 'moment'
 import { BirthInfo } from '../../../../services/api/birthInfo'
@@ -32,6 +32,7 @@ const StudentBirthForm = ({
     const access = useAuthStore(s => s.access) || ''
     const { setMessage, setShow, setType } = useNotificationsStore()
     const updateBirthInfo = birthInfo && useUpdateBirthInfo({ birthInfoId: birthInfo.id })
+    const createBirthInfoInternal = !createBirthInfo && !updateBirthInfo && useCreateBirthInfo()
 
     const [state, setState] = useState(birthInfo ? birthInfo.state : '')
     const [county, setCounty] = useState(birthInfo ? birthInfo.county : '')
@@ -101,6 +102,25 @@ const StudentBirthForm = ({
                 setType('success')
                 setShow(true)
                 setMessage('Información de salud actualizada exitosamente!')
+            }
+        })
+
+        createBirthInfoInternal && createBirthInfoInternal.mutate({
+            birthInfo: {
+                state,
+                county,
+                city,
+                natural_birth: naturalBirth === '1',
+                date_of_birth: moment(dateOfBirth).format('YYYY-MM-DD'),
+                student: studentId
+            },
+            access
+        }, {
+            onSuccess: () => {
+                setOpen && setOpen(false)
+                setType('success')
+                setShow(true)
+                setMessage('Información de salud guardada exitosamente!')
             }
         })
     }

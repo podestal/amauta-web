@@ -32,13 +32,13 @@ const StudentAdminCard = ({ student, classrooms }: Props) => {
     <>
     <div 
       // onClick={() => setOpen(true)}
-      className="w-full grid grid-cols-7 gap-6 hover:bg-slate-200 dark:hover:bg-slate-900  py-4 rounded-xl">  
+      className="w-full grid grid-cols-8 gap-6 hover:bg-slate-200 dark:hover:bg-slate-900  py-4 rounded-xl">  
         <div className="col-span-3 flex items-center justify-start gap-4">
           <RiBookletFill 
             className="text-blue-700 hover:text-blue-800 cursor-pointer"
             onClick={() =>{
                 setRenderComponent('studentInfo')
-               setOpen(true)}}
+                setOpen(true)}}
           />
           <p className="">{student.first_name} {student.last_name}</p>
         </div>
@@ -66,6 +66,8 @@ const StudentAdminCard = ({ student, classrooms }: Props) => {
             setRenderComponent('emergencyContact')
             setOpen(true)
           }}
+          className={`w-[40%] h-4 ${student.emergency_contact ? 'bg-green-600 hover:bg-green-700' : 'dark:bg-neutral-400 bg-neutral-200 dark:hover:bg-neutral-500 hover:bg-neutral-300'} cursor-pointer`}/>
+        <div 
           className={`w-[40%] h-4 ${student.emergency_contact ? 'bg-green-600 hover:bg-green-700' : 'dark:bg-neutral-400 bg-neutral-200 dark:hover:bg-neutral-500 hover:bg-neutral-300'} cursor-pointer`}/>
     </div>
     <Modal 
