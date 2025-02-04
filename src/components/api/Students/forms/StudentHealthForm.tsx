@@ -76,8 +76,7 @@ const StudentHealthForm = ({ setPage, studentId }: Props) => {
                 />
                 <Button 
                     label="Siguiente"
-                    onClick={() => setPage(prev => prev + 1)}
-                    type="button"
+                    type="submit"
                 />
             </div>
         </form>

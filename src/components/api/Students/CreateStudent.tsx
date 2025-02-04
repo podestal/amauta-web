@@ -6,11 +6,15 @@ import useLoader from "../../../hooks/ui/useLoader"
 import StudentHealthForm from "./forms/StudentHealthForm"
 import StudentBirthForm from "./forms/StudentBirthForm"
 import StudentEmergency from "./forms/StudentEmergency"
+import moment from "moment"
 
 const CreateStudent = () => {
 
   const access = useAuthStore(s => s.access) || ''
   const [studentId, setStudentId] = useState('')
+
+  console.log(moment('1991-03-29').format('YYYY-MM-DD'),);
+  
   const {data: classrooms, isLoading, isError, error, isSuccess} = useGetClassroom({access})
   const [page, setPage] = useState(1)
 

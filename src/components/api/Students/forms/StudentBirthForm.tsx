@@ -5,12 +5,14 @@ import { useState } from 'react'
 import Selector from '../../../ui/Selector'
 import useCreateBirthInfo from '../../../../hooks/api/student/studentInfo/useCreateBirthInfo'
 import useAuthStore from '../../../../hooks/store/useAuthStore'
+import moment from 'moment'
 
 interface Props {
     setPage: React.Dispatch<React.SetStateAction<number>>
+    studentId: string
 }
 
-const StudentBirthForm = ({ setPage }: Props) => {
+const StudentBirthForm = ({ setPage, studentId }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
     const [state, setState] = useState('')
@@ -28,8 +30,8 @@ const StudentBirthForm = ({ setPage }: Props) => {
                 county,
                 city,
                 natural_birth: naturalBirth === '1',
-                date_of_birth: dateOfBirth,
-                student: '1'
+                date_of_birth: moment(dateOfBirth).format('YYYY-MM-DD'),
+                student: studentId
             },
             access
         })
@@ -74,7 +76,7 @@ const StudentBirthForm = ({ setPage }: Props) => {
             <div className='grid grid-cols-3 gap-6'>
                 <Input 
                     placeholder='Fecha de Nacimiento ...'
-                    label='Fecha de Nacimiento'
+                    label='AAAA-MM-DD'
                     value={dateOfBirth}
                     setValue={setDateOfBirth}
                 />
@@ -93,8 +95,7 @@ const StudentBirthForm = ({ setPage }: Props) => {
                 />
                 <Button 
                     label="Siguiente"
-                    onClick={() => setPage(prev => prev + 1)}
-                    type="button"
+                    type="submit"
                 />
             </div>
         </form>
