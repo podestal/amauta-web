@@ -8,13 +8,14 @@ import useCreateEmergencyContact from "../../../../hooks/api/student/studentInfo
 interface Props {
     setPage: React.Dispatch<React.SetStateAction<number>>
     studentId: string
+    nextPrev?: boolean
 }
 
 // name = models.CharField(max_length=255)
 // phone_number = models.CharField(max_length=255)
 // address = models.TextField()
 
-const StudentEmergency = ({ setPage, studentId }: Props) => {
+const StudentEmergency = ({ setPage, studentId, nextPrev=true }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
 
@@ -110,9 +111,12 @@ const StudentEmergency = ({ setPage, studentId }: Props) => {
                     error={addressError}
                 />
             </div>
-            <div className="flex justify-left items-center gap-4 mt-12">
+            {nextPrev 
+            ? 
+            <div className="flex justify-between items-center gap-4 mt-12">
                 <Button 
                     label="Anterior"
+                    onClick={() => setPage(prev => prev - 1)}
                     type="button"
                 />
                 <Button 
@@ -120,6 +124,14 @@ const StudentEmergency = ({ setPage, studentId }: Props) => {
                     type="submit"
                 />
             </div>
+            :
+            <div className='w-full justify-end flex mt-12'>
+                <Button 
+                    label="Enviar"
+                    type="submit"
+                />
+            </div>
+            }
         </form>
     </motion.div>
   )

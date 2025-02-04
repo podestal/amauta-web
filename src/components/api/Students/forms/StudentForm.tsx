@@ -429,7 +429,7 @@ const StudentForm = ({ setPage, classrooms, setStudentId, student }: Props) => {
         </motion.div>}
         <div className="my-8 w-full flex justify-end">
           <Button 
-            label="Siguiente"
+            label={student ? 'Guardar' : 'Siguiente'}
             onClick={handleSubmit}
             type="submit"
           />

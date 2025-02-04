@@ -35,7 +35,7 @@ const StudentAdminCard = ({ student, classrooms }: Props) => {
           <p className="">{student.first_name} {student.last_name}</p>
         </div>
         <div 
-            className="dark:bg-neutral-400 bg-neutral-200 dark:hover:bg-neutral-500 hover:bg-neutral-300 cursor-pointer"
+            className="w-[40%] h-4 bg-green-600 hover:bg-green-700 cursor-pointer"
             onClick={() => {
               setRenderComponent('studentForm')
               setOpen(true)
@@ -85,6 +85,7 @@ const StudentAdminCard = ({ student, classrooms }: Props) => {
       <StudentEmergency 
         studentId={student.uid}
         setPage={() => {}}
+        nextPrev={false}
       />}
       {renderComponent === 'studentForm' &&
       <StudentForm
