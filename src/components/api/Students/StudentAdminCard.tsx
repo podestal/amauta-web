@@ -9,6 +9,7 @@ import StudentBirthForm from "./forms/StudentBirthForm"
 import StudentHealthForm from "./forms/StudentHealthForm"
 import StudentForm from "./forms/StudentForm"
 import { Classroom } from "../../../services/api/classroomService"
+import useUpdateStudent from "../../../hooks/api/student/useUpdateStudent"
 
 interface Props {
     student: Student
@@ -19,6 +20,7 @@ const StudentAdminCard = ({ student, classrooms }: Props) => {
 
   const [open, setOpen] = useState(false)
   const [renderComponent, setRenderComponent] = useState('')
+  const updateStudent = useUpdateStudent({ studentId: student.uid })
 
   return (
     <>
@@ -93,6 +95,7 @@ const StudentAdminCard = ({ student, classrooms }: Props) => {
         setStudentId={() => {}}
         setPage={() => {}}
         student={student}
+        updateStudent={updateStudent}
       />}
     </Modal>
     </>

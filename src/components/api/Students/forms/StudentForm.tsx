@@ -5,14 +5,18 @@ import Selector from "../../../ui/Selector"
 import { Classroom } from "../../../../services/api/classroomService"
 import useLanguageStore from "../../../../hooks/store/useLanguageStore"
 import { motion } from "framer-motion"
-import useCreateStudent from "../../../../hooks/api/student/useCreateStudent"
+import { CreateStudentData } from "../../../../hooks/api/student/useCreateStudent"
 import useAuthStore from "../../../../hooks/store/useAuthStore"
 import { Student } from "../../../../services/api/studentsService"
+import { UseMutationResult } from "@tanstack/react-query"
+import { UpdateStudentData } from "../../../../hooks/api/student/useUpdateStudent"
 
 interface Props {
   setPage?: React.Dispatch<React.SetStateAction<number>>
   classrooms: Classroom[]
   setStudentId: React.Dispatch<React.SetStateAction<string>>
+  createStudent?: UseMutationResult<Student, Error, CreateStudentData>
+  updateStudent?: UseMutationResult<Student, Error, UpdateStudentData>
   student?: Student
 }
 
@@ -36,11 +40,17 @@ const religions = [
   {id: 'O', name: 'Otra'}
 ]
 
-const StudentForm = ({ setPage, classrooms, setStudentId, student }: Props) => {
+const StudentForm = ({ 
+    setPage, 
+    classrooms, 
+    setStudentId, 
+    student, 
+    createStudent, 
+    updateStudent 
+  }: Props) => {
 
   const lan = useLanguageStore(s => s.lan)
   const access = useAuthStore(s => s.access) || ''
-  const createStudent = useCreateStudent()
 
   // PERSONAL DATA
   const [dni, setDni] = useState(student ? student.uid : '')
@@ -178,7 +188,7 @@ const StudentForm = ({ setPage, classrooms, setStudentId, student }: Props) => {
 
     const livesWithName = livesWith === 'A' ? tutorName : livesWith
 
-    createStudent.mutate({
+    createStudent && createStudent.mutate({
       student: {
         uid: dni,
         prev_school: oldSchool,
@@ -203,6 +213,32 @@ const StudentForm = ({ setPage, classrooms, setStudentId, student }: Props) => {
         setStudentId(res.uid)
       }
     })    
+
+    updateStudent && updateStudent.mutate({
+      student: {
+        uid: dni,
+        prev_school: oldSchool,
+        first_name: names,
+        last_name: `${fatherLastName} ${motherLastName}`,
+        clase: classroomId,
+        main_language: mainLanguage,
+        second_language: secondLanguage === 'N' ? '' : secondLanguage,
+        number_of_siblings: brothers,
+        place_in_family: place,
+        religion,
+        address,
+        phone_number: phone,
+        celphone_number: cellphone,
+        insurance,
+        lives_with: livesWithName,
+      },
+      access
+    }, {
+      onSuccess: res => {
+        console.log('Updated', res)
+        
+      }
+    })
   }
 
   return (
@@ -227,6 +263,7 @@ const StudentForm = ({ setPage, classrooms, setStudentId, student }: Props) => {
               placeholder="DNI ..."
               type="number"
               error={dniError}
+              disable={!!student}
           />
           <div className="col-span-2">
             <Input 

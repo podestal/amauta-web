@@ -2,17 +2,21 @@ import { UseMutationResult, useMutation, useQueryClient } from "@tanstack/react-
 import getStudentService, { Student, StudentCreateUpdate } from "../../../services/api/studentsService"
 import { getStudentsCacheKey } from "../../../utils/cacheKeys"
 
-export interface CreateStudentData {
+export interface UpdateStudentData {
     access: string
     student: StudentCreateUpdate
 }
 
-const useCreateStudent = (): UseMutationResult<Student, Error, CreateStudentData> => {
+interface Props {
+    studentId: string
+}
 
-    const studentService = getStudentService({all: true})
+const useUpdateStudent = ({ studentId }: Props): UseMutationResult<Student, Error, UpdateStudentData> => {
     const queryClient = useQueryClient()
+    const studentService = getStudentService({studentId})
+
     return useMutation({
-        mutationFn: (data: CreateStudentData) => studentService.post(data.student, data.access),
+        mutationFn: (data: UpdateStudentData) => studentService.update(data.student, data.access),
         onSuccess: res => {
             console.log('res',res)
             queryClient.invalidateQueries({ queryKey: getStudentsCacheKey(('all')) })
@@ -27,4 +31,4 @@ const useCreateStudent = (): UseMutationResult<Student, Error, CreateStudentData
     })
 }
 
-export default useCreateStudent
+export default useUpdateStudent

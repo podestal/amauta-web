@@ -60,15 +60,18 @@ export type StudentCreateUpdate = Omit<
 interface Props {
     tutor?: boolean
     all?: boolean
+    studentId?: string
 }
 
-const getStudentService = ({ tutor, all }: Props) => {
+const getStudentService = ({ tutor, all, studentId }: Props) => {
 
     let url = `student/byClassroom/`
     if (tutor) {
         url = `student/byTutor/`
-    } else if (all) {
+    } if (all) {
         url = `student/`
+    } else if (studentId) {
+        url = `student/${studentId}/`
     }
 
     return new APIClient<Student, StudentCreateUpdate>(url)

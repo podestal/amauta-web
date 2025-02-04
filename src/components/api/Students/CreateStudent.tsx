@@ -3,8 +3,8 @@ import StudentForm from "./forms/StudentForm"
 import StudentHealthForm from "./forms/StudentHealthForm"
 import StudentBirthForm from "./forms/StudentBirthForm"
 import StudentEmergency from "./forms/StudentEmergency"
-import moment from "moment"
 import { Classroom } from "../../../services/api/classroomService"
+import useCreateStudent from "../../../hooks/api/student/useCreateStudent"
 
 interface Props {
   classrooms: Classroom[]
@@ -13,10 +13,8 @@ interface Props {
 const CreateStudent = ({ classrooms }: Props) => {
 
   const [studentId, setStudentId] = useState('')
-
-  console.log(moment('1991-03-29').format('YYYY-MM-DD'),);
-  
   const [page, setPage] = useState(1)
+  const createStudent = useCreateStudent()
 
 
 
@@ -28,6 +26,7 @@ const CreateStudent = ({ classrooms }: Props) => {
         setPage={setPage}
         classrooms={classrooms}
         setStudentId={setStudentId}
+        createStudent={createStudent}
       />}
       {page === 2 && 
       <StudentHealthForm 

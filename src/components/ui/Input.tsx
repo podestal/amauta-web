@@ -10,6 +10,7 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
     setValue?: Dispatch<SetStateAction<string>>
     stylesContainer?: string
     label?: string
+    disable?: boolean
 }
 
 const styles = {
@@ -60,6 +61,7 @@ const Input = forwardRef<HTMLInputElement, Props>(({
     setValue,
     stylesContainer,
     label,
+    disable,
     ...props 
 }, ref) => {
     const [showPassword, setShowPassword] = useState(type !== 'password');
@@ -109,11 +111,13 @@ const Input = forwardRef<HTMLInputElement, Props>(({
                     ref={ref}
                     className={`bg-slate-100 dark:bg-gray-950 border-neutral-400 dark:border-gray-800 border-2 rounded-lg w-full dark:text-slate-50 px-2 py-2 focus:border-blue-700 focus:outline-none text-base
                                 ${showError ? 'border-red-500 dark:border-red-600 shake' : 'dark:border-gray-800 border-neutral-200'}
+                                ${disable ? 'dark:text-gray-400 text-gray-600   cursor-not-allowed' : ''}
                             `}
                     placeholder={placeholder ? placeholder : 'Input ...'}
                     type={showPassword && type === 'password' ? 'text' : type} 
                     value={value}
                     onChange={handleInputChange}
+                    disabled={disable}
                     {...props} 
                 />
                 {type === 'password' && (
