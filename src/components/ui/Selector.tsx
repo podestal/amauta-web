@@ -59,7 +59,7 @@ const Selector = <T extends Item>({
   lan='EN' }: Props<T>) => {
   
     return (
-        <div className="lg:w-full w-[60%] flex flex-col mx-auto justify-center items-center gap-4">
+        <div className="lg:w-full w-[60%] flex flex-col mx-auto justify-center items-center gap-2">
             {/* Label for the selector */}
             {label && <p className="text-lg lg:text-xl dark:text-slate-50 text-center mb-4">{label}</p>}
             {/* Dropdown (select) element */}
@@ -72,7 +72,7 @@ const Selector = <T extends Item>({
                   }
                   setter(e.target.value)
                 }}
-                className={`dark:bg-gray-950 bg-slate-100  rounded-lg w-full dark:text-slate-50 text-xs pl-2 py-[8px] border-2 ${error ? 'border-red-600 shake' : ' border-neutral-400 dark:border-gray-800'}`}
+                className={`dark:bg-gray-950 bg-slate-100  rounded-lg w-full dark:text-slate-50 text-xs pl-2 py-[10px] border-2 ${error ? 'border-red-600 shake' : ' border-neutral-400 dark:border-gray-800'}`}
             >
                 {all 
                 ?

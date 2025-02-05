@@ -70,10 +70,11 @@ const StudentEmergency = ({
         }, 
         {
             onSuccess: () => {
-                setOpen && setOpen(false)
-                setType('success')
-                setShow(true)
-                setMessage('Información de estudiante guardada exitosamente!')
+                setPage(prev => prev + 1)
+                // setOpen && setOpen(false)
+                // setType('success')
+                // setShow(true)
+                // setMessage('Información de estudiante guardada exitosamente!')
             }
         })
 
@@ -105,10 +106,11 @@ const StudentEmergency = ({
         }, 
         {
             onSuccess: () => {
-                setOpen && setOpen(false)
-                setType('success')
-                setShow(true)
-                setMessage('Información de estudiante guardada exitosamente!')
+                setPage(prev => prev + 1)
+                // setOpen && setOpen(false)
+                // setType('success')
+                // setShow(true)
+                // setMessage('Información de estudiante guardada exitosamente!')
             }
         })
     }
@@ -162,12 +164,12 @@ const StudentEmergency = ({
             </div>
             {nextPrev 
             ? 
-            <div className="flex justify-between items-center gap-4 mt-12">
-                <Button 
+            <div className="flex justify-end items-center gap-4 mt-12">
+                {/* <Button 
                     label="Anterior"
                     onClick={() => setPage(prev => prev - 1)}
                     type="button"
-                />
+                /> */}
                 <Button 
                     label="Siguiente"
                     type="submit"

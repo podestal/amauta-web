@@ -8,6 +8,7 @@ import useCreateStudent from "../../../hooks/api/student/useCreateStudent"
 import useCreateBirthInfo from "../../../hooks/api/student/studentInfo/useCreateBirthInfo"
 import useCreateHealthInfo from "../../../hooks/api/student/studentInfo/useCreateHealthInfo"
 import useCreateEmergencyContact from "../../../hooks/api/student/studentInfo/useCreateEmergencyContact"
+import StudentTutorForm from "./forms/StudentTutorForm"
 
 interface Props {
   classrooms: Classroom[]
@@ -17,7 +18,7 @@ interface Props {
 const CreateStudent = ({ classrooms, setOpen }: Props) => {
 
   const [studentId, setStudentId] = useState('')
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState(5)
   const createStudent = useCreateStudent()
 
   // MORE INFO
@@ -57,6 +58,24 @@ const CreateStudent = ({ classrooms, setOpen }: Props) => {
         setOpen={setOpen}
       />
       }
+      {page === 5 &&
+      <StudentTutorForm 
+        studentId={studentId}
+        tutorType="P"
+        setPage={setPage}
+      />}
+      {page === 6 &&
+      <StudentTutorForm 
+        studentId={studentId}
+        tutorType="M"
+        setPage={setPage}
+      />}
+      {page === 7 &&
+      <StudentTutorForm 
+        studentId={studentId}
+        tutorType="O"
+        setPage={setPage}
+      />}
     </div>
   )
 }
