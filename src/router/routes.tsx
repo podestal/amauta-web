@@ -12,36 +12,59 @@ import DetailedAttendancePage from "../pages/DetailedAttendancePage";
 import ReportsPage from "../pages/ReportsPage";
 import StudenAdminPage from "../pages/StudenAdminPage";
 import LandingPage from "../pages/LandingPage";
+import PublicRoutes from "../components/auth/PublicRoutes";
 
 const routes = createBrowserRouter([
     {
         path: "/",
+        element: <PublicRoutes />,
+        children: [
+            {
+                path: '/',
+                element: <LandingPage />
+            },
+            {
+                path: "login",
+                element: <LoginPage />
+            },
+            {
+                path: "downloadapp",
+                element: <DownloadappPage />
+            },
+            {
+                path: "tesitng",
+                element: <div>Testing</div>
+            },
+        ]
+    },
+    {
+        path: "/app",
         element: <MainPage />,
         errorElement: <div>404</div>,
         children: [
             {
-                path: "/",
+                path: "students-main",
                 element: 
                 <PrivateRoutes>
                     <StudentsPage />
                 </PrivateRoutes>
             },
             {
-                path: "/attendance",
+                path: "attendance",
                 element: 
                 <PrivateRoutes>
                     <AttendancePage />
                 </PrivateRoutes>
             },
             {
-                path: "/announcement",
+                path: "announcement",
                 element: 
                 <PrivateRoutes>
                     <AnnouncementsPage />
                 </PrivateRoutes>
             },
             {
-                path: "/profile",
+                path: "profile",
                 element:
                 <PrivateRoutes>
                     <ProfilePage />
@@ -76,22 +99,6 @@ const routes = createBrowserRouter([
                     <StudenAdminPage />
                 </PrivateRoutes>
             },
-            {
-                path: "/login",
-                element: <LoginPage />
-            },
-            {
-                path: "/downloadapp",
-                element: <DownloadappPage />
-            },
-            {
-                path: "/tesitng",
-                element: <div>Testing</div>
-            },
-            {
-                path: 'home',
-                element: <LandingPage />
-            }
         ]
     }
 ])

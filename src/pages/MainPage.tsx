@@ -27,7 +27,7 @@ const MainPage = () => {
         // w-full flex justify-center z-50 lg:pb-[100px]
         <WebNavigator />
        }
-        <div className="flex-1">
+        <div className="flex-1 ml-0 lg:ml-64">
           {show && 
           <NotificationCard 
               type={type}

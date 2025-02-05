@@ -44,7 +44,7 @@ const Login = () => {
                 setLoading(false)
             },
             onSuccess: () => {
-                navigate('/')
+                navigate('/app')
             },
             onError: error => {
                 setShow(true)

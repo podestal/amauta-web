@@ -19,13 +19,13 @@ const SideBar = ({ profile }: Props) => {
     const group = useGetProfileStore(s => s.user)?.groups[0] || ''
 
     const navItems = [
-        { name: "Clases", path: "/" },
+        { name: "Clases", path: "students-main" },
         // { name: "Anuncios", path: "/announcement" },
         // { name: "Profile", path: "/profile" },
         // { name: "Students", path: "/students" },
-        { name: "Reportes", path: "/reports" },
-        { name: "Alumnos", path: "/student-admin" },
-        { name: "Descargar", path: "/downloadapp" },
+        { name: "Reportes", path: "reports" },
+        { name: "Alumnos", path: "student-admin" },
+        // { name: "Descargar", path: "/downloadapp" },
     ];
 
   return (
