@@ -8,6 +8,7 @@ import Loader from "../components/ui/Loader"
 import { useEffect } from "react"
 import useGetProfileStore from "../hooks/store/useGetProfileStore"
 import SideBar from "../router/SideBar"
+import WebNavigator from "../router/WebNavigator"
 
 const MainPage = () => {
 
@@ -22,8 +23,11 @@ const MainPage = () => {
 
   return (
     <div className="min-h-screen dark:bg-slate-950 dark:text-slate-50 bg-white text-black mx-auto relative">
-        {profile && access && <SideBar profile={profile}/>}
-        <div className="flex-1 ml-0 lg:ml-64">
+        {profile && access ? <SideBar profile={profile}/> : 
+        // w-full flex justify-center z-50 lg:pb-[100px]
+        <WebNavigator />
+       }
+        <div className="flex-1">
           {show && 
           <NotificationCard 
               type={type}

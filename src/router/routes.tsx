@@ -11,6 +11,7 @@ import AnnouncementsPage from "../pages/AnnouncementsPage";
 import DetailedAttendancePage from "../pages/DetailedAttendancePage";
 import ReportsPage from "../pages/ReportsPage";
 import StudenAdminPage from "../pages/StudenAdminPage";
+import LandingPage from "../pages/LandingPage";
 
 const routes = createBrowserRouter([
     {
@@ -86,6 +87,10 @@ const routes = createBrowserRouter([
             {
                 path: "/tesitng",
                 element: <div>Testing</div>
+            },
+            {
+                path: 'home',
+                element: <LandingPage />
             }
         ]
     }
