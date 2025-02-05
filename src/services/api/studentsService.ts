@@ -3,6 +3,7 @@ import { BirthInfo } from "./birthInfo"
 import { Classroom } from "./classroomService"
 import { EmergencyContact } from "./emergencyContact"
 import { HealthInfo } from "./healthInfo"
+import { Tutor } from "./tutorService"
 
 export interface SimpleAttendance {
     id: number
@@ -35,6 +36,7 @@ export interface Student {
     health_info:HealthInfo | null
     birth_info: BirthInfo | null
     emergency_contact: EmergencyContact | null
+    tutors: Tutor[]
     tutor_name: string
 }
 
@@ -50,7 +52,8 @@ export type StudentCreateUpdate = Omit<
         'health_info' |
         'birth_info' |
         'emergency_contact' |
-        'tutor_name'
+        'tutor_name' | 
+        'tutors'
     > & {
     uid?: string
     clase?: number

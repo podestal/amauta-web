@@ -10,6 +10,7 @@ import StudentHealthForm from "./forms/StudentHealthForm"
 import StudentForm from "./forms/StudentForm"
 import { Classroom } from "../../../services/api/classroomService"
 import useUpdateStudent from "../../../hooks/api/student/useUpdateStudent"
+import StudentTutorForm from "./forms/StudentTutorForm"
 
 interface Props {
     student: Student
@@ -24,6 +25,9 @@ const StudentAdminCard = ({ student, classrooms }: Props) => {
   const birthInfo = student.birth_info ? student.birth_info : undefined
   const healthInfo = student.health_info ? student.health_info : undefined
   const emergencyContact = student.emergency_contact ? student.emergency_contact : undefined
+  const studentFather = student.tutors.find(tutor => tutor.tutor_type === 'F')
+  const studentMother = student.tutors.find(tutor => tutor.tutor_type === 'M')
+  const studentTutor = student.tutors.find(tutor => tutor.tutor_type === 'O')
 
   // MUTATIONS
   const updateStudent = useUpdateStudent({ studentId: student.uid })
@@ -32,7 +36,7 @@ const StudentAdminCard = ({ student, classrooms }: Props) => {
     <>
     <div 
       // onClick={() => setOpen(true)}
-      className="w-full grid grid-cols-8 gap-6 hover:bg-slate-200 dark:hover:bg-slate-900  py-4 rounded-xl">  
+      className="w-full grid grid-cols-10 gap-6 hover:bg-slate-200 dark:hover:bg-slate-900  py-4 rounded-xl">  
         <div className="col-span-3 flex items-center justify-start gap-4">
           <RiBookletFill 
             className="text-blue-700 hover:text-blue-800 cursor-pointer"
@@ -68,7 +72,23 @@ const StudentAdminCard = ({ student, classrooms }: Props) => {
           }}
           className={`w-[40%] h-4 ${student.emergency_contact ? 'bg-green-600 hover:bg-green-700' : 'dark:bg-neutral-400 bg-neutral-200 dark:hover:bg-neutral-500 hover:bg-neutral-300'} cursor-pointer`}/>
         <div 
-          className={`w-[40%] h-4 ${student.emergency_contact ? 'bg-green-600 hover:bg-green-700' : 'dark:bg-neutral-400 bg-neutral-200 dark:hover:bg-neutral-500 hover:bg-neutral-300'} cursor-pointer`}/>
+          onClick={() => {
+            setRenderComponent('studentFatherForm')
+            setOpen(true)
+          }}
+          className={`w-[40%] h-4 ${studentFather ? 'bg-green-600 hover:bg-green-700' : 'dark:bg-neutral-400 bg-neutral-200 dark:hover:bg-neutral-500 hover:bg-neutral-300'} cursor-pointer`}/>
+        <div 
+          onClick={() => {
+            setRenderComponent('studentMotherForm')
+            setOpen(true)
+          }}
+          className={`w-[40%] h-4 ${studentMother ? 'bg-green-600 hover:bg-green-700' : 'dark:bg-neutral-400 bg-neutral-200 dark:hover:bg-neutral-500 hover:bg-neutral-300'} cursor-pointer`}/>
+        <div 
+          onClick={() => {
+            setRenderComponent('studentTutorForm')
+            setOpen(true)
+          }}
+          className={`w-[40%] h-4 ${studentTutor ? 'bg-green-600 hover:bg-green-700' : 'dark:bg-neutral-400 bg-neutral-200 dark:hover:bg-neutral-500 hover:bg-neutral-300'} cursor-pointer`}/>
     </div>
     <Modal 
       isOpen={open}
@@ -110,6 +130,27 @@ const StudentAdminCard = ({ student, classrooms }: Props) => {
         setPage={() => {}}
         student={student}
         updateStudent={updateStudent}
+      />}
+      {renderComponent === 'studentFatherForm' &&
+      <StudentTutorForm 
+        studentId={student.uid}
+        setPage={() => {}}
+        tutorType="P"
+        tutor={studentFather}
+      />}
+      {renderComponent === 'studentMotherForm' &&
+      <StudentTutorForm
+        studentId={student.uid}
+        setPage={() => {}}
+        tutorType="M"
+        tutor={studentMother}
+      />}
+      {renderComponent === 'studentTutorForm' &&
+      <StudentTutorForm
+        studentId={student.uid}
+        setPage={() => {}}
+        tutorType="O"
+        tutor={studentTutor}
       />}
     </Modal>
     </>

@@ -75,6 +75,7 @@ const CreateStudent = ({ classrooms, setOpen }: Props) => {
         studentId={studentId}
         tutorType="O"
         setPage={setPage}
+        setOpen={setOpen}
       />}
     </div>
   )

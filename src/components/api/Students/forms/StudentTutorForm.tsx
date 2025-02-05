@@ -12,9 +12,10 @@ interface Props {
     tutor?: Tutor
     tutorType: string
     setPage: React.Dispatch<React.SetStateAction<number>>
+    setOpen?: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const StudentTutorForm = ({ studentId, tutor, tutorType, setPage }: Props) => {
+const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen }: Props) => {
 
     console.log('studentId', studentId);
     console.log('tutorType', tutorType);
@@ -147,12 +148,12 @@ const StudentTutorForm = ({ studentId, tutor, tutorType, setPage }: Props) => {
                     <p>
                         {tutorType === 'P' && 'Existe Información del Padre?'}
                         {tutorType === 'M' && 'Existe Información de la Madre?'}
+                        {tutorType === 'O' && 'Se necesita agregar apoderado?'}
                     </p>
-                    {tutorType !== 'O' && 
                     <Switch 
                         value={tutorInfo}
                         setter={setTutorInfo}
-                    />}
+                    />
                 </div>
             </div>
             {tutorInfo && <>
@@ -352,14 +353,17 @@ const StudentTutorForm = ({ studentId, tutor, tutorType, setPage }: Props) => {
                 {tutorInfo 
                 ? 
                 <Button 
-                    label="Siguiente"
+                    label={tutorType === 'O' ? 'Terminar' : "Siguiente"}
                     type="submit"
                 /> 
                 : 
                 <Button 
-                    label="Siguiente"
+                    label={tutorType === 'O' ? 'Terminar' : "Siguiente"}
                     type="button"
-                    onClick={() => setPage(prev => prev + 1)}
+                    onClick={() => {
+                        setPage(prev => prev + 1)
+                        setOpen && setOpen(false)
+                    }}
                 />
                 }
                 </>}
