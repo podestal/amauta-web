@@ -9,7 +9,7 @@ const PublicRoutes = () => {
     }, [])
 
     return (
-        <div className="min-h-screen dark:bg-slate-950 dark:text-slate-50 bg-white text-black mx-auto relative ">
+        <div className="min-h-screen dark:bg-neutral-950 dark:text-slate-50 bg-white text-black mx-auto relative ">
             <WebNavigator />
             <Outlet />
         </div>
