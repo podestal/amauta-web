@@ -84,12 +84,12 @@ const PrivateRoutes = ({ children }: Props) => {
   useLoader(isLoadingUser || isLoadingProfile)
   
   if (tokenExpired) {
-    return <Navigate to="/login" replace />
+    return <Navigate to="/" replace />
   }
 
   if (isErrorUser || isErrorProfile) {
     console.log('error', errorUser || errorProfile);
-    return <Navigate to="/login" replace />
+    return <Navigate to="/" replace />
   }
 
   if (isSuccess) {

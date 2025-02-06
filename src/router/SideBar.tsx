@@ -62,8 +62,9 @@ const SideBar = ({ profile }: Props) => {
         
       </nav>
       <div className="flex justify-start items-center px-4">
-            <Logout />
-        </div>
+          <Logout />
+      </div>
+      
     </div>
   );
 };

@@ -1,3 +1,4 @@
+import moment from "moment"
 import useLanguageStore from "../../../hooks/store/useLanguageStore"
 import { Student } from "../../../services/api/studentsService"
 import getClassroomDescription from "../../../utils/getClassroomDescription"
@@ -11,6 +12,12 @@ interface Props {
 // ENGLISH_LANGUAGE = 'E'
 // QUECHUA_LANGUAGE = 'Q'
 // AYMARA_LANGUAGE = 'A'
+
+const tutorTypes: Record<string, string> = {
+    M: 'Madre',
+    F: 'Padre',
+    O: 'Apoderado'
+}
 
 const religions: Record<string, string> = {
     C: 'Católica',
@@ -29,6 +36,13 @@ const languages: Record<string, string> = {
     E: 'Inglés',
     Q: 'Quechua',
     A: 'Aymara',
+}
+
+const civilStatus: Record<string, string> = {
+    S: 'Soltero',
+    C: 'Casado',
+    D: 'Divorciado',
+    V: 'Viudo'
 }
 
 const StudentInfo = ({ student }: Props) => {
@@ -119,13 +133,53 @@ const StudentInfo = ({ student }: Props) => {
         {student.emergency_contact ? 
         <div className="w-full flex flex-col gap-4 my-6">
             <div className="w-full grid grid-cols-4 gap-4">
-                <p>Nombre: {student.emergency_contact.name || 'Juan Perez'}</p>
+                <p>Nombres: {student.emergency_contact.name || 'Juan Perez'}</p>
                 <p>Teléfono: {student.emergency_contact.phone_number || '123456'}</p>
                 <p>Dirección: {student.emergency_contact.address || 'Avenida Cortes 245'}</p>
             </div>
         </div>
         :
         <p> - </p>}
+        {student.tutors.map( tutor => (
+            <div
+                key={tutor.id}
+            >
+                <h2 className="text-xl font-bold my-2">Información {tutor.tutor_type === 'M' ? 'de la' : 'del'} {tutorTypes[tutor.tutor_type]}</h2>
+                
+                {/* 
+
+            'ocupation',
+            'employer',
+            'civil_status',
+            'lives_with_student', */}
+                <div className="w-full flex flex-col gap-4 my-6">
+                    <div className="w-full grid grid-cols-4 gap-4">
+                        <p>DNI: {tutor.dni || '54673322'}</p>
+                        <p>Nombres: {tutor.first_name}</p>
+                        <p>Apellidos: {tutor.last_name}</p>
+                        <p>Correo electrónico: {tutor.email}</p>
+                    </div>
+                    <div className="w-full grid grid-cols-4 gap-4"> 
+                        <p>Teléfono: {tutor.phone_number}</p>
+                        <p>Fecha de nacimiento: {moment(tutor.date_of_birth).format('DD-MM-YYYY')}</p>
+                        <p>Dirección: {tutor.address}</p>
+                    </div>
+                    <div className="w-full grid grid-cols-4 gap-4">
+                        <p>Departamento: {tutor.state}</p>
+                        <p>Provincia: {tutor.county}</p>
+                        <p>Ciudad: {tutor.city}</p>
+                    </div>
+                    <div className="w-full grid grid-cols-4 gap-4">
+                        <p>Ocupación: {tutor.ocupation}</p>
+                        <p>Centro Laboral: {tutor.employer}</p>
+                    </div>
+                    <div className="w-full grid grid-cols-4 gap-4">
+                        <p>Estado Civil: {civilStatus[tutor.civil_status]}</p>
+                        <p>Vive con el estudiante: {tutor.lives_with_student ? 'Si' : 'No'}</p>
+                    </div>
+                </div>
+            </div>
+        ))}
     </div>
   )
 }

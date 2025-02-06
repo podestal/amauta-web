@@ -43,6 +43,12 @@ const features = [
     title: "Fichas de Inscripción Digitales",
     subTitle: "Permite que la escuela o los padres registren y gestionen la información de los estudiantes de manera sencilla.",
     variant: 4,
+  },
+  {
+    id: "parent-tracking",
+    title: "Seguimiento de Asistencia para Padres",
+    subTitle: "Los padres pueden acceder a la aplicación para revisar la asistencia de sus hijos y recibir mensajes importantes en tiempo real.",
+    variant: 2,
   }
 ];
 
