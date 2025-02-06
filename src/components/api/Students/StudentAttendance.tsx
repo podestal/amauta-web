@@ -14,6 +14,7 @@ const StudentAttendance = ({ student, classroomId, canModifyAttendance}: Props) 
   const lan = useLanguageStore(s => s.lan)
   const attendanceIn: SimpleAttendance = student.attendances_in[0]
   const attendanceOut: SimpleAttendance = student.attendances_out[0]
+  
 
   const renderAttendanceAction = ( attendance: SimpleAttendance, kind: string, label: string) => {
     return attendance 

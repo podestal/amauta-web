@@ -22,7 +22,7 @@ const MainPage = () => {
     }, [])
 
   return (
-    <div className="min-h-screen dark:bg-slate-950 dark:text-slate-50 bg-white text-black mx-auto relative">
+    <div className="min-h-screen bg-gray-950 text-slate-50 mx-auto relative">
         {profile && access ? <SideBar profile={profile}/> : 
         // w-full flex justify-center z-50 lg:pb-[100px]
         <WebNavigator />

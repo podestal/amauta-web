@@ -44,7 +44,7 @@ const Login = () => {
                 setLoading(false)
             },
             onSuccess: () => {
-                navigate('/app')
+                navigate('/app/students-main')
             },
             onError: error => {
                 setShow(true)

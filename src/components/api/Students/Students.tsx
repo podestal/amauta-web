@@ -8,6 +8,7 @@ import { motion } from "framer-motion"
 import { useLocation } from "react-router-dom"
 import useGetProfileStore from "../../../hooks/store/useGetProfileStore"
 import { Instructor } from "../../../services/api/instructorService"
+import moment from "moment"
 
 interface Props {
     classroom?: string
@@ -16,6 +17,7 @@ interface Props {
 
 const Students = ({ classroom, level }: Props) => {
 
+    const today = moment().date()
     const [filter, setFilter] = useState('')
     const access = useAuthStore(s => s.access) || ''
     const classroomId = classroom ? classroom : useLocation().state?.classroom
@@ -24,7 +26,7 @@ const Students = ({ classroom, level }: Props) => {
     const profile = useGetProfileStore(s => s.profile)
     const instructor = group === 'instructor' && profile as Instructor
     const canModifyAttendance = instructor && currentLevel === 'P'
-    const {data: students, isLoading, isError, error, isSuccess} = useGetStudents({ access, classroomId })
+    const {data: students, isLoading, isError, error, isSuccess} = useGetStudents({ access, classroomId, day: today.toString() })
 
     useLoader(isLoading)
 

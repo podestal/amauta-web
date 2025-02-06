@@ -15,7 +15,6 @@ const DailyAttendanceReportBody = ({ selectedClassroom, selectedDay, currentMont
     const access = useAuthStore(s => s.access) || ''
     const lan = useLanguageStore(s => s.lan)
     
-
     const { data: students, isLoading, isError, error, isSuccess } = useGetStudents({ access, classroomId: selectedClassroom, day: selectedDay, month: currentMonth })
 
 

@@ -2,7 +2,7 @@ import Hero from "../components/landing/Hero"
 
 const LandingPage = () => {
   return (
-    <div className="w-full overflow-hidden ml-0 lg:ml-0 dark:bg-neutral-950 bg-white ">
+    <div className="w-full overflow-hidden ml-0 lg:ml-0 ">
         <svg xmlns="http://www.w3.org/2000/svg" className="absolute -inset-x-8 w-[60%] h-full opacity-20" viewBox="0 0 100 100">
             <defs>
                 <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
