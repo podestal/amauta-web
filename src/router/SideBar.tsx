@@ -29,7 +29,7 @@ const SideBar = ({ profile }: Props) => {
     ];
 
   return (
-    <div className="hidden lg:block w-64 h-full bg-black px-4 py-8 fixed mr-64">
+    <div className="hidden lg:block w-64 h-full bg-slate-950 px-4 py-8 fixed mr-64 z-50">
       <nav className="space-y-4 mb-10">
         {profile &&
             <div className="flex items-center space-x-4 mb-8">

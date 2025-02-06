@@ -17,7 +17,7 @@ const TutorDetailedAttendance = () => {
       <motion.div 
         
         className="max-w-4xl mx-auto px-4 h-screen overflow-y-scroll">
-        <h1 className="text-2xl font-bold mb-10 text-center">
+        <h1 className="text-4xl font-poppins font-bold mb-10 text-center">
             {lan === 'EN' ? 'Attendance' : 'Asistencia'}
         </h1>
         <div className="w-full my-4 flex justify-center items-center mx-auto">

@@ -13,6 +13,9 @@ import attendanceReport1 from '../assets/imgs/attendanceReport1.png'
 import attendanceReport2 from '../assets/imgs/attendanceReport2.png'
 import attendanceReport3 from '../assets/imgs/attendanceReport3.png'
 
+import parentTracking1 from '../assets/imgs/parentTracking1.png'
+import parentTracking2 from '../assets/imgs/parentTracking2.png'
+
 const features = [
   {
     id: "attendance-tracking",
@@ -49,6 +52,8 @@ const features = [
     title: "Seguimiento de Asistencia para Padres",
     subTitle: "Los padres pueden acceder a la aplicación para revisar la asistencia de sus hijos y recibir mensajes importantes en tiempo real.",
     variant: 2,
+    img1: parentTracking1,
+    img2: parentTracking2,
   }
 ];
 

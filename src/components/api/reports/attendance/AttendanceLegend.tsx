@@ -13,7 +13,7 @@ const AttendanceLegend = () => {
         animate="visible"
         variants={variants}
         transition={{ duration: 0.5 }}
-        className="w-full grid grid-cols-8 my-8">
+        className="w-full grid grid-cols-8 my-16 text-white">
         <div className="flex justify-center items-center gap-4">
             <div className={`w-8 h-8 flex justify-center items-center rounded-lg ${statusStyles['O']}`}></div>
             <p className="text-sm">A tiempo</p>

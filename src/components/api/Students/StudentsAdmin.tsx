@@ -19,7 +19,7 @@ const StudentsAdmin = () => {
 
     useLoader(loadingStudents)
 
-    useLoader(loadingClassrooms)
+    // useLoader(loadingClassrooms)
 
     if (isErrorStudents || isErrorClassroom) return <p>Error {studentsError ? studentsError.message: classroomError?.message}</p>
 
