@@ -26,8 +26,9 @@ const WebNavigator = () => {
           
           {/* Logo (Fades in, no movement) */}
           <motion.div variants={fadeInVariants}>
-            <Link to="/" className="text-3xl font-bold">
-              <motion.img src={logo} width={80} alt="amautapp" className="hover:opacity-70" />
+            <Link to="/home" className="text-3xl font-bold flex justify-center items-center gap-2 hover:opacity-70">
+              <motion.img src={logo} width={80} alt="amautapp"/>
+              <p className="text-lg font-bold font-poppins mt-2">Amautapp</p>
             </Link>
           </motion.div>
 
@@ -40,7 +41,7 @@ const WebNavigator = () => {
 
           {/* Login Button (Fades in, no movement) */}
           <motion.button 
-            onClick={() => navigate('/login')}
+            onClick={() => navigate('/')}
             className="relative px-8 py-2 text-white font-semibold rounded-lg border-2 border-transparent bg-neutral-950 
             before:absolute before:-inset-1 before:rounded-lg before:bg-gradient-to-r before:from-purple-500 before:to-blue-500 
             before:-z-10 before:opacity-100 hover:before:opacity-75 transition-all text-xs"

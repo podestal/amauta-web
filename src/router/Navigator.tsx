@@ -17,11 +17,11 @@ const Navigator: React.FC = () => {
   const lan = useLanguageStore(s=>s.lan)
 
   return (
-    <nav className="bg-slate-200 dark:bg-slate-800 fixed bottom-0 w-full flex justify-around py-2 shadow-md z-50 md:hidden">
+    <nav className="bg-slate-200 dark:bg-slate-900 fixed bottom-0 w-full flex justify-around py-2 shadow-md z-50 md:hidden">
       {group === 'assistant' &&
       <>
         <NavLink
-          to="/"
+          to="students-main"
           className={({ isActive }) =>
             `flex flex-col items-center text-sm ${
               isActive ? 'text-blue-500' : 'text-gray-500'
@@ -32,7 +32,7 @@ const Navigator: React.FC = () => {
           <span>{lan === 'EN' ? 'Students' : 'Alumnos'}</span>
         </NavLink>
         <NavLink
-          to="/attendance"
+          to="attendance"
           className={({ isActive }) =>
             `flex flex-col items-center text-sm ${
               isActive ? 'text-blue-500' : 'text-gray-500'
@@ -43,7 +43,7 @@ const Navigator: React.FC = () => {
           <span>{lan === 'EN' ? 'Attendance' : 'Asistencia' }</span>
         </NavLink>
         <NavLink
-          to="/profile"
+          to="profile"
           className={({ isActive }) =>
             `flex flex-col items-center text-sm ${
               isActive ? 'text-blue-500' : 'text-gray-500'

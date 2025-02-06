@@ -20,11 +20,11 @@ const routes = createBrowserRouter([
         element: <PublicRoutes />,
         children: [
             {
-                path: '/',
+                path: 'home',
                 element: <LandingPage />
             },
             {
-                path: "login",
+                path: "/",
                 element: <LoginPage />
             },
             {
