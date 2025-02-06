@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import WebNavigator from "../../router/WebNavigator";
 import { useEffect } from "react";
+import Footer from "../../router/Footer";
 
 const PublicRoutes = () => {
 
@@ -12,6 +13,7 @@ const PublicRoutes = () => {
         <div className="min-h-screen bg-gray-950 text-slate-50 mx-auto relative ">
             <WebNavigator />
             <Outlet />
+            <Footer />
         </div>
     )
 }
