@@ -19,6 +19,9 @@ const TutorAttedences = ({ studentId, selectedMonth }: Props) => {
         hidden: { opacity: 0, x: 50 }, 
         visible: { opacity: 1, x: 0 }, 
       };
+
+    console.log('selectedMonth', selectedMonth);
+    
     
     const {data: attendances, isLoading, isError, error, isSuccess} = useGetAttendance({ access, studentId, month: selectedMonth })
     
@@ -38,7 +41,7 @@ const TutorAttedences = ({ studentId, selectedMonth }: Props) => {
           className="dark:bg-slate-900 shadow rounded overflow-y-scroll h-[550px] mt-10"
         >
           {attendances.map((attendance) => (
-            <DayAttendance key={attendance.id} attendance={attendance} />
+            <DayAttendance key={attendance.id} attendanceIn={attendance.kind === 'I' ? attendance : undefined} attendanceOut={attendance.kind === 'O' ? attendance : undefined} />
           ))}
         </motion.div>
       ) : (

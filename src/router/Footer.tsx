@@ -2,7 +2,7 @@ import logo from "../assets/icons/amautapp.png";
 
 const Footer = () => {
   return (
-    <footer className="h-80 bg-black text-white">
+    <footer className="h-80 bg-black text-white max-lg:hidden">
         <div className="w-full h-full md:max-w-[800px] lg:max-w-[1024px] xl:max-w-[1200px] 2xl:max-w-[1280px] mx-auto">
             <div className="grid grid-cols-3 gap-10 py-12">
                 <div className="w-full h-full flex flex-col justify-start items-start gap-4">

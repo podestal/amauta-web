@@ -17,6 +17,7 @@ export interface Student {
     first_name: string
     last_name: string
     attendance: SimpleAttendance[] | null
+    attendances: SimpleAttendance[]
     attendances_in: SimpleAttendance[]
     attendances_out: SimpleAttendance[]
     clase: Classroom
@@ -46,6 +47,7 @@ export type StudentCreateUpdate = Omit<
         'attendance' | 
         'attendances_in' | 
         'attendances_out' | 
+        'attendances' |
         'picture' | 
         'map_location' | 
         'clase' |

@@ -57,7 +57,7 @@ const Navigator: React.FC = () => {
       {instructor &&
       <>
         <NavLink
-          to="/"
+          to="students-main"
           className={({ isActive }) =>
             `flex flex-col items-center text-sm ${
               isActive ? 'text-blue-500' : 'text-gray-500'
@@ -68,7 +68,7 @@ const Navigator: React.FC = () => {
           <span>{lan === 'EN' ? 'Students' : 'Alumnos'}</span>
         </NavLink>
         {createUpdateAttendance && <NavLink
-          to="/attendance"
+          to="attendance"
           className={({ isActive }) =>
             `flex flex-col items-center text-sm ${
               isActive ? 'text-blue-500' : 'text-gray-500'
@@ -79,7 +79,7 @@ const Navigator: React.FC = () => {
           <span>{lan === 'EN' ? 'Attendance' : 'Asistencia' }</span>
         </NavLink>}
         <NavLink
-          to="/profile"
+          to="profile"
           className={({ isActive }) =>
             `flex flex-col items-center text-sm ${
               isActive ? 'text-blue-500' : 'text-gray-500'
@@ -93,7 +93,7 @@ const Navigator: React.FC = () => {
       {group === 'tutor' &&
       <>
           <NavLink
-            to="/"
+            to="students-main"
             className={({ isActive }) =>
               `flex flex-col items-center text-sm ${
                 isActive ? 'text-blue-500' : 'text-gray-500'
@@ -104,7 +104,7 @@ const Navigator: React.FC = () => {
             <span>{lan === 'EN' ? 'Progress' : 'Progreso' }</span>
           </NavLink>
           <NavLink
-            to="/announcement"
+            to="announcement"
             className={({ isActive }) =>
               `flex flex-col items-center text-sm ${
                 isActive ? 'text-blue-500' : 'text-gray-500'
@@ -115,7 +115,7 @@ const Navigator: React.FC = () => {
             <span>{lan === 'EN' ? 'Announcements' : 'Mensajes' }</span>
           </NavLink>
           <NavLink
-            to="/profile"
+            to="profile"
             className={({ isActive }) =>
               `flex flex-col items-center text-sm ${
                 isActive ? 'text-blue-500' : 'text-gray-500'

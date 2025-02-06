@@ -17,7 +17,7 @@ const WebNavigator = () => {
 
   return (
     <motion.div 
-      className="w-full bg-gray-950 text-slate-50 flex justify-center z-50 fixed top-0"
+      className="w-full bg-gray-950 text-slate-50 flex justify-center z-50 fixed top-0 max-lg:hidden"
       initial="hidden"
       animate="visible"
     >

@@ -6,7 +6,7 @@ interface Props {
 const getAttendanceLabel = ({ lan, attendance }: Props) => {
 
     const attendanceLabels: Record<string, string> = {
-        'O': lan === 'EN' ? 'On Time' : 'Temprano',
+        'O': lan === 'EN' ? 'On Time' : 'A Tiempo',
         'L': lan === 'EN' ? 'Late' : 'Tardanza',
         'N': lan === 'EN' ? 'Not Attended' : 'Falta',
         'E': lan === 'EN' ? 'Excused' : 'Excusado',
