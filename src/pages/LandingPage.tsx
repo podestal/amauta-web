@@ -4,6 +4,48 @@ import { motion } from "framer-motion";
 import Lenis from "lenis";
 import StorySection from "../components/landing/StorySection"
 
+// IMGS
+import attendanceTracking1 from '../assets/imgs/attendanceTracking1.png'
+import attendanceTracking2 from '../assets/imgs/attendanceTracking2.png'
+import attendanceTracking3 from '../assets/imgs/attendanceTracking3.png'
+
+import attendanceReport1 from '../assets/imgs/attendanceReport1.png'
+import attendanceReport2 from '../assets/imgs/attendanceReport2.png'
+import attendanceReport3 from '../assets/imgs/attendanceReport3.png'
+
+const features = [
+  {
+    id: "attendance-tracking",
+    title: "Registro de Asistencia Inteligente",
+    subTitle: "Escanea códigos QR o marca asistencia de manera manual con un sistema rápido y eficiente.",
+    variant: 4,
+    img1: attendanceTracking3,
+    img2: attendanceTracking1,
+    img3: attendanceTracking2,
+  },
+  {
+    id: "attendance-reports",
+    title: "Reportes Detallados de Asistencia",
+    subTitle: "Obtén reportes diarios, semanales y mensuales con datos precisos sobre la asistencia de los estudiantes.",
+    variant: 3,
+    img1: attendanceReport1,
+    img2: attendanceReport2,
+    img3: attendanceReport3,
+  },
+  {
+    id: "messaging-parents",
+    title: "Notificaciones Instantáneas a Tutores",
+    subTitle: "Informa a los tutores sobre faltas, tardanzas o cualquier asunto importante a través de mensajes automáticos.",
+    variant: 5,
+  },
+  {
+    id: "student-registration",
+    title: "Fichas de Inscripción Digitales",
+    subTitle: "Permite que la escuela o los padres registren y gestionen la información de los estudiantes de manera sencilla.",
+    variant: 4,
+  }
+];
+
 const LandingPage = () => {
 
   const gridVariants = {
@@ -44,11 +86,13 @@ const LandingPage = () => {
             </motion.svg>
             <Hero />
           </div>
-          <StorySection title="Gestión Escolar Inteligente" description="..." imgSrc1="..." imgSrc2="..." variant={1} />
-          <StorySection title="Asistencia en Tiempo Real" description="..." imgSrc1="..." imgSrc2="..." variant={2} />
-          <StorySection title="Calificaciones Digitales" description="..." imgSrc1="..." imgSrc2="..." variant={3} />
-          <StorySection title="Comunicación con Padres" description="..." imgSrc1="..." imgSrc2="..." variant={4} />
-          <StorySection title="Reportes y Análisis" description="..." imgSrc1="..." imgSrc2="..." variant={5} />
+          {features.map((feature, index) => (
+            <>
+            {index === 0 && <div className="mt-72"/>}
+            <StorySection key={index} title={feature.title} description={feature.subTitle} imgSrc1={feature.img1 ? feature.img1 : ''} imgSrc2={feature.img2 ? feature.img2 : ''} imgSrc3={feature.img3} variant={feature.variant} />
+            <div className="mb-96"/>
+            </>
+          ))}
         </div>
         
     </div>

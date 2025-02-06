@@ -14,7 +14,7 @@ const Logout = () => {
     const handleLogout = () => {
         clearTokens()
         queryClient.clear()
-        navigate('/login')
+        navigate('/home')
     }
 
   return (

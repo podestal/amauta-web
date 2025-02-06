@@ -58,18 +58,21 @@ interface StorySectionProps {
             <motion.img src={imgSrc2} className="w-1/3 rounded-lg shadow-lg"
               initial={{ opacity: 0, y: 100 }} whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.4 }} />
+            <motion.img src={imgSrc3} className="w-1/3 rounded-lg shadow-lg"
+              initial={{ opacity: 0, y: 100 }} whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.4 }} />
           </motion.div>
         )}
   
         {variant === 3 && (
           // 3️⃣ Bottom Text + Images Slide In from Left & Right
-          <motion.div className="relative flex flex-col items-center justify-end h-full pb-20"
+          <motion.div className="relative flex flex-col items-center justify-end h-full w-full pb-20"
             initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }} viewport={{ once: false }}>
-            <motion.img src={imgSrc1} className="absolute left-10 top-1/4 w-1/4 rounded-lg shadow-lg"
+            <motion.img src={imgSrc1} className="w-[600px] absolute top-0 left-0 rounded-lg shadow-lg z-10"
               initial={{ opacity: 0, x: -100 }} whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 1, delay: 0.3 }} />
-            <motion.img src={imgSrc2} className="absolute right-10 top-1/4 w-1/4 rounded-lg shadow-lg"
+            <motion.img src={imgSrc2} className=" w-[600px] absolute bottom-52 right-0 rounded-lg shadow-lg"
               initial={{ opacity: 0, x: 100 }} whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 1, delay: 0.3 }} />
             <div className="text-center">
@@ -84,7 +87,7 @@ interface StorySectionProps {
     <div className="relative w-full h-screen flex justify-center items-center overflow-hidden">
       {/* Background Image */}
       <motion.div 
-        className="absolute inset-0 bg-cover bg-center brightness-75" 
+        className="absolute inset-0 bg-no-repeat bg-center brightness-50" 
         style={{ backgroundImage: `url(${imgSrc1})` }} 
         initial={{ opacity: 0, scale: 1.2 }} 
         whileInView={{ opacity: 1, scale: 1 }} 
