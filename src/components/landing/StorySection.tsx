@@ -129,23 +129,20 @@ interface StorySectionProps {
       />
     </div>
   )}
-  
-  
-  
-        {variant === 5 && (
-          // 5️⃣ Staggered Images + Typewriter Text
-          <motion.div className="relative flex flex-col items-center justify-center text-center w-full p-10"
-            initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 1 }} viewport={{ once: false }}>
-            <motion.img src={imgSrc1} className="absolute top-10 left-10 w-1/4 rounded-lg shadow-lg"
-              initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1, delay: 0.2 }} />
-            <motion.img src={imgSrc2} className="absolute bottom-10 right-10 w-1/4 rounded-lg shadow-lg"
-              initial={{ opacity: 0, x: 50 }} whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1, delay: 0.2 }} />
-            <motion.h3 className="text-5xl font-bold text-white">{title}</motion.h3>
-            <motion.p className="mt-4 text-lg text-gray-300">{description}</motion.p>
-          </motion.div>
-        )}
+    {variant === 5 && (
+      // 5️⃣ Staggered Images + Typewriter Text
+      <motion.div className="relative flex flex-col items-center justify-center text-center w-full p-10"
+        initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 1 }} viewport={{ once: false }}>
+        <motion.img src={imgSrc1} className="absolute top-10 left-10 w-[50%] rounded-lg shadow-lg"
+          initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1, delay: 0.2 }} />
+        <motion.img src={imgSrc2} className="absolute bottom-10 right-10 w-[50%] rounded-lg shadow-lg"
+          initial={{ opacity: 0, x: 50 }} whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1, delay: 0.2 }} />
+        <motion.h3 className="text-5xl font-bold text-white z-20">{title}</motion.h3>
+        <motion.p className="mt-4 text-lg text-gray-300 z-20">{description}</motion.p>
+      </motion.div>
+    )}
       </div>
     );
   };

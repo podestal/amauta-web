@@ -16,6 +16,9 @@ import attendanceReport3 from '../assets/imgs/attendanceReport3.png'
 import parentTracking1 from '../assets/imgs/parentTracking1.png'
 import parentTracking2 from '../assets/imgs/parentTracking2.png'
 
+import studentRegistration1 from '../assets/imgs/studentRegistration1.png'
+import studentRegistration2 from '../assets/imgs/studentRegistration2.png'
+
 const features = [
   {
     id: "attendance-tracking",
@@ -45,7 +48,9 @@ const features = [
     id: "student-registration",
     title: "Fichas de Inscripción Digitales",
     subTitle: "Permite que la escuela o los padres registren y gestionen la información de los estudiantes de manera sencilla.",
-    variant: 4,
+    variant: 5,
+    img1: studentRegistration1,
+    img2: studentRegistration2,
   },
   {
     id: "parent-tracking",
