@@ -34,62 +34,72 @@ const StudentAdminCard = ({ student, classrooms }: Props) => {
 
   return (
     <>
-    <div 
-      // onClick={() => setOpen(true)}
-      className="w-full grid grid-cols-10 gap-6 hover:bg-slate-200 dark:hover:bg-slate-900  py-4 rounded-xl">  
-        <div className="col-span-3 flex items-center justify-start gap-4">
-          <RiBookletFill 
-            className="text-blue-700 hover:text-blue-800 cursor-pointer"
-            onClick={() =>{
-                setRenderComponent('studentInfo')
-                setOpen(true)}}
-          />
-          <p className="">{student.first_name} {student.last_name}</p>
+            <div 
+            className="w-full grid grid-cols-10 gap-6 items-center bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-700 py-4 px-6 rounded-xl shadow-md transition-all"
+        >  
+            {/* Student Name & Icon */}
+            <div className="col-span-3 flex items-center gap-4">
+                <RiBookletFill 
+                    className="text-blue-700 hover:text-blue-800 cursor-pointer text-2xl"
+                    onClick={() =>{
+                        setRenderComponent('studentInfo')
+                        setOpen(true)
+                    }}
+                />
+                <p className="font-medium text-lg">{student.first_name} {student.last_name}</p>
+            </div>
+
+            {/* Information Progress Indicators */}
+            <StudentInfoBlock 
+                onClick={() => {
+                    setRenderComponent('studentForm');
+                    setOpen(true);
+                }}
+                filled={true} // Always filled
+            />
+            <StudentInfoBlock 
+                onClick={() => {
+                    setRenderComponent('birthInfo');
+                    setOpen(true);
+                }}
+                filled={!!student.birth_info}
+            />
+            <StudentInfoBlock 
+                onClick={() => {
+                    setRenderComponent('healthInfo');
+                    setOpen(true);
+                }}
+                filled={!!student.health_info}
+            />
+            <StudentInfoBlock 
+                onClick={() => {
+                    setRenderComponent('emergencyContact');
+                    setOpen(true);
+                }}
+                filled={!!student.emergency_contact}
+            />
+            <StudentInfoBlock 
+                onClick={() => {
+                    setRenderComponent('studentFatherForm');
+                    setOpen(true);
+                }}
+                filled={!!studentFather}
+            />
+            <StudentInfoBlock 
+                onClick={() => {
+                    setRenderComponent('studentMotherForm');
+                    setOpen(true);
+                }}
+                filled={!!studentMother}
+            />
+            <StudentInfoBlock 
+                onClick={() => {
+                    setRenderComponent('studentTutorForm');
+                    setOpen(true);
+                }}
+                filled={!!studentTutor}
+            />
         </div>
-        <div 
-            className="w-[40%] h-4 bg-green-600 hover:bg-green-700 cursor-pointer"
-            onClick={() => {
-              setRenderComponent('studentForm')
-              setOpen(true)
-            }}
-        />
-        <div 
-          onClick={() => {
-            setRenderComponent('birthInfo')
-            setOpen(true)
-          }}
-          className={`w-[40%] h-4 ${student.birth_info ? 'bg-green-600 hover:bg-green-700' : 'dark:bg-neutral-400 bg-neutral-200 dark:hover:bg-neutral-500 hover:bg-neutral-300'} cursor-pointer`}/>
-        <div 
-          onClick={() => {
-            setRenderComponent('healthInfo')
-            setOpen(true)
-          }}
-          className={`w-[40%] h-4 ${student.health_info ? 'bg-green-600 hover:bg-green-700' : 'dark:bg-neutral-400 bg-neutral-200 dark:hover:bg-neutral-500 hover:bg-neutral-300'} cursor-pointer`}/>
-        <div 
-          onClick={() => {
-            setRenderComponent('emergencyContact')
-            setOpen(true)
-          }}
-          className={`w-[40%] h-4 ${student.emergency_contact ? 'bg-green-600 hover:bg-green-700' : 'dark:bg-neutral-400 bg-neutral-200 dark:hover:bg-neutral-500 hover:bg-neutral-300'} cursor-pointer`}/>
-        <div 
-          onClick={() => {
-            setRenderComponent('studentFatherForm')
-            setOpen(true)
-          }}
-          className={`w-[40%] h-4 ${studentFather ? 'bg-green-600 hover:bg-green-700' : 'dark:bg-neutral-400 bg-neutral-200 dark:hover:bg-neutral-500 hover:bg-neutral-300'} cursor-pointer`}/>
-        <div 
-          onClick={() => {
-            setRenderComponent('studentMotherForm')
-            setOpen(true)
-          }}
-          className={`w-[40%] h-4 ${studentMother ? 'bg-green-600 hover:bg-green-700' : 'dark:bg-neutral-400 bg-neutral-200 dark:hover:bg-neutral-500 hover:bg-neutral-300'} cursor-pointer`}/>
-        <div 
-          onClick={() => {
-            setRenderComponent('studentTutorForm')
-            setOpen(true)
-          }}
-          className={`w-[40%] h-4 ${studentTutor ? 'bg-green-600 hover:bg-green-700' : 'dark:bg-neutral-400 bg-neutral-200 dark:hover:bg-neutral-500 hover:bg-neutral-300'} cursor-pointer`}/>
-    </div>
     <Modal 
       isOpen={open}
       onClose={() => setOpen(false)}
@@ -156,5 +166,23 @@ const StudentAdminCard = ({ student, classrooms }: Props) => {
     </>
   )
 }
+
+interface StudentInfoBlockProps {
+    onClick: () => void
+    filled: boolean
+}
+
+const StudentInfoBlock = ({ onClick, filled }: StudentInfoBlockProps ) => {
+  return (
+      <div 
+          onClick={onClick}
+          className={`relative w-full h-6 rounded-full cursor-pointer transition-all duration-300 shadow-sm 
+              ${filled ? 'bg-green-600 hover:bg-green-700' : 'dark:bg-neutral-400 bg-neutral-200 dark:hover:bg-neutral-500 hover:bg-neutral-300'}
+          `}
+      >
+          {/* <span className="absolute top-[-1.5rem] text-sm text-center w-full text-gray-600 dark:text-gray-300">{label}</span> */}
+      </div>
+  );
+};
 
 export default StudentAdminCard
