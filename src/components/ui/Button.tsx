@@ -6,6 +6,7 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
     loading?: boolean
     disable?: boolean
     color?: keyof typeof colors
+    minWidth?: boolean
 }
 
 const colors = {
@@ -32,6 +33,7 @@ const Button = ({
     loading=false,
     disable=false,
     color='blue',
+    minWidth=false,
     ...props
 }: Props) => {
 
@@ -42,13 +44,13 @@ const Button = ({
         disabled={disable}
         className={`
             ${disable ? pickedColor.disabled : pickedColor.enabled}  
-            py-2 px-4 text-sm rounded-md text-center my-auto`}
+            py-2 px-4 text-sm rounded-md text-center my-auto ${minWidth && 'min-w-32'}`}
         {...props}    
         >
         {loading 
         ? 
         <div className="flex justify-center items-center gap-2">
-            <RiLoader2Fill className="animate-spin"/> 
+            <RiLoader2Fill className="animate-spin" size={16}/> 
         </div>
         : 
         <p className="font-bold text-xs">{label}</p>

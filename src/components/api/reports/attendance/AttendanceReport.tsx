@@ -16,17 +16,18 @@ const AttendanceReport = () => {
     const [selectedMonth, setSelectedMonth] = useState(currentMonth);
     const [selectedType, setSelectedType] = useState('2');
 
-    // 1️⃣ Create a reference to capture the entire report
+    const [isLoading, setIsLoading] = useState(false);
     const reportRef = useRef<HTMLDivElement | null>(null);
 
     const generateImage = async () => {
       if (!reportRef.current) return;
 
+      setIsLoading(true)
+
       try {
           const canvas = await html2canvas(reportRef.current, { scale: 2 });
           const imgURL = canvas.toDataURL("image/png");
 
-          // Create a download link
           const link = document.createElement("a");
           link.href = imgURL;
           link.download = `Attendance_Report_${moment().format("YYYYMMDD")}.png`;
@@ -35,21 +36,29 @@ const AttendanceReport = () => {
           document.body.removeChild(link);
       } catch (error) {
           console.error("Error generating image:", error);
+      } finally {
+          setIsLoading(false)
       }
   };
 
     return (
         <div className="py-12">
             
-            <h2 className="text-4xl mb-8 text-center font-bold">Reporte de Asistencia</h2>
+
             {/* PDF Export Button */}
-            <div className="flex justify-end mb-4">
+            <div className="grid grid-cols-3 w-full mb-8">
+              <h2 className="text-4xl text-center font-bold">Reporte de Asistencia</h2>
+              <div className="col-span-2 flex justify-end items-center">
                 <Button
                     onClick={generateImage}
+                    loading={isLoading}
                     label="Imprimir Reporte"
+                    disable={!selectedClassroom || selectedClassroom === '0'}
+                    minWidth
                 />
-
+              </div>
             </div>
+     
 
             {/* Wrap all content inside this div for PDF capture */}
             <AttendanceFilters 

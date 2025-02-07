@@ -16,7 +16,6 @@ interface Props {
 const AttendanceScanner = ({ onScanSuccess, selectedStatus, classroomId, setAttendances, errorMessage }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
-    console.log('classroomId', classroomId);
     
     const { data: attendances, isLoading, isError, error, isSuccess } = useGetAttendance({ access, classroomId })
 

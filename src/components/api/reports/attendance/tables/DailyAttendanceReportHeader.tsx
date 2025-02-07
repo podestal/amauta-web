@@ -84,7 +84,6 @@ const DailyAttendanceReportHeader = ({ selectedDay, setSelectedDay, getDay, curr
             <p>{lan === 'EN' ? 'Exit' : 'Salida'}</p> 
         </div>
         <div className="w-[70%] mx-auto col-span-2 flex justify-between items-center dark:hover:text-slate-300">
-            <p>{selectedDay}</p>
             <RiArrowLeftCircleFill 
                 className="text-blue-600 hover:text-blue-800 cursor-pointer"
                 onClick={handlePreviousDay}
@@ -101,20 +100,6 @@ const DailyAttendanceReportHeader = ({ selectedDay, setSelectedDay, getDay, curr
         </div>
         <div className="w-full flex justify-center items-center">
             {monthInSpanish[currentMonth]}
-            {/* <Selector 
-                values={[
-                    {id: '1', name: 'Enero'},
-                    {id: '2', name: 'Febrero'},
-                    {id: '3', name: 'Marzo'},
-                    {id: '4', name: 'Abril'},
-                    {id: '5', name: 'Mayo'},
-                    {id: '6', name: 'Junio'},
-                    {id: '7', name: 'Julio'},
-                ]}
-                defaultValue={currentMonth}
-                setter={setCurrentMonth}
-                /> */}
-                    
         </div>
     </div>
   )
