@@ -3,6 +3,7 @@ interface Props {
     grade: string
     section: string
     level: string
+    short?: boolean
 }
 
 export const getClassroomGrade = (lan: string, grade: string) => {
@@ -18,7 +19,7 @@ export const getClassroomGrade = (lan: string, grade: string) => {
     return gradeConverter[grade]
 }
 
-const getClassroomDescription = ({lan, grade, section, level }: Props)  => {
+const getClassroomDescription = ({lan, grade, section, level, short }: Props)  => {
     const gradeConverter: Record<string, string> = {
         '1': lan === 'EN' ? 'First' : 'Primero',
         '2': lan === 'EN' ? 'Second' : 'Segundo',
@@ -28,13 +29,22 @@ const getClassroomDescription = ({lan, grade, section, level }: Props)  => {
         '6': lan === 'EN' ? 'Sixth' : 'Sexto',
     }
 
+    const gradeConverterShort: Record<string, string> = {
+        '1': lan === 'EN' ? '1st' : '1ro',
+        '2': lan === 'EN' ? '2nd' : '2do',
+        '3': lan === 'EN' ? '3rd' : '3ro',
+        '4': lan === 'EN' ? '4th' : '4to',
+        '5': lan === 'EN' ? '5th' : '5to',
+        '6': lan === 'EN' ? '6th' : '6to',
+    }
+
     const levelConverter: Record<string, string> = {
         'P': lan === 'EN' ? 'Elementary' : 'Primaria',
         'S': lan === 'EN' ? 'Middle' : 'Secundaria',
     }
     
 
-    return `${gradeConverter[grade]} ${section} ${levelConverter[level]}`
+    return short ? `${gradeConverterShort[grade]}-${section} ${levelConverter[level]}` : `${gradeConverter[grade]} ${section} ${levelConverter[level]}`
 }
 
 export default getClassroomDescription

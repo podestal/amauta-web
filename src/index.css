@@ -5,4 +5,27 @@
 @tailwind components;
 @tailwind utilities;
 
+.only-in-image {
+    display: none; /* Hide by default on the webpage */
+}
+
+
+@media print {
+    button {
+        display: none; /* Hide buttons in PDF */
+    }
+
+    .page-break {
+        break-inside: avoid; /* Prevents splitting elements between pages */
+        page-break-inside: avoid; /* Ensures the whole section stays together */
+    }
+
+    .attendance-report {
+        page-break-before: always; /* Ensures clean page transitions */
+    }
+
+    .only-in-image {
+        display: block !important; /* Show only when generating the image */
+    }
+}
 

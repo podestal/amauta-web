@@ -14,7 +14,7 @@ const StudentsAdmin = () => {
     const access = useAuthStore(s => s.access) || ''
     const [open, setOpen] = useState(false)
     const [studentFilter, setStudentFilter] = useState('')
-    const { data: classrooms, isLoading: loadingClassrooms, isError: isErrorClassroom, error: classroomError, isSuccess: classroomSuccess } = useGetClassroom({ access })
+    const { data: classrooms, isError: isErrorClassroom, error: classroomError, isSuccess: classroomSuccess } = useGetClassroom({ access })
     const { data: students, isLoading: loadingStudents, isError: isErrorStudents, error: studentsError, isSuccess: studentsSuccess } = useGetStudents({ access, all: true })
 
     useLoader(loadingStudents)

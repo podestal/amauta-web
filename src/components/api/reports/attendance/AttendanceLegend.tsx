@@ -13,7 +13,7 @@ const AttendanceLegend = () => {
         animate="visible"
         variants={variants}
         transition={{ duration: 0.5 }}
-        className="w-full grid grid-cols-8 my-16 text-white">
+        className="w-full grid grid-cols-8 my-12">
         <div className="flex justify-center items-center gap-4">
             <div className={`w-8 h-8 flex justify-center items-center rounded-lg ${statusStyles['O']}`}></div>
             <p className="text-sm">A tiempo</p>
@@ -39,11 +39,11 @@ const AttendanceLegend = () => {
             <p className="text-sm">Sin Datos</p>
         </div>
         <div className="flex justify-center items-center gap-4">
-            <div className={`w-8 h-8 flex justify-center items-center rounded-lg font-bold bg-blue-600`}>E</div>
+            <div className={`w-8 h-8 flex justify-center items-center rounded-lg font-bold bg-blue-600 text-white`}>E</div>
             <p className="text-sm">Entrada</p>
         </div>
         <div className="flex justify-center items-center gap-4">
-            <div className={`w-8 h-8 flex justify-center items-center rounded-lg font-bold bg-blue-600`}>S</div>
+            <div className={`w-8 h-8 flex justify-center items-center rounded-lg font-bold bg-blue-600 text-white`}>S</div>
             <p className="text-sm">Salida</p>
         </div>
     </motion.div>

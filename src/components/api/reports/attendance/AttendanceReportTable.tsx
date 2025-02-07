@@ -62,6 +62,7 @@ const AttendanceReportTable = ({
         animate="visible"
         variants={variants}
         transition={{ duration: 0.5 }}
+        className="page-break"
     >
         <AttendanceLegend />
         {selectedType === '3' &&
