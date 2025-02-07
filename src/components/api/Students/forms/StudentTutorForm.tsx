@@ -6,21 +6,26 @@ import moment from "moment"
 import Selector from "../../../ui/Selector"
 import Button from "../../../ui/Button"
 import Switch from "../../../ui/Switch"
+import { CreateTutorData } from "../../../../hooks/api/tutor/useCreateTutor"
+import { UseMutationResult } from "@tanstack/react-query"
+import useAuthStore from "../../../../hooks/store/useAuthStore"
 
 interface Props {
-    studentId?: string
+    studentId: string
     tutor?: Tutor
     tutorType: string
     setPage: React.Dispatch<React.SetStateAction<number>>
     setOpen?: React.Dispatch<React.SetStateAction<boolean>>
+    createTutor?: UseMutationResult<Tutor, Error, CreateTutorData>
 }
 
-const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen }: Props) => {
+const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen, createTutor }: Props) => {
 
     console.log('studentId', studentId);
     console.log('tutorType', tutorType);
     
     const [tutorInfo, setTutorInfo] = useState(true)
+    const access = useAuthStore(s => s.access) || ''
 
     const [dni, setDni] = useState(tutor ? tutor.dni : '')
     const [dateOfBirth, setDateOfBirth] = useState(tutor ? moment(tutor.date_of_birth).format('YYYY-MM-DD') : '')
@@ -31,7 +36,7 @@ const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen }: Pro
     const [ocupation, setOcupation] = useState(tutor ? tutor.ocupation : '')
     const [employer, setEmployer] = useState(tutor ? tutor.employer : '')
     const [civilStatus, setCivilStatus] = useState(tutor ? tutor.civil_status : '')
-    const [livesWithStudent, setLivesWithStudent] = useState(tutor ? tutor.lives_with_student : '')
+    const [livesWithStudent, setLivesWithStudent] = useState(tutor ? `${tutor.lives_with_student ? 'Si' : 'No'}` : '')
     const [firstName, setFirstName] = useState(tutor ? tutor.first_name : '')
     const [fatherLastName, setFatherLastName] = useState(tutor ? tutor.last_name.split(' ')[0] : '')
     const [motherLastName, setMotherLastName] = useState(tutor ? tutor.last_name.split(' ')[1] : '')
@@ -127,6 +132,31 @@ const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen }: Pro
             return
         }
 
+        createTutor && createTutor.mutate({
+            tutor: {
+                students: [studentId],
+                dni,
+                date_of_birth: dateOfBirth,
+                state,
+                county,
+                city,
+                instruction_grade: instructionGrade,
+                ocupation,
+                employer,
+                civil_status: civilStatus,
+                lives_with_student: livesWithStudent.toLocaleLowerCase() === 'si' ? true : false,
+                first_name: firstName,
+                last_name: `${fatherLastName} ${motherLastName}`,
+                phone_number: phoneNumber,
+                address,
+                email,
+                tutor_relationship: tutorRelationship,
+                can_access: true, 
+                tutor_type: tutorType
+            },
+            access
+        })
+
     }
 
   return (
@@ -140,13 +170,13 @@ const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen }: Pro
         >
             <div className="w-full border-b-2 dark:border-gray-600 border-gray-300 mb-12 flex justify-between items-center">
                 <h2 className="text-2xl text-left font-semibold mb-6">
-                    {tutorType === 'P' && 'Información del Padre'}
+                    {tutorType === 'F' && 'Información del Padre'}
                     {tutorType === 'M' && 'Información de la Madre'}
                     {tutorType === 'O' && 'Información del Tutor'}
                 </h2>
                 <div className="flex justify-between items-center gap-4">
                     <p>
-                        {tutorType === 'P' && 'Existe Información del Padre?'}
+                        {tutorType === 'F' && 'Existe Información del Padre?'}
                         {tutorType === 'M' && 'Existe Información de la Madre?'}
                         {tutorType === 'O' && 'Se necesita agregar apoderado?'}
                     </p>

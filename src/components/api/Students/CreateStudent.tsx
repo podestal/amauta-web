@@ -9,6 +9,7 @@ import useCreateBirthInfo from "../../../hooks/api/student/studentInfo/useCreate
 import useCreateHealthInfo from "../../../hooks/api/student/studentInfo/useCreateHealthInfo"
 import useCreateEmergencyContact from "../../../hooks/api/student/studentInfo/useCreateEmergencyContact"
 import StudentTutorForm from "./forms/StudentTutorForm"
+import useCreateTutor from "../../../hooks/api/tutor/useCreateTutor"
 
 interface Props {
   classrooms: Classroom[]
@@ -18,13 +19,14 @@ interface Props {
 const CreateStudent = ({ classrooms, setOpen }: Props) => {
 
   const [studentId, setStudentId] = useState('')
-  const [page, setPage] = useState(5)
+  const [page, setPage] = useState(1)
   const createStudent = useCreateStudent()
 
   // MORE INFO
   const createBirthInfo = useCreateBirthInfo()
   const createHealthInfo = useCreateHealthInfo()
   const createEmergencyContact = useCreateEmergencyContact()
+  const createTutor = useCreateTutor()
 
 
 
@@ -38,7 +40,7 @@ const CreateStudent = ({ classrooms, setOpen }: Props) => {
         setStudentId={setStudentId}
         createStudent={createStudent}
       />}
-      {page === 2 && 
+      {/* {page === 2 && 
       <StudentHealthForm 
         setPage={setPage}
         studentId={studentId}
@@ -57,18 +59,20 @@ const CreateStudent = ({ classrooms, setOpen }: Props) => {
         createEmergencyContact={createEmergencyContact}
         setOpen={setOpen}
       />
-      }
-      {page === 5 &&
+      } */}
+      {page === 2 &&
       <StudentTutorForm 
         studentId={studentId}
-        tutorType="P"
+        tutorType="F"
         setPage={setPage}
+        createTutor={createTutor}
       />}
       {page === 6 &&
       <StudentTutorForm 
         studentId={studentId}
         tutorType="M"
         setPage={setPage}
+        createTutor={createTutor}
       />}
       {page === 7 &&
       <StudentTutorForm 
@@ -76,6 +80,7 @@ const CreateStudent = ({ classrooms, setOpen }: Props) => {
         tutorType="O"
         setPage={setPage}
         setOpen={setOpen}
+        createTutor={createTutor}
       />}
     </div>
   )

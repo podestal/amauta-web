@@ -23,7 +23,7 @@ export interface Tutor {
     email: string
     can_access: boolean
     dni: string
-    date_of_birth: Date
+    date_of_birth: string
     state: string
     county: string
     city: string
@@ -36,7 +36,9 @@ export interface Tutor {
     tutor_relationship: string
 }
 
-export type TutorCreateUpdate = Omit<Tutor, 'id' | 'students'> 
+export type TutorCreateUpdate = Omit<Tutor, 'id' | 'students'> & {
+    students: string[]
+}
 
 interface Props {
     tutorId?: string
