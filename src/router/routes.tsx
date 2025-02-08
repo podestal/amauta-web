@@ -13,6 +13,9 @@ import ReportsPage from "../pages/ReportsPage";
 import StudenAdminPage from "../pages/StudenAdminPage";
 import LandingPage from "../pages/LandingPage";
 import PublicRoutes from "../components/auth/PublicRoutes";
+import AboutPage from "../pages/AboutPage";
+import CareersPage from "../pages/CareersPage";
+import ContactPage from "../pages/ContactPage";
 
 const routes = createBrowserRouter([
     {
@@ -32,9 +35,17 @@ const routes = createBrowserRouter([
                 element: <DownloadappPage />
             },
             {
-                path: "tesitng",
-                element: <div>Testing</div>
+                path: "about",
+                element: <AboutPage />
             },
+            {
+                path: "careers",
+                element: <CareersPage />
+            },
+            {
+                path: "contact",
+                element: <ContactPage />
+            }
         ]
     },
     {

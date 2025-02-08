@@ -27,11 +27,11 @@ interface StorySectionProps {
               initial={{ opacity: 0, x: -100 }} whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 1, delay: 0.3 }} viewport={{ once: false }} />
   
-            <div className="text-center md:text-left max-w-lg">
-              <motion.h3 className="text-5xl font-bold text-white"
+            <div className="md:text-left max-w-lg">
+              <motion.h3 className="text-5xl font-bold text-white text-center"
                 initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.4 }} viewport={{ once: false }}>{title}</motion.h3>
-              <motion.p className="mt-4 text-lg text-gray-300"
+              <motion.p className="mt-4 text-lg text-gray-300 text-center"
                 initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.5 }} viewport={{ once: false }}>{description}</motion.p>
             </div>

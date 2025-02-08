@@ -34,9 +34,9 @@ const WebNavigator = () => {
 
           {/* Navigation Links (Still animates from top to bottom) */}
           <motion.ul className="flex w-full justify-center items-center gap-32" variants={navVariants}>
-            <motion.li className="hover:text-slate-400 cursor-pointer" variants={navVariants}>Nosotros</motion.li>
-            <motion.li className="hover:text-slate-400 cursor-pointer" variants={navVariants}>Carreras</motion.li>
-            <motion.li className="hover:text-slate-400 cursor-pointer" variants={navVariants}>Contacto</motion.li>
+            <motion.li className="hover:text-slate-400 cursor-pointer" variants={navVariants}><Link to='about'>Nosotros</Link></motion.li>
+            <motion.li className="hover:text-slate-400 cursor-pointer" variants={navVariants}><Link to='careers'>Carreras</Link></motion.li>
+            <motion.li className="hover:text-slate-400 cursor-pointer" variants={navVariants}><Link to='contact'>Contacto</Link></motion.li>
           </motion.ul>
 
           {/* Login Button (Fades in, no movement) */}
