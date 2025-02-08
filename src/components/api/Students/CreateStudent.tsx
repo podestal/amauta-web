@@ -40,7 +40,7 @@ const CreateStudent = ({ classrooms, setOpen }: Props) => {
         setStudentId={setStudentId}
         createStudent={createStudent}
       />}
-      {/* {page === 2 && 
+      {page === 2 && 
       <StudentHealthForm 
         setPage={setPage}
         studentId={studentId}
@@ -59,8 +59,8 @@ const CreateStudent = ({ classrooms, setOpen }: Props) => {
         createEmergencyContact={createEmergencyContact}
         setOpen={setOpen}
       />
-      } */}
-      {page === 2 &&
+      }
+      {page === 5 &&
       <StudentTutorForm 
         studentId={studentId}
         tutorType="F"

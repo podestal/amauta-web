@@ -19,6 +19,9 @@ import parentTracking2 from '../assets/imgs/parentTracking2.png'
 import studentRegistration1 from '../assets/imgs/studentRegistration1.png'
 import studentRegistration2 from '../assets/imgs/studentRegistration2.png'
 
+import messagingParents1 from '../assets/imgs/messagingParents1.jpeg'
+import messagingParents2 from '../assets/imgs/messagingParents2.jpeg'
+
 const features = [
   {
     id: "attendance-tracking",
@@ -42,7 +45,9 @@ const features = [
     id: "messaging-parents",
     title: "Notificaciones Instantáneas a Tutores",
     subTitle: "Informa a los tutores sobre faltas, tardanzas o cualquier asunto importante a través de mensajes automáticos.",
-    variant: 5,
+    variant: 1,
+    img1: messagingParents1,
+    img2: messagingParents2,
   },
   {
     id: "student-registration",
