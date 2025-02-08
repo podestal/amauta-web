@@ -16,6 +16,7 @@ import PublicRoutes from "../components/auth/PublicRoutes";
 import AboutPage from "../pages/AboutPage";
 import CareersPage from "../pages/CareersPage";
 import ContactPage from "../pages/ContactPage";
+import LocateStudentPage from "../pages/LocateStudentPage";
 
 const routes = createBrowserRouter([
     {
@@ -108,6 +109,13 @@ const routes = createBrowserRouter([
                 element:
                 <PrivateRoutes>
                     <StudenAdminPage />
+                </PrivateRoutes>
+            },
+            {
+                path: 'user-search',
+                element: 
+                <PrivateRoutes>
+                    <LocateStudentPage />
                 </PrivateRoutes>
             },
         ]

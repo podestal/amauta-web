@@ -1,4 +1,4 @@
-import { RiMailFill, RiMapPinFill, RiPhoneFill } from '@remixicon/react';
+// import { RiMailFill, RiMapPinFill, RiPhoneFill } from '@remixicon/react';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 

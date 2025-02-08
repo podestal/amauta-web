@@ -6,7 +6,7 @@ import Button from './Button';
 type QRScannerProps = {
   onScanSuccess: (decodedText: string, stopScanner: any, resumeScanner: any) => void;
   onScanFailure?: (error: string) => void;
-  selectedStatus: string;
+  selectedStatus?: string;
   errorMessage?: string;
 };
 
