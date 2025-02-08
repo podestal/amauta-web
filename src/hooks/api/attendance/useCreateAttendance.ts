@@ -16,11 +16,16 @@ interface Props {
 const useCreateAttendance = ({ classroomId }: Props): UseMutationResult<Attendance, Error, CreateAttendanceData> => {
 
     const attendanceService = getAttendanceService({})
-    const STUDENTS_CACHE_KEY = getStudentsCacheKey(classroomId)
+    // Fix this
+    const day = new Date().getDate().toString()
+    const month = undefined
+    const studentCacheKeyTime = `${classroomId} ${day} ${month}`
+    const STUDENTS_CACHE_KEY = getStudentsCacheKey(studentCacheKeyTime)
     const queryClient = useQueryClient()
     return useMutation({
         mutationFn: (data: CreateAttendanceData) => attendanceService.post(data.attendance, data.access),
         onSuccess: res => {
+            // queryClient.invalidateQueries({queryKey: STUDENTS_CACHE_KEY})
             queryClient.setQueryData<Student[]>(STUDENTS_CACHE_KEY, (oldData) => {
                 if (!oldData) return []
                 const newData = oldData.map(student => 
