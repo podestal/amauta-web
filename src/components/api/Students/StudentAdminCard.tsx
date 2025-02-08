@@ -108,6 +108,7 @@ const StudentAdminCard = ({ student, classrooms }: Props) => {
       {renderComponent === 'studentInfo' && 
       <StudentInfo 
         student={student}
+        showIcons={false}
       />}
       {renderComponent === 'birthInfo' && 
       <StudentBirthForm 
