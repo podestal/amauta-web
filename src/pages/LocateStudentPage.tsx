@@ -7,15 +7,13 @@ const LocateStudentPage = () => {
 
     const [studentId, setStudentId] = useState('')
 
-    const onScanSuccess = (decodedText: string, stopScanner: any, resumeScanner: any) => {
-        console.log(stopScanner)
+    const onScanSuccess = (decodedText: string, pauseScanner: any, resumeScanner: any, stopScanner: any) => {
+        console.log(pauseScanner)
         console.log(resumeScanner)
         console.log(decodedText)
         const studentId = decodedText.split('-')[0]
         setStudentId(studentId)
         stopScanner()
-        
-
     }
 
   return (

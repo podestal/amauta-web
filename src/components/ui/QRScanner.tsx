@@ -4,7 +4,7 @@ import useLanguageStore from '../../hooks/store/useLanguageStore';
 import Button from './Button';
 
 type QRScannerProps = {
-  onScanSuccess: (decodedText: string, stopScanner: any, resumeScanner: any) => void;
+  onScanSuccess: (decodedText: string, pauseScanner: any, resumeScanner: any, stopScanner: any) => void;
   onScanFailure?: (error: string) => void;
   selectedStatus?: string;
   errorMessage?: string;
@@ -80,7 +80,7 @@ const QRScanner: React.FC<QRScannerProps> = ({ onScanSuccess, onScanFailure, sel
           if (isLocked) return;
           setIsLocked(true);
           try {
-            await onScanSuccess(decodedText, pauseScanner, resumeScanner);
+            await onScanSuccess(decodedText, pauseScanner, resumeScanner, stopScanner);
           } catch (error) {
             console.error('Error during QR code processing:', error);
           } finally {

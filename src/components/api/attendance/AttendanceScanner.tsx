@@ -6,7 +6,7 @@ import { Attendance } from "../../../services/api/attendanceService";
 import useLoader from "../../../hooks/ui/useLoader";
 
 interface Props {
-    onScanSuccess: (decodedText: string, stopScanner: any, resumeScanner: any) => void
+    onScanSuccess: (decodedText: string, pauseScanner: any, resumeScanner: any, stopScanner: any) => void
     selectedStatus: string
     classroomId: string
     setAttendances: React.Dispatch<React.SetStateAction<Attendance[]>>

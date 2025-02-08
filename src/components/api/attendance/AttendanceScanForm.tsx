@@ -56,9 +56,11 @@ const AttendanceScanForm = ({ createAttendance }: Props) => {
     }
   }, [instructor, selectedClassroom, setSelectedClassroom]);
 
-  const handleSuccess = (decodedText: string, stopScanner: any, resumeScanner: any) => {
+  const handleSuccess = (decodedText: string, pauseScanner: any, resumeScanner: any, stopScanner: any) => {
+    console.log(stopScanner)
+    
     const [studentUid, studentName] = decodedText.split("-");
-    stopScanner();
+    pauseScanner();
     setAlreadyScannedError("");
 
     const alreadyScanned = attendances && isAttendanceCreated(attendances, studentUid, selectedKind);
