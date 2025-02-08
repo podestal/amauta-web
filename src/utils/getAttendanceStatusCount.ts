@@ -1,7 +1,7 @@
 import { SimpleAttendance } from "../services/api/studentsService";
 
 export const getAttendanceStatusCount = (attendances: SimpleAttendance[]) => {
-    return attendances.reduce((acc, attendance) => {
+    return attendances && attendances.reduce((acc, attendance) => {
         switch (attendance.status) {
             case 'O':
                 acc.onTime += 1;
