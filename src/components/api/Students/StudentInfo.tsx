@@ -115,6 +115,19 @@ const StudentInfo = ({ student, showIcons = true }: Props) => {
         <p className="text-gray-500">-</p>
       )}
 
+
+      {/* Información de Salud */}
+      <h2 className="text-xl font-bold my-4">{showIcons && "🚨"} Información de Salud</h2>
+      {student.health_info ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 bg-gray-100 dark:bg-gray-800 p-4 rounded-lg shadow-md">
+          <p>{showIcons && "🩸"} Peso: {student.health_info.weight || "60"} kg</p>
+          <p>{showIcons && "📏"} Talla: {student.health_info.height || "1.70"} m</p>
+          <p>{showIcons && "💉"} Enfermedades: {student.health_info.illness || "Ninguna"}</p>
+        </div>
+      ) : (
+        <p className="text-gray-500">-</p>
+      )}
+
       {/* Contacto de Emergencia */}
       <h2 className="text-xl font-bold my-4">{showIcons && "🚨"} Contacto de Emergencia</h2>
       {student.emergency_contact ? (
