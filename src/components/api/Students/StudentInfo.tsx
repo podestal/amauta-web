@@ -80,7 +80,7 @@ const StudentInfo = ({ student, showIcons = true }: Props) => {
             {showIcons && "🏫"} Clase: {classroom}
           </p>
         </div>
-        <img className="border-4 border-black" src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${student.uid}-${student.first_name}`} alt="QR Code" />
+        {!showIcons && <img className="border-4 border-black" src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${student.uid}-${student.first_name}`} alt="QR Code" />}
         <div className="w-44 h-52 border-2 border-gray-400 dark:border-gray-600 flex justify-center items-center rounded-lg overflow-hidden">
           {/* Aquí puedes colocar la imagen del estudiante */}
           {/* <img src={student.photo || "https://via.placeholder.com/150"} alt="Foto" className="object-cover w-full h-full" /> */}
