@@ -8,6 +8,7 @@ import Input from "../../ui/Input"
 import Button from "../../ui/Button"
 import Modal from "../../ui/Modal"
 import CreateStudent from "./CreateStudent"
+import { motion } from "framer-motion"
 
 const StudentsAdmin = () => {
 
@@ -54,7 +55,11 @@ const StudentsAdmin = () => {
             <p>Información Madre</p>
             <p>Información Apoderado</p>
         </div>
-        <div className="w-full flex flex-col gap-2">
+        <motion.div 
+            initial="hidden"
+            animate="visible"
+            transition={{ staggerChildren: 0.1 }}
+            className="w-full flex flex-col gap-2">
             {students
                 .filter( student => `${student.first_name.toLowerCase()}${student.last_name.toLowerCase()}`.includes(studentFilter.toLowerCase()))
                 .map( student => (
@@ -64,7 +69,7 @@ const StudentsAdmin = () => {
                     classrooms={classrooms}
                 />
             ))}
-        </div>
+        </motion.div>
     </div>
     <Modal 
         isOpen={open}

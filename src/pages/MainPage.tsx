@@ -34,7 +34,9 @@ const MainPage = () => {
               message={message}
               reset={reset}
           />}
-          {isLoading && <Loader />}
+          {isLoading && 
+            <div className="w-full relative"><Loader /></div>
+          }
           <Outlet />
         </div>
         

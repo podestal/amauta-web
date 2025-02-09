@@ -11,6 +11,7 @@ import StudentForm from "./forms/StudentForm"
 import { Classroom } from "../../../services/api/classroomService"
 import useUpdateStudent from "../../../hooks/api/student/useUpdateStudent"
 import StudentTutorForm from "./forms/StudentTutorForm"
+import { motion } from "framer-motion"
 
 interface Props {
     student: Student
@@ -18,6 +19,11 @@ interface Props {
 }
 
 const StudentAdminCard = ({ student, classrooms }: Props) => {
+
+  const itemVariants = {
+    hidden: { opacity: 0, x: 50 }, 
+    visible: { opacity: 1, x: 0 }, 
+  }
 
   const [open, setOpen] = useState(false)
   const [renderComponent, setRenderComponent] = useState('')
@@ -34,7 +40,8 @@ const StudentAdminCard = ({ student, classrooms }: Props) => {
 
   return (
     <>
-            <div 
+        <motion.div 
+            variants={itemVariants}
             className="w-full grid grid-cols-10 gap-6 items-center bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-700 py-4 px-6 rounded-xl shadow-md transition-all"
         >  
             {/* Student Name & Icon */}
@@ -99,7 +106,7 @@ const StudentAdminCard = ({ student, classrooms }: Props) => {
                 }}
                 filled={!!studentTutor}
             />
-        </div>
+        </motion.div>
     <Modal 
       isOpen={open}
       onClose={() => setOpen(false)}
