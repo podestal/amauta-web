@@ -40,18 +40,19 @@ const CreateStudent = ({ classrooms, setOpen }: Props) => {
         setStudentId={setStudentId}
         createStudent={createStudent}
       />}
-      {page === 2 && 
-      <StudentHealthForm 
-        setPage={setPage}
-        studentId={studentId}
-        createHealthInfo={createHealthInfo}
-      />}
-      {page === 3 &&
+      {page === 2 &&
       <StudentBirthForm 
         setPage={setPage}
         studentId={studentId}
         createBirthInfo={createBirthInfo}
       />}
+      {page === 3 && 
+      <StudentHealthForm 
+        setPage={setPage}
+        studentId={studentId}
+        createHealthInfo={createHealthInfo}
+      />}
+
       {page === 4 &&
       <StudentEmergency 
         setPage={setPage}

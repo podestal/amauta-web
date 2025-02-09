@@ -153,8 +153,9 @@ const StudentAdminCard = ({ student, classrooms }: Props) => {
       <StudentTutorForm 
         studentId={student.uid}
         setPage={() => {}}
-        tutorType="P"
+        tutorType="F"
         tutor={studentFather}
+        setOpen={setOpen}
       />}
       {renderComponent === 'studentMotherForm' &&
       <StudentTutorForm
@@ -162,6 +163,7 @@ const StudentAdminCard = ({ student, classrooms }: Props) => {
         setPage={() => {}}
         tutorType="M"
         tutor={studentMother}
+        setOpen={setOpen}
       />}
       {renderComponent === 'studentTutorForm' &&
       <StudentTutorForm
@@ -169,6 +171,7 @@ const StudentAdminCard = ({ student, classrooms }: Props) => {
         setPage={() => {}}
         tutorType="O"
         tutor={studentTutor}
+        setOpen={setOpen}
       />}
     </Modal>
     </>
