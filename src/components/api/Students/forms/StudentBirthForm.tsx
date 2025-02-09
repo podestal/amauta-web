@@ -162,10 +162,10 @@ const StudentBirthForm = ({
             <div className="grid grid-cols-3 gap-6 mb-12">
                 <Input 
                     type="text"
-                    placeholder="Estado ..."
+                    placeholder="Departamento ..."
                     value={state}
                     onChange={(e) => setState(e.target.value)}
-                    label="Estado"
+                    label="Departamento"
                     error={stateError}
                 />
                 <Input 

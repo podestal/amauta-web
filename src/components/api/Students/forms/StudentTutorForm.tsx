@@ -48,7 +48,7 @@ const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen, creat
     const [ocupation, setOcupation] = useState(tutor ? tutor.ocupation : '')
     const [employer, setEmployer] = useState(tutor ? tutor.employer : '')
     const [civilStatus, setCivilStatus] = useState(tutor ? tutor.civil_status : '')
-    const [livesWithStudent, setLivesWithStudent] = useState(tutor ? `${tutor.lives_with_student ? 'Si' : 'No'}` : '')
+    const [livesWithStudent, setLivesWithStudent] = useState(tutor ? `${tutor.lives_with_student ? 'Si' : 'No'}` : 'Si')
     const [firstName, setFirstName] = useState(tutor ? tutor.first_name : '')
     const [fatherLastName, setFatherLastName] = useState(tutor ? tutor.last_name.split(' ')[0] : '')
     const [motherLastName, setMotherLastName] = useState(tutor ? tutor.last_name.split(' ')[1] : '')
@@ -345,12 +345,12 @@ const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen, creat
                 />
                 <Input 
                     type="text"
-                    placeholder="Estado ..."
+                    placeholder="Departamento ..."
                     value={state}
                     onChange={(e) => {
                         state && setStateError('')
                         setState(e.target.value)}}
-                    label="Estado"
+                    label="Departamento"
                     error={stateError}
                 />
                 <Input 
@@ -408,7 +408,7 @@ const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen, creat
                 
             </div>
             <div className="grid grid-cols-3 gap-6 mb-12">
-                <Input 
+                {/* <Input 
                     type="text"
                     placeholder="¿Vive con el alumno? ..."
                     value={livesWithStudent ? 'Si' : 'No'}
@@ -417,6 +417,15 @@ const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen, creat
                         setLivesWithStudent(e.target.value)}}
                     label="¿Vive con el alumno?"
                     error={livesWithStudentError}
+                /> */}
+                <Selector 
+                    values={[{id: '1', name: 'Si'}, {id: '2', name: 'No'}]}
+                    label="¿Vive con el alumno?"
+                    setter={setLivesWithStudent}
+                    defaultValue={livesWithStudent}
+                    lan="ES"
+                    error={livesWithStudentError}
+                    setError={setLivesWithStudentError}
                 />
                 {tutorType === 'O' &&
                 <Input 
