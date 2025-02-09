@@ -6,7 +6,7 @@ import moment from "moment"
 import Selector from "../../../ui/Selector"
 import Button from "../../../ui/Button"
 import Switch from "../../../ui/Switch"
-import { CreateTutorData } from "../../../../hooks/api/tutor/useCreateTutor"
+import useCreateTutor, { CreateTutorData } from "../../../../hooks/api/tutor/useCreateTutor"
 import { UseMutationResult } from "@tanstack/react-query"
 import useAuthStore from "../../../../hooks/store/useAuthStore"
 import useUpdateTutor from "../../../../hooks/api/tutor/useUpdateTutor"
@@ -32,6 +32,7 @@ const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen, creat
     // - Create tutor when open this particular form
     // - Loading state for create tutor
     const updateTutor = tutor && useUpdateTutor({ tutorId: (tutor.id).toString() })
+    const createTutorInternal = !createTutor && !updateTutor && useCreateTutor()
     const [loading, setLoading] = useState(false)
     const { setMessage, setShow, setType } = useNotificationsStore()
     const [tutorInfo, setTutorInfo] = useState(true)
@@ -204,6 +205,44 @@ const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen, creat
                 setType('error')
                 setShow(true)
                 setMessage('Hubo un error al actualizar la información del tutor')
+            },
+            onSettled: () => setLoading(false)
+        })
+
+        createTutorInternal && createTutorInternal.mutate({
+            tutor: {
+                students: [studentId],
+                dni,
+                date_of_birth: dateOfBirth,
+                state,
+                county,
+                city,
+                instruction_grade: instructionGrade,
+                ocupation,
+                employer,
+                civil_status: civilStatus,
+                lives_with_student: livesWithStudent.toLocaleLowerCase() === 'si' ? true : false,
+                first_name: firstName,
+                last_name: `${fatherLastName} ${motherLastName}`,
+                phone_number: phoneNumber,
+                address,
+                email,
+                tutor_relationship: tutorRelationship,
+                can_access: true, 
+                tutor_type: tutorType
+            },
+            access
+        }, {
+            onSuccess: () => {
+                setOpen && setOpen(false)
+                setType('success')
+                setShow(true)
+                setMessage('Información del tutor guardada exitosamente!')
+            },
+            onError: () => {
+                setType('error')
+                setShow(true)
+                setMessage('Hubo un error al guardar la información del tutor')
             },
             onSettled: () => setLoading(false)
         })
