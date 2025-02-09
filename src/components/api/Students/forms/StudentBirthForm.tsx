@@ -31,6 +31,7 @@ const StudentBirthForm = ({
 
     const access = useAuthStore(s => s.access) || ''
     const { setMessage, setShow, setType } = useNotificationsStore()
+    const [loading, setLoading] = useState(false)
     const updateBirthInfo = birthInfo && useUpdateBirthInfo({ birthInfoId: birthInfo.id })
     const createBirthInfoInternal = !createBirthInfo && !updateBirthInfo && useCreateBirthInfo()
 
@@ -70,6 +71,8 @@ const StudentBirthForm = ({
             return
         }
 
+        setLoading(true)
+
         createBirthInfo && createBirthInfo.mutate({
             birthInfo: {
                 state,
@@ -83,7 +86,13 @@ const StudentBirthForm = ({
         }, {
             onSuccess: () => {
                 setPage(prev => prev + 1)
-            }
+            },
+            onError: () => {
+                setType('error')
+                setShow(true)
+                setMessage('Ocurrió un error al guardar la información de nacimiento')
+            },
+            onSettled: () => setLoading(false)
         })
 
         updateBirthInfo && updateBirthInfo.mutate({
@@ -102,7 +111,13 @@ const StudentBirthForm = ({
                 setType('success')
                 setShow(true)
                 setMessage('Información de salud actualizada exitosamente!')
-            }
+            },
+            onError: () => {
+                setType('error')
+                setShow(true)
+                setMessage('Ocurrió un error al guardar la información de nacimiento')
+            },
+            onSettled: () => setLoading(false)
         })
 
         createBirthInfoInternal && createBirthInfoInternal.mutate({
@@ -121,8 +136,15 @@ const StudentBirthForm = ({
                 setType('success')
                 setShow(true)
                 setMessage('Información de salud guardada exitosamente!')
-            }
+            },
+            onError: () => {
+                setType('error')
+                setShow(true)
+                setMessage('Ocurrió un error al guardar la información de nacimiento')
+            },
+            onSettled: () => setLoading(false)
         })
+        setLoading(false)
     }
 
   return (
@@ -181,14 +203,16 @@ const StudentBirthForm = ({
             {nextPrev 
             ? 
             <div className="flex justify-between items-center gap-4 mt-12">
-                <Button 
+                {/* <Button 
                     label="Anterior"
                     onClick={() => setPage(prev => prev - 1)}
                     type="button"
-                />
+                /> */}
                 <Button 
                     label="Siguiente"
                     type="submit"
+                    loading={loading}
+                    minWidth
                 />
             </div>
             :
@@ -196,6 +220,8 @@ const StudentBirthForm = ({
                 <Button 
                     label={birthInfo ? 'Guardar' : "Enviar"}
                     type="submit"
+                    loading={loading}
+                    minWidth
                 />
             </div>
             }

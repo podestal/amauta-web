@@ -29,6 +29,7 @@ const StudentHealthForm = ({
 }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
+    const [loading, setLoading] = useState(false)
     const { setMessage, setShow, setType } = useNotificationsStore()
     const updateHealthInfo = healthInfo && useUpdateHealthInfo({ healthInfoId: healthInfo.id })
     const createHealthInfoInternal = !createHealthInfo && !updateHealthInfo && useCreateHealthInfo()
@@ -37,8 +38,32 @@ const StudentHealthForm = ({
     const [height, setHeight] = useState(healthInfo ? `${healthInfo.height}` : '')
     const [illness, setIllness] = useState(healthInfo ? healthInfo.illness : '')
 
+    // ERROR HANDLING
+
+    const [weightError, setWeightError] = useState('')
+    const [heightError, setHeightError] = useState('')
+    const [illnessError, setIllnessError] = useState('')
+
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-            e.preventDefault()
+        e.preventDefault()
+
+        if (!weight) {
+            setWeightError('Este campo es requerido')
+            return
+        }
+
+        if (!height) {
+            setHeightError('Este campo es requerido')
+            return
+        }
+
+        if (!illness) {
+            setIllnessError('Este campo es requerido')
+            return
+        }
+
+        setLoading(true)
+
         createHealthInfo && createHealthInfo.mutate({
                 healthInfo: {
                     weight: parseFloat(weight),
@@ -49,7 +74,13 @@ const StudentHealthForm = ({
                 access
             }, 
             {
-                onSuccess: () => setPage(prev => prev + 1)
+                onSuccess: () => setPage(prev => prev + 1),
+                onError: () => {
+                    setType('error')
+                    setShow(true)
+                    setMessage('Hubo un error al guardar la información de salud')
+                }, 
+                onSettled: () => setLoading(false)
             }
         )
         updateHealthInfo && updateHealthInfo.mutate({  
@@ -66,7 +97,13 @@ const StudentHealthForm = ({
                 setType('success')
                 setShow(true)
                 setMessage('Información de salud actualizada exitosamente!')
-            }
+            },
+            onError: () => {
+                setType('error')
+                setShow(true)
+                setMessage('Hubo un error al actualizar la información de salud')
+            },
+            onSettled: () => setLoading(false)
         })
         createHealthInfoInternal && createHealthInfoInternal.mutate({  
             healthInfo: {
@@ -82,8 +119,16 @@ const StudentHealthForm = ({
                 setType('success')
                 setShow(true)
                 setMessage('Información de salud guardada exitosamente!')
-            }
+            },
+            onError: () => {
+                setType('error')
+                setShow(true)
+                setMessage('Hubo un error al guardar la información de salud')
+            },
+            onSettled: () => setLoading(false)
         })
+
+        setLoading(false)
     }
     
 
@@ -104,6 +149,7 @@ const StudentHealthForm = ({
                     value={weight}
                     onChange={(e) => setWeight(e.target.value)}
                     label="Peso"
+                    error={weightError}
                 />
                 <Input 
                     type="number"
@@ -111,24 +157,28 @@ const StudentHealthForm = ({
                     value={height}
                     onChange={(e) => setHeight(e.target.value)}
                     label="Altura"
+                    error={heightError}
                 />
                 <TextArea 
                     placeholder="Enfermedades ..."
                     value={illness}
                     onChange={(e) => setIllness(e.target.value)}
+                    error={illnessError}
                 />
             </div>
             {nextPrev 
             ? 
             <div className="flex justify-between items-center gap-4 mt-12">
-                <Button 
+                {/* <Button 
                     label="Anterior"
                     onClick={() => setPage(prev => prev - 1)}
                     type="button"
-                />
+                /> */}
                 <Button 
                     label="Siguiente"
                     type="submit"
+                    loading={loading}
+                    minWidth
                 />
             </div>
             :
@@ -136,6 +186,8 @@ const StudentHealthForm = ({
                 <Button 
                     label={healthInfo ? 'Guardar' : 'Enviar'}
                     type="submit"
+                    loading={loading}
+                    minWidth
                 />
             </div>
             }

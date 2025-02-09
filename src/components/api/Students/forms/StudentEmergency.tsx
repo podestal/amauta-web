@@ -29,6 +29,7 @@ const StudentEmergency = ({
 
     const access = useAuthStore(s => s.access) || ''
     const { setMessage, setShow, setType } = useNotificationsStore()
+    const [loading, setLoading] = useState(false)
     const updateEmergencyContact = emergencyContact && useUpdateEmergencyContact({ emergencyContactId: emergencyContact.id })
     const createEmergencyContactInternal = !createEmergencyContact && !updateEmergencyContact && useCreateEmergencyContact()
 
@@ -59,6 +60,8 @@ const StudentEmergency = ({
             return
         }
 
+        setLoading(true)
+
         createEmergencyContact && createEmergencyContact.mutate({
             emergencyContact: {
                 name,
@@ -75,7 +78,13 @@ const StudentEmergency = ({
                 // setType('success')
                 // setShow(true)
                 // setMessage('Información de estudiante guardada exitosamente!')
-            }
+            },
+            onError: () => {
+                setType('error')
+                setShow(true)
+                setMessage('Hubo un error al guardar la información')
+            },
+            onSettled: () => setLoading(false)
         })
 
         updateEmergencyContact && updateEmergencyContact.mutate({
@@ -92,7 +101,13 @@ const StudentEmergency = ({
                 setType('success')
                 setShow(true)
                 setMessage('Información de salud actualizada exitosamente!')
-            }
+            },
+            onError: () => {
+                setType('error')
+                setShow(true)
+                setMessage('Hubo un error al actualizar la información de salud')
+            },
+            onSettled: () => setLoading(false)
         })
 
         createEmergencyContactInternal && createEmergencyContactInternal.mutate({
@@ -107,12 +122,19 @@ const StudentEmergency = ({
         {
             onSuccess: () => {
                 setPage(prev => prev + 1)
-                // setOpen && setOpen(false)
-                // setType('success')
-                // setShow(true)
-                // setMessage('Información de estudiante guardada exitosamente!')
-            }
+                setOpen && setOpen(false)
+                setType('success')
+                setShow(true)
+                setMessage('Información de estudiante guardada exitosamente!')
+            },
+            onError: () => {
+                setType('error')
+                setShow(true)
+                setMessage('Hubo un error al guardar la información')
+            },
+            onSettled: () => setLoading
         })
+        setLoading(false)
     }
 
 
@@ -173,6 +195,8 @@ const StudentEmergency = ({
                 <Button 
                     label="Siguiente"
                     type="submit"
+                    loading={loading}
+                    minWidth
                 />
             </div>
             :
@@ -180,6 +204,8 @@ const StudentEmergency = ({
                 <Button 
                     label="Enviar"
                     type="submit"
+                    loading={loading}
+                    minWidth
                 />
             </div>
             }

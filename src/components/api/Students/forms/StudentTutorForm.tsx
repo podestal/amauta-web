@@ -32,11 +32,10 @@ const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen, creat
     // - Create tutor when open this particular form
     // - Loading state for create tutor
     const updateTutor = tutor && useUpdateTutor({ tutorId: (tutor.id).toString() })
+    const [loading, setLoading] = useState(false)
     const { setMessage, setShow, setType } = useNotificationsStore()
     const [tutorInfo, setTutorInfo] = useState(true)
     const access = useAuthStore(s => s.access) || ''
-
-    console.log('tutor', tutor);
     
 
     const [dni, setDni] = useState(tutor ? tutor.dni : '')
@@ -144,6 +143,8 @@ const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen, creat
             return
         }
 
+        setLoading(true)
+
         createTutor && createTutor.mutate({
             tutor: {
                 students: [studentId],
@@ -197,9 +198,17 @@ const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen, creat
                 setOpen && setOpen(false)
                 setType('success')
                 setShow(true)
-                setMessage('Información de salud actualizada exitosamente!')
-            }
+                setMessage('Información del tutor actualizada exitosamente!')
+            },
+            onError: () => {
+                setType('error')
+                setShow(true)
+                setMessage('Hubo un error al actualizar la información del tutor')
+            },
+            onSettled: () => setLoading(false)
         })
+
+        setLoading(false)
 
     }
 
@@ -421,6 +430,8 @@ const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen, creat
                 <Button 
                     label="Guardar"
                     type="submit"
+                    loading={loading}
+                    minWidth
                 /> 
                 : 
                 <>
@@ -429,11 +440,15 @@ const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen, creat
                 <Button 
                     label={tutorType === 'O' ? 'Terminar' : "Siguiente"}
                     type="submit"
+                    loading={loading}
+                    minWidth
+
                 /> 
                 : 
                 <Button 
                     label={tutorType === 'O' ? 'Terminar' : "Siguiente"}
                     type="button"
+                    loading={loading}
                     onClick={() => {
                         setPage(prev => prev + 1)
                         setOpen && setOpen(false)

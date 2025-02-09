@@ -10,6 +10,7 @@ import useAuthStore from "../../../../hooks/store/useAuthStore"
 import { Student } from "../../../../services/api/studentsService"
 import { UseMutationResult } from "@tanstack/react-query"
 import { UpdateStudentData } from "../../../../hooks/api/student/useUpdateStudent"
+import useNotificationsStore from "../../../../hooks/store/useNotificationsStore"
 
 interface Props {
   setPage?: React.Dispatch<React.SetStateAction<number>>
@@ -18,6 +19,7 @@ interface Props {
   createStudent?: UseMutationResult<Student, Error, CreateStudentData>
   updateStudent?: UseMutationResult<Student, Error, UpdateStudentData>
   student?: Student
+  setOpen?: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const languages = [
@@ -46,11 +48,15 @@ const StudentForm = ({
     setStudentId, 
     student, 
     createStudent, 
-    updateStudent 
+    updateStudent,
+    setOpen 
   }: Props) => {
 
   const lan = useLanguageStore(s => s.lan)
   const access = useAuthStore(s => s.access) || ''
+
+  const [loading, setLoading] = useState(false)
+  const { setMessage, setShow, setType } = useNotificationsStore()
 
   // PERSONAL DATA
   const [dni, setDni] = useState(student ? student.uid : '')
@@ -188,6 +194,8 @@ const StudentForm = ({
 
     const livesWithName = livesWith === 'A' ? tutorName : livesWith
 
+    setLoading(true)
+
     createStudent && createStudent.mutate({
       student: {
         uid: dni,
@@ -211,7 +219,12 @@ const StudentForm = ({
       onSuccess: res => {
         setPage && setPage(prev => prev + 1)
         setStudentId(res.uid)
-      }
+      },
+      onError: err => {
+        setType('error')
+        setShow(true)
+        setMessage(`Error: ${err.message}`)},
+      onSettled: () => setLoading(false)
     })    
 
     updateStudent && updateStudent.mutate({
@@ -235,10 +248,21 @@ const StudentForm = ({
       access
     }, {
       onSuccess: res => {
-        console.log('Updated', res)
+        console.log(res)
+        setOpen && setOpen(false)
+        setType('success')
+        setShow(true)
+        setMessage('Información del tutor actualizada exitosamente!')
         
-      }
+      },
+      onError: err => {
+        setType('error')
+        setShow(true)
+        setMessage(`Error: ${err.message}`)
+      },
+      onSettled: () => setLoading(false)
     })
+    setLoading(false)
   }
 
   return (
@@ -469,6 +493,8 @@ const StudentForm = ({
             label={student ? 'Guardar' : 'Siguiente'}
             onClick={handleSubmit}
             type="submit"
+            loading={loading}
+            minWidth
           />
         </div> 
     </form>
