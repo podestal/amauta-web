@@ -47,7 +47,7 @@ const AttendanceScanForm = ({ createAttendance }: Props) => {
   const access = useAuthStore((s) => s.access) || "";
 
   const [alreadyScannedError, setAlreadyScannedError] = useState("");
-  const showScanner = classrooms.length === 2 || selectedClassroom !== "0";
+  // const showScanner = classrooms.length === 2 || selectedClassroom !== "0";
 
   useEffect(() => {
     if (instructor && instructor?.clases_details.length === 1) {
@@ -124,15 +124,14 @@ const AttendanceScanForm = ({ createAttendance }: Props) => {
         defaultValue={selectedStatus}
         label="Status"
       />
-      {classrooms.length > 2 && (
+      {/* {classrooms.length > 2 && (
         <Selector
           values={classrooms}
           setter={setSelectedClassroom}
           defaultValue={selectedClassroom}
           label={lan === "EN" ? "Classroom" : "Salón"}
         />
-      )}
-      {showScanner && (
+      )} */}
         <AttendanceScanner
           onScanSuccess={handleSuccess}
           selectedStatus={selectedStatus}
@@ -140,7 +139,6 @@ const AttendanceScanForm = ({ createAttendance }: Props) => {
           setAttendances={setAttendances}
           errorMessage={alreadyScannedError}
         />
-      )}
       {isLoading && (
         <div className="text-blue-600 font-semibold mt-4">
           {lan === "EN" ? "Creating Attendance..." : "Creando Asistencia..."}
