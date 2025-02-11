@@ -20,26 +20,36 @@ const AttendanceReport = () => {
     const reportRef = useRef<HTMLDivElement | null>(null);
 
     const generateImage = async () => {
-      if (!reportRef.current) return;
-
-      setIsLoading(true)
-
-      try {
-          const canvas = await html2canvas(reportRef.current, { scale: 2 });
+        if (!reportRef.current) return;
+        setIsLoading(true);
+      
+        try {
+          const canvas = await html2canvas(reportRef.current, {
+            scale: 3,
+            useCORS: true,
+            backgroundColor: "#ffffff", // Ensure white background
+            onclone: (document) => {
+              document.fonts.ready.then(() => {
+                console.log("Fonts loaded");
+              });
+            },
+          });
+      
           const imgURL = canvas.toDataURL("image/png");
-
+      
           const link = document.createElement("a");
           link.href = imgURL;
           link.download = `Attendance_Report_${moment().format("YYYYMMDD")}.png`;
           document.body.appendChild(link);
           link.click();
           document.body.removeChild(link);
-      } catch (error) {
+        } catch (error) {
           console.error("Error generating image:", error);
-      } finally {
-          setIsLoading(false)
-      }
-  };
+        } finally {
+          setIsLoading(false);
+        }
+      };
+      
 
     return (
         <div className="py-12">
