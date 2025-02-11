@@ -5,7 +5,7 @@ import Navigator from "../router/Navigator"
 import useAuthStore from "../hooks/store/useAuthStore"
 import useLoadingStore from "../hooks/store/useLoadingStore"
 import Loader from "../components/ui/Loader"
-// import { useEffect } from "react"
+import { useEffect } from "react"
 import useGetProfileStore from "../hooks/store/useGetProfileStore"
 import SideBar from "../router/SideBar"
 import WebNavigator from "../router/WebNavigator"
@@ -17,9 +17,9 @@ const MainPage = () => {
     const access = useAuthStore(s => s.access)
     const profile = useGetProfileStore(s => s.profile)
 
-    // useEffect(() => {
-    //   document.querySelector('html')?.classList.remove('dark')
-    // }, [])
+    useEffect(() => {
+      document.querySelector('html')?.classList.add('dark')
+    }, [])
 
   return (
     <div className="min-h-screen bg-gray-950 text-slate-50 mx-auto relative">

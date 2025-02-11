@@ -35,7 +35,7 @@ const AttendanceLegend = () => {
             <p className="text-sm">Salió Temprano</p>
         </div>
         <div className="flex justify-center items-center gap-4">
-            <div className={`w-8 h-8 flex justify-center items-center rounded-lg dark:bg-gray-700 bg-gray-400`}></div>
+            <div className={`w-8 h-8 flex justify-center items-center rounded-lg bg-gray-700`}></div>
             <p className="text-sm">Sin Datos</p>
         </div>
         <div className="flex justify-center items-center gap-4">

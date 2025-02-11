@@ -33,7 +33,7 @@ const AnnouncementCard = ({ announcement }: Props) => {
             <h3 className="text-md text-slate-300">Asunto: {announcement.title}</h3>
             }
             <motion.div
-                className="cursor-pointer dark:hover:text-neutral-400 hover:text-slate-800"
+                className="cursor-pointer hover:text-neutral-400"
                 onClick={toggleAnnouncement}
                 animate={{ rotate: show ? 180 : 0 }} 
                 transition={{ duration: 0.3 }}
@@ -50,7 +50,7 @@ const AnnouncementCard = ({ announcement }: Props) => {
             transition={{ duration: 0.5, ease: "easeInOut" }}
         >
             <p className="text-xs">{announcement.description}</p>
-            <p className="text-xs mt-2 text-right dark:text-slate-300">{createdAt}</p>
+            <p className="text-xs mt-2 text-right text-slate-300">{createdAt}</p>
         </motion.div>
     </div>
   )

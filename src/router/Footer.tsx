@@ -3,7 +3,7 @@ import logo from "../assets/icons/amautapp.png";
 
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-r from-gray-900 to-black text-white py-12">
+    <footer className="bg-gradient-to-r from-gray-900 to-black text-white py-12 max-lg:hidden">
       <div className="max-w-[1280px] mx-auto px-6">
         {/* Grid Layout */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">

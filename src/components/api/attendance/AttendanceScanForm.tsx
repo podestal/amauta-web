@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Selector from "../../ui/Selector";
 import useLanguageStore from "../../../hooks/store/useLanguageStore";
-import { getAttendanceStatus, getInstructorClassrooms } from "../../../utils/data";
+import { getAttendanceStatus } from "../../../utils/data";
 import useAuthStore from "../../../hooks/store/useAuthStore";
 import { CreateAttendanceData } from "../../../hooks/api/attendance/useCreateAttendance";
 import { Attendance } from "../../../services/api/attendanceService";
@@ -37,13 +37,13 @@ const AttendanceScanForm = ({ createAttendance }: Props) => {
       name: lan === 'EN' ? 'Exit' : 'Salida',
     }
   ]
-  const classrooms = [
-    {
-      id: "0",
-      name: lan === "EN" ? "Select" : "Selecionar",
-    },
-    ...(instructor ? getInstructorClassrooms(instructor.clases_details, lan) : []),
-  ];
+  // const classrooms = [
+  //   {
+  //     id: "0",
+  //     name: lan === "EN" ? "Select" : "Selecionar",
+  //   },
+  //   ...(instructor ? getInstructorClassrooms(instructor.clases_details, lan) : []),
+  // ];
   const access = useAuthStore((s) => s.access) || "";
 
   const [alreadyScannedError, setAlreadyScannedError] = useState("");

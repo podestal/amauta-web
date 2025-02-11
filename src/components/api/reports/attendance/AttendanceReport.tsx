@@ -66,7 +66,7 @@ const AttendanceReport = () => {
                 selectedType={selectedType}
                 setSelectedType={setSelectedType}
             />
-            <div ref={reportRef} className="bg-white w-full attendance-report dark:bg-gray-950 p-6 shadow-lg rounded-lg">
+            <div ref={reportRef} className="w-full attendance-report bg-gray-950 p-6 shadow-lg rounded-lg">
                 {selectedClassroom && 
                 <AttendanceReportTitle 
                   classroomId={selectedClassroom}

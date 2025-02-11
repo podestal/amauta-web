@@ -6,7 +6,7 @@ import Footer from "../../router/Footer";
 const PublicRoutes = () => {
 
     useEffect(() => {
-        document.querySelector('html')?.classList.remove('dark')
+        document.querySelector('html')?.classList.add('dark')
     }, [])
 
     return (
