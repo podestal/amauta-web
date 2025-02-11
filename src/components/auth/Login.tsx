@@ -48,9 +48,25 @@ const Login = () => {
                 navigate('/app/students-main')
             },
             onError: error => {
-                setShow(true)
-                setType('error')
-                setMessage(`Error: ${error.message}`)
+                setShow(true);
+                setType("error");
+            
+                // Extract specific API error messages or use a default one
+                let errorMessage = "Ha ocurrido un error. Inténtalo de nuevo.";
+            
+                if (error.response) {
+                    if (error.response.status === 401) {
+                        errorMessage = "Credenciales incorrectas. Verifica tu usuario y contraseña.";
+                    } else if (error.response.status === 400) {
+                        errorMessage = "Solicitud incorrecta. Revisa los datos ingresados.";
+                    } else if (error.response.status === 500) {
+                        errorMessage = "Error en el servidor. Inténtalo más tarde.";
+                    } else {
+                        errorMessage = typeof error.response.data === 'string' ? error.response.data : error.message;
+                    }
+                }
+            
+                setMessage(`❌ ${errorMessage}`)
             }
             }
         )

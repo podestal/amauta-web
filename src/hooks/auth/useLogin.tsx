@@ -3,6 +3,7 @@ import loginService, { JWT, JWTCredentials } from '../../services/auth/loginServ
 import useAuthStore from '../store/useAuthStore'
 
 import { jwtDecode } from 'jwt-decode'
+import { AxiosError } from 'axios'
 
 interface LoginData {
     credentials: JWTCredentials
@@ -12,7 +13,7 @@ interface DecodedToken {
     user_id: number
   }
 
-const useLogin = (): UseMutationResult<JWT, Error, LoginData> => {
+const useLogin = (): UseMutationResult<JWT, AxiosError, LoginData> => {
     const {setTokens, setUserId, clearTokens} = useAuthStore() 
 
     return useMutation({
