@@ -17,6 +17,7 @@ import AboutPage from "../pages/AboutPage";
 import CareersPage from "../pages/CareersPage";
 import ContactPage from "../pages/ContactPage";
 import LocateStudentPage from "../pages/LocateStudentPage";
+import AssignaturesPage from "../pages/AssignaturesPage";
 
 const routes = createBrowserRouter([
     {
@@ -116,6 +117,13 @@ const routes = createBrowserRouter([
                 element: 
                 <PrivateRoutes>
                     <LocateStudentPage />
+                </PrivateRoutes>
+            },
+            {
+                path: 'assignatures',
+                element:
+                <PrivateRoutes>
+                    <AssignaturesPage />
                 </PrivateRoutes>
             },
         ]

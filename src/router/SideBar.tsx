@@ -24,6 +24,7 @@ const SideBar = ({ profile }: Props) => {
         // { name: "Profile", path: "/profile" },
         // { name: "Students", path: "/students" },
         { name: "Reportes", path: "reports" },
+        { name: "Cursos", path: "assignatures" },
         // { name: "Alumnos", path: "student-admin" },
         // { name: "Descargar", path: "/downloadapp" },
     ];
