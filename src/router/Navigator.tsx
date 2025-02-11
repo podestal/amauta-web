@@ -90,6 +90,17 @@ const Navigator: React.FC = () => {
           <span>{lan === 'EN' ? 'Attendance' : 'Asistencia' }</span>
         </NavLink>}
         <NavLink
+          to="user-search"
+          className={({ isActive }) =>
+            `flex flex-col items-center text-sm ${
+              isActive ? 'text-blue-500' : 'text-gray-500'
+            }`
+          }
+        >
+          <RiUserSearchFill />
+          <span>{lan === 'EN' ? 'Student' : 'Alumno' }</span>
+        </NavLink>
+        <NavLink
           to="profile"
           className={({ isActive }) =>
             `flex flex-col items-center text-sm ${
