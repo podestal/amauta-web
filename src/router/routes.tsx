@@ -18,6 +18,7 @@ import CareersPage from "../pages/CareersPage";
 import ContactPage from "../pages/ContactPage";
 import LocateStudentPage from "../pages/LocateStudentPage";
 import AssignaturesPage from "../pages/AssignaturesPage";
+import AssignaturePage from "../pages/AssignaturePage";
 
 const routes = createBrowserRouter([
     {
@@ -126,6 +127,13 @@ const routes = createBrowserRouter([
                     <AssignaturesPage />
                 </PrivateRoutes>
             },
+            {
+                path: 'assignature/:assignatureId',
+                element: 
+                <PrivateRoutes>
+                    <AssignaturePage />
+                </PrivateRoutes>
+            }
         ]
     }
 ])

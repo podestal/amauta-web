@@ -1,3 +1,70 @@
+export const assignments = [
+    {
+      id: 1,
+      name: "Tarea de Triángulos",
+      description: "Resolver problemas sobre la clasificación de triángulos y el Teorema de Pitágoras.",
+      dueDate: "2025-02-20",
+      assignatureId: 1, // Geometría
+    },
+    {
+      id: 2,
+      name: "Proyecto: Construcción de Figuras",
+      description: "Crear modelos físicos de figuras geométricas y calcular sus áreas y volúmenes.",
+      dueDate: "2025-03-05",
+      assignatureId: 1, // Geometría
+    },
+    {
+      id: 3,
+      name: "Examen de Ángulos y Polígonos",
+      description: "Evaluación sobre los diferentes tipos de ángulos, polígonos y sus propiedades.",
+      dueDate: "2025-02-28",
+      assignatureId: 1, // Geometría
+    },
+    {
+      id: 4,
+      name: "Tarea de Fracciones",
+      description: "Resolver ejercicios sobre suma, resta, multiplicación y división de fracciones.",
+      dueDate: "2025-02-18",
+      assignatureId: 2, // Aritmética
+    },
+    {
+      id: 5,
+      name: "Proyecto: Mercado Financiero",
+      description: "Analizar datos de precios de productos y aplicar porcentajes para calcular descuentos e impuestos.",
+      dueDate: "2025-03-10",
+      assignatureId: 2, // Aritmética
+    },
+    {
+      id: 6,
+      name: "Examen de Números Decimales",
+      description: "Prueba de evaluación sobre operaciones con números decimales y conversión a fracciones.",
+      dueDate: "2025-02-25",
+      assignatureId: 2, // Aritmética
+    },
+    {
+      id: 7,
+      name: "Tarea de Ecuaciones Lineales",
+      description: "Resolver ejercicios de ecuaciones de primer grado con una incógnita.",
+      dueDate: "2025-02-22",
+      assignatureId: 3, // Álgebra
+    },
+    {
+      id: 8,
+      name: "Investigación: Álgebra en la Vida Real",
+      description: "Redactar un informe sobre cómo se aplica el álgebra en diferentes profesiones y situaciones cotidianas.",
+      dueDate: "2025-03-12",
+      assignatureId: 3, // Álgebra
+    },
+    {
+      id: 9,
+      name: "Examen de Expresiones Algebraicas",
+      description: "Evaluación sobre simplificación y factorización de expresiones algebraicas.",
+      dueDate: "2025-03-01",
+      assignatureId: 3, // Álgebra
+    }
+  ];
+  
+
 export const categories = [
     {
         id: 1,
