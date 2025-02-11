@@ -7,9 +7,10 @@ import { CreateAttendanceData } from "../../../hooks/api/attendance/useCreateAtt
 import { Attendance } from "../../../services/api/attendanceService";
 import { UseMutationResult } from "@tanstack/react-query";
 import AttendanceScanner from "./AttendanceScanner";
-import { isAttendanceCreated } from "../../../utils/isAttendanceCreated";
+// import { isAttendanceCreated } from "../../../utils/isAttendanceCreated";
 import { Instructor } from "../../../services/api/instructorService";
 import useGetProfileStore from "../../../hooks/store/useGetProfileStore";
+import useNotificationsStore from "../../../hooks/store/useNotificationsStore";
 
 interface Props {
   createAttendance: UseMutationResult<Attendance, Error, CreateAttendanceData>;
@@ -17,6 +18,7 @@ interface Props {
 
 const AttendanceScanForm = ({ createAttendance }: Props) => {
 
+  const { setMessage, setShow, setType } = useNotificationsStore()
   const profile = useGetProfileStore((s) => s.profile);
   const instructor = profile as Instructor;
   const [selectedKind, setSelectedKind] = useState("I");
@@ -58,20 +60,21 @@ const AttendanceScanForm = ({ createAttendance }: Props) => {
 
   const handleSuccess = (decodedText: string, pauseScanner: any, resumeScanner: any, stopScanner: any) => {
     console.log(stopScanner)
+    console.log(attendances)
     
     const [studentUid, studentName] = decodedText.split("-");
     pauseScanner();
-    setAlreadyScannedError("");
+    // setAlreadyScannedError("");
 
-    const alreadyScanned = attendances && isAttendanceCreated(attendances, studentUid, selectedKind);
-    if (alreadyScanned) {
-      setAlreadyScannedError(lan === "EN" ? "Student already scanned" : "Estudiante ya fué escaneado");
-      setTimeout(() => {
-        setAlreadyScannedError("");
-        resumeScanner();
-      }, 1000);
-      return;
-    }
+    // const alreadyScanned = attendances && isAttendanceCreated(attendances, studentUid, selectedKind);
+    // if (alreadyScanned) {
+    //   setAlreadyScannedError(lan === "EN" ? "Student already scanned" : "Estudiante ya fué escaneado");
+    //   setTimeout(() => {
+    //     setAlreadyScannedError("");
+    //     resumeScanner();
+    //   }, 1000);
+    //   return;
+    // }
     
     
 
@@ -89,17 +92,27 @@ const AttendanceScanForm = ({ createAttendance }: Props) => {
       },
       {
         onSuccess: () => {
-          setSuccessMsg(lan === "EN" ? `Attendance created for ${studentName}` : `Asistencia creada para ${studentName}`);
-          setTimeout(() => {
-            setSuccessMsg("");
-          }, 1000);
+          // setSuccessMsg(lan === "EN" ? `Attendance created for ${studentName}` : `Asistencia creada para ${studentName}`);
+          // setTimeout(() => {
+          //   setSuccessMsg("");
+          // }, 1000);
+          setType('success')
+          setShow(true)
+          setMessage(`${studentName} escaneado con éxito`)
+          setSuccessMsg('')
         },
-        onError: (error) => {
-          setAlreadyScannedError(error.message)
+        onError: () => {
+          // setAlreadyScannedError(error.message)
+          // setAlreadyScannedError(`${studentName} ya fué escaneado`);
+          setType('error')
+          setShow(true)
+          setMessage(`${studentName} ya fué escaneado`)
+
         },
         onSettled: () => {
           setIsLoading(false);
           setTimeout(() => {
+            setAlreadyScannedError("");
             resumeScanner();
           }, 1000);
         },
@@ -108,7 +121,7 @@ const AttendanceScanForm = ({ createAttendance }: Props) => {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full h-full flex flex-col justify-start items-center">
       <div className="w-full flex justify-center">
         {successMsg && <div className="text-green-600 font-semibold mb-4 absolute top-10 text-center">{successMsg}</div>}
       </div>

@@ -96,6 +96,36 @@ const QRScanner: React.FC<QRScannerProps> = ({ onScanSuccess, onScanFailure, sel
 
   }, [isScannerActive, onScanSuccess, onScanFailure, isLocked, lan]);
 
+  // const activateScanner = () => {
+  //   if (!isScannerActive || !scannerRef.current || html5QrcodeRef.current) return;
+
+  //   const html5Qrcode = new Html5Qrcode('qr-reader');
+  //   html5QrcodeRef.current = html5Qrcode;
+
+  //   html5Qrcode
+  //     .start(
+  //       { facingMode: 'environment' },
+  //       { fps: 10, qrbox: { width: 180, height: 180 } },
+  //       async (decodedText) => {
+  //         if (isLocked) return;
+  //         setIsLocked(true);
+  //         try {
+  //           await onScanSuccess(decodedText, pauseScanner, resumeScanner, stopScanner);
+  //         } catch (error) {
+  //           console.error('Error during QR code processing:', error);
+  //         } finally {
+  //           setIsLocked(false);
+  //         }
+  //       },
+  //       (errorMessage) => {
+  //         if (onScanFailure && !isLocked) {
+  //           onScanFailure(errorMessage)};
+  //       }
+  //     )
+  //     .catch((error) => console.error('Failed to start QR scanner:', error));
+
+  // }
+
   const toggleScanner = () => {
     if (isScannerActive) {
       stopScanner().then(() => setIsScannerActive(false));
@@ -109,22 +139,24 @@ const QRScanner: React.FC<QRScannerProps> = ({ onScanSuccess, onScanFailure, sel
       <div className='w-full flex justify-center items-center'>
         {errorMessage && <div className="text-red-600 font-semibold mb-4 absolute top-10 text-center">{errorMessage}</div>}
       </div>
-      <div className="flex flex-col items-center my-8 relative">
+      <div className="flex flex-col h-[220px] items-center my-8 relative">
         <>
         <div id="qr-reader" ref={scannerRef} className="rounded-lg shadow-md h-[220px] w-[220px] mb-12"></div>
-        <Button
-          onClick={toggleScanner}
-          disable={!selectedStatus || selectedStatus === '0'}
-          label={
-            isScannerActive
-              ? lan === 'EN'
-                ? 'Stop Scanner'
-                : 'Apagar Scanner'
-              : lan === 'EN'
-              ? 'Start Scanner'
-              : 'Encender Scanner'
-          }
-        />
+        <div className='relative z-40'>
+          <Button
+            onClick={toggleScanner}
+            disable={!selectedStatus || selectedStatus === '0'}
+            label={
+              isScannerActive
+                ? lan === 'EN'
+                  ? 'Stop Scanner'
+                  : 'Apagar Scanner'
+                : lan === 'EN'
+                ? 'Start Scanner'
+                : 'Encender Scanner'
+            }
+          />
+        </div>
         </>
       </div>
     </div>
