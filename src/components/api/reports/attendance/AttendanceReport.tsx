@@ -24,18 +24,19 @@ const AttendanceReport = () => {
         setIsLoading(true);
       
         try {
+          const scale = window.devicePixelRatio || 4; // Adjust dynamically
+      
           const canvas = await html2canvas(reportRef.current, {
-            scale: 3,
+            scale,
             useCORS: true,
-            backgroundColor: "#ffffff", // Ensure white background
-            onclone: (document) => {
-              document.fonts.ready.then(() => {
-                console.log("Fonts loaded");
-              });
-            },
+            backgroundColor: "#ffffff",
+            width: reportRef.current.scrollWidth,
+            height: reportRef.current.scrollHeight,
+            allowTaint: true,
+            logging: false,
           });
       
-          const imgURL = canvas.toDataURL("image/png");
+          const imgURL = canvas.toDataURL("image/png", 1.0); // Maximum quality
       
           const link = document.createElement("a");
           link.href = imgURL;
@@ -48,7 +49,7 @@ const AttendanceReport = () => {
         } finally {
           setIsLoading(false);
         }
-      };
+      };      
       
 
     return (
