@@ -49,6 +49,7 @@ if ("serviceWorker" in navigator) {
       });
 }
 
+document.documentElement.classList.add("dark")
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
