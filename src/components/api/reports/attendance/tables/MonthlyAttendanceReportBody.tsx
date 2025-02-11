@@ -30,7 +30,9 @@ const MonthlyAttendanceReportBody = ({ selectedClassroom, selectedMonth }: Props
   return (
 <div>
         {/* <>{console.log('students', students)}</> */}
-        {students.map( student => (
+        {students
+        .sort((a, b) => a.last_name.localeCompare(b.last_name))
+        .map( student => (
             <div
                 key={student.uid}
                 className="w-full grid grid-cols-12 px-2 py-6 font-palanquin text-left hover:bg-slate-100 dark:hover:bg-slate-900"
@@ -39,10 +41,10 @@ const MonthlyAttendanceReportBody = ({ selectedClassroom, selectedMonth }: Props
                     <p>{student.uid}</p>
                 </div>
                 <div className="flex justify-start items-start col-span-2">
-                    <p>{student.first_name}</p>
+                    <p>{student.last_name}</p>
                 </div>
                 <div className="flex justify-start items-start col-span-2">
-                    <p>{student.last_name}</p>
+                    <p>{student.first_name}</p>
                 </div>
                 <div className="w-full col-span-7 gap-4">
                     <div className="grid grid-cols-31 text-center">

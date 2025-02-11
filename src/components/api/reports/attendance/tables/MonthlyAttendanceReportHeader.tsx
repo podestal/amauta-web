@@ -35,15 +35,15 @@ const MonthlyAttendanceReportHeader = ({ selectedMonth, setSelectedMonth }: Prop
             <p>{lan === 'EN' ? 'UID' : 'UID'}</p> 
         </div>
         <div className="flex py-1 text-left col-span-2 hover:text-slate-700 dark:hover:text-slate-300 cursor-pointer">
-            <p>{lan === 'EN' ? 'Name' : 'Nombres'}</p>
-            <RiArrowDownSFill 
-                // className={`${sortKey === 'category_name' && sortOrder === 'desc' ? 'rotate-180' : ''}`}
-            />
-        </div>
-        <div className="flex py-1 text-left col-span-2 hover:text-slate-700 dark:hover:text-slate-300 cursor-pointer">
             <p>{lan === 'EN' ? 'Lastname' : 'Apellidos'}</p>
             <RiArrowDownSFill 
                 // className={`${sortKey === 'created_at' && sortOrder === 'desc' ? 'rotate-180' : ''}`}
+            />
+        </div>
+        <div className="flex py-1 text-left col-span-2 hover:text-slate-700 dark:hover:text-slate-300 cursor-pointer">
+            <p>{lan === 'EN' ? 'Name' : 'Nombres'}</p>
+            <RiArrowDownSFill 
+                // className={`${sortKey === 'category_name' && sortOrder === 'desc' ? 'rotate-180' : ''}`}
             />
         </div>
         <div className="w-full col-span-7 flex flex-col justify-center items-center gap-4">
