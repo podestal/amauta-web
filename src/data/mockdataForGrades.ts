@@ -1,3 +1,11 @@
+export interface Assignment {
+    id: number;
+    name: string;
+    description: string;
+    dueDate: string;
+    assignatureId: number;
+}
+
 export const assignments = [
     {
       id: 1,

@@ -30,20 +30,22 @@ const CreateAssignment = () => {
           </h1>
 
           {/* Form */}
-          <form className="flex flex-col justify-start items-center gap-6 pb-20 w-full lg:w-[75%] mx-auto">
+          <form className="flex flex-col justify-start items-center gap-6 pb-20 w-full lg:w-[65%] mx-auto py-10">
 
 
-            <Input placeholder="Título" />
+            <div className="w-[60%] lg:w-full">
+                <Input placeholder="Título" />
+            </div>
             <Selector values={categories} label="Categoría" setter={() => {}} lan="ES" />
 
             {/* Fecha de Entrega */}
-            <div className="w-full">
+            <div className="w-[60%] lg:w-full">
                 <p className="text-lg lg:text-xl dark:text-slate-50 text-center mb-6">Fecha de Entrega</p>
                 <Calendar selectedDate={dueDate} setSelectedDate={setDueDate} />
             </div>
 
 
-            <TextArea placeholder="Descripción" />
+            <TextArea placeholder="Descripción" tall/>
 
             {/* Submit Button */}
             <div className="sm:col-span-2 flex justify-center">

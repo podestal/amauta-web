@@ -19,6 +19,7 @@ import ContactPage from "../pages/ContactPage";
 import LocateStudentPage from "../pages/LocateStudentPage";
 import AssignaturesPage from "../pages/AssignaturesPage";
 import AssignaturePage from "../pages/AssignaturePage";
+import GradesPage from "../pages/GradesPage";
 
 const routes = createBrowserRouter([
     {
@@ -132,6 +133,13 @@ const routes = createBrowserRouter([
                 element: 
                 <PrivateRoutes>
                     <AssignaturePage />
+                </PrivateRoutes>
+            },
+            {
+                path: 'grades/:assignmentId',
+                element:
+                <PrivateRoutes>
+                    <GradesPage />
                 </PrivateRoutes>
             }
         ]
