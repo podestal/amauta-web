@@ -40,7 +40,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, whole }
       <style dangerouslySetInnerHTML={{ __html: styles.modalAnimation }} />
 
       <div
-        className={`relative dark:bg-slate-950 bg-white rounded-lg shadow-lg p-6 ${whole ? 'mr-10 ml-72' : 'max-w-lg'} max-h-100 w-full scale-transition`}
+        className={`relative dark:bg-slate-950 bg-white rounded-lg shadow-lg p-6 ${whole ? 'lg:mr-10 lg:ml-72' : 'max-w-lg'} max-h-100 w-full scale-transition`}
         style={{ maxHeight: '90vh', overflowY: 'auto' }}
         onClick={(e) => e.stopPropagation()}
       >

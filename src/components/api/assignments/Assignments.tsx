@@ -1,6 +1,6 @@
 import { motion } from "framer-motion"
 import { assignments } from "../../../data/mockdataForGrades"
-import Button from "../../ui/Button"
+import CreateAssignment from "./CreateAssignment"
 
 interface Props {
     assignatureId: number
@@ -19,8 +19,8 @@ const Assignments = ({ assignatureId }: Props) => {
     >
       <div className="flex justify-between items-center mb-8">
         <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-200">📌 Tareas Asignadas</h2>
-        <Button 
-            label="Nueva Tarea"
+        <CreateAssignment 
+        
         />
       </div>
 

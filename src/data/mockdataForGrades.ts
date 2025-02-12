@@ -67,23 +67,23 @@ export const assignments = [
 
 export const categories = [
     {
-        id: 1,
+        id: '1',
         name: 'Tarea',
     },
     {
-        id: 2,
+        id: '2',
         name: 'Examen',
     },
     {
-        id: 3,
+        id: '3',
         name: 'Participación',
     },
     {
-        id: 4,
+        id: '4',
         name: 'Proyecto',
     },
     {
-        id: 6,
+        id: '6',
         name: 'Otro',
     },
 ]
