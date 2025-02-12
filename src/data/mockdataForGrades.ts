@@ -77,22 +77,27 @@ export const categories = [
     {
         id: '1',
         name: 'Tarea',
+        weight: 0.2,
     },
     {
         id: '2',
         name: 'Examen',
+        weight: 0.4,
     },
     {
         id: '3',
         name: 'Participación',
+        weight: 0.1,
     },
     {
         id: '4',
         name: 'Proyecto',
+        weight: 0.2,
     },
     {
         id: '6',
         name: 'Otro',
+        weight: 0.1,
     },
 ]
 
