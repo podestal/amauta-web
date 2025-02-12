@@ -6,6 +6,277 @@ export interface Assignment {
     assignatureId: number;
 }
 
+export interface StudentsTable {
+    id: number;
+    firstName: string;
+    lastName: string;
+    grades: {
+        [key: number]: string;
+    };
+}
+
+export const studentsTable = [
+    {
+      id: 10023456,
+      firstName: "Juan",
+      lastName: "Pérez",
+      grades: {
+        1: "A", // Tarea de Triángulos
+        2: "B", // Proyecto: Figuras
+        3: "A", // Examen Ángulos
+        4: "B", // Tarea Fracciones
+        5: "C", // Proyecto Finanzas
+        6: "A", // Examen Decimales
+        7: "AD", // Tarea Ecuaciones
+        8: "B", // Investigación Álgebra
+        9: "B", // Examen Expresiones
+      },
+    },
+    {
+      id: 10034567,
+      firstName: "María",
+      lastName: "López",
+      grades: {
+        1: "B",
+        2: "A",
+        3: "C",
+        4: "B",
+        5: "A",
+        6: "B",
+        7: "A",
+        8: "B",
+        9: "C",
+      },
+    },
+    {
+      id: 10045678,
+      firstName: "Carlos",
+      lastName: "Sánchez",
+      grades: {
+        1: "C",
+        2: "C",
+        3: "B",
+        4: "A",
+        5: "B",
+        6: "C",
+        7: "B",
+        8: "AD",
+        9: "NA",
+      },
+    },
+    {
+      id: 10056789,
+      firstName: "Lucía",
+      lastName: "Rodríguez",
+      grades: {
+        1: "AD",
+        2: "B",
+        3: "A",
+        4: "B",
+        5: "AD",
+        6: "NA",
+        7: "B",
+        8: "A",
+        9: "B",
+      },
+    },
+    {
+      id: 10067890,
+      firstName: "Pedro",
+      lastName: "Gómez",
+      grades: {
+        1: "NA",
+        2: "B",
+        3: "C",
+        4: "A",
+        5: "B",
+        6: "NA",
+        7: "NA",
+        8: "NA",
+        9: "NA",
+      },
+    },
+    {
+      id: 10078901,
+      firstName: "Ana",
+      lastName: "Martínez",
+      grades: {
+        1: "B",
+        2: "C",
+        3: "A",
+        4: "B",
+        5: "C",
+        6: "B",
+        7: "A",
+        8: "C",
+        9: "A",
+      },
+    },
+    {
+      id: 10089012,
+      firstName: "Javier",
+      lastName: "Díaz",
+      grades: {
+        1: "A",
+        2: "B",
+        3: "A",
+        4: "AD",
+        5: "C",
+        6: "B",
+        7: "NA",
+        8: "NA",
+        9: "NA",
+      },
+    },
+    {
+      id: 10090123,
+      firstName: "Elena",
+      lastName: "Fernández",
+      grades: {
+        1: "C",
+        2: "A",
+        3: "B",
+        4: "C",
+        5: "A",
+        6: "AD",
+        7: "B",
+        8: "B",
+        9: "A",
+      },
+    },
+    {
+      id: 10101234,
+      firstName: "Sofía",
+      lastName: "Ramírez",
+      grades: {
+        1: "NA",
+        2: "NA",
+        3: "NA",
+        4: "NA",
+        5: "NA",
+        6: "NA",
+        7: "NA",
+        8: "NA",
+        9: "NA",
+      },
+    },
+    {
+      id: 10112345,
+      firstName: "Hugo",
+      lastName: "Torres",
+      grades: {
+        1: "AD",
+        2: "B",
+        3: "C",
+        4: "A",
+        5: "B",
+        6: "B",
+        7: "AD",
+        8: "C",
+        9: "A",
+      },
+    },
+    {
+      id: 10123456,
+      firstName: "Isabel",
+      lastName: "Vega",
+      grades: {
+        1: "B",
+        2: "A",
+        3: "B",
+        4: "C",
+        5: "A",
+        6: "C",
+        7: "B",
+        8: "A",
+        9: "B",
+      },
+    },
+    {
+      id: 10134567,
+      firstName: "Fernando",
+      lastName: "Navarro",
+      grades: {
+        1: "NA",
+        2: "NA",
+        3: "NA",
+        4: "NA",
+        5: "NA",
+        6: "NA",
+        7: "NA",
+        8: "NA",
+        9: "NA",
+      },
+    },
+    {
+      id: 10145678,
+      firstName: "Valentina",
+      lastName: "Ruiz",
+      grades: {
+        1: "C",
+        2: "B",
+        3: "AD",
+        4: "A",
+        5: "C",
+        6: "B",
+        7: "A",
+        8: "B",
+        9: "AD",
+      },
+    },
+    {
+      id: 10156789,
+      firstName: "Diego",
+      lastName: "Castro",
+      grades: {
+        1: "A",
+        2: "C",
+        3: "B",
+        4: "AD",
+        5: "A",
+        6: "B",
+        7: "C",
+        8: "AD",
+        9: "B",
+      },
+    },
+    {
+      id: 10167890,
+      firstName: "Camila",
+      lastName: "Herrera",
+      grades: {
+        1: "B",
+        2: "A",
+        3: "B",
+        4: "C",
+        5: "B",
+        6: "C",
+        7: "A",
+        8: "B",
+        9: "AD",
+      },
+    },
+  ];
+  
+
+export const students = [
+    { id: 10023456, firstName: "Juan", lastName: "Pérez", grade: "A" },
+    { id: 10034567, firstName: "María", lastName: "López", grade: "B" },
+    { id: 10045678, firstName: "Carlos", lastName: "Sánchez", grade: "C" },
+    { id: 10056789, firstName: "Lucía", lastName: "Rodríguez", grade: "AD" },
+    { id: 10067890, firstName: "Pedro", lastName: "Gómez", grade: "NA" },
+    { id: 10078901, firstName: "Ana", lastName: "Martínez", grade: "B" },
+    { id: 10089012, firstName: "Javier", lastName: "Díaz", grade: "A" },
+    { id: 10090123, firstName: "Elena", lastName: "Fernández", grade: "C" },
+    { id: 10101234, firstName: "Sofía", lastName: "Ramírez", grade: "NA" },
+    { id: 10112345, firstName: "Hugo", lastName: "Torres", grade: "AD" },
+    { id: 10123456, firstName: "Isabel", lastName: "Vega", grade: "B" },
+    { id: 10134567, firstName: "Fernando", lastName: "Navarro", grade: "NA" },
+    { id: 10145678, firstName: "Valentina", lastName: "Ruiz", grade: "C" },
+    { id: 10156789, firstName: "Diego", lastName: "Castro", grade: "A" },
+    { id: 10167890, firstName: "Camila", lastName: "Herrera", grade: "B" },
+];
+
 export const assignments = [
     {
       id: 1,

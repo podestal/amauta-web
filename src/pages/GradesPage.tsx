@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { students as initialStudents } from "../data/mockdataForGrades";
 
 // Define grades and their styles
 const gradeOptions = ["NA", "C", "B", "A", "AD"];
@@ -12,23 +13,7 @@ const gradeStyles: Record<string, string> = {
 };
 
 // Sample students data
-const initialStudents = [
-    { id: 10023456, firstName: "Juan", lastName: "Pérez", grade: "A" },
-    { id: 10034567, firstName: "María", lastName: "López", grade: "B" },
-    { id: 10045678, firstName: "Carlos", lastName: "Sánchez", grade: "C" },
-    { id: 10056789, firstName: "Lucía", lastName: "Rodríguez", grade: "AD" },
-    { id: 10067890, firstName: "Pedro", lastName: "Gómez", grade: "NA" },
-    { id: 10078901, firstName: "Ana", lastName: "Martínez", grade: "B" },
-    { id: 10089012, firstName: "Javier", lastName: "Díaz", grade: "A" },
-    { id: 10090123, firstName: "Elena", lastName: "Fernández", grade: "C" },
-    { id: 10101234, firstName: "Sofía", lastName: "Ramírez", grade: "NA" },
-    { id: 10112345, firstName: "Hugo", lastName: "Torres", grade: "AD" },
-    { id: 10123456, firstName: "Isabel", lastName: "Vega", grade: "B" },
-    { id: 10134567, firstName: "Fernando", lastName: "Navarro", grade: "NA" },
-    { id: 10145678, firstName: "Valentina", lastName: "Ruiz", grade: "C" },
-    { id: 10156789, firstName: "Diego", lastName: "Castro", grade: "A" },
-    { id: 10167890, firstName: "Camila", lastName: "Herrera", grade: "B" },
-  ];
+
 
 const GradesPage = () => {
   const [students, setStudents] = useState(initialStudents);

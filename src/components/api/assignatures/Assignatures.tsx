@@ -10,7 +10,7 @@ export interface Assignature {
     hoverColor: string;
 }
 
-const assignatures = [
+export const assignatures = [
   { id: 1, name: "Geometría", icon: <FaShapes />, color: "bg-blue-500", textColor: "text-blue-100", hoverColor: "hover:bg-blue-600" },
   { id: 2, name: "Aritmética", icon: <FaCalculator />, color: "bg-green-500", textColor: "text-green-100", hoverColor: "hover:bg-green-600" },
   { id: 3, name: "Álgebra", icon: <FaSuperscript />, color: "bg-purple-500", textColor: "text-purple-100", hoverColor: "hover:bg-purple-600" },
