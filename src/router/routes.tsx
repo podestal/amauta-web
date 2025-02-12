@@ -20,6 +20,7 @@ import LocateStudentPage from "../pages/LocateStudentPage";
 import AssignaturesPage from "../pages/AssignaturesPage";
 import AssignaturePage from "../pages/AssignaturePage";
 import GradesPage from "../pages/GradesPage";
+import GradesSummaryPage from "../pages/GradesSummaryPage";
 
 const routes = createBrowserRouter([
     {
@@ -140,6 +141,13 @@ const routes = createBrowserRouter([
                 element:
                 <PrivateRoutes>
                     <GradesPage />
+                </PrivateRoutes>
+            },
+            {
+                path: 'grades-summary',
+                element:
+                <PrivateRoutes>
+                    <GradesSummaryPage />
                 </PrivateRoutes>
             }
         ]
