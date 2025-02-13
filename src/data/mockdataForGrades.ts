@@ -13,7 +13,11 @@ export interface StudentsTable {
     grades: {
         [key: number]: string;
     };
+    averages: {
+        [key: number]: string;
+    }
 }
+
 
 export const studentsTable = [
     {
@@ -21,241 +25,166 @@ export const studentsTable = [
       firstName: "Juan",
       lastName: "Pérez",
       grades: {
-        1: "A", // Tarea de Triángulos
-        2: "B", // Proyecto: Figuras
-        3: "A", // Examen Ángulos
-        4: "B", // Tarea Fracciones
-        5: "C", // Proyecto Finanzas
-        6: "A", // Examen Decimales
-        7: "AD", // Tarea Ecuaciones
-        8: "B", // Investigación Álgebra
-        9: "B", // Examen Expresiones
+        1: "A", 2: "B", 3: "A", 4: "B", 5: "C", 6: "A", 7: "AD", 8: "B", 9: "B",
+        10: "A", 11: "B", 12: "C", 13: "B", 14: "A", 15: "A", 16: "B", 17: "C", 18: "A",
+        19: "A", 20: "B", 21: "B", 22: "C", 23: "A", 24: "A", 25: "B", 26: "B", 27: "A",
       },
+      averages: {1: 'A', 2: 'AD', 3: 'C'}
     },
     {
       id: 10034567,
       firstName: "María",
       lastName: "López",
       grades: {
-        1: "B",
-        2: "A",
-        3: "C",
-        4: "B",
-        5: "A",
-        6: "B",
-        7: "A",
-        8: "B",
-        9: "C",
+        1: "B", 2: "A", 3: "C", 4: "B", 5: "A", 6: "B", 7: "A", 8: "B", 9: "C",
+        10: "C", 11: "B", 12: "A", 13: "C", 14: "A", 15: "A", 16: "B", 17: "B", 18: "A",
+        19: "C", 20: "B", 21: "B", 22: "A", 23: "C", 24: "A", 25: "B", 26: "B", 27: "A",
       },
+      averages: {1: 'B', 2: 'C', 3: 'C'}
     },
     {
       id: 10045678,
       firstName: "Carlos",
       lastName: "Sánchez",
       grades: {
-        1: "C",
-        2: "C",
-        3: "B",
-        4: "A",
-        5: "B",
-        6: "C",
-        7: "B",
-        8: "AD",
-        9: "NA",
+        1: "C", 2: "C", 3: "B", 4: "A", 5: "B", 6: "C", 7: "B", 8: "AD", 9: "NA",
+        10: "B", 11: "A", 12: "C", 13: "B", 14: "AD", 15: "A", 16: "B", 17: "C", 18: "B",
+        19: "C", 20: "B", 21: "A", 22: "C", 23: "A", 24: "B", 25: "C", 26: "B", 27: "NA",
       },
+        averages: {1: 'C', 2: 'A', 3: 'B'}
     },
     {
       id: 10056789,
       firstName: "Lucía",
       lastName: "Rodríguez",
       grades: {
-        1: "AD",
-        2: "B",
-        3: "A",
-        4: "B",
-        5: "AD",
-        6: "NA",
-        7: "B",
-        8: "A",
-        9: "B",
+        1: "AD", 2: "B", 3: "A", 4: "B", 5: "AD", 6: "NA", 7: "B", 8: "A", 9: "B",
+        10: "C", 11: "A", 12: "B", 13: "A", 14: "C", 15: "B", 16: "A", 17: "B", 18: "C",
+        19: "B", 20: "A", 21: "C", 22: "B", 23: "A", 24: "AD", 25: "B", 26: "B", 27: "NA",
       },
+        averages: {1: 'AD', 2: 'B', 3: 'C'}
     },
     {
       id: 10067890,
       firstName: "Pedro",
       lastName: "Gómez",
       grades: {
-        1: "NA",
-        2: "B",
-        3: "C",
-        4: "A",
-        5: "B",
-        6: "NA",
-        7: "NA",
-        8: "NA",
-        9: "NA",
+        1: "NA", 2: "B", 3: "C", 4: "A", 5: "B", 6: "NA", 7: "NA", 8: "NA", 9: "NA",
+        10: "A", 11: "B", 12: "C", 13: "A", 14: "B", 15: "NA", 16: "C", 17: "A", 18: "B",
+        19: "C", 20: "B", 21: "A", 22: "B", 23: "NA", 24: "C", 25: "B", 26: "B", 27: "NA",
       },
+        averages: {1: 'A', 2: 'B', 3: 'C'}
     },
     {
       id: 10078901,
       firstName: "Ana",
       lastName: "Martínez",
       grades: {
-        1: "B",
-        2: "C",
-        3: "A",
-        4: "B",
-        5: "C",
-        6: "B",
-        7: "A",
-        8: "C",
-        9: "A",
+        1: "B", 2: "C", 3: "A", 4: "B", 5: "C", 6: "B", 7: "A", 8: "C", 9: "A",
+        10: "A", 11: "B", 12: "C", 13: "A", 14: "C", 15: "B", 16: "A", 17: "B", 18: "B",
+        19: "B", 20: "C", 21: "A", 22: "B", 23: "C", 24: "B", 25: "B", 26: "B", 27: "A",
       },
+        averages: {1: 'B', 2: 'C', 3: 'A'}
     },
     {
       id: 10089012,
       firstName: "Javier",
       lastName: "Díaz",
       grades: {
-        1: "A",
-        2: "B",
-        3: "A",
-        4: "AD",
-        5: "C",
-        6: "B",
-        7: "NA",
-        8: "NA",
-        9: "NA",
+        1: "A", 2: "B", 3: "A", 4: "AD", 5: "C", 6: "B", 7: "NA", 8: "NA", 9: "NA",
+        10: "A", 11: "C", 12: "B", 13: "B", 14: "A", 15: "B", 16: "B", 17: "C", 18: "A",
+        19: "A", 20: "C", 21: "B", 22: "A", 23: "B", 24: "A", 25: "B", 26: "B", 27: "C",
       },
+        averages: {1: 'A', 2: 'B', 3: 'C'}
     },
     {
-      id: 10090123,
-      firstName: "Elena",
-      lastName: "Fernández",
-      grades: {
-        1: "C",
-        2: "A",
-        3: "B",
-        4: "C",
-        5: "A",
-        6: "AD",
-        7: "B",
-        8: "B",
-        9: "A",
-      },
+        id: 10090123,
+        firstName: "Elena",
+        lastName: "Fernández",
+        grades: {
+          1: "C", 2: "A", 3: "B", 4: "C", 5: "A", 6: "B", 7: "C", 8: "A", 9: "B",
+          10: "C", 11: "A", 12: "B", 13: "C", 14: "A", 15: "B", 16: "C", 17: "A", 18: "B",
+          19: "C", 20: "A", 21: "B", 22: "C", 23: "A", 24: "B", 25: "C", 26: "A", 27: "B",
+        },
+        averages: {1: 'C', 2: 'A', 3: 'B'}
     },
     {
-      id: 10101234,
-      firstName: "Sofía",
-      lastName: "Ramírez",
-      grades: {
-        1: "NA",
-        2: "NA",
-        3: "NA",
-        4: "NA",
-        5: "NA",
-        6: "NA",
-        7: "NA",
-        8: "NA",
-        9: "NA",
-      },
+        id: 10101234,
+        firstName: "Sofía",
+        lastName: "Ramírez",
+        grades: {
+          1: "NA", 2: "B", 3: "C", 4: "A", 5: "B", 6: "NA", 7: "NA", 8: "NA", 9: "NA",
+          10: "A", 11: "B", 12: "C", 13: "A", 14: "B", 15: "NA", 16: "C", 17: "A", 18: "B",
+          19: "C", 20: "B", 21: "A", 22: "B", 23: "NA", 24: "C", 25: "B", 26: "B", 27: "NA",
+        },
+        averages: {1: 'A', 2: 'B', 3: 'C'}
     },
     {
-      id: 10112345,
-      firstName: "Hugo",
-      lastName: "Torres",
-      grades: {
-        1: "AD",
-        2: "B",
-        3: "C",
-        4: "A",
-        5: "B",
-        6: "B",
-        7: "AD",
-        8: "C",
-        9: "A",
-      },
+        id: 10112345,
+        firstName: "Hugo",
+        lastName: "Torres",
+        grades: {
+          1: "B", 2: "A", 3: "B", 4: "C", 5: "B", 6: "C", 7: "A", 8: "B", 9: "AD",
+          10: "A", 11: "B", 12: "C", 13: "B", 14: "A", 15: "C", 16: "B", 17: "A", 18: "B",
+          19: "B", 20: "C", 21: "A", 22: "B", 23: "C", 24: "B", 25: "B", 26: "A", 27: "B",
+        },
+        averages: {1: 'B', 2: 'A', 3: 'C'}
     },
     {
-      id: 10123456,
-      firstName: "Isabel",
-      lastName: "Vega",
-      grades: {
-        1: "B",
-        2: "A",
-        3: "B",
-        4: "C",
-        5: "A",
-        6: "C",
-        7: "B",
-        8: "A",
-        9: "B",
-      },
+        id: 10123456,
+        firstName: "Isabel",
+        lastName: "Vega",
+        grades: {
+          1: "NA", 2: "B", 3: "C", 4: "A", 5: "B", 6: "NA", 7: "NA", 8: "NA", 9: "NA",
+          10: "A", 11: "B", 12: "C", 13: "A", 14: "B", 15: "NA", 16: "C", 17: "A", 18: "B",
+          19: "C", 20: "B", 21: "A", 22: "B", 23: "NA", 24: "C", 25: "B", 26: "B", 27: "NA",
+        },
+        averages: {1: 'A', 2: 'B', 3: 'C'}
     },
     {
-      id: 10134567,
-      firstName: "Fernando",
-      lastName: "Navarro",
-      grades: {
-        1: "NA",
-        2: "NA",
-        3: "NA",
-        4: "NA",
-        5: "NA",
-        6: "NA",
-        7: "NA",
-        8: "NA",
-        9: "NA",
-      },
+        id: 10134567,
+        firstName: "Fernando",
+        lastName: "Navarro",
+        grades: {
+          1: "B", 2: "A", 3: "B", 4: "C", 5: "B", 6: "C", 7: "A", 8: "B", 9: "AD",
+          10: "A", 11: "B", 12: "C", 13: "B", 14: "A", 15: "C", 16: "B", 17: "A", 18: "B",
+          19: "B", 20: "C", 21: "A", 22: "B", 23: "C", 24: "B", 25: "B", 26: "A", 27: "B",
+        },
+        averages: {1: 'B', 2: 'A', 3: 'C'}
     },
     {
-      id: 10145678,
-      firstName: "Valentina",
-      lastName: "Ruiz",
-      grades: {
-        1: "C",
-        2: "B",
-        3: "AD",
-        4: "A",
-        5: "C",
-        6: "B",
-        7: "A",
-        8: "B",
-        9: "AD",
-      },
+        id: 10145678,
+        firstName: "Valentina",
+        lastName: "Ruiz",
+        grades: {
+          1: "NA", 2: "B", 3: "C", 4: "A", 5: "B", 6: "NA", 7: "NA", 8: "NA", 9: "NA",
+          10: "A", 11: "B", 12: "C", 13: "A", 14: "B", 15: "NA", 16: "C", 17: "A", 18: "B",
+          19: "C", 20: "B", 21: "A", 22: "B", 23: "NA", 24: "C", 25: "B", 26: "B", 27: "NA",
+        },
+        averages: {1: 'A', 2: 'B', 3: 'C'}
     },
     {
-      id: 10156789,
-      firstName: "Diego",
-      lastName: "Castro",
-      grades: {
-        1: "A",
-        2: "C",
-        3: "B",
-        4: "AD",
-        5: "A",
-        6: "B",
-        7: "C",
-        8: "AD",
-        9: "B",
-      },
+        id: 10156789,
+        firstName: "Diego",
+        lastName: "Castro",
+        grades: {
+          1: "B", 2: "A", 3: "B", 4: "C", 5: "B", 6: "C", 7: "A", 8: "B", 9: "AD",
+          10: "A", 11: "B", 12: "C", 13: "B", 14: "A", 15: "C", 16: "B", 17: "A", 18: "B",
+          19: "B", 20: "C", 21: "A", 22: "B", 23: "C", 24: "B", 25: "B", 26: "A", 27: "B",
+        },
+        averages: {1: 'B', 2: 'A', 3: 'C'}
     },
     {
-      id: 10167890,
-      firstName: "Camila",
-      lastName: "Herrera",
-      grades: {
-        1: "B",
-        2: "A",
-        3: "B",
-        4: "C",
-        5: "B",
-        6: "C",
-        7: "A",
-        8: "B",
-        9: "AD",
-      },
-    },
+        id: 10167890,
+        firstName: "Camila",
+        lastName: "Herrera",
+        grades: {
+          1: "NA", 2: "B", 3: "C", 4: "A", 5: "B", 6: "NA", 7: "NA", 8: "NA", 9: "NA",
+          10: "A", 11: "B", 12: "C", 13: "A", 14: "B", 15: "NA", 16: "C", 17: "A", 18: "B",
+          19: "C", 20: "B", 21: "A", 22: "B", 23: "NA", 24: "C", 25: "B", 26: "B", 27: "NA",
+        },
+        averages: {1: 'A', 2: 'B', 3: 'C'}
+    }
   ];
   
 
@@ -278,70 +207,40 @@ export const students = [
 ];
 
 export const assignments = [
-    {
-      id: 1,
-      name: "Tarea de Triángulos",
-      description: "Resolver problemas sobre la clasificación de triángulos y el Teorema de Pitágoras.",
-      dueDate: "2025-02-20",
-      assignatureId: 1, // Geometría
-    },
-    {
-      id: 2,
-      name: "Proyecto: Construcción de Figuras",
-      description: "Crear modelos físicos de figuras geométricas y calcular sus áreas y volúmenes.",
-      dueDate: "2025-03-05",
-      assignatureId: 1, // Geometría
-    },
-    {
-      id: 3,
-      name: "Examen de Ángulos y Polígonos",
-      description: "Evaluación sobre los diferentes tipos de ángulos, polígonos y sus propiedades.",
-      dueDate: "2025-02-28",
-      assignatureId: 1, // Geometría
-    },
-    {
-      id: 4,
-      name: "Tarea de Fracciones",
-      description: "Resolver ejercicios sobre suma, resta, multiplicación y división de fracciones.",
-      dueDate: "2025-02-18",
-      assignatureId: 2, // Aritmética
-    },
-    {
-      id: 5,
-      name: "Proyecto: Mercado Financiero",
-      description: "Analizar datos de precios de productos y aplicar porcentajes para calcular descuentos e impuestos.",
-      dueDate: "2025-03-10",
-      assignatureId: 2, // Aritmética
-    },
-    {
-      id: 6,
-      name: "Examen de Números Decimales",
-      description: "Prueba de evaluación sobre operaciones con números decimales y conversión a fracciones.",
-      dueDate: "2025-02-25",
-      assignatureId: 2, // Aritmética
-    },
-    {
-      id: 7,
-      name: "Tarea de Ecuaciones Lineales",
-      description: "Resolver ejercicios de ecuaciones de primer grado con una incógnita.",
-      dueDate: "2025-02-22",
-      assignatureId: 3, // Álgebra
-    },
-    {
-      id: 8,
-      name: "Investigación: Álgebra en la Vida Real",
-      description: "Redactar un informe sobre cómo se aplica el álgebra en diferentes profesiones y situaciones cotidianas.",
-      dueDate: "2025-03-12",
-      assignatureId: 3, // Álgebra
-    },
-    {
-      id: 9,
-      name: "Examen de Expresiones Algebraicas",
-      description: "Evaluación sobre simplificación y factorización de expresiones algebraicas.",
-      dueDate: "2025-03-01",
-      assignatureId: 3, // Álgebra
-    }
+    // 📐 Geometría
+    { id: 1, name: "Tarea de Triángulos", description: "Resolver problemas sobre la clasificación de triángulos y el Teorema de Pitágoras.", dueDate: "2025-02-20", assignatureId: 1, categoryId: 1 },
+    { id: 2, name: "Proyecto: Construcción de Figuras", description: "Crear modelos físicos de figuras geométricas y calcular sus áreas y volúmenes.", dueDate: "2025-03-05", assignatureId: 1, categoryId: 4 },
+    { id: 3, name: "Examen de Ángulos y Polígonos", description: "Evaluación sobre los diferentes tipos de ángulos, polígonos y sus propiedades.", dueDate: "2025-02-28", assignatureId: 1, categoryId: 2 },
+    { id: 4, name: "Investigación sobre Círculos", description: "Análisis del área y circunferencia de los círculos.", dueDate: "2025-03-10", assignatureId: 1, categoryId: 6 },
+    { id: 5, name: "Tarea de Perímetros", description: "Ejercicios sobre cálculo de perímetros de diferentes figuras.", dueDate: "2025-03-15", assignatureId: 1, categoryId: 1 },
+    { id: 6, name: "Proyecto: Formas en la Naturaleza", description: "Identificar figuras geométricas en el entorno.", dueDate: "2025-03-22", assignatureId: 1, categoryId: 4 },
+    { id: 7, name: "Examen sobre Volúmenes", description: "Cálculo de volúmenes de cuerpos geométricos.", dueDate: "2025-03-28", assignatureId: 1, categoryId: 2 },
+    { id: 8, name: "Trabajo en equipo: Figuras 3D", description: "Crear maquetas de sólidos geométricos.", dueDate: "2025-04-05", assignatureId: 1, categoryId: 4 },
+    { id: 9, name: "Tarea sobre Simetría", description: "Ejercicios sobre líneas de simetría en figuras.", dueDate: "2025-04-12", assignatureId: 1, categoryId: 1 },
+  
+    // 🔢 Aritmética
+    { id: 10, name: "Tarea de Fracciones", description: "Resolver ejercicios sobre suma, resta, multiplicación y división de fracciones.", dueDate: "2025-02-18", assignatureId: 2, categoryId: 1 },
+    { id: 11, name: "Proyecto: Mercado Financiero", description: "Analizar datos de precios y aplicar porcentajes.", dueDate: "2025-03-10", assignatureId: 2, categoryId: 4 },
+    { id: 12, name: "Examen de Números Decimales", description: "Prueba sobre operaciones con decimales y fracciones.", dueDate: "2025-02-25", assignatureId: 2, categoryId: 2 },
+    { id: 13, name: "Investigación sobre Proporciones", description: "Cómo se aplican las proporciones en la vida diaria.", dueDate: "2025-03-14", assignatureId: 2, categoryId: 6 },
+    { id: 14, name: "Tarea de Porcentajes", description: "Cálculo de descuentos e impuestos en productos.", dueDate: "2025-03-22", assignatureId: 2, categoryId: 1 },
+    { id: 15, name: "Proyecto: Matemáticas en la Cocina", description: "Aplicar medidas y fracciones en recetas.", dueDate: "2025-03-30", assignatureId: 2, categoryId: 4 },
+    { id: 16, name: "Examen de Regla de Tres", description: "Prueba sobre proporciones directas e inversas.", dueDate: "2025-04-07", assignatureId: 2, categoryId: 2 },
+    { id: 17, name: "Tarea sobre Operaciones Básicas", description: "Ejercicios combinados de suma, resta, multiplicación y división.", dueDate: "2025-04-14", assignatureId: 2, categoryId: 1 },
+    { id: 18, name: "Desafío Matemático", description: "Resolver problemas de lógica numérica.", dueDate: "2025-04-20", assignatureId: 2, categoryId: 3 },
+  
+    // 📖 Álgebra
+    { id: 19, name: "Tarea de Ecuaciones Lineales", description: "Resolver ecuaciones de primer grado.", dueDate: "2025-02-22", assignatureId: 3, categoryId: 1 },
+    { id: 20, name: "Investigación: Álgebra en la Vida Real", description: "Cómo se aplica el álgebra en profesiones.", dueDate: "2025-03-12", assignatureId: 3, categoryId: 6 },
+    { id: 21, name: "Examen de Expresiones Algebraicas", description: "Evaluación sobre simplificación de expresiones.", dueDate: "2025-03-01", assignatureId: 3, categoryId: 2 },
+    { id: 22, name: "Proyecto: Modelos Algebraicos", description: "Crear modelos físicos que representen ecuaciones.", dueDate: "2025-03-18", assignatureId: 3, categoryId: 4 },
+    { id: 23, name: "Tarea sobre Propiedades Algebraicas", description: "Ejercicios sobre distribución, asociatividad y conmutatividad.", dueDate: "2025-03-26", assignatureId: 3, categoryId: 1 },
+    { id: 24, name: "Investigación sobre Álgebra y Computación", description: "Cómo se usa el álgebra en la programación.", dueDate: "2025-04-02", assignatureId: 3, categoryId: 6 },
+    { id: 25, name: "Examen sobre Factores Comunes", description: "Evaluación sobre factorización de polinomios.", dueDate: "2025-04-10", assignatureId: 3, categoryId: 2 },
+    { id: 26, name: "Tarea sobre Resolución de Sistemas", description: "Ejercicios de sistemas de ecuaciones.", dueDate: "2025-04-18", assignatureId: 3, categoryId: 1 },
+    { id: 27, name: "Proyecto Final: Aplicaciones del Álgebra", description: "Estudio de casos reales en los que se aplica el álgebra.", dueDate: "2025-04-25", assignatureId: 3, categoryId: 4 },
   ];
+  
   
 
 export const categories = [
