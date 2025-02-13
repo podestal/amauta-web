@@ -2,6 +2,7 @@ export interface Assignment {
     id: number;
     name: string;
     description: string;
+    categoryId: number;
     dueDate: string;
     assignatureId: number;
 }

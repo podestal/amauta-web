@@ -1,7 +1,8 @@
 import { motion } from "framer-motion"
-import { assignments } from "../../../data/mockdataForGrades"
+import { assignments, Assignment } from "../../../data/mockdataForGrades"
 import CreateAssignment from "./CreateAssignment"
 import AssignmentCard from "./AssignmentCard"
+import { useState } from "react"
 
 interface Props {
     assignatureId: number
@@ -10,6 +11,10 @@ interface Props {
 const Assignments = ({ assignatureId }: Props) => {
 
     const filteredAssignments = assignments.filter(assignment => assignment.assignatureId === assignatureId)
+    const [localAssignments, setLocalAssignments] = useState<Assignment[]>(filteredAssignments)
+
+    console.log('localAssignments', localAssignments)
+    
 
   return (
     <motion.div 
@@ -21,13 +26,14 @@ const Assignments = ({ assignatureId }: Props) => {
       <div className="flex justify-between items-center mb-8">
         <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-200">📌 Tareas Asignadas</h2>
         <CreateAssignment 
-        
+          setLocalAssignments={setLocalAssignments}
+          assignatureId={assignatureId}
         />
       </div>
 
-      {filteredAssignments.length > 0 ? (
+      {localAssignments.length > 0 ? (
         <ul className="space-y-4">
-          {filteredAssignments.map((assignment) => (
+          {localAssignments.map((assignment) => (
             <AssignmentCard 
                 key={assignment.id}
                 assignment={assignment}

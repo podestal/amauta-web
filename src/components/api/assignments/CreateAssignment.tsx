@@ -4,13 +4,68 @@ import Button from "../../ui/Button";
 import Modal from "../../ui/Modal";
 import Input from "../../ui/Input";
 import Selector from "../../ui/Selector";
-import { categories } from "../../../data/mockdataForGrades";
+import { Assignment, categories } from "../../../data/mockdataForGrades";
 import TextArea from "../../ui/TextArea";
 import Calendar from "../../ui/Calendar";
+import useNotificationsStore from "../../../hooks/store/useNotificationsStore";
 
-const CreateAssignment = () => {
+interface Props {
+  setLocalAssignments: React.Dispatch<React.SetStateAction<Assignment[]>>;
+  assignatureId: number;
+}
+
+const CreateAssignment = ({ setLocalAssignments, assignatureId }: Props) => {
+
+  const { setMessage, setShow, setType } = useNotificationsStore()
   const [open, setOpen] = useState(false);
-  const [dueDate, setDueDate] = useState<Date | undefined>(undefined);
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [dueDate, setDueDate] = useState<Date | undefined>(new Date());
+
+  const [titleError, setTitleError] = useState('');
+  const [descriptionError, setDescriptionError] = useState('');
+  const [categoryError, setCategoryError] = useState('');
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const newDueDate = dueDate && new Date(dueDate);
+
+    console.log('title', title)
+    console.log('description', description)
+    console.log('selectedCategory', selectedCategory)
+    
+    
+
+    if (!title) {
+      setTitleError('El título es requerido');
+      return;
+    }
+
+    if (!selectedCategory) {
+      setCategoryError('La categoría es requerida');
+      return;
+    }
+
+    if (!description) {
+      setDescriptionError('La descripción es requerida');
+      return;
+    }
+
+    setLocalAssignments(prev => [{
+      id: prev.length + 1,
+      name: title,
+      description,
+      dueDate: newDueDate ? newDueDate.toISOString() : new Date().toISOString(),
+      assignatureId,
+      categoryId: parseInt(selectedCategory)
+    }, ...prev])
+    setOpen(false);
+    setShow(true)
+    setType('success')
+    setMessage('Tarea creada exitosamente!')
+  } 
 
   return (
     <>
@@ -30,13 +85,29 @@ const CreateAssignment = () => {
           </h1>
 
           {/* Form */}
-          <form className="flex flex-col justify-start items-center gap-6 pb-20 w-full lg:w-[65%] mx-auto py-10">
+          <form 
+            onSubmit={handleSubmit}
+            className="flex flex-col justify-start items-center gap-6 pb-20 w-full lg:w-[65%] mx-auto py-10">
 
 
             <div className="w-[60%] lg:w-full">
-                <Input placeholder="Título" />
+                <Input 
+                  placeholder="Título" 
+                  value={title}
+                  onChange={(e) => {
+                    title && setTitleError('')
+                    setTitle(e.target.value)}}
+                  error={titleError}
+                />
             </div>
-            <Selector values={categories} label="Categoría" setter={() => {}} lan="ES" />
+            <Selector 
+              values={categories} 
+              label="Categoría" 
+              setter={setSelectedCategory}
+              lan="ES" 
+              error={categoryError}
+              setError={setCategoryError}
+            />
 
             {/* Fecha de Entrega */}
             <div className="w-[60%] lg:w-full">
@@ -45,7 +116,15 @@ const CreateAssignment = () => {
             </div>
 
 
-            <TextArea placeholder="Descripción" tall/>
+            <TextArea
+               placeholder="Descripción" 
+                value={description}
+                onChange={(e) => {
+                  description && setDescriptionError('')
+                  setDescription(e.target.value)}}
+                error={descriptionError}
+               tall
+            />
 
             {/* Submit Button */}
             <div className="sm:col-span-2 flex justify-center">
