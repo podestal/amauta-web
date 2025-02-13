@@ -5,6 +5,8 @@ export interface Assignment {
     categoryId: number;
     dueDate: string;
     assignatureId: number;
+    competencies: number[];
+    capacities: number[];
 }
 
 export interface StudentsTable {
@@ -207,40 +209,76 @@ export const students = [
     { id: 10167890, firstName: "Camila", lastName: "Herrera", grade: "B" },
 ];
 
+// export const assignments = [
+//     // 📐 Geometría
+//     { id: 1, name: "Tarea de Triángulos", description: "Resolver problemas sobre la clasificación de triángulos y el Teorema de Pitágoras.", dueDate: "2025-02-20", assignatureId: 1, categoryId: 1 },
+//     { id: 2, name: "Proyecto: Construcción de Figuras", description: "Crear modelos físicos de figuras geométricas y calcular sus áreas y volúmenes.", dueDate: "2025-03-05", assignatureId: 1, categoryId: 4 },
+//     { id: 3, name: "Examen de Ángulos y Polígonos", description: "Evaluación sobre los diferentes tipos de ángulos, polígonos y sus propiedades.", dueDate: "2025-02-28", assignatureId: 1, categoryId: 2 },
+//     { id: 4, name: "Investigación sobre Círculos", description: "Análisis del área y circunferencia de los círculos.", dueDate: "2025-03-10", assignatureId: 1, categoryId: 6 },
+//     { id: 5, name: "Tarea de Perímetros", description: "Ejercicios sobre cálculo de perímetros de diferentes figuras.", dueDate: "2025-03-15", assignatureId: 1, categoryId: 1 },
+//     { id: 6, name: "Proyecto: Formas en la Naturaleza", description: "Identificar figuras geométricas en el entorno.", dueDate: "2025-03-22", assignatureId: 1, categoryId: 4 },
+//     { id: 7, name: "Examen sobre Volúmenes", description: "Cálculo de volúmenes de cuerpos geométricos.", dueDate: "2025-03-28", assignatureId: 1, categoryId: 2 },
+//     { id: 8, name: "Trabajo en equipo: Figuras 3D", description: "Crear maquetas de sólidos geométricos.", dueDate: "2025-04-05", assignatureId: 1, categoryId: 4 },
+//     { id: 9, name: "Tarea sobre Simetría", description: "Ejercicios sobre líneas de simetría en figuras.", dueDate: "2025-04-12", assignatureId: 1, categoryId: 1 },
+  
+//     // 🔢 Aritmética
+//     { id: 10, name: "Tarea de Fracciones", description: "Resolver ejercicios sobre suma, resta, multiplicación y división de fracciones.", dueDate: "2025-02-18", assignatureId: 2, categoryId: 1 },
+//     { id: 11, name: "Proyecto: Mercado Financiero", description: "Analizar datos de precios y aplicar porcentajes.", dueDate: "2025-03-10", assignatureId: 2, categoryId: 4 },
+//     { id: 12, name: "Examen de Números Decimales", description: "Prueba sobre operaciones con decimales y fracciones.", dueDate: "2025-02-25", assignatureId: 2, categoryId: 2 },
+//     { id: 13, name: "Investigación sobre Proporciones", description: "Cómo se aplican las proporciones en la vida diaria.", dueDate: "2025-03-14", assignatureId: 2, categoryId: 6 },
+//     { id: 14, name: "Tarea de Porcentajes", description: "Cálculo de descuentos e impuestos en productos.", dueDate: "2025-03-22", assignatureId: 2, categoryId: 1 },
+//     { id: 15, name: "Proyecto: Matemáticas en la Cocina", description: "Aplicar medidas y fracciones en recetas.", dueDate: "2025-03-30", assignatureId: 2, categoryId: 4 },
+//     { id: 16, name: "Examen de Regla de Tres", description: "Prueba sobre proporciones directas e inversas.", dueDate: "2025-04-07", assignatureId: 2, categoryId: 2 },
+//     { id: 17, name: "Tarea sobre Operaciones Básicas", description: "Ejercicios combinados de suma, resta, multiplicación y división.", dueDate: "2025-04-14", assignatureId: 2, categoryId: 1 },
+//     { id: 18, name: "Desafío Matemático", description: "Resolver problemas de lógica numérica.", dueDate: "2025-04-20", assignatureId: 2, categoryId: 3 },
+  
+//     // 📖 Álgebra
+//     { id: 19, name: "Tarea de Ecuaciones Lineales", description: "Resolver ecuaciones de primer grado.", dueDate: "2025-02-22", assignatureId: 3, categoryId: 1 },
+//     { id: 20, name: "Investigación: Álgebra en la Vida Real", description: "Cómo se aplica el álgebra en profesiones.", dueDate: "2025-03-12", assignatureId: 3, categoryId: 6 },
+//     { id: 21, name: "Examen de Expresiones Algebraicas", description: "Evaluación sobre simplificación de expresiones.", dueDate: "2025-03-01", assignatureId: 3, categoryId: 2 },
+//     { id: 22, name: "Proyecto: Modelos Algebraicos", description: "Crear modelos físicos que representen ecuaciones.", dueDate: "2025-03-18", assignatureId: 3, categoryId: 4 },
+//     { id: 23, name: "Tarea sobre Propiedades Algebraicas", description: "Ejercicios sobre distribución, asociatividad y conmutatividad.", dueDate: "2025-03-26", assignatureId: 3, categoryId: 1 },
+//     { id: 24, name: "Investigación sobre Álgebra y Computación", description: "Cómo se usa el álgebra en la programación.", dueDate: "2025-04-02", assignatureId: 3, categoryId: 6 },
+//     { id: 25, name: "Examen sobre Factores Comunes", description: "Evaluación sobre factorización de polinomios.", dueDate: "2025-04-10", assignatureId: 3, categoryId: 2 },
+//     { id: 26, name: "Tarea sobre Resolución de Sistemas", description: "Ejercicios de sistemas de ecuaciones.", dueDate: "2025-04-18", assignatureId: 3, categoryId: 1 },
+//     { id: 27, name: "Proyecto Final: Aplicaciones del Álgebra", description: "Estudio de casos reales en los que se aplica el álgebra.", dueDate: "2025-04-25", assignatureId: 3, categoryId: 4 },
+//   ];
+
 export const assignments = [
     // 📐 Geometría
-    { id: 1, name: "Tarea de Triángulos", description: "Resolver problemas sobre la clasificación de triángulos y el Teorema de Pitágoras.", dueDate: "2025-02-20", assignatureId: 1, categoryId: 1 },
-    { id: 2, name: "Proyecto: Construcción de Figuras", description: "Crear modelos físicos de figuras geométricas y calcular sus áreas y volúmenes.", dueDate: "2025-03-05", assignatureId: 1, categoryId: 4 },
-    { id: 3, name: "Examen de Ángulos y Polígonos", description: "Evaluación sobre los diferentes tipos de ángulos, polígonos y sus propiedades.", dueDate: "2025-02-28", assignatureId: 1, categoryId: 2 },
-    { id: 4, name: "Investigación sobre Círculos", description: "Análisis del área y circunferencia de los círculos.", dueDate: "2025-03-10", assignatureId: 1, categoryId: 6 },
-    { id: 5, name: "Tarea de Perímetros", description: "Ejercicios sobre cálculo de perímetros de diferentes figuras.", dueDate: "2025-03-15", assignatureId: 1, categoryId: 1 },
-    { id: 6, name: "Proyecto: Formas en la Naturaleza", description: "Identificar figuras geométricas en el entorno.", dueDate: "2025-03-22", assignatureId: 1, categoryId: 4 },
-    { id: 7, name: "Examen sobre Volúmenes", description: "Cálculo de volúmenes de cuerpos geométricos.", dueDate: "2025-03-28", assignatureId: 1, categoryId: 2 },
-    { id: 8, name: "Trabajo en equipo: Figuras 3D", description: "Crear maquetas de sólidos geométricos.", dueDate: "2025-04-05", assignatureId: 1, categoryId: 4 },
-    { id: 9, name: "Tarea sobre Simetría", description: "Ejercicios sobre líneas de simetría en figuras.", dueDate: "2025-04-12", assignatureId: 1, categoryId: 1 },
+    { id: 1, name: "Tarea de Triángulos", description: "Resolver problemas sobre la clasificación de triángulos y el Teorema de Pitágoras.", dueDate: "2025-02-20", assignatureId: 1, categoryId: 1, competencies: [23, 21], capacities: [79, 80] },
+    { id: 2, name: "Proyecto: Construcción de Figuras", description: "Crear modelos físicos de figuras geométricas y calcular sus áreas y volúmenes.", dueDate: "2025-03-05", assignatureId: 1, categoryId: 4, competencies: [23, 22], capacities: [81, 82] },
+    { id: 3, name: "Examen de Ángulos y Polígonos", description: "Evaluación sobre los diferentes tipos de ángulos, polígonos y sus propiedades.", dueDate: "2025-02-28", assignatureId: 1, categoryId: 2, competencies: [23], capacities: [80, 81] },
+    { id: 4, name: "Investigación sobre Círculos", description: "Análisis del área y circunferencia de los círculos.", dueDate: "2025-03-10", assignatureId: 1, categoryId: 6, competencies: [23], capacities: [81, 82] },
+    { id: 5, name: "Tarea de Perímetros", description: "Ejercicios sobre cálculo de perímetros de diferentes figuras.", dueDate: "2025-03-15", assignatureId: 1, categoryId: 1, competencies: [23], capacities: [79] },
+    { id: 6, name: "Proyecto: Formas en la Naturaleza", description: "Identificar figuras geométricas en el entorno.", dueDate: "2025-03-22", assignatureId: 1, categoryId: 4, competencies: [23], capacities: [81] },
+    { id: 7, name: "Examen sobre Volúmenes", description: "Cálculo de volúmenes de cuerpos geométricos.", dueDate: "2025-03-28", assignatureId: 1, categoryId: 2, competencies: [23], capacities: [82] },
+    { id: 8, name: "Trabajo en equipo: Figuras 3D", description: "Crear maquetas de sólidos geométricos.", dueDate: "2025-04-05", assignatureId: 1, categoryId: 4, competencies: [23], capacities: [81] },
+    { id: 9, name: "Tarea sobre Simetría", description: "Ejercicios sobre líneas de simetría en figuras.", dueDate: "2025-04-12", assignatureId: 1, categoryId: 1, competencies: [23], capacities: [79] },
   
     // 🔢 Aritmética
-    { id: 10, name: "Tarea de Fracciones", description: "Resolver ejercicios sobre suma, resta, multiplicación y división de fracciones.", dueDate: "2025-02-18", assignatureId: 2, categoryId: 1 },
-    { id: 11, name: "Proyecto: Mercado Financiero", description: "Analizar datos de precios y aplicar porcentajes.", dueDate: "2025-03-10", assignatureId: 2, categoryId: 4 },
-    { id: 12, name: "Examen de Números Decimales", description: "Prueba sobre operaciones con decimales y fracciones.", dueDate: "2025-02-25", assignatureId: 2, categoryId: 2 },
-    { id: 13, name: "Investigación sobre Proporciones", description: "Cómo se aplican las proporciones en la vida diaria.", dueDate: "2025-03-14", assignatureId: 2, categoryId: 6 },
-    { id: 14, name: "Tarea de Porcentajes", description: "Cálculo de descuentos e impuestos en productos.", dueDate: "2025-03-22", assignatureId: 2, categoryId: 1 },
-    { id: 15, name: "Proyecto: Matemáticas en la Cocina", description: "Aplicar medidas y fracciones en recetas.", dueDate: "2025-03-30", assignatureId: 2, categoryId: 4 },
-    { id: 16, name: "Examen de Regla de Tres", description: "Prueba sobre proporciones directas e inversas.", dueDate: "2025-04-07", assignatureId: 2, categoryId: 2 },
-    { id: 17, name: "Tarea sobre Operaciones Básicas", description: "Ejercicios combinados de suma, resta, multiplicación y división.", dueDate: "2025-04-14", assignatureId: 2, categoryId: 1 },
-    { id: 18, name: "Desafío Matemático", description: "Resolver problemas de lógica numérica.", dueDate: "2025-04-20", assignatureId: 2, categoryId: 3 },
+    { id: 10, name: "Tarea de Fracciones", description: "Resolver ejercicios sobre suma, resta, multiplicación y división de fracciones.", dueDate: "2025-02-18", assignatureId: 2, categoryId: 1, competencies: [21], capacities: [79, 80] },
+    { id: 11, name: "Proyecto: Mercado Financiero", description: "Analizar datos de precios y aplicar porcentajes.", dueDate: "2025-03-10", assignatureId: 2, categoryId: 4, competencies: [24], capacities: [81, 82] },
+    { id: 12, name: "Examen de Números Decimales", description: "Prueba sobre operaciones con decimales y fracciones.", dueDate: "2025-02-25", assignatureId: 2, categoryId: 2, competencies: [21], capacities: [80, 81] },
+    { id: 13, name: "Investigación sobre Proporciones", description: "Cómo se aplican las proporciones en la vida diaria.", dueDate: "2025-03-14", assignatureId: 2, categoryId: 6, competencies: [22], capacities: [81, 82] },
+    { id: 14, name: "Tarea de Porcentajes", description: "Cálculo de descuentos e impuestos en productos.", dueDate: "2025-03-22", assignatureId: 2, categoryId: 1, competencies: [24], capacities: [79, 80] },
+    { id: 15, name: "Proyecto: Matemáticas en la Cocina", description: "Aplicar medidas y fracciones en recetas.", dueDate: "2025-03-30", assignatureId: 2, categoryId: 4, competencies: [21], capacities: [81, 82] },
+    { id: 16, name: "Examen de Regla de Tres", description: "Prueba sobre proporciones directas e inversas.", dueDate: "2025-04-07", assignatureId: 2, categoryId: 2, competencies: [22], capacities: [80, 81] },
+    { id: 17, name: "Tarea sobre Operaciones Básicas", description: "Ejercicios combinados de suma, resta, multiplicación y división.", dueDate: "2025-04-14", assignatureId: 2, categoryId: 1, competencies: [21], capacities: [79] },
+    { id: 18, name: "Desafío Matemático", description: "Resolver problemas de lógica numérica.", dueDate: "2025-04-20", assignatureId: 2, categoryId: 3, competencies: [22], capacities: [80, 81] },
   
     // 📖 Álgebra
-    { id: 19, name: "Tarea de Ecuaciones Lineales", description: "Resolver ecuaciones de primer grado.", dueDate: "2025-02-22", assignatureId: 3, categoryId: 1 },
-    { id: 20, name: "Investigación: Álgebra en la Vida Real", description: "Cómo se aplica el álgebra en profesiones.", dueDate: "2025-03-12", assignatureId: 3, categoryId: 6 },
-    { id: 21, name: "Examen de Expresiones Algebraicas", description: "Evaluación sobre simplificación de expresiones.", dueDate: "2025-03-01", assignatureId: 3, categoryId: 2 },
-    { id: 22, name: "Proyecto: Modelos Algebraicos", description: "Crear modelos físicos que representen ecuaciones.", dueDate: "2025-03-18", assignatureId: 3, categoryId: 4 },
-    { id: 23, name: "Tarea sobre Propiedades Algebraicas", description: "Ejercicios sobre distribución, asociatividad y conmutatividad.", dueDate: "2025-03-26", assignatureId: 3, categoryId: 1 },
-    { id: 24, name: "Investigación sobre Álgebra y Computación", description: "Cómo se usa el álgebra en la programación.", dueDate: "2025-04-02", assignatureId: 3, categoryId: 6 },
-    { id: 25, name: "Examen sobre Factores Comunes", description: "Evaluación sobre factorización de polinomios.", dueDate: "2025-04-10", assignatureId: 3, categoryId: 2 },
-    { id: 26, name: "Tarea sobre Resolución de Sistemas", description: "Ejercicios de sistemas de ecuaciones.", dueDate: "2025-04-18", assignatureId: 3, categoryId: 1 },
-    { id: 27, name: "Proyecto Final: Aplicaciones del Álgebra", description: "Estudio de casos reales en los que se aplica el álgebra.", dueDate: "2025-04-25", assignatureId: 3, categoryId: 4 },
+    { id: 19, name: "Tarea de Ecuaciones Lineales", description: "Resolver ecuaciones de primer grado.", dueDate: "2025-02-22", assignatureId: 3, categoryId: 1, competencies: [22], capacities: [79, 80] },
+    { id: 20, name: "Investigación: Álgebra en la Vida Real", description: "Cómo se aplica el álgebra en profesiones.", dueDate: "2025-03-12", assignatureId: 3, categoryId: 6, competencies: [22], capacities: [81, 82] },
+    { id: 21, name: "Examen de Expresiones Algebraicas", description: "Evaluación sobre simplificación de expresiones.", dueDate: "2025-03-01", assignatureId: 3, categoryId: 2, competencies: [22], capacities: [80, 81] },
+    { id: 22, name: "Proyecto: Modelos Algebraicos", description: "Crear modelos físicos que representen ecuaciones.", dueDate: "2025-03-18", assignatureId: 3, categoryId: 4, competencies: [22], capacities: [81, 82] },
+    { id: 23, name: "Tarea sobre Propiedades Algebraicas", description: "Ejercicios sobre distribución, asociatividad y conmutatividad.", dueDate: "2025-03-26", assignatureId: 3, categoryId: 1, competencies: [22], capacities: [79] },
+    { id: 24, name: "Investigación sobre Álgebra y Computación", description: "Cómo se usa el álgebra en la programación.", dueDate: "2025-04-02", assignatureId: 3, categoryId: 6, competencies: [22], capacities: [81, 82] },
+    { id: 25, name: "Examen sobre Factores Comunes", description: "Evaluación sobre factorización de polinomios.", dueDate: "2025-04-10", assignatureId: 3, categoryId: 2, competencies: [22], capacities: [80, 81] },
+    { id: 26, name: "Tarea sobre Resolución de Sistemas", description: "Ejercicios de sistemas de ecuaciones.", dueDate: "2025-04-18", assignatureId: 3, categoryId: 1, competencies: [22], capacities: [79] },
+    { id: 27, name: "Proyecto Final: Aplicaciones del Álgebra", description: "Estudio de casos reales en los que se aplica el álgebra.", dueDate: "2025-04-25", assignatureId: 3, categoryId: 4, competencies: [22], capacities: [81, 82] },
   ];
+
   
   
 
