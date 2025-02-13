@@ -35,7 +35,9 @@ const Assignments = ({ assignatureId, area }: Props) => {
 
       {localAssignments.length > 0 ? (
         <ul className="space-y-4">
-          {localAssignments.map((assignment) => (
+          {localAssignments
+            .sort((a, b) => a.dueDate.localeCompare(b.dueDate))
+            .map((assignment) => (
             <AssignmentCard 
                 key={assignment.id}
                 assignment={assignment}

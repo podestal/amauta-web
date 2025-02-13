@@ -246,8 +246,8 @@ export const students = [
 
 export const assignments = [
     // 📐 Geometría
-    { id: 1, name: "Tarea de Triángulos", description: "Resolver problemas sobre la clasificación de triángulos y el Teorema de Pitágoras.", dueDate: "2025-02-20", assignatureId: 1, categoryId: 1, competencies: [23, 21], capacities: [79, 80] },
-    { id: 2, name: "Proyecto: Construcción de Figuras", description: "Crear modelos físicos de figuras geométricas y calcular sus áreas y volúmenes.", dueDate: "2025-03-05", assignatureId: 1, categoryId: 4, competencies: [23, 22], capacities: [81, 82] },
+    { id: 1, name: "Tarea de Triángulos", description: "Resolver problemas sobre la clasificación de triángulos y el Teorema de Pitágoras.", dueDate: "2025-01-20", assignatureId: 1, categoryId: 1, competencies: [23, 21], capacities: [79, 80] },
+    { id: 2, name: "Proyecto: Construcción de Figuras", description: "Crear modelos físicos de figuras geométricas y calcular sus áreas y volúmenes.", dueDate: "2025-02-05", assignatureId: 1, categoryId: 4, competencies: [23, 22], capacities: [81, 82] },
     { id: 3, name: "Examen de Ángulos y Polígonos", description: "Evaluación sobre los diferentes tipos de ángulos, polígonos y sus propiedades.", dueDate: "2025-02-28", assignatureId: 1, categoryId: 2, competencies: [23], capacities: [80, 81] },
     { id: 4, name: "Investigación sobre Círculos", description: "Análisis del área y circunferencia de los círculos.", dueDate: "2025-03-10", assignatureId: 1, categoryId: 6, competencies: [23], capacities: [81, 82] },
     { id: 5, name: "Tarea de Perímetros", description: "Ejercicios sobre cálculo de perímetros de diferentes figuras.", dueDate: "2025-03-15", assignatureId: 1, categoryId: 1, competencies: [23], capacities: [79] },
