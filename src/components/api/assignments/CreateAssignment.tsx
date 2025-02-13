@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Button from "../../ui/Button";
 import Modal from "../../ui/Modal";
 import Input from "../../ui/Input";
@@ -12,9 +12,10 @@ import { Assignment, categories, competencies, capacities } from "../../../data/
 interface Props {
   setLocalAssignments: React.Dispatch<React.SetStateAction<Assignment[]>>;
   assignatureId: number;
+  area: number;
 }
 
-const CreateAssignment = ({ setLocalAssignments, assignatureId }: Props) => {
+const CreateAssignment = ({ setLocalAssignments, assignatureId, area }: Props) => {
   const { setMessage, setShow, setType } = useNotificationsStore();
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
@@ -128,10 +129,14 @@ const CreateAssignment = ({ setLocalAssignments, assignatureId }: Props) => {
                 📌 Competencias
               </h3>
               <div className="flex flex-wrap gap-2">
-                {competencies.map((competency) => (
-                  <button
+                {competencies
+                  .filter((competency) => competency.area === area)
+                  .map((competency) => (
+                  <motion.button
                     key={competency.id}
                     type="button"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                     onClick={() => toggleCompetency(competency.id)}
                     className={`px-3 py-1 text-sm rounded-full transition-all duration-300 ${
                       selectedCompetencies.includes(competency.id)
@@ -140,33 +145,59 @@ const CreateAssignment = ({ setLocalAssignments, assignatureId }: Props) => {
                     }`}
                   >
                     {competency.title}
-                  </button>
+                  </motion.button>
                 ))}
               </div>
             </div>
 
-            {/* Capacity Selector */}
-            <div className="w-full">
-              <h3 className="text-lg font-semibold text-gray-100 mb-2">
-                🎯 Capacidades
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {capacities.map((capacity) => (
-                  <button
-                    key={capacity.id}
-                    type="button"
-                    onClick={() => toggleCapacity(capacity.id)}
-                    className={`px-3 py-1 text-sm rounded-full transition-all duration-300 ${
-                      selectedCapacities.includes(capacity.id)
-                        ? "bg-green-500 text-white"
-                        : "bg-gray-700 text-gray-300 hover:bg-green-400 hover:text-white"
-                    }`}
+            {/* Capacity Selector with Smooth Transitions */}
+            <AnimatePresence>
+              {selectedCompetencies.length > 0 &&
+                selectedCompetencies.map((competency) => (
+                  <motion.div
+                    key={competency}
+                    className="w-full my-8"
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.3 }}
                   >
-                    {capacity.title}
-                  </button>
+                    <h3 className="text-lg font-semibold text-gray-100 mb-2">
+                      🎯 Capacidades para {competency && competencies.find((c) => c.id === competency)?.title}
+                    </h3>
+
+                    <AnimatePresence>
+                      <motion.div
+                        className="flex flex-wrap gap-2"
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.3, delay: 0.1 }}
+                      >
+                        {capacities
+                          .filter((capacity) => capacity.competence === competency)
+                          .map((capacity) => (
+                            <motion.button
+                              key={capacity.id}
+                              type="button"
+                              onClick={() => toggleCapacity(capacity.id)}
+                              className={`px-3 py-1 text-sm rounded-full transition-all duration-300 ${
+                                selectedCapacities.includes(capacity.id)
+                                  ? "bg-green-500 text-white"
+                                  : "bg-gray-700 text-gray-300 hover:bg-green-400 hover:text-white"
+                              }`}
+                              whileHover={{ scale: 1.05 }}
+                              whileTap={{ scale: 0.95 }}
+                              exit={{ opacity: 0, scale: 0.8 }}
+                            >
+                              {capacity.title}
+                            </motion.button>
+                          ))}
+                      </motion.div>
+                    </AnimatePresence>
+                  </motion.div>
                 ))}
-              </div>
-            </div>
+            </AnimatePresence>
 
             <TextArea
               placeholder="Descripción"

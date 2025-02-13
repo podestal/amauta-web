@@ -9,9 +9,8 @@ interface Props {
 const AssignatureCard = ({ assignature }: Props) => {
 
     const navigate = useNavigate()
-
     const handleNavigate = () => {
-        navigate(`/app/assignature/${assignature.id}`)
+        navigate(`/app/assignature/${assignature.id}`, { state: { area: assignature.area } })
     }
 
   return (

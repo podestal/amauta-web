@@ -6,9 +6,10 @@ import { useState } from "react"
 
 interface Props {
     assignatureId: number
+    area: number
 }
 
-const Assignments = ({ assignatureId }: Props) => {
+const Assignments = ({ assignatureId, area }: Props) => {
 
     const filteredAssignments = assignments.filter(assignment => assignment.assignatureId === assignatureId)
     const [localAssignments, setLocalAssignments] = useState<Assignment[]>(filteredAssignments)
@@ -28,6 +29,7 @@ const Assignments = ({ assignatureId }: Props) => {
         <CreateAssignment 
           setLocalAssignments={setLocalAssignments}
           assignatureId={assignatureId}
+          area={area}
         />
       </div>
 

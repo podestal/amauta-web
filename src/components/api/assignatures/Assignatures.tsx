@@ -4,6 +4,7 @@ import AssignatureCard from "./AssignatureCard";
 export interface Assignature {
     id: number;
     name: string;
+    area: number
     icon: JSX.Element;
     color: string;
     textColor: string;
@@ -11,9 +12,9 @@ export interface Assignature {
 }
 
 export const assignatures = [
-  { id: 1, name: "Geometría", icon: <FaShapes />, color: "bg-blue-500", textColor: "text-blue-100", hoverColor: "hover:bg-blue-600" },
-  { id: 2, name: "Aritmética", icon: <FaCalculator />, color: "bg-green-500", textColor: "text-green-100", hoverColor: "hover:bg-green-600" },
-  { id: 3, name: "Álgebra", icon: <FaSuperscript />, color: "bg-purple-500", textColor: "text-purple-100", hoverColor: "hover:bg-purple-600" },
+  { id: 1, name: "Geometría", area: 9, icon: <FaShapes />, color: "bg-blue-500", textColor: "text-blue-100", hoverColor: "hover:bg-blue-600" },
+  { id: 2, name: "Aritmética", area: 9, icon: <FaCalculator />, color: "bg-green-500", textColor: "text-green-100", hoverColor: "hover:bg-green-600" },
+  { id: 3, name: "Álgebra", area: 9, icon: <FaSuperscript />, color: "bg-purple-500", textColor: "text-purple-100", hoverColor: "hover:bg-purple-600" },
 ];
 
 const Assignatures = () => {
