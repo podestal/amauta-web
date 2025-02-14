@@ -16,9 +16,10 @@ export interface StudentsTable {
     grades: {
         [key: number]: string;
     };
-    averages: {
+    competencyGrades: {
         [key: number]: string;
     }
+    finalGrade: string;
 }
 
 
@@ -32,7 +33,9 @@ export const studentsTable = [
         10: "A", 11: "B", 12: "C", 13: "B", 14: "A", 15: "A", 16: "B", 17: "C", 18: "A",
         19: "A", 20: "B", 21: "B", 22: "C", 23: "A", 24: "A", 25: "B", 26: "B", 27: "A",
       },
-      averages: {1: 'A', 2: 'AD', 3: 'C'}
+      competencyGrades: {21: 'A', 22: 'B', 23: 'C', 24: 'A'},
+      finalGrade: 'A',
+    //   averages: {1: 'A', 2: 'AD', 3: 'C'}
     },
     {
       id: 10034567,
@@ -43,7 +46,8 @@ export const studentsTable = [
         10: "C", 11: "B", 12: "A", 13: "C", 14: "A", 15: "A", 16: "B", 17: "B", 18: "A",
         19: "C", 20: "B", 21: "B", 22: "A", 23: "C", 24: "A", 25: "B", 26: "B", 27: "A",
       },
-      averages: {1: 'B', 2: 'C', 3: 'C'}
+      competencyGrades: {21:'AD', 22: 'A', 23: 'B', 24: 'C'},
+      finalGrade: 'B',
     },
     {
       id: 10045678,
@@ -54,7 +58,8 @@ export const studentsTable = [
         10: "B", 11: "A", 12: "C", 13: "B", 14: "AD", 15: "A", 16: "B", 17: "C", 18: "B",
         19: "C", 20: "B", 21: "A", 22: "C", 23: "A", 24: "B", 25: "C", 26: "B", 27: "NA",
       },
-        averages: {1: 'C', 2: 'A', 3: 'B'}
+      competencyGrades: {21: 'C', 22: 'B', 23: 'A', 24: 'AD'},
+      finalGrade: 'C',
     },
     {
       id: 10056789,
@@ -65,7 +70,8 @@ export const studentsTable = [
         10: "C", 11: "A", 12: "B", 13: "A", 14: "C", 15: "B", 16: "A", 17: "B", 18: "C",
         19: "B", 20: "A", 21: "C", 22: "B", 23: "A", 24: "AD", 25: "B", 26: "B", 27: "NA",
       },
-        averages: {1: 'AD', 2: 'B', 3: 'C'}
+      competencyGrades: {21: 'AD', 22: 'B', 23: 'A', 24: 'C'},
+      finalGrade: 'AD',
     },
     {
       id: 10067890,
@@ -76,7 +82,8 @@ export const studentsTable = [
         10: "A", 11: "B", 12: "C", 13: "A", 14: "B", 15: "NA", 16: "C", 17: "A", 18: "B",
         19: "C", 20: "B", 21: "A", 22: "B", 23: "NA", 24: "C", 25: "B", 26: "B", 27: "NA",
       },
-        averages: {1: 'A', 2: 'B', 3: 'C'}
+      competencyGrades: {21: 'A', 22: 'B', 23: 'C', 24: 'A'},
+      finalGrade: 'B',
     },
     {
       id: 10078901,
@@ -87,7 +94,8 @@ export const studentsTable = [
         10: "A", 11: "B", 12: "C", 13: "A", 14: "C", 15: "B", 16: "A", 17: "B", 18: "B",
         19: "B", 20: "C", 21: "A", 22: "B", 23: "C", 24: "B", 25: "B", 26: "B", 27: "A",
       },
-        averages: {1: 'B', 2: 'C', 3: 'A'}
+      competencyGrades: {21: 'C', 22: 'A', 23: 'B', 24: 'B'},
+      finalGrade: 'A',
     },
     {
       id: 10089012,
@@ -98,7 +106,8 @@ export const studentsTable = [
         10: "A", 11: "C", 12: "B", 13: "B", 14: "A", 15: "B", 16: "B", 17: "C", 18: "A",
         19: "A", 20: "C", 21: "B", 22: "A", 23: "B", 24: "A", 25: "B", 26: "B", 27: "C",
       },
-        averages: {1: 'A', 2: 'B', 3: 'C'}
+      competencyGrades: {21: 'B', 22: 'A', 23: 'B', 24: 'AD'},
+      finalGrade: 'A',
     },
     {
         id: 10090123,
@@ -109,7 +118,8 @@ export const studentsTable = [
           10: "C", 11: "A", 12: "B", 13: "C", 14: "A", 15: "B", 16: "C", 17: "A", 18: "B",
           19: "C", 20: "A", 21: "B", 22: "C", 23: "A", 24: "B", 25: "C", 26: "A", 27: "B",
         },
-        averages: {1: 'C', 2: 'A', 3: 'B'}
+        competencyGrades: {21: 'B', 22: 'C', 23: 'A', 24: 'B'},
+        finalGrade: 'B',
     },
     {
         id: 10101234,
@@ -120,7 +130,8 @@ export const studentsTable = [
           10: "A", 11: "B", 12: "C", 13: "A", 14: "B", 15: "NA", 16: "C", 17: "A", 18: "B",
           19: "C", 20: "B", 21: "A", 22: "B", 23: "NA", 24: "C", 25: "B", 26: "B", 27: "NA",
         },
-        averages: {1: 'A', 2: 'B', 3: 'C'}
+        competencyGrades: {21: 'A', 22: 'B', 23: 'AD', 24: 'A'},
+        finalGrade: 'AD',
     },
     {
         id: 10112345,
@@ -131,7 +142,8 @@ export const studentsTable = [
           10: "A", 11: "B", 12: "C", 13: "B", 14: "A", 15: "C", 16: "B", 17: "A", 18: "B",
           19: "B", 20: "C", 21: "A", 22: "B", 23: "C", 24: "B", 25: "B", 26: "A", 27: "B",
         },
-        averages: {1: 'B', 2: 'A', 3: 'C'}
+        competencyGrades: {21: 'B', 22: 'A', 23: 'C', 24: 'B'},
+        finalGrade: 'B',
     },
     {
         id: 10123456,
@@ -142,7 +154,8 @@ export const studentsTable = [
           10: "A", 11: "B", 12: "C", 13: "A", 14: "B", 15: "NA", 16: "C", 17: "A", 18: "B",
           19: "C", 20: "B", 21: "A", 22: "B", 23: "NA", 24: "C", 25: "B", 26: "B", 27: "NA",
         },
-        averages: {1: 'A', 2: 'B', 3: 'C'}
+        competencyGrades: {21: 'A', 22: 'B', 23: 'C', 24: 'A'},
+        finalGrade: 'A',
     },
     {
         id: 10134567,
@@ -153,7 +166,8 @@ export const studentsTable = [
           10: "A", 11: "B", 12: "C", 13: "B", 14: "A", 15: "C", 16: "B", 17: "A", 18: "B",
           19: "B", 20: "C", 21: "A", 22: "B", 23: "C", 24: "B", 25: "B", 26: "A", 27: "B",
         },
-        averages: {1: 'B', 2: 'A', 3: 'C'}
+        competencyGrades: {21: 'AD', 22: 'A', 23: 'C', 24: 'B'},
+        finalGrade: 'C',
     },
     {
         id: 10145678,
@@ -164,7 +178,8 @@ export const studentsTable = [
           10: "A", 11: "B", 12: "C", 13: "A", 14: "B", 15: "NA", 16: "C", 17: "A", 18: "B",
           19: "C", 20: "B", 21: "A", 22: "B", 23: "NA", 24: "C", 25: "B", 26: "B", 27: "NA",
         },
-        averages: {1: 'A', 2: 'B', 3: 'C'}
+        competencyGrades: {21: 'A', 22: 'B', 23: 'C', 24: 'A'},
+        finalGrade: 'A',
     },
     {
         id: 10156789,
@@ -175,7 +190,8 @@ export const studentsTable = [
           10: "A", 11: "B", 12: "C", 13: "B", 14: "A", 15: "C", 16: "B", 17: "A", 18: "B",
           19: "B", 20: "C", 21: "A", 22: "B", 23: "C", 24: "B", 25: "B", 26: "A", 27: "B",
         },
-        averages: {1: 'B', 2: 'A', 3: 'C'}
+        competencyGrades: {21: 'AD', 22: 'A', 23: 'C', 24: 'B'},
+        finalGrade: 'C',
     },
     {
         id: 10167890,
@@ -186,7 +202,8 @@ export const studentsTable = [
           10: "A", 11: "B", 12: "C", 13: "A", 14: "B", 15: "NA", 16: "C", 17: "A", 18: "B",
           19: "C", 20: "B", 21: "A", 22: "B", 23: "NA", 24: "C", 25: "B", 26: "B", 27: "NA",
         },
-        averages: {1: 'A', 2: 'B', 3: 'C'}
+        competencyGrades: {21: 'A', 22: 'B', 23: 'C', 24: 'A'},
+        finalGrade: 'B',
     }
   ];
   

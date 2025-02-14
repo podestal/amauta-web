@@ -99,12 +99,27 @@ const GradesSummaryPage = () => {
       transition={{ duration: 0.5 }}
     >
       {/* Table Header */}
-      <div className="flex bg-gray-800 text-white">
+      <div className="flex items-center bg-gray-800 text-white font-bold">
         <h2 className="min-w-[300px] max-w-[300px] py-3 px-4">Estudiante</h2>
-        <h2 className="min-w-[160px] max-w-[160px] h-[100px] py-3 px-4 text-center">Promedio</h2>
-        {assignments
+        <h2 className="min-w-[160px] max-w-[160px] py-3 px-4 text-center">Promedio</h2>
+        {selectedComeptency === '0' 
+          ? 
+          <>
+          {filteredCompetencies.map(competency => (
+            <h2 
+              key={competency.id} 
+              className="min-w-[160px] max-w-[160px] py-3 px-4 text-center"
+            >
+              {competency.title}
+            </h2>
+          ))}
+          </>  
+          :
+          <>
+          {assignments
           .filter(assignment => assignment.assignatureId.toString() === selectedAssignature)
           .filter(assignment => selectedCategory === '0' || assignment.categoryId.toString() === selectedCategory)
+          .filter(assignment => assignment.competencies.includes(parseInt(selectedComeptency)))
           .map((assignment) => (
             <h2 
               key={assignment.id} 
@@ -113,6 +128,8 @@ const GradesSummaryPage = () => {
               {assignment.name}
             </h2>
           ))}
+          </>
+        }
       </div>
 
       {/* Table Rows */}
@@ -130,16 +147,49 @@ const GradesSummaryPage = () => {
             {student.firstName} {student.lastName}
           </h2>
           {/* Average Grade */}
-          {student.averages[parseInt(selectedAssignature)] && (
-            <h2 className={`min-w-[160px] max-w-[160px] py-3 px-4 text-center ${gradeStyles[student.averages[parseInt(selectedAssignature)]]}`}>
-              {student.averages[parseInt(selectedAssignature)]}
-            </h2>
-          )}
+          {selectedComeptency === '0' 
+          ? 
+          <>
+            {student.finalGrade && (
+              <h2 className={`min-w-[160px] max-w-[160px] py-3 px-4 text-center ${gradeStyles[student.finalGrade]}`}>
+                {student.finalGrade}
+              </h2>
+            )}
+          </> 
+          : 
+          <>
+            {student.competencyGrades[parseInt(selectedComeptency)] && (
+              <h2 className={`min-w-[160px] max-w-[160px] py-3 px-4 text-center ${gradeStyles[student.competencyGrades[parseInt(selectedComeptency)]]}`}>
+                {student.competencyGrades[parseInt(selectedComeptency)]}
+              </h2>
+            )}
+          </>
+          }
 
           {/* Grades Selection */}
+          {selectedComeptency === '0' 
+          ? 
+          <>
+          <>{console.log('student.competencyGrades', student.competencyGrades)}</>
+          {/* {student.competencyGrades && (
+              <h2 className={`min-w-[160px] max-w-[160px] py-3 px-4 text-center ${gradeStyles[student.competencyGrades[parseInt(selectedComeptency)]]}`}>
+                {student.competencyGrades[parseInt(selectedComeptency)]}
+              </h2>
+            )} */}
+            {filteredCompetencies.map(competency => (
+              <>
+              <h2 className={`min-w-[160px] max-w-[160px] py-3 px-4 text-center hover:opacity-80 cursor-pointer ${gradeStyles[student.competencyGrades[competency.id]]}`}>
+                {student.competencyGrades[competency.id]}
+              </h2>
+              </>
+            ))}
+          </> 
+          : 
+          <>
           {assignments
             .filter(assignment => assignment.assignatureId.toString() === selectedAssignature)
             .filter(assignment => selectedCategory === '0' || assignment.categoryId.toString() === selectedCategory)
+            .filter(assignment => assignment.competencies.includes(parseInt(selectedComeptency)))
             .map((assignment) => (
               <div 
                 key={`${student.id}-${assignment.id}`} 
@@ -158,6 +208,30 @@ const GradesSummaryPage = () => {
                 </select>
               </div>
           ))}
+          </>
+          }
+          {/* {assignments
+            .filter(assignment => assignment.assignatureId.toString() === selectedAssignature)
+            .filter(assignment => selectedCategory === '0' || assignment.categoryId.toString() === selectedCategory)
+            .filter(assignment => assignment.competencies.includes(parseInt(selectedComeptency)))
+            .map((assignment) => (
+              <div 
+                key={`${student.id}-${assignment.id}`} 
+                className="min-w-[160px] max-w-[160px] px-4 py-1 text-center"
+              >
+                <select
+                  className={` px-4 py-1 rounded-full font-semibold cursor-pointer outline-none transition-all duration-300 ${gradeStyles[student.grades?.[assignment.id]]}`}
+                  value={student.grades?.[assignment.id] || "NA"}
+                  onChange={(e) => handleGradeChange(student.id, assignment.id, e.target.value)}
+                >
+                  {gradeOptions.map((grade) => (
+                    <option key={grade} value={grade}>
+                      {grade}
+                    </option>
+                  ))}
+                </select>
+              </div>
+          ))} */}
         </motion.div>
       ))}
     </motion.div>
