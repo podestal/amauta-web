@@ -3,6 +3,7 @@ import { assignments, Assignment } from "../../../data/mockdataForGrades"
 import CreateAssignment from "./CreateAssignment"
 import AssignmentCard from "./AssignmentCard"
 import { useState } from "react"
+import moment from "moment"
 
 interface Props {
     assignatureId: number
@@ -36,7 +37,19 @@ const Assignments = ({ assignatureId, area }: Props) => {
       {localAssignments.length > 0 ? (
         <ul className="space-y-4">
           {localAssignments
-            .sort((a, b) => a.dueDate.localeCompare(b.dueDate))
+            .sort((a, b) => {
+              const now = moment();
+              const dueA = moment(a.dueDate);
+              const dueB = moment(b.dueDate);
+    
+              const isPastA = dueA.isBefore(now, "day");
+              const isPastB = dueB.isBefore(now, "day");
+    
+              if (isPastA && !isPastB) return 1; // Push past-due to bottom
+              if (!isPastA && isPastB) return -1; // Keep upcoming at top
+    
+              return dueA.diff(dueB); // Sort by date
+            })
             .map((assignment) => (
             <AssignmentCard 
                 key={assignment.id}

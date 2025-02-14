@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { assignments } from "../data/mockdataForGrades";
+import { assignments, competencies } from "../data/mockdataForGrades";
 import { assignatures } from "../components/api/assignatures/Assignatures";
 import { studentsTable as initialStudents, StudentsTable } from "../data/mockdataForGrades";
 import Selector from "../components/ui/Selector";
@@ -35,7 +35,8 @@ const GradesSummaryPage = () => {
 
   const [students, setStudents] = useState<StudentsTable[]>(initialStudents);
   const [selectedAssignature, setSelectedAssignature] = useState('0');
-
+  const filteredCompetencies = competencies.filter(competency => competency.area.toString() === assignatures.find(assignature => assignature.id.toString() === selectedAssignature)?.area.toString());
+  const [selectedComeptency, setSelectedCompetency] = useState('0');
   const [selectedQuarter, setSelectedQuarter] = useState('1');
   const [selectedCategory, setSelectedCategory] = useState('0');
 
@@ -59,11 +60,18 @@ const GradesSummaryPage = () => {
   return (
     <div className="w-full mx-auto px-6 py-12">
       <h2 className="text-3xl font-bold text-center mb-6">📊 Resumen de Calificaciones</h2>
-      <div className="w-full grid grid-cols-3 gap-12 my-12">
+      <div className="w-full grid grid-cols-4 gap-12 my-12">
         <Selector 
           label={"Curso"}
           values={assignatures.map(assignature => ({id: assignature.id.toString(), name: assignature.name}))}
           setter={setSelectedAssignature}
+          lan="ES"
+        />
+        <Selector 
+          label={"Competencia"}
+          values={[{id: '0', name: 'Todas'}, ...filteredCompetencies.map(competency => ({id: competency.id.toString(), name: competency.title}))]}
+          setter={setSelectedCompetency}
+          defaultValue="0"
           lan="ES"
         />
         <Selector 
@@ -81,20 +89,6 @@ const GradesSummaryPage = () => {
           lan="ES"
         />
       </div>
-          {/* Table Header */}
-          {/* <thead>
-            <tr className="bg-gray-800 text-white" >
-              <th className="py-3 px-4 text-left w-[50px]">Estudiante</th>
-              {assignments
-              .filter(assignment => (assignment.assignatureId ).toString() === selectedAssignature)
-              .filter(assignment => selectedCategory === '0' || (assignment.categoryId ).toString() === selectedCategory)
-              .map((assignment) => (
-                <th key={assignment.id} className="py-3 px-4 text-center">
-                  {assignment.name}
-                </th>
-              ))}
-            </tr>
-          </thead> */}
       <div className="overflow-x-auto">
       {selectedAssignature !== '0' && (
   <div className="w-full overflow-x-auto">
