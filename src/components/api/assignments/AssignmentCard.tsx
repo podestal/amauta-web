@@ -93,7 +93,7 @@ const AssignmentCard = ({ assignment }: Props) => {
   const isPastDue = moment(assignment.dueDate).isBefore(moment(), "day")
 
   const handleClick = () => {
-    navigate(`/app/grades/${assignment.id}`);
+    navigate(`/app/grades/${assignment.id}`, { state: { assignment } });
   };
 
   return (
