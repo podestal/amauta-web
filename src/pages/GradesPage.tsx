@@ -31,58 +31,85 @@ const GradesPage = () => {
     <div className="w-full max-w-[95%] sm:max-w-[600px] md:max-w-[800px] lg:max-w-[1024px] xl:max-w-[1200px] 2xl:max-w-[1380px] mx-auto px-6 py-12">
       <h2 className="text-3xl font-bold text-center mb-6">📊 Calificaciones</h2>
 
-      <div className="overflow-x-auto">
-        <motion.table
+      <div className="overflow-x-auto max-lg:hidden">
+        <motion.div
           className="w-full border-collapse bg-white dark:bg-gray-900 shadow-md rounded-lg overflow-hidden"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
           {/* Table Header */}
-          <thead>
-            <tr className="bg-gray-800 text-white">
-                <th className="py-3 px-4 text-left">DNI</th>
-                <th className="py-3 px-4 text-left">Apellido</th>
-                <th className="py-3 px-4 text-left">Nombre</th>
-                <th className="py-3 px-4 text-center">Calificación</th>
-            </tr>
-          </thead>
+          <div className="grid grid-cols-8 bg-gray-800 text-white font-bold min-h-14">
+              <h2 className="flex items-center justify-left px-2">DNI</h2>
+              <h2 className="flex items-center justify-left">Nombres</h2>
+              <h2 className="flex items-center justify-left">Apellido</h2>
+              <h2 className="flex items-center justify-center col-span-5">Calificación</h2>
+          </div>
 
           {/* Table Body */}
-          <tbody>
+          <div>
             {students
                 .sort((a, b) => a.lastName.localeCompare(b.lastName))
                 .map((student, index) => (
-              <motion.tr
+              <motion.div
                 key={student.id}
-                className="border-bborder-gray-700 hover:bg-gray-800 transition-colors"
+                className="border-bborder-gray-700 hover:bg-gray-800 transition-colors grid grid-cols-8"
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.3, delay: index * 0.05 }}
               >
-                <td className="py-3 px-4">{student.id}</td>
-                <td className="py-3 px-4">{student.lastName}</td>
-                <td className="py-3 px-4">{student.firstName}</td>
-                <td className="py-3 px-4 text-center">
-                  {/* Grade Dropdown */}
-                  <select
-                    className={`px-4 py-1 rounded-full font-semibold cursor-pointer outline-none transition-all duration-300 ${gradeStyles[student.grade]}`}
-                    value={student.grade}
-                    onChange={(e) => handleGradeChange(student.id, e.target.value)}
-                  >
-                    {gradeOptions.map((grade) => (
-                      <option key={grade} value={grade}>
-                        {grade}
-                      </option>
+                <h2 className="flex items-center justify-left px-2">{student.id}</h2>
+                <h2 className="flex items-center justify-left">{student.lastName}</h2>
+                <h2 className="flex items-center justify-left">{student.firstName}</h2>
+                <div className="py-3 px-4 text-center col-span-5">
+                  <div className="w-full flex justify-evenly gap-2">
+                    {gradeOptions.map( grade => (
+                      <>
+                        <p 
+                          onClick={() => handleGradeChange(student.id, grade)}
+                          className={` w-16 rounded-3xl cursor-pointer hover:opacity-80 transition-all duration-300 ${grade === student.grade ? `${gradeStyles[student.grade]}` : 'bg-gray-300 text-gray-700'}`}>{grade}</p>
+                      </>
                     ))}
-                  </select>
-                </td>
-              </motion.tr>
+                  </div>
+                </div>
+              </motion.div>
             ))}
-          </tbody>
-        </motion.table>
+          </div>
+        </motion.div>
       </div>
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="lg:hidden">
+          <div>
+            {students
+              .sort((a, b) => a.lastName.localeCompare(b.lastName))
+              .map((student, index) => (
+              <motion.div
+                key={student.id}
+                className="flex flex-col gap-6 justify-between items-center bg-gray-800 p-3 rounded-lg shadow mb-4 hover:bg-gray-700 cursor-pointer"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.05 }}
+              >
+                <div className="flex items-center">
+                  <h2 className="font-semibold text-xl">{student.lastName}, {student.firstName}</h2>
+                </div>
+                <div className="flex gap-2">
+                  {gradeOptions.map( grade => (
+                    <>
+                      <p 
+                        onClick={() => handleGradeChange(student.id, grade)}
+                        className={` w-16 py-2 text-center rounded-3xl cursor-pointer hover:opacity-80 transition-all duration-300 ${grade === student.grade ? `${gradeStyles[student.grade]}` : 'bg-gray-300 text-gray-700'}`}>{grade}</p>
+                    </>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+      </motion.div>
     </div>
   );
 };

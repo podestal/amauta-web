@@ -170,7 +170,6 @@ const GradesSummaryPage = () => {
           {selectedComeptency === '0' 
           ? 
           <>
-          <>{console.log('student.competencyGrades', student.competencyGrades)}</>
           {/* {student.competencyGrades && (
               <h2 className={`min-w-[160px] max-w-[160px] py-3 px-4 text-center ${gradeStyles[student.competencyGrades[parseInt(selectedComeptency)]]}`}>
                 {student.competencyGrades[parseInt(selectedComeptency)]}
