@@ -93,8 +93,7 @@ const CreateAssignment = ({ setLocalAssignments, assignatureId, area }: Props) =
             onSubmit={handleSubmit}
             className="flex flex-col justify-start items-center gap-6 pb-20 w-full lg:w-[65%] mx-auto py-10"
           >
-            <div className="w-[60%] lg:w-full">
-              <Input
+            <Input
                 placeholder="Título"
                 value={title}
                 onChange={(e) => {
@@ -103,7 +102,6 @@ const CreateAssignment = ({ setLocalAssignments, assignatureId, area }: Props) =
                 }}
                 error={titleError}
               />
-            </div>
 
             {/* Category Selector */}
             <Selector
@@ -116,12 +114,10 @@ const CreateAssignment = ({ setLocalAssignments, assignatureId, area }: Props) =
             />
 
             {/* Due Date */}
-            <div className="w-[60%] lg:w-full">
-              <p className="text-lg lg:text-xl dark:text-slate-50 text-center mb-6">
+            <p className="text-lg lg:text-xl dark:text-slate-50 text-center mb-6">
                 Fecha de Entrega
               </p>
-              <Calendar selectedDate={dueDate} setSelectedDate={setDueDate} />
-            </div>
+            <Calendar selectedDate={dueDate} setSelectedDate={setDueDate} />
 
             {/* Competency Selector */}
             <div className="w-full">

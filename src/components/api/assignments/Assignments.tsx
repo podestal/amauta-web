@@ -35,7 +35,7 @@ const Assignments = ({ assignatureId, area }: Props) => {
       </div>
 
       {localAssignments.length > 0 ? (
-        <ul className="space-y-4">
+        <ul className="space-y-4 pb-10">
           {localAssignments
             .sort((a, b) => {
               const now = moment();

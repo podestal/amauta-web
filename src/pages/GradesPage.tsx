@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { students as initialStudents } from "../data/mockdataForGrades";
 import { useLocation } from "react-router-dom";
+import useNotificationsStore from "../hooks/store/useNotificationsStore";
 
 // Define grades and their styles
 const gradeOptions = ["NA", "C", "B", "A", "AD"];
@@ -19,6 +20,7 @@ const gradeStyles: Record<string, string> = {
 const GradesPage = () => {
   const [students, setStudents] = useState(initialStudents);
   const assignment = useLocation().state.assignment
+  const { setMessage, setShow, setType } = useNotificationsStore()
 
   // Function to update the grade
   const handleGradeChange = (id: number, newGrade: string) => {
@@ -26,7 +28,10 @@ const GradesPage = () => {
       prev.map((student) =>
         student.id === id ? { ...student, grade: newGrade } : student
       )
-    );
+    )
+    setType('success')
+    setShow(true)
+    setMessage('Calificación asignada exitosamente!')
   };
 
   return (
