@@ -8,12 +8,13 @@ import { useLocation } from "react-router-dom"
 import useGetProfileStore from "../../../hooks/store/useGetProfileStore"
 import { Instructor } from "../../../services/api/instructorService"
 import moment from "moment"
-import Tabs from "../../ui/Tabs"
-import StudentAdminCard from "./StudentAdminCard"
-import Modal from "../../ui/Modal"
-import Button from "../../ui/Button"
-import CreateStudent from "./CreateStudent"
-import useGetClassroom from "../../../hooks/api/classroom/useGetClassroom"
+// import Tabs from "../../ui/Tabs"
+// import StudentAdminCard from "./StudentAdminCard"
+// import Modal from "../../ui/Modal"
+// import Button from "../../ui/Button"
+// import CreateStudent from "./CreateStudent"
+// import useGetClassroom from "../../../hooks/api/classroom/useGetClassroom"
+import useLoader from "../../../hooks/ui/useLoader"
 
 interface Props {
     classroom?: string
@@ -23,7 +24,7 @@ interface Props {
 const Students = ({ classroom, level }: Props) => {
 
     const today = moment().date()
-    const [open, setOpen] = useState(false)
+    // const [open, setOpen] = useState(false)
     const [filter, setFilter] = useState('')
     const access = useAuthStore(s => s.access) || ''
     const classroomId = classroom ? classroom : useLocation().state?.classroom
@@ -33,18 +34,26 @@ const Students = ({ classroom, level }: Props) => {
     const instructor = group === 'instructor' && profile as Instructor
     const canModifyAttendance = instructor && currentLevel === 'P'
 
-    const { data: classrooms, isLoading: classroomLoading, isError: isErrorClassroom, error: classroomError, isSuccess: classroomSuccess } = useGetClassroom({ access })
+    // const { data: classrooms, isLoading: classroomLoading, isError: isErrorClassroom, error: classroomError, isSuccess: classroomSuccess } = useGetClassroom({ access })
+    // const {data: students, isLoading, isError, error, isSuccess} = useGetStudents({ access, classroomId, day: today.toString() })
+
+    // if (isLoading || classroomLoading) return <p className="animate-pulse text-center text-2xl pt-20">Un momento ...</p>
+
+    // if (isError || isErrorClassroom) return <p>Error {error ? error.message : classroomError?.message}</p>
+
+    // if (isSuccess && classroomSuccess)
+
     const {data: students, isLoading, isError, error, isSuccess} = useGetStudents({ access, classroomId, day: today.toString() })
 
-    if (isLoading || classroomLoading) return <p className="animate-pulse text-center text-2xl pt-20">Un momento ...</p>
+    useLoader(isLoading)
 
-    if (isError || isErrorClassroom) return <p>Error {error ? error.message : classroomError?.message}</p>
+    if (isError) return <p>Error {error.message}</p>
 
-    if (isSuccess && classroomSuccess)
+    if (isSuccess)
 
   return (
     <>
-    <div className="pt-14 max-lg:hidden">
+    {/* <div className="pt-14 max-lg:hidden">
         <Tabs
             tabs={[
             {
@@ -133,8 +142,8 @@ const Students = ({ classroom, level }: Props) => {
             },
             ]}
         />
-    </div>
-    <div className="pt-10 pb-20 lg:hidden">
+    </div> */}
+    <div className="pt-10 pb-20">
         <h2 className="text-5xl font-bold text-center">Alumnos</h2>
         <StudentFilter 
             filter={filter}
