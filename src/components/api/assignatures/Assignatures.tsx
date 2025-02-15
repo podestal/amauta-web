@@ -1,5 +1,6 @@
 import { FaShapes, FaCalculator, FaSuperscript } from "react-icons/fa";
 import AssignatureCard from "./AssignatureCard";
+import { motion } from "framer-motion";
 
 export interface Assignature {
     id: number;
@@ -20,9 +21,13 @@ export const assignatures = [
 const Assignatures = () => {
   return (
     <div className="w-full max-w-4xl mx-auto px-6 py-12">
-      <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-800 dark:text-gray-200 mb-10">
+      <motion.h2 
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="text-3xl md:text-4xl font-bold text-center text-gray-800 dark:text-gray-200 mb-10">
         📚 Asignaturas
-      </h2>
+      </motion.h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
         {assignatures.map((assignature) => (
             <AssignatureCard 

@@ -44,21 +44,31 @@ const CategoriesPage = () => {
 
   return (
     <div className="w-full max-w-4xl mx-auto p-6 shadow-lg rounded-lg">
-      {/* Header */}
-      <h2 className="text-3xl font-bold text-center mb-6 pt-10">📊 Categorías de Evaluación</h2>
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}    
+    >
+        {/* Header */}
+        <h2 className="text-3xl font-bold text-center mb-6 pt-10">📊 Categorías de Evaluación</h2>
 
-      {/* Total Weight Warning */}
-      <div
+        {/* Total Weight Warning */}
+        <div
         className={`text-center font-semibold p-3 rounded-md mb-4 ${
             totalWeight.toFixed(2) === '100.00' ? "bg-green-500 text-white" : "bg-red-500 text-white"
         }`}
-      >
+        >
         Peso total: {totalWeight.toFixed(2)}%
         {totalWeight.toFixed(2) !== '100.00' && <p>Asegúrate de que el total sea 100%.</p>}
-      </div>
+        </div>
+      </motion.div>
 
       {/* Form to Add/Edit Categories */}
-      <div className="flex flex-col md:flex-row gap-4 mb-6">
+      <motion.div 
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="flex flex-col md:flex-row gap-4 mb-6">
         <Input 
             name="name"
             placeholder="Nombre"
@@ -79,10 +89,14 @@ const CategoriesPage = () => {
         ) : (
           <Button onClick={handleAddCategory} label="Añadir" />
         )}
-      </div>
+      </motion.div>
 
       {/* Category List */}
-      <div className="bg-gray-900 p-4 rounded-lg shadow-md">
+      <motion.div 
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="bg-gray-900 p-4 rounded-lg shadow-md">
         {categories.map((category) => (
           <motion.div
             key={category.id}
@@ -104,7 +118,7 @@ const CategoriesPage = () => {
             </div>
           </motion.div>
         ))}
-      </div>
+      </motion.div>
 
       {/* Chart */}
       <div className="mt-8">

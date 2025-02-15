@@ -4,6 +4,7 @@ import { assignments, competencies } from "../data/mockdataForGrades";
 import { assignatures } from "../components/api/assignatures/Assignatures";
 import { studentsTable as initialStudents, StudentsTable } from "../data/mockdataForGrades";
 import Selector from "../components/ui/Selector";
+import Button from "../components/ui/Button";
 
 const gradeOptions = ["A", "B", "C", "AD", "NA"]; // Grade choices
 
@@ -59,11 +60,16 @@ const GradesSummaryPage = () => {
 
   return (
     <div className="w-full mx-auto px-6 py-12">
-      <motion.h2 
-        initial={{ opacity: 0, x: -30 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.5 }}
-        className="text-3xl font-bold text-center mb-6">📊 Resumen de Calificaciones</motion.h2>
+        <motion.div 
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+          className="flex justify-between items-center gap-4 mb-6">
+            <h2 className="text-3xl font-bold ">📊 Resumen de Calificacione</h2>
+            <Button 
+              label="Exportar"
+            />
+        </motion.div>
       <motion.div 
         initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}

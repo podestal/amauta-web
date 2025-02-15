@@ -6,6 +6,7 @@ import moment from "moment";
 import Button from "../../../ui/Button";
 import html2canvas from "html2canvas";
 import AttendanceReportTitle from "./AttendanceReportTitle";
+import { motion } from "framer-motion";
 
 const AttendanceReport = () => {
 
@@ -57,8 +58,15 @@ const AttendanceReport = () => {
             
 
             {/* PDF Export Button */}
-            <div className="grid grid-cols-3 w-full mb-8">
-              <h2 className="text-4xl text-center font-bold">Reporte de Asistencia</h2>
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="grid grid-cols-3 w-full mb-8">
+              <h2 
+                className="text-4xl text-center font-bold">
+                Reporte de Asistencia
+              </h2>
               <div className="col-span-2 flex justify-end items-center">
                 <Button
                     onClick={generateImage}
@@ -68,7 +76,7 @@ const AttendanceReport = () => {
                     minWidth
                 />
               </div>
-            </div>
+            </motion.div>
      
 
             {/* Wrap all content inside this div for PDF capture */}
