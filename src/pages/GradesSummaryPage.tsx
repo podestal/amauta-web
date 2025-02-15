@@ -59,8 +59,16 @@ const GradesSummaryPage = () => {
 
   return (
     <div className="w-full mx-auto px-6 py-12">
-      <h2 className="text-3xl font-bold text-center mb-6">📊 Resumen de Calificaciones</h2>
-      <div className="w-full grid grid-cols-4 gap-12 my-12">
+      <motion.h2 
+        initial={{ opacity: 0, x: -30 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.5 }}
+        className="text-3xl font-bold text-center mb-6">📊 Resumen de Calificaciones</motion.h2>
+      <motion.div 
+        initial={{ opacity: 0, y: -30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="w-full grid grid-cols-4 gap-12 my-12">
         <Selector 
           label={"Curso"}
           values={assignatures.map(assignature => ({id: assignature.id.toString(), name: assignature.name}))}
@@ -88,7 +96,7 @@ const GradesSummaryPage = () => {
           defaultValue={selectedCategory}
           lan="ES"
         />
-      </div>
+      </motion.div>
       <div className="overflow-x-auto">
       {selectedAssignature !== '0' && (
   <div className="w-full overflow-x-auto">

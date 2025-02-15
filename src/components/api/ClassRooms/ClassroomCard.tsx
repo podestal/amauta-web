@@ -14,6 +14,11 @@ const ClassroomCard = ({ classroom }: Props) => {
   const classRoomDescription = getClassroomDescription({ lan, grade, section, level });
   const navigate = useNavigate();
 
+  const itemVariants = {
+    hidden: { opacity: 0, x: 50 }, 
+    visible: { opacity: 1, x: 0 }, 
+  };
+
   const handleNavigate = () => {
     navigate(`/app/students?classroom=${id}`, { state: { level, classroom: id } });
   };
@@ -31,6 +36,7 @@ const ClassroomCard = ({ classroom }: Props) => {
 
   return (
     <motion.div
+      variants={itemVariants}
       onClick={handleNavigate}
       className={`w-full shadow-2xl cursor-pointer border-b-2 border-r-2 rounded-3xl py-8 px-6 flex flex-col justify-center items-center mt-10 text-white 
       ${selectedColor.bg} ${selectedColor.hoverBg} ${selectedColor.border} ${selectedColor.shadow}`}
