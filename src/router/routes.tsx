@@ -10,7 +10,7 @@ import DownloadappPage from "../pages/DownloadappPage";
 import AnnouncementsPage from "../pages/AnnouncementsPage";
 import DetailedAttendancePage from "../pages/DetailedAttendancePage";
 import ReportsPage from "../pages/ReportsPage";
-// import StudenAdminPage from "../pages/StudenAdminPage";
+import StudenAdminPage from "../pages/StudenAdminPage";
 import LandingPage from "../pages/LandingPage";
 import PublicRoutes from "../components/auth/PublicRoutes";
 import AboutPage from "../pages/AboutPage";
@@ -156,6 +156,13 @@ const routes = createBrowserRouter([
                 element:
                 <PrivateRoutes>
                     <CategoriesPage />
+                </PrivateRoutes>
+            },
+            {
+                path: 'student-admin',
+                element:
+                <PrivateRoutes>
+                    <StudenAdminPage />
                 </PrivateRoutes>
             }
         ]

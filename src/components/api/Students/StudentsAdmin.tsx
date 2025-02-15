@@ -1,36 +1,50 @@
 import { useState } from "react"
-import useGetStudents from "../../../hooks/api/student/useGetStudents"
 import useGetClassroom from "../../../hooks/api/classroom/useGetClassroom"
 import useAuthStore from "../../../hooks/store/useAuthStore"
 import useLoader from "../../../hooks/ui/useLoader"
-import StudentAdminCard from "./StudentAdminCard"
-import Input from "../../ui/Input"
 import Button from "../../ui/Button"
 import Modal from "../../ui/Modal"
 import CreateStudent from "./CreateStudent"
+import Selector from "../../ui/Selector"
+import getClassroomDescription from "../../../utils/getClassroomDescription"
+import StudentsAdminTable from "./StudentsAdminTable"
 import { motion } from "framer-motion"
 
 const StudentsAdmin = () => {
 
     const access = useAuthStore(s => s.access) || ''
     const [open, setOpen] = useState(false)
-    const [studentFilter, setStudentFilter] = useState('')
-    const { data: classrooms, isError: isErrorClassroom, error: classroomError, isSuccess: classroomSuccess } = useGetClassroom({ access })
-    const { data: students, isLoading: loadingStudents, isError: isErrorStudents, error: studentsError, isSuccess: studentsSuccess } = useGetStudents({ access, all: true })
+    const [selectedClassroom, setSelectedClassroom] = useState('0')
+    const { data: classrooms, isLoading, isError, error, isSuccess } = useGetClassroom({ access })
 
-    useLoader(loadingStudents)
+    useLoader(isLoading)
 
-    // useLoader(loadingClassrooms)
+    if (isError) return <p>Error {error.message}</p>
 
-    if (isErrorStudents || isErrorClassroom) return <p>Error {studentsError ? studentsError.message: classroomError?.message}</p>
-
-    if (studentsSuccess && classroomSuccess)
+    if (isSuccess)
 
   return (
     <>
-    <div className="pt-10 pb-20 flex flex-col gap-8 justify-center items-center">
+    <motion.div 
+        initial="hidden"
+        animate="visible"
+        variants={{
+            hidden: { opacity: 0, y: -50 }, 
+            visible: { opacity: 1, y: 0 }, 
+        }}
+        transition={{ duration: 0.5 }}
+        
+        className="pt-10 pb-20 flex flex-col gap-8 justify-center items-center">
         <div className="w-full flex justify-between items-start gap-4">
             <h2 className="text-5xl font-bold">Alumnos</h2>
+            <div className="flex gap-4 items-center justify-center">
+                <h2 className="text-xl font-bold">Clase</h2>
+                <Selector 
+                    values={classrooms.map( classroom => ({ id: classroom.id.toString(), name: getClassroomDescription({ lan: 'ES', grade: classroom.grade, section: classroom.section, level: classroom.level }) }))}
+                    setter={setSelectedClassroom}
+                    lan={'ES'}
+                />
+            </div>
             <div>
                 <Button 
                     label="Nuevo alumno"
@@ -38,39 +52,11 @@ const StudentsAdmin = () => {
                 />
             </div>
         </div>
-        <Input 
-            value={studentFilter}
-            onChange={e => {
-                setStudentFilter(e.target.value)
-            }}
-            placeholder="Buscar por nombre"
-        />
-        <div className="w-full grid grid-cols-10 text-lg font-bold gap-6 px-6 py-3 bg-gray-900 rounded-t-xl">
-            <p className="col-span-3">Nombres y Apellidos</p>
-            <p>Información Personal</p>
-            <p>Información Nacimiento</p>
-            <p>Información Salud</p>
-            <p>Contacto Emergencia</p>
-            <p>Información Padre</p>
-            <p>Información Madre</p>
-            <p>Información Apoderado</p>
-        </div>
-        <motion.div 
-            initial="hidden"
-            animate="visible"
-            transition={{ staggerChildren: 0.1 }}
-            className="w-full flex flex-col gap-2">
-            {students
-                .filter( student => `${student.first_name.toLowerCase()}${student.last_name.toLowerCase()}`.includes(studentFilter.toLowerCase()))
-                .map( student => (
-                <StudentAdminCard 
-                    key={student.uid}
-                    student={student}
-                    classrooms={classrooms}
-                />
-            ))}
-        </motion.div>
-    </div>
+        {selectedClassroom !== '0' && <StudentsAdminTable 
+            classroomId={selectedClassroom}
+            classrooms={classrooms}
+        />}
+    </motion.div>
     <Modal 
         isOpen={open}
         onClose={() => setOpen(false)}

@@ -12,11 +12,29 @@ const groupToSpanish: Record<string, string> = {
     assistant: "Auxiliar",
     student: "Estudiante",
     tutor: "Tutor",
+    admin: 'Administrativo'
 }
 
 const SideBar = ({ profile }: Props) => {
 
     const group = useGetProfileStore(s => s.user)?.groups[0] || ''
+
+    // let navItems
+
+    // if (group === 'instructor') {
+    //   navItems = [
+    //       { name: "Clases", path: "students-main" },
+    //       { name: "Asistencias", path: "reports" },
+    //       { name: "Cursos", path: "assignatures" },
+    //       { name: 'Notas', path: 'grades-summary' },
+    //       { name: 'Categorías', path: 'categories' },
+    //   ]
+    // } else if (group === 'assistant') {
+    //   navItems = [
+    //       { name: "Clases", path: "students-main" },
+    //       { name: "Asistencias", path: "reports" },
+    //   ]
+    // }
 
     const navItems = [
         { name: "Clases", path: "students-main" },
@@ -27,7 +45,7 @@ const SideBar = ({ profile }: Props) => {
         { name: "Cursos", path: "assignatures" },
         { name: 'Notas', path: 'grades-summary' },
         { name: 'Categorías', path: 'categories' },
-        // { name: "Alumnos", path: "student-admin" },
+        { name: "Alumnos", path: "student-admin" },
         // { name: "Descargar", path: "/downloadapp" },
     ];
 
