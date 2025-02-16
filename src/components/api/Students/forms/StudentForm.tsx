@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useRef, useState } from "react"
 import Button from "../../../ui/Button"
 import Input from "../../../ui/Input"
 import Selector from "../../../ui/Selector"
@@ -110,64 +110,126 @@ const StudentForm = ({
   const [livesWithError, setLivesWithError] = useState('')
   const [tutorNameError, setTutorNameError] = useState('')
 
+  // REFS
+  const dniRef = useRef<HTMLInputElement>(null);
+  const oldSchoolRef = useRef<HTMLInputElement>(null);
+  const fatherLastNameRef = useRef<HTMLInputElement>(null);
+  const motherLastNameRef = useRef<HTMLInputElement>(null);
+  const namesRef = useRef<HTMLInputElement>(null);
+  const levelRef = useRef<HTMLSelectElement>(null);
+  const gradeRef = useRef<HTMLSelectElement>(null);
+  const sectionRef = useRef<HTMLSelectElement>(null);
+  const addressRef = useRef<HTMLInputElement>(null);
+  const phoneRef = useRef<HTMLInputElement>(null);
+  const cellphoneRef = useRef<HTMLInputElement>(null);
+  const insuranceRef = useRef<HTMLSelectElement>(null);
+  const livesWithRef = useRef<HTMLSelectElement>(null);
+  const tutorNameRef = useRef<HTMLInputElement>(null);
+  
+  const scrollToField = (ref: React.RefObject<HTMLElement>) => {
+    if (ref.current) {
+      ref.current.scrollIntoView({ behavior: "smooth", block: "center" });
+      ref.current.focus();
+    }
+  };
 
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     const classroomId = classrooms && classrooms.find(c => c.grade === grade && c.section === section && c.level === level)?.id
+    let firstErrorField: React.RefObject<HTMLElement> | null = null;
     
     if (dni === '') {
       setDniError('El DNI es requerido')
+      setType('error')
+      setShow(true)
+      setMessage('El DNI es requerido')
+      if (!firstErrorField) firstErrorField = dniRef;
+      scrollToField(firstErrorField);
       return
     }
 
     if (dni.length > 8) {
       setDniError('El DNI debe tener 8 dígitos')
+      setType('error')
+      setShow(true)
+      setMessage('El DNI debe tener 8 dígitos')
+      if (!firstErrorField) firstErrorField = dniRef
+      scrollToField(firstErrorField);
       return
     }
 
     if (oldSchool === '') {
       setOldSchoolError('La IE de procedencia es requerida')
-      return
+      setType('error')
+      setShow(true)
+      setMessage('La IE de procedencia es requerida')
+      if (!firstErrorField) firstErrorField = oldSchoolRef
+      scrollToField(firstErrorField);
+      return;
     }
 
     if (fatherLastName === '') {
       setFatherLastNameError('El apellido paterno es requerido')
-      return
+      setType('error')
+      setShow(true)
+      setMessage('El apellido paterno es requerido')
+      if (!firstErrorField) firstErrorField = fatherLastNameRef;
     }
 
     if (motherLastName === '') {
       setMotherLastNameError('El apellido materno es requerido')
-      return
+      setType('error')
+      setShow(true)
+      setMessage('El apellido materno es requerido')
+      if (!firstErrorField) firstErrorField = motherLastNameRef;
     }
 
     if (names === '') {
       setNamesError('El nombre es requerido')
-      return
+      setType('error')
+      setShow(true)
+      setMessage('El nombre es requerido')
+      if (!firstErrorField) firstErrorField = namesRef;
     }
 
     if (level === '' || level === '0') {
       setLevelError('El nivel es requerido')
+      setType('error')
+      setShow(true)
+      setMessage('El nivel es requerido')
       return
     }
 
     if (grade === '' || grade === '0') {
       setGradeError('El grado es requerido')
+      setType('error')
+      setShow(true)
+      setMessage('El grado es requerido')
       return
     }
 
     if (section === '' || section === '0') {
       setSectionError('La sección es requerida')
+      setType('error')
+      setShow(true)
+      setMessage('La sección es requerida')
       return
     }
 
     if (religion === '' || religion === '0') {
       setReligionError('La religión es requerida')
+      setType('error')
+      setShow(true)
+      setMessage('La religión es requerida')
       return
     }
 
     if (address === '') {
       setAddressError('La dirección es requerida')
+      setType('error')
+      setShow(true)
+      setMessage('La dirección es requerida')
       return
     }
 
@@ -179,16 +241,25 @@ const StudentForm = ({
 
     if (insurance === '' || insurance === '0') {
       setInsuranceError('El seguro es requerido')
+      setType('error')
+      setShow(true)
+      setMessage('El seguro es requerido')
       return
     }
 
     if (livesWith === '' || livesWith === '0') {
       setLivesWithError('Con quién vive es requerido')
+      setType('error')
+      setShow(true)
+      setMessage('Con quién vive es requerido')
       return
     }
 
     if (livesWith === 'A' && tutorName === '') {
       setTutorNameError('El nombre del apoderado es requerido')
+      setType('error')
+      setShow(true)
+      setMessage('El nombre del apoderado es requerido')
       return
     }
 
@@ -288,6 +359,7 @@ const StudentForm = ({
               type="number"
               error={dniError}
               disable={!!student}
+              ref={dniRef}
           />
           <div className="col-span-2">
             <Input 
@@ -298,6 +370,7 @@ const StudentForm = ({
                   setOldSchool(e.target.value)}}
                 placeholder="IE de Procedencia ..."
                 error={oldSchoolError}
+                ref={oldSchoolRef}
             />
           </div>
         </div>
@@ -310,6 +383,7 @@ const StudentForm = ({
               setFatherLastName(e.target.value)}}
             error={fatherLastNameError}
             placeholder="Apellido Paterno ..."
+            ref={fatherLastNameRef}
           />
           <Input 
             label="Apellido Materno"
@@ -319,6 +393,7 @@ const StudentForm = ({
               setMotherLastName(e.target.value)}}
             error={motherLastNameError}
             placeholder="Apellido Materno ..."
+            ref={motherLastNameRef}
           />
           <Input 
             label="Nombres"
@@ -328,6 +403,7 @@ const StudentForm = ({
               setNames(e.target.value)}}
             error={namesError}
             placeholder="Nombres ..."
+            ref={namesRef}
           />
         </div>
         <div className="w-full grid grid-cols-3 gap-4">
@@ -341,6 +417,7 @@ const StudentForm = ({
               value={level}
               setError={setLevelError}
               defaultValue={level && level}
+              ref={levelRef}
             />
           </div>
           {level && <motion.div
@@ -360,6 +437,7 @@ const StudentForm = ({
               value={grade}
               setError={setGradeError}
               defaultValue={grade && grade}
+              ref={gradeRef}
             />
           </motion.div>}
           {grade && <motion.div
@@ -376,6 +454,7 @@ const StudentForm = ({
               value={section}
               setError={setSectionError}
               defaultValue={section && section}
+              ref={sectionRef}
             />
           </motion.div>}
         </div>
@@ -385,6 +464,7 @@ const StudentForm = ({
             setter={setMainLanguage}
             defaultValue={mainLanguage}
             label="Lengua Materna"
+            
 
           />
           <Selector 
@@ -414,6 +494,7 @@ const StudentForm = ({
               setAddress(e.target.value)}}
             error={addressError}
             placeholder="Dirección ..."
+            ref={addressRef}
           />
           <Input
             label="Teléfono"
@@ -423,6 +504,7 @@ const StudentForm = ({
               setPhone(e.target.value)}}
             error={phoneError}
             placeholder="Teléfono ..."
+            ref={phoneRef}
           />
           <Input
             label="Celular"
@@ -432,6 +514,7 @@ const StudentForm = ({
               setCellphone(e.target.value)}}
             error={cellphoneError}
             placeholder="Celular ..."
+            ref={cellphoneRef}
           />
         </div>
         <div className="grid grid-cols-3 gap-4">
@@ -460,6 +543,7 @@ const StudentForm = ({
             setError={setInsuranceError}
             value={insurance}
             defaultValue={insurance && insurance}
+            ref={insuranceRef}
           />
           <Selector 
             values={[{id: 'Padre', name: 'Padre'}, {id: 'Madre', name: 'Madre'}, {id: 'A', name: 'Apoderado'}]}
@@ -470,6 +554,7 @@ const StudentForm = ({
             setError={setLivesWithError}
             value={livesWith}
             defaultValue={livesWith && livesWith}
+            ref={livesWithRef}
           />
         </div>
         {livesWith === 'A' &&

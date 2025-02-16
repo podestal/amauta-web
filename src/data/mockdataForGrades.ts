@@ -1108,3 +1108,1093 @@ export const getCompetency = (competencyId: number) => {
 export const getFilteredCapacities = (competency: number) => {
     return capacities.filter(capacity => capacity.competence == competency)
 }
+
+export const departments = [
+    {
+        "id": 1,
+        "name": "Amazonas",
+    },
+    {
+        "id": 2,
+        "name": "Áncash",
+    },
+    {
+        "id": 3,
+        "name": "Apurímac",
+    },
+    {
+        "id": 4,
+        "name": "Arequipa",
+    },
+    {
+        "id": 5,
+        "name": "Ayacucho",
+    },
+    {
+        "id": 6,
+        "name": "Cajamarca",
+    },
+    {
+        "id": 7,
+        "name": "Callao",
+    },
+    {
+        "id": 8,
+        "name": "Cusco",
+    },
+    {
+        "id": 9,
+        "name": "Huancavelica",
+    },
+    {
+        "id": 10,
+        "name": "Huánuco",
+    },
+    {
+        "id": 11,
+        "name": "Ica",
+    },
+    {
+        "id": 12,
+        "name": "Junín",
+    },
+    {
+        "id": 13,
+        "name": "La Libertad",
+    },
+    {
+        "id": 14,
+        "name": "Lambayeque",
+    },
+    {
+        "id": 15,
+        "name": "Lima",
+    },
+    {
+        "id": 16,
+        "name": "Loreto",
+    },
+    {
+        "id": 17,
+        "name": "Madre de Dios",
+    },
+    {
+        "id": 18,
+        "name": "Moquegua",
+    },
+    {
+        "id": 19,
+        "name": "Pasco",
+    },
+    {
+        "id": 20,
+        "name": "Piura",
+    },
+    {
+        "id": 21,
+        "name": "Puno",
+    },
+    {
+        "id": 22,
+        "name": "San Martín",
+    },
+    {
+        "id": 23,
+        "name": "Tacna",
+    },
+    {
+        "id": 24,
+        "name": "Tumbes",
+    },
+    {
+        "id": 25,
+        "name": "Ucayali",
+    }
+]
+
+export const getDepartment = (departmentId: number) => {
+    return departments.find( department => department.id == departmentId)
+}
+
+export const provinces = [
+    {
+        "id": 1,
+        "name": "Bagua",
+        "department": 1
+    },
+    {
+        "id": 2,
+        "name": "Bongará",
+        "department": 1
+    },
+    {
+        "id": 3,
+        "name": "Chachapoyas",
+        "department": 1
+    },
+    {
+        "id": 4,
+        "name": "Condorcanqui",
+        "department": 1
+    },
+    {
+        "id": 5,
+        "name": "Luya",
+        "department": 1
+    },
+    {
+        "id": 6,
+        "name": "Rodríguez de Mendoza",
+        "department": 1
+    },
+    {
+        "id": 7,
+        "name": "Utcubamba",
+        "department": 1
+    },
+    {
+        "id": 8,
+        "name": "Aija",
+        "department": 2
+    },
+    {
+        "id": 9,
+        "name": "Antonio Raimondi",
+        "department": 2
+    },
+    {
+        "id": 10,
+        "name": "Asunción",
+        "department": 2
+    },
+    {
+        "id": 11,
+        "name": "Bolognesi",
+        "department": 2
+    },
+    {
+        "id": 12,
+        "name": "Carhuaz",
+        "department": 2
+    },
+    {
+        "id": 13,
+        "name": "Carlos Fermín Fitzcarrald",
+        "department": 2
+    },
+    {
+        "id": 14,
+        "name": "Casma",
+        "department": 2
+    },
+    {
+        "id": 15,
+        "name": "Corongo",
+        "department": 2
+    },
+    {
+        "id": 16,
+        "name": "Huari",
+        "department": 2
+    },
+    {
+        "id": 17,
+        "name": "Huarmey",
+        "department": 2
+    },
+    {
+        "id": 18,
+        "name": "Huaylas",
+        "department": 2
+    },
+    {
+        "id": 19,
+        "name": "Mariscal Luzuriaga",
+        "department": 2
+    },
+    {
+        "id": 20,
+        "name": "Ocros",
+        "department": 2
+    },
+    {
+        "id": 21,
+        "name": "Pallasca",
+        "department": 2
+    },
+    {
+        "id": 22,
+        "name": "Pomabamba",
+        "department": 2
+    },
+    {
+        "id": 23,
+        "name": "Recuay",
+        "department": 2
+    },
+    {
+        "id": 24,
+        "name": "Santa",
+        "department": 2
+    },
+    {
+        "id": 25,
+        "name": "Sihuas",
+        "department": 2
+    },
+    {
+        "id": 26,
+        "name": "Yungay",
+        "department": 2
+    },
+    {
+        "id": 27,
+        "name": "Abancay",
+        "department": 3
+    },
+    {
+        "id": 28,
+        "name": "Andahuaylas",
+        "department": 3
+    },
+    {
+        "id": 29,
+        "name": "Antabamba",
+        "department": 3
+    },
+    {
+        "id": 30,
+        "name": "Aymaraes",
+        "department": 3
+    },
+    {
+        "id": 31,
+        "name": "Cotabambas",
+        "department": 3
+    },
+    {
+        "id": 32,
+        "name": "Grau",
+        "department": 3
+    },
+    {
+        "id": 33,
+        "name": "Chincheros",
+        "department": 3
+    },
+    {
+        "id": 34,
+        "name": "Arequipa",
+        "department": 4
+    },
+    {
+        "id": 35,
+        "name": "Camaná",
+        "department": 4
+    },
+    {
+        "id": 36,
+        "name": "Caravelí",
+        "department": 4
+    },
+    {
+        "id": 37,
+        "name": "Castilla",
+        "department": 4
+    },
+    {
+        "id": 38,
+        "name": "Caylloma",
+        "department": 4
+    },
+    {
+        "id": 39,
+        "name": "Condesuyos",
+        "department": 4
+    },
+    {
+        "id": 40,
+        "name": "Islay",
+        "department": 4
+    },
+    {
+        "id": 41,
+        "name": "La Unión",
+        "department": 4
+    },
+    {
+        "id": 42,
+        "name": "Ayacucho",
+        "department": 5
+    },
+    {
+        "id": 43,
+        "name": "Cangallo",
+        "department": 5
+    },
+    {
+        "id": 44,
+        "name": "Huanca Sancos",
+        "department": 5
+    },
+    {
+        "id": 45,
+        "name": "Huanta",
+        "department": 5
+    },
+    {
+        "id": 46,
+        "name": "La Mar",
+        "department": 5
+    },
+    {
+        "id": 47,
+        "name": "Lucanas",
+        "department": 5
+    },
+    {
+        "id": 48,
+        "name": "Parinacochas",
+        "department": 5
+    },
+    {
+        "id": 49,
+        "name": "Páucar del Sara Sara",
+        "department": 5
+    },
+    {
+        "id": 50,
+        "name": "Sucre",
+        "department": 5
+    },
+    {
+        "id": 51,
+        "name": "Víctor Fajardo",
+        "department": 5
+    },
+    {
+        "id": 52,
+        "name": "Vilcas Huamán",
+        "department": 5
+    },
+    {
+        "id": 53,
+        "name": "Cajamarca",
+        "department": 6
+    },
+    {
+        "id": 54,
+        "name": "Cajabamba",
+        "department": 6
+    },
+    {
+        "id": 55,
+        "name": "Celendín",
+        "department": 6
+    },
+    {
+        "id": 56,
+        "name": "Chota",
+        "department": 6
+    },
+    {
+        "id": 57,
+        "name": "Contumazá",
+        "department": 6
+    },
+    {
+        "id": 58,
+        "name": "Cutervo",
+        "department": 6
+    },
+    {
+        "id": 59,
+        "name": "Hualgayoc",
+        "department": 6,
+    },
+    {
+        "id": 60,
+        "name": "Jaén",
+        "department": 6
+    },
+    {
+        "id": 61,
+        "name": "San Ignacio",
+        "department": 6
+    },
+    {
+        "id": 62,
+        "name": "San Marcos",
+        "department": 6
+    },
+    {
+        "id": 63,
+        "name": "San Miguel",
+        "department": 6
+    },
+    {
+        "id": 64,
+        "name": "San Pablo",
+        "department": 6
+    },
+    {
+        "id": 65,
+        "name": "Santa Cruz",
+        "department": 6
+    },
+    {
+        "id": 66,
+        "name": "Callao",
+        "department": 7
+    },
+    {
+        "id": 67,
+        "name": "Cusco",
+        "department": 8
+    },
+    {
+        "id": 68,
+        "name": "Acomayo",
+        "department": 8
+    },
+    {
+        "id": 69,
+        "name": "Anta",
+        "department": 8
+    },
+    {
+        "id": 70,
+        "name": "Calca",
+        "department": 8
+    },
+    {
+        "id": 71,
+        "name": "Canas",
+        "department": 8
+    },
+    {
+        "id": 72,
+        "name": "Canchis",
+        "department": 8
+    },
+    {
+        "id": 73,
+        "name": "Chumbivilcas",
+        "department": 8
+    },
+    {
+        "id": 74,
+        "name": "Espinar",
+        "department": 8
+    },
+    {
+        "id": 75,
+        "name": "La Convención",
+        "department": 8
+    },
+    {
+        "id": 76,
+        "name": "Paruro",
+        "department": 8
+    },
+    {
+        "id": 77,
+        "name": "Paucartambo",
+        "department": 8
+    },
+    {
+        "id": 78,
+        "name": "Quispicanchi",
+        "department": 8
+    },
+    {
+        "id": 79,
+        "name": "Urubamba",
+        "department": 8
+    },
+    {
+        "id": 80,
+        "name": "Huancavelica",
+        "department": 9
+    },
+    {
+        "id": 81,
+        "name": "Acobamba",
+        "department": 9
+    },
+    {
+        "id": 82,
+        "name": "Angaraes",
+        "department": 9
+    },
+    {
+        "id": 83,
+        "name": "Castrovirreyna",
+        "department": 9
+    },
+    {
+        "id": 84,
+        "name": "Churcampa",
+        "department": 9
+    },
+    {
+        "id": 85,
+        "name": "Huaytará",
+        "department": 9
+    },
+    {
+        "id": 86,
+        "name": "Tayacaja",
+        "department": 9
+    },
+    {
+        "id": 87,
+        "name": "Huánuco",
+        "department": 10
+    },
+    {
+        "id": 88,
+        "name": "Ambo",
+        "department": 10
+    },
+    {
+        "id": 89,
+        "name": "Dos de Mayo",
+        "department": 10
+    },
+    {
+        "id": 90,
+        "name": "Huacaybamba",
+        "department": 10
+    },
+    {
+        "id": 91,
+        "name": "Huamalíes",
+        "department": 10
+    },
+    {
+        "id": 92,
+        "name": "Leoncio Prado",
+        "department": 10
+    },
+    {
+        "id": 93,
+        "name": "Marañón",
+        "department": 10
+    },
+    {
+        "id": 94,
+        "name": "Pachitea",
+        "department": 10
+    },
+    {
+        "id": 95,
+        "name": "Puerto Inca",
+        "department": 10
+    },
+    {
+        "id": 96,
+        "name": "Lauricocha",
+        "department": 10
+    },
+    {
+        "id": 97,
+        "name": "Yarowilca",
+        "department": 10
+    },
+    {
+        "id": 98,
+        "name": "Ica",
+        "department": 11
+    },
+    {
+        "id": 99,
+        "name": "Chincha",
+        "department": 11
+    },
+    {
+        "id": 100,
+        "name": "Nasca",
+        "department": 11
+    },
+    {
+        "id": 101,
+        "name": "Palpa",
+        "department": 11
+    },
+    {
+        "id": 102,
+        "name": "Pisco",
+        "department": 11
+    },
+    {
+        "id": 103,
+        "name": "Huancayo",
+        "department": 12
+    },
+    {
+        "id": 104,
+        "name": "Concepción",
+        "department": 12
+    },
+    {
+        "id": 105,
+        "name": "Chanchamayo",
+        "department": 12
+    },
+    {
+        "id": 106,
+        "name": "Jauja",
+        "department": 12
+    },
+    {
+        "id": 107,
+        "name": "Junín",
+        "department": 12
+    },
+    {
+        "id": 108,
+        "name": "Satipo",
+        "department": 12
+    },
+    {
+        "id": 109,
+        "name": "Tarma",
+        "department": 12
+    },
+    {
+        "id": 110,
+        "name": "Yauli",
+        "department": 12
+    },
+    {
+        "id": 111,
+        "name": "Chupaca",
+        "department": 12
+    },
+    {
+        "id": 112,
+        "name": "Trujillo",
+        "department": 13
+    },
+    {
+        "id": 113,
+        "name": "Ascope",
+        "department": 13
+    },
+    {
+        "id": 114,
+        "name": "Bolívar",
+        "department": 13
+    },
+    {
+        "id": 115,
+        "name": "Chepén",
+        "department": 13
+    },
+    {
+        "id": 116,
+        "name": "Julcán",
+        "department": 13
+    },
+    {
+        "id": 117,
+        "name": "Otuzco",
+        "department": 13
+    },
+    {
+        "id": 118,
+        "name": "Pacasmayo",
+        "department": 13
+    },
+    {
+        "id": 119,
+        "name": "Pataz",
+        "department": 13
+    },
+    {
+        "id": 120,
+        "name": "Sánchez Carrión",
+        "department": 13
+    },
+    {
+        "id": 121,
+        "name": "Santiago de Chuco",
+        "department": 13
+    },
+    {
+        "id": 122,
+        "name": "Gran Chimú",
+        "department": 13
+    },
+    {
+        "id": 123,
+        "name": "Virú",
+        "department": 13
+    },
+    {
+        "id": 124,
+        "name": "Chiclayo",
+        "department": 14
+    },
+    {
+        "id": 125,
+        "name": "Ferreñafe",
+        "department": 14
+    },
+    {
+        "id": 126,
+        "name": "Lambayeque",
+        "department": 14
+    },
+    {
+        "id": 127,
+        "name": "Lima",
+        "department": 15
+    },
+    {
+        "id": 128,
+        "name": "Barranca",
+        "department": 15
+    },
+    {
+        "id": 129,
+        "name": "Cajatambo",
+        "department": 15
+    },
+    {
+        "id": 130,
+        "name": "Canta",
+        "department": 15
+    },
+    {
+        "id": 131,
+        "name": "Cañete",
+        "department": 15
+    },
+    {
+        "id": 132,
+        "name": "Huaral",
+        "department": 15
+    },
+    {
+        "id": 133,
+        "name": "Huarochirí",
+        "department": 15
+    },
+    {
+        "id": 134,
+        "name": "Huaura",
+        "department": 15
+    },
+    {
+        "id": 135,
+        "name": "Oyón",
+        "department": 15
+    },
+    {
+        "id": 136,
+        "name": "Yauyos",
+        "department": 15
+    },
+    {
+        "id": 137,
+        "name": "Maynas",
+        "department": 16
+    },
+    {
+        "id": 138,
+        "name": "Alto Amazonas",
+        "department": 16
+    },
+    {
+        "id": 139,
+        "name": "Loreto",
+        "department": 16
+    },
+    {
+        "id": 140,
+        "name": "Mariscal Ramón Castilla",
+        "department": 16
+    },
+    {
+        "id": 141,
+        "name": "Requena",
+        "department": 16
+    },
+    {
+        "id": 142,
+        "name": "Ucayali",
+        "department": 16
+    },
+    {
+        "id": 143,
+        "name": "Datem del Marañón",
+        "department": 16
+    },
+    {
+        "id": 144,
+        "name": "Putumayo",
+        "department": 16
+    },
+    {
+        "id": 145,
+        "name": "Tambopata",
+        "department": 17
+    },
+    {
+        "id": 146,
+        "name": "Manu",
+        "department": 17
+    },
+    {
+        "id": 147,
+        "name": "Tahuamanu",
+        "department": 17
+    },
+    {
+        "id": 148,
+        "name": "Mariscal Nieto",
+        "department": 18
+    },
+    {
+        "id": 149,
+        "name": "General Sánchez Cerro",
+        "department": 18
+    },
+    {
+        "id": 150,
+        "name": "Ilo",
+        "department": 18
+    },
+    {
+        "id": 151,
+        "name": "Pasco",
+        "department": 19
+    },
+    {
+        "id": 152,
+        "name": "Daniel Alcídes Carrión",
+        "department": 19
+    },
+    {
+        "id": 153,
+        "name": "Oxapampa",
+        "department": 19
+    },
+    {
+        "id": 154,
+        "name": "Piura",
+        "department": 20
+    },
+    {
+        "id": 155,
+        "name": "Ayabaca",
+        "department": 20
+    },
+    {
+        "id": 156,
+        "name": "Huancabamba",
+        "department": 20
+    },
+    {
+        "id": 157,
+        "name": "Morropón",
+        "department": 20
+    },
+    {
+        "id": 158,
+        "name": "Paita",
+        "department": 20
+    },
+    {
+        "id": 159,
+        "name": "Sullana",
+        "department": 20
+    },
+    {
+        "id": 160,
+        "name": "Talara",
+        "department": 20
+    },
+    {
+        "id": 161,
+        "name": "Sechura",
+        "department": 20
+    },
+    {
+        "id": 162,
+        "name": "Puno",
+        "department": 21
+    },
+    {
+        "id": 163,
+        "name": "Azángaro",
+        "department": 21
+    },
+    {
+        "id": 164,
+        "name": "Carabaya",
+        "department": 21
+    },
+    {
+        "id": 165,
+        "name": "Chucuito",
+        "department": 21
+    },
+    {
+        "id": 166,
+        "name": "El Collao",
+        "department": 21
+    },
+    {
+        "id": 167,
+        "name": "Huancané",
+        "department": 21
+    },
+    {
+        "id": 168,
+        "name": "Lampa",
+        "department": 21
+    },
+    {
+        "id": 169,
+        "name": "Melgar",
+        "department": 21
+    },
+    {
+        "id": 170,
+        "name": "Moho",
+        "department": 21
+    },
+    {
+        "id": 171,
+        "name": "San Antonio de Putina",
+        "department": 21
+    },
+    {
+        "id": 172,
+        "name": "San Román",
+        "department": 21
+    },
+    {
+        "id": 173,
+        "name": "Sandia",
+        "department": 21
+    },
+    {
+        "id": 174,
+        "name": "Yunguyo",
+        "department": 21
+    },
+    {
+        "id": 175,
+        "name": "Moyobamba",
+        "department": 22
+    },
+    {
+        "id": 176,
+        "name": "Bellavista",
+        "department": 22
+    },
+    {
+        "id": 177,
+        "name": "El Dorado",
+        "department": 22
+    },
+    {
+        "id": 178,
+        "name": "Huallaga",
+        "department": 22
+    },
+    {
+        "id": 179,
+        "name": "Lamas",
+        "department": 22
+    },
+    {
+        "id": 180,
+        "name": "Mariscal Cáceres",
+        "department": 22
+    },
+    {
+        "id": 181,
+        "name": "Picota",
+        "department": 22
+    },
+    {
+        "id": 182,
+        "name": "Rioja",
+        "department": 22
+    },
+    {
+        "id": 183,
+        "name": "San Martín",
+        "department": 22
+    },
+    {
+        "id": 184,
+        "name": "Tocache",
+        "department": 22
+    },
+    {
+        "id": 185,
+        "name": "Tacna",
+        "department": 23
+    },
+    {
+        "id": 186,
+        "name": "Candarave",
+        "department": 23
+    },
+    {
+        "id": 187,
+        "name": "Jorge Basadre",
+        "department": 23
+    },
+    {
+        "id": 188,
+        "name": "Tarata",
+        "department": 23
+    },
+    {
+        "id": 189,
+        "name": "Tumbes",
+        "department": 24
+    },
+    {
+        "id": 190,
+        "name": "Contralmirante Villar",
+        "department": 24
+    },
+    {
+        "id": 191,
+        "name": "Zarumilla",
+        "department": 24
+    },
+    {
+        "id": 192,
+        "name": "Coronel Portillo",
+        "department": 25
+    },
+    {
+        "id": 193,
+        "name": "Atalaya",
+        "department": 25
+    },
+    {
+        "id": 194,
+        "name": "Padre Abad",
+        "department": 25
+    },
+    {
+        "id": 195,
+        "name": "Purús",
+        "department": 25
+    },
+
+]
+
+export const getProvince = (provinceId: number) => {
+    return provinces.find( province => province.id == provinceId)
+}

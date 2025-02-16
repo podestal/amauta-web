@@ -10,6 +10,7 @@ import { BirthInfo } from '../../../../services/api/birthInfo'
 import { UseMutationResult } from '@tanstack/react-query'
 import useUpdateBirthInfo from '../../../../hooks/api/student/studentInfo/useUpdateBirthInfo'
 import useNotificationsStore from '../../../../hooks/store/useNotificationsStore'
+import { departments, provinces, getDepartment, getProvince } from '../../../../data/mockdataForGrades'
 
 interface Props {
     setPage: React.Dispatch<React.SetStateAction<number>>
@@ -34,6 +35,8 @@ const StudentBirthForm = ({
     const [loading, setLoading] = useState(false)
     const updateBirthInfo = birthInfo && useUpdateBirthInfo({ birthInfoId: birthInfo.id })
     const createBirthInfoInternal = !createBirthInfo && !updateBirthInfo && useCreateBirthInfo()
+
+    const [selectedDepartment, setSelectedDepartment] = useState(birthInfo ? birthInfo.state : 'Puno')
 
     const [state, setState] = useState(birthInfo ? birthInfo.state : '')
     const [county, setCounty] = useState(birthInfo ? birthInfo.county : '')
@@ -160,7 +163,7 @@ const StudentBirthForm = ({
                 <h2 className="text-2xl text-left font-semibold mb-6">Información de Nacimiento</h2>
             </div>
             <div className="grid grid-cols-3 gap-6 mb-12">
-                <Input 
+                {/* <Input 
                     type="text"
                     placeholder="Departamento ..."
                     value={state}
@@ -175,6 +178,18 @@ const StudentBirthForm = ({
                     onChange={(e) => setCounty(e.target.value)}
                     label="Provincia"
                     error={countyError}
+                /> */}
+                <Selector 
+                    values={departments.map(d => ({id: (d.id).toString(), name: d.name}))}
+                    label='Departamento'
+                    setter={setSelectedDepartment}
+                    defaultValue={selectedDepartment}
+                />
+                <Selector 
+                    values={provinces.map(p => ({id: (p.id).toString(), name: p.name}))}
+                    label='Provincia'
+                    setter={setCounty}
+                    defaultValue={county}
                 />
                 <Input 
                     type="text"

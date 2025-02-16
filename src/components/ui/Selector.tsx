@@ -1,3 +1,5 @@
+import { forwardRef } from "react"
+
 interface Item {
     id: string
     name: string
@@ -47,16 +49,8 @@ const styles = {
 }
 
 // Selector component that uses a generic type T, extending the Item interface
-const Selector = <T extends Item>({ 
-  values, 
-  defaultValue, 
-  value, 
-  setter, 
-  label, 
-  all, 
-  error, 
-  setError, 
-  lan='EN' }: Props<T>) => {
+const Selector = forwardRef<HTMLSelectElement, Props<Item>>(
+  ({ values, defaultValue, value, setter, label, all, error, setError, lan = "EN" }, ref) => {
   
     return (
         <div className="lg:w-full w-[60%] flex flex-col mx-auto justify-center items-center gap-2">
@@ -65,6 +59,7 @@ const Selector = <T extends Item>({
             {/* Dropdown (select) element */}
             <style dangerouslySetInnerHTML={{ __html: styles.animation }} />
             <select
+                ref={ref}
                 defaultValue={defaultValue} // Set the default selected value
                 onChange={e => {
                   if(setError) {
@@ -93,5 +88,6 @@ const Selector = <T extends Item>({
         </div>      
     )
 }
+)
 
 export default Selector // Export the component for use in other parts of the app
