@@ -42,23 +42,23 @@ const StudentHealthForm = ({
 
     const [weightError, setWeightError] = useState('')
     const [heightError, setHeightError] = useState('')
-    const [illnessError, setIllnessError] = useState('')
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
         if (!weight) {
-            setWeightError('Este campo es requerido')
+            setWeightError('El peso es requerido')
+            setType('error')
+            setShow(true)
+            setMessage('El peso es requerido')
             return
         }
 
         if (!height) {
-            setHeightError('Este campo es requerido')
-            return
-        }
-
-        if (!illness) {
-            setIllnessError('Este campo es requerido')
+            setHeightError('La altura es requerida')
+            setType('error')
+            setShow(true)
+            setMessage('La altura es requerida')
             return
         }
 
@@ -163,7 +163,6 @@ const StudentHealthForm = ({
                     placeholder="Enfermedades ..."
                     value={illness}
                     onChange={(e) => setIllness(e.target.value)}
-                    error={illnessError}
                 />
             </div>
             {nextPrev 
