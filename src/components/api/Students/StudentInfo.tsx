@@ -3,6 +3,7 @@ import useLanguageStore from "../../../hooks/store/useLanguageStore";
 import { Student } from "../../../services/api/studentsService";
 import getClassroomDescription from "../../../utils/getClassroomDescription";
 import Button from "../../ui/Button";
+import { getDepartment, getProvince } from "../../../data/mockdataForGrades";
 
 interface Props {
   student: Student;
@@ -107,8 +108,8 @@ const StudentInfo = ({ student, showIcons = true }: Props) => {
       {student.birth_info ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 bg-gray-100 dark:bg-gray-800 p-4 rounded-lg shadow-md">
           <p>{showIcons && "📅"} Fecha de Nacimiento: {moment(student.birth_info.date_of_birth).format("DD-MM-YYYY") || "-"}</p>
-          <p>{showIcons && "🏛️"} Departamento: {student.birth_info.state || "-"}</p>
-          <p>{showIcons && "🏙️"} Provincia: {student.birth_info.county || "-"}</p>
+          <p>{showIcons && "🏛️"} Departamento: {getDepartment(parseInt(student.birth_info.state))?.name || "-"}</p>
+          <p>{showIcons && "🏙️"} Provincia: {getProvince(parseInt(student.birth_info.county))?.name || "-"}</p>
           <p>{showIcons && "🌆"} Distrito: {student.birth_info.city || "-"}</p>
         </div>
       ) : (

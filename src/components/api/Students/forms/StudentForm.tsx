@@ -124,7 +124,6 @@ const StudentForm = ({
   const cellphoneRef = useRef<HTMLInputElement>(null);
   const insuranceRef = useRef<HTMLSelectElement>(null);
   const livesWithRef = useRef<HTMLSelectElement>(null);
-  const tutorNameRef = useRef<HTMLInputElement>(null);
   
   const scrollToField = (ref: React.RefObject<HTMLElement>) => {
     if (ref.current) {
@@ -174,7 +173,9 @@ const StudentForm = ({
       setType('error')
       setShow(true)
       setMessage('El apellido paterno es requerido')
-      if (!firstErrorField) firstErrorField = fatherLastNameRef;
+      if (!firstErrorField) firstErrorField = fatherLastNameRef
+      scrollToField(firstErrorField)
+      return
     }
 
     if (motherLastName === '') {
@@ -182,7 +183,9 @@ const StudentForm = ({
       setType('error')
       setShow(true)
       setMessage('El apellido materno es requerido')
-      if (!firstErrorField) firstErrorField = motherLastNameRef;
+      if (!firstErrorField) firstErrorField = motherLastNameRef
+      scrollToField(firstErrorField)
+      return
     }
 
     if (names === '') {
@@ -190,7 +193,9 @@ const StudentForm = ({
       setType('error')
       setShow(true)
       setMessage('El nombre es requerido')
-      if (!firstErrorField) firstErrorField = namesRef;
+      if (!firstErrorField) firstErrorField = namesRef
+      scrollToField(firstErrorField)
+      return
     }
 
     if (level === '' || level === '0') {

@@ -10,7 +10,7 @@ import { BirthInfo } from '../../../../services/api/birthInfo'
 import { UseMutationResult } from '@tanstack/react-query'
 import useUpdateBirthInfo from '../../../../hooks/api/student/studentInfo/useUpdateBirthInfo'
 import useNotificationsStore from '../../../../hooks/store/useNotificationsStore'
-import { departments, provinces, getDepartment, getProvince } from '../../../../data/mockdataForGrades'
+import { departments, provinces } from '../../../../data/mockdataForGrades'
 
 interface Props {
     setPage: React.Dispatch<React.SetStateAction<number>>
@@ -37,9 +37,7 @@ const StudentBirthForm = ({
     const createBirthInfoInternal = !createBirthInfo && !updateBirthInfo && useCreateBirthInfo()
 
     const [selectedDepartment, setSelectedDepartment] = useState(birthInfo ? birthInfo.state : 'Puno')
-
-    const [state, setState] = useState(birthInfo ? birthInfo.state : '')
-    const [county, setCounty] = useState(birthInfo ? birthInfo.county : '')
+    const [selectedProvince, setSelectedProvince] = useState(birthInfo ? birthInfo.county : 'Puno')
     const [city, setCity] = useState(birthInfo ? birthInfo.city : '')
     const [naturalBirth, setNaturalBirth] = useState(birthInfo ? `${birthInfo.natural_birth ? '1' : '2'}` : '1')
     const [dateOfBirth, setDateOfBirth] = useState(birthInfo ? moment(birthInfo.date_of_birth).format('YYYY-MM-DD') : '')
@@ -54,32 +52,53 @@ const StudentBirthForm = ({
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        if (!state) {
+        if (!selectedDepartment) {
             setStateError('Este campo es requerido')
+            setType('error')
+            setShow(true)
+            setMessage('El departamento es requerido')
             return
         }
 
-        if (!county) {
+        if (!selectedProvince) {
             setCountyError('Este campo es requerido')
+            setType('error')
+            setShow(true)
+            setMessage('La provincia es requerida')
             return
         }
 
         if (!city) {
             setCityError('Este campo es requerido')
+            setType('error')
+            setShow(true)
+            setMessage('La ciudad es requerida')
             return
         }
 
         if (!dateOfBirth) {
             setDateOfBirthError('Este campo es requerido')
+            setType('error')
+            setShow(true)
+            setMessage('La fecha de nacimiento es requerida')
             return
+        }
+
+        const dateRegex = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
+        if (!dateRegex.test(dateOfBirth)) {
+            setDateOfBirthError("Formato incorrecto (YYYY-MM-DD)");
+            setType("error");
+            setShow(true);
+            setMessage("El formato de fecha debe ser YYYY-MM-DD (ejemplo: 2016-09-04)");
+            return;
         }
 
         setLoading(true)
 
         createBirthInfo && createBirthInfo.mutate({
             birthInfo: {
-                state,
-                county,
+                state: selectedDepartment,
+                county: selectedProvince,
                 city,
                 natural_birth: naturalBirth === '1',
                 date_of_birth: moment(dateOfBirth).format('YYYY-MM-DD'),
@@ -100,8 +119,8 @@ const StudentBirthForm = ({
 
         updateBirthInfo && updateBirthInfo.mutate({
             birthInfo: {
-                state,
-                county,
+                state: selectedDepartment,
+                county: selectedProvince,
                 city,
                 natural_birth: naturalBirth === '1',
                 date_of_birth: moment(dateOfBirth).format('YYYY-MM-DD'),
@@ -125,8 +144,8 @@ const StudentBirthForm = ({
 
         createBirthInfoInternal && createBirthInfoInternal.mutate({
             birthInfo: {
-                state,
-                county,
+                state: selectedDepartment,
+                county: selectedProvince,
                 city,
                 natural_birth: naturalBirth === '1',
                 date_of_birth: moment(dateOfBirth).format('YYYY-MM-DD'),
@@ -163,33 +182,23 @@ const StudentBirthForm = ({
                 <h2 className="text-2xl text-left font-semibold mb-6">Información de Nacimiento</h2>
             </div>
             <div className="grid grid-cols-3 gap-6 mb-12">
-                {/* <Input 
-                    type="text"
-                    placeholder="Departamento ..."
-                    value={state}
-                    onChange={(e) => setState(e.target.value)}
-                    label="Departamento"
-                    error={stateError}
-                />
-                <Input 
-                    type="text"
-                    placeholder="Provincia ..."
-                    value={county}
-                    onChange={(e) => setCounty(e.target.value)}
-                    label="Provincia"
-                    error={countyError}
-                /> */}
                 <Selector 
                     values={departments.map(d => ({id: (d.id).toString(), name: d.name}))}
                     label='Departamento'
                     setter={setSelectedDepartment}
                     defaultValue={selectedDepartment}
+                    error={stateError}
+                    setError={setStateError}
                 />
                 <Selector 
-                    values={provinces.map(p => ({id: (p.id).toString(), name: p.name}))}
+                    values={provinces
+                        .filter(p => (p.department).toString() === selectedDepartment)
+                        .map(p => ({id: (p.id).toString(), name: p.name}))}
                     label='Provincia'
-                    setter={setCounty}
-                    defaultValue={county}
+                    setter={setSelectedProvince}
+                    defaultValue={selectedProvince}
+                    error={countyError}
+                    setError={setCountyError}
                 />
                 <Input 
                     type="text"
@@ -202,8 +211,8 @@ const StudentBirthForm = ({
             </div>
             <div className='grid grid-cols-3 gap-6'>
                 <Input 
-                    placeholder='Fecha de Nacimiento ...'
-                    label='AAAA-MM-DD'
+                    placeholder='AAAA-MM-DD'
+                    label='Fecha de Nacimiento'
                     value={dateOfBirth}
                     setValue={setDateOfBirth}
                     error={dateOfBirthError}
