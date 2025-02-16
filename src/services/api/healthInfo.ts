@@ -5,6 +5,9 @@ export interface HealthInfo {
     weight: number
     height: number
     illness: string
+    handicap: string
+    saanee: boolean
+    psicopedagogy: boolean
 }
 
 export type HealthInfoCreateUpdate = Omit<HealthInfo, 'id'> & {

@@ -9,6 +9,8 @@ import { UseMutationResult } from "@tanstack/react-query"
 import { HealthInfo } from "../../../../services/api/healthInfo"
 import useUpdateHealthInfo from "../../../../hooks/api/student/studentInfo/useUpdateHealthInfo"
 import useNotificationsStore from "../../../../hooks/store/useNotificationsStore"
+import Selector from "../../../ui/Selector"
+import Checkbox from "../../../ui/Checkbox"
 
 interface Props {
     setPage: React.Dispatch<React.SetStateAction<number>>
@@ -18,6 +20,26 @@ interface Props {
     createHealthInfo?: UseMutationResult<HealthInfo, Error, CreateHealthInfoData>
     setOpen?: React.Dispatch<React.SetStateAction<boolean>>
 }
+
+// ('V', 'Visual'),
+// ('A', 'Autism'),
+// ('M', 'Motor'),
+// ('C', 'Cognitive'),
+// ('P', 'Psychological'),
+// ('H', 'Hearing-Vision'),
+// ('O', 'Other'),
+// ('N', 'None'),
+
+const handycapOptions = [
+    { id: 'V', name: 'Visual' },
+    { id: 'A', name: 'Autism' },
+    { id: 'M', name: 'Motor' },
+    { id: 'C', name: 'Cognitive' },
+    { id: 'P', name: 'Psychological' },
+    { id: 'H', name: 'Hearing-Vision' },
+    { id: 'O', name: 'Other' },
+    { id: 'N', name: 'None' },
+]
 
 const StudentHealthForm = ({ 
     setPage, 
@@ -37,6 +59,9 @@ const StudentHealthForm = ({
     const [weight, setWeight] = useState(healthInfo ? `${healthInfo.weight}` : '')
     const [height, setHeight] = useState(healthInfo ? `${healthInfo.height}` : '')
     const [illness, setIllness] = useState(healthInfo ? healthInfo.illness : '')
+    const [handicap, setHandicap] = useState(healthInfo ? `${healthInfo.handicap}` : 'N')
+    const [saanee, setSaanee] = useState(healthInfo ? healthInfo.saanee : false)
+    const [psicopedagogy, setPsicopedagogy] = useState(healthInfo ? healthInfo.psicopedagogy : false)
 
     // ERROR HANDLING
 
@@ -69,7 +94,10 @@ const StudentHealthForm = ({
                     weight: parseFloat(weight),
                     height: parseFloat(height),
                     illness,
-                    student: studentId
+                    student: studentId,
+                    handicap,
+                    saanee,
+                    psicopedagogy
                 },
                 access
             }, 
@@ -88,7 +116,10 @@ const StudentHealthForm = ({
                 weight: parseFloat(weight),
                 height: parseFloat(height),
                 illness,
-                student: studentId
+                student: studentId,
+                handicap,
+                saanee,
+                psicopedagogy
             },
             access
         }, {
@@ -110,7 +141,10 @@ const StudentHealthForm = ({
                 weight: parseFloat(weight),
                 height: parseFloat(height),
                 illness,
-                student: studentId
+                student: studentId,
+                handicap,
+                saanee,
+                psicopedagogy
             },
             access
         }, {
@@ -163,6 +197,24 @@ const StudentHealthForm = ({
                     placeholder="Enfermedades ..."
                     value={illness}
                     onChange={(e) => setIllness(e.target.value)}
+                />
+            </div>
+            <div className="grid grid-cols-3 gap-6 mb-12 items-start">
+                <Selector 
+                    values={handycapOptions}
+                    label='Discapacidad'
+                    setter={setHandicap}
+                    defaultValue={handicap}
+                />
+                <Checkbox 
+                    label="SAANEE"
+                    checked={saanee}
+                    onChange={setSaanee}
+                />
+                <Checkbox 
+                    label="Psicopedagogía"
+                    checked={psicopedagogy}
+                    onChange={setPsicopedagogy}
                 />
             </div>
             {nextPrev 
