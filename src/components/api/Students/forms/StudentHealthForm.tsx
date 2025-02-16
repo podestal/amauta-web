@@ -21,15 +21,6 @@ interface Props {
     setOpen?: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-// ('V', 'Visual'),
-// ('A', 'Autism'),
-// ('M', 'Motor'),
-// ('C', 'Cognitive'),
-// ('P', 'Psychological'),
-// ('H', 'Hearing-Vision'),
-// ('O', 'Other'),
-// ('N', 'None'),
-
 const handycapOptions = [
     { id: 'V', name: 'Visual' },
     { id: 'A', name: 'Autism' },

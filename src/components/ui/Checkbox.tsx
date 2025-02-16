@@ -1,19 +1,18 @@
-import { useState } from "react";
+// import { useState } from "react";
 import { motion } from "framer-motion";
 
 interface CheckboxProps {
   label?: string;
-  checked?: boolean;
-  onChange?: (checked: boolean) => void;
+  checked: boolean;
+  onChange: (checked: boolean) => void;
 }
 
 const Checkbox = ({ label, checked = false, onChange }: CheckboxProps) => {
-  const [isChecked, setIsChecked] = useState(checked);
 
   const toggleCheckbox = () => {
-    const newState = !isChecked;
-    setIsChecked(newState);
-    if (onChange) onChange(newState);
+    // const newState = !isChecked;
+    // setIsChecked(newState);
+    // if (onChange) onChange(newState);
   };
 
   return (
@@ -21,20 +20,20 @@ const Checkbox = ({ label, checked = false, onChange }: CheckboxProps) => {
       {/* Hidden Native Checkbox */}
       <input
         type="checkbox"
-        checked={isChecked}
-        onChange={toggleCheckbox}
+        checked={checked}
+        onChange={() => onChange(!checked)}
         className="hidden"
       />
 
       {/* Custom Checkbox */}
       <motion.div
         className={`w-6 h-6 flex items-center justify-center rounded-md border-2 transition-all 
-          ${isChecked ? "bg-blue-500 border-blue-500" : "bg-gray-200 border-gray-400"}`
+          ${checked ? "bg-blue-500 border-blue-500" : "bg-gray-200 border-gray-400"}`
         }
         whileTap={{ scale: 0.9 }}
         onClick={toggleCheckbox}
       >
-        {isChecked && (
+        {checked && (
           <motion.svg
             className="w-4 h-4 text-white"
             viewBox="0 0 20 20"
@@ -53,7 +52,7 @@ const Checkbox = ({ label, checked = false, onChange }: CheckboxProps) => {
       </motion.div>
 
       {/* Label (optional) */}
-      {label && <span className="text-gray-800 dark:text-gray-300 bg-blue-400">{label}</span>}
+      {label && <span className="text-gray-800 dark:text-gray-300">{label}</span>}
     </label>
   );
 };
