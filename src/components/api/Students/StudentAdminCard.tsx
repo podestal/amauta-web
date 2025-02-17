@@ -160,6 +160,7 @@ const StudentAdminCard = ({ student, classrooms, classroomId }: Props) => {
         tutorType="F"
         tutor={studentFather}
         setOpen={setOpen}
+        classroomId={classroomId}
       />}
       {renderComponent === 'studentMotherForm' &&
       <StudentTutorForm
@@ -168,6 +169,7 @@ const StudentAdminCard = ({ student, classrooms, classroomId }: Props) => {
         tutorType="M"
         tutor={studentMother}
         setOpen={setOpen}
+        classroomId={classroomId}
       />}
       {renderComponent === 'studentTutorForm' &&
       <StudentTutorForm
@@ -176,6 +178,7 @@ const StudentAdminCard = ({ student, classrooms, classroomId }: Props) => {
         tutorType="O"
         tutor={studentTutor}
         setOpen={setOpen}
+        classroomId={classroomId}
       />}
     </Modal>
     </>

@@ -27,7 +27,7 @@ const CreateStudent = ({ classrooms, setOpen, classroomId }: Props) => {
   const createBirthInfo = useCreateBirthInfo({ classroomId })
   const createHealthInfo = useCreateHealthInfo({ classroomId })
   const createEmergencyContact = useCreateEmergencyContact({  classroomId })
-  const createTutor = useCreateTutor()
+  const createTutor = useCreateTutor({ classroomId })
 
 
 
@@ -71,6 +71,7 @@ const CreateStudent = ({ classrooms, setOpen, classroomId }: Props) => {
         tutorType="F"
         setPage={setPage}
         createTutor={createTutor}
+        classroomId={classroomId}
       />}
       {page === 6 &&
       <StudentTutorForm 
@@ -78,6 +79,7 @@ const CreateStudent = ({ classrooms, setOpen, classroomId }: Props) => {
         tutorType="M"
         setPage={setPage}
         createTutor={createTutor}
+        classroomId={classroomId}
       />}
       {page === 7 &&
       <StudentTutorForm 
@@ -86,6 +88,7 @@ const CreateStudent = ({ classrooms, setOpen, classroomId }: Props) => {
         setPage={setPage}
         setOpen={setOpen}
         createTutor={createTutor}
+        classroomId={classroomId}
       />}
     </div>
   )

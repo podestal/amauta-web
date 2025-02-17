@@ -1,6 +1,6 @@
 import { UseMutationResult, useMutation, useQueryClient } from "@tanstack/react-query"
 import getTutorService, { Tutor, TutorCreateUpdate } from "../../../services/api/tutorService"
-import { getStudentsCacheKey } from "../../../utils/cacheKeys"
+import moment from "moment"
 
 export interface UpdateTutorData {
     access: string
@@ -9,17 +9,19 @@ export interface UpdateTutorData {
 
 interface Props {
     tutorId: string
+    classroomId: string
 }
 
-const useUpdateTutor = ({ tutorId }: Props): UseMutationResult<Tutor, Error, UpdateTutorData> => {
+const useUpdateTutor = ({ tutorId, classroomId }: Props): UseMutationResult<Tutor, Error, UpdateTutorData> => {
     const tutorService = getTutorService({ tutorId })
     const queryClient = useQueryClient()
-    const studentsCacheKey = getStudentsCacheKey('all')
+    const day = moment().date().toString()
+    const month = moment().month().toString()
     return useMutation({
         mutationFn: (data: UpdateTutorData) => tutorService.update(data.tutor, data.access),
         onSettled: res => {
             console.log('res', res)
-            queryClient.invalidateQueries({  queryKey: studentsCacheKey })
+            queryClient.invalidateQueries({  queryKey: [`students ${classroomId} ${day} ${month}`] })
         },
         onError: err => {
             console.log(err)

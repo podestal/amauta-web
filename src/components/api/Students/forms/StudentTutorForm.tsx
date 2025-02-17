@@ -20,20 +20,18 @@ interface Props {
     setPage: React.Dispatch<React.SetStateAction<number>>
     setOpen?: React.Dispatch<React.SetStateAction<boolean>>
     createTutor?: UseMutationResult<Tutor, Error, CreateTutorData>
+    classroomId: string
     // updateTutor?: UseMutationResult<Tutor, Error, CreateTutorData>
 }
 
-const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen, createTutor }: Props) => {
-
-    console.log('studentId', studentId);
-    console.log('tutorType', tutorType);
+const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen, createTutor, classroomId }: Props) => {
 
     // TODOS
     // - Update Tutor
     // - Create tutor when open this particular form
     // - Loading state for create tutor
-    const updateTutor = tutor && useUpdateTutor({ tutorId: (tutor.id).toString() })
-    const createTutorInternal = !createTutor && !updateTutor && useCreateTutor()
+    const updateTutor = tutor && useUpdateTutor({ tutorId: (tutor.id).toString(), classroomId })
+    const createTutorInternal = !createTutor && !updateTutor && useCreateTutor({ classroomId })
     const [loading, setLoading] = useState(false)
     const { setMessage, setShow, setType } = useNotificationsStore()
     const [tutorInfo, setTutorInfo] = useState(true)
