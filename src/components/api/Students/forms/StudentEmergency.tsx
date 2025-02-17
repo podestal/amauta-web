@@ -47,16 +47,25 @@ const StudentEmergency = ({
 
         if (!name) {
             setNameError('Este campo es requerido')
+            setType('error')
+            setShow(true)
+            setMessage('El nombre es requerido')
             return
         }
 
         if (!phoneNumber) {
             setPhoneNumberError('Este campo es requerido')
+            setType('error')
+            setShow(true)
+            setMessage('El número de teléfono es requerido')
             return
         }
 
         if (!address) {
             setAddressError('Este campo es requerido')
+            setType('error')
+            setShow(true)
+            setMessage('La dirección es requerida')
             return
         }
 

@@ -210,7 +210,7 @@ const StudentHealthForm = ({
             </div>
             {nextPrev 
             ? 
-            <div className="flex justify-between items-center gap-4 mt-12">
+            <div className="flex justify-end items-center gap-4 mt-12">
                 {/* <Button 
                     label="Anterior"
                     onClick={() => setPage(prev => prev - 1)}

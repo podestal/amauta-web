@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { Tutor } from "../../../../services/api/tutorService"
 import { motion } from "framer-motion"
 import Input from "../../../ui/Input"
@@ -11,6 +11,7 @@ import { UseMutationResult } from "@tanstack/react-query"
 import useAuthStore from "../../../../hooks/store/useAuthStore"
 import useUpdateTutor from "../../../../hooks/api/tutor/useUpdateTutor"
 import useNotificationsStore from "../../../../hooks/store/useNotificationsStore"
+import { departments, provinces } from "../../../../data/mockdataForGrades"
 
 interface Props {
     studentId: string
@@ -41,8 +42,8 @@ const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen, creat
 
     const [dni, setDni] = useState(tutor ? tutor.dni : '')
     const [dateOfBirth, setDateOfBirth] = useState(tutor ? moment(tutor.date_of_birth).format('YYYY-MM-DD') : '')
-    const [state, setState] = useState(tutor ? tutor.state : '')
-    const [county, setCounty] = useState(tutor ? tutor.county : '')
+    const [selectedDepartment, setSelectedDepartment] = useState(tutor ? tutor.state : '21')
+    const [selectedProvince, setSelectedProvince] = useState(tutor ? tutor.county : '162')
     const [city, setCity] = useState(tutor ? tutor.city : '')
     const [instructionGrade, setInstructionGrade] = useState(tutor ? tutor.instruction_grade : '')
     const [ocupation, setOcupation] = useState(tutor ? tutor.ocupation : '')
@@ -76,71 +77,148 @@ const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen, creat
     const [emailError, setEmailError] = useState('')
     const [tutorRelationshipError, setTutorRelationshipError] = useState('')
 
+    // REFS
+    const dniRef = useRef<HTMLInputElement>(null);
+    const civilStatusRef = useRef<HTMLSelectElement>(null);
+    const namesRef = useRef<HTMLInputElement>(null);
+    const fatherLastNameRef = useRef<HTMLInputElement>(null);
+    const motherLastNameRef = useRef<HTMLInputElement>(null);
+
+    const scrollToField = (ref: React.RefObject<HTMLElement>) => {
+        if (ref.current) {
+          ref.current.scrollIntoView({ behavior: "smooth", block: "center" });
+          ref.current.focus();
+        }
+      };
+
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+        let firstErrorField: React.RefObject<HTMLElement> | null = null
 
         if (!firstName) {
-            setFirstNameError('Este campo es requerido')
+            setFirstNameError('El nombre es requerido')
+            setType('error')
+            setShow(true)
+            setMessage('El nombre es requerido')
+            if (!firstErrorField) firstErrorField = namesRef
+            scrollToField(firstErrorField)
             return
         }
         if (!fatherLastName) {
-            setFatherLastNameError('Este campo es requerido')
+            setFatherLastNameError('El apellido paterno es requerido')
+            setType('error')
+            setShow(true)
+            setMessage('El apellido paterno es requerido')
+            if (!firstErrorField) firstErrorField = fatherLastNameRef
+            scrollToField(firstErrorField)
             return
         }
         if (!motherLastName) {
-            setMotherLastNameError('Este campo es requerido')
+            setMotherLastNameError('El apellido materno es requerido')
+            setType('error')
+            setShow(true)
+            setMessage('El apellido materno es requerido')
+            if (!firstErrorField) firstErrorField = motherLastNameRef
+            scrollToField(firstErrorField)
             return
         }
         if (!dni) {
-            setDniError('Este campo es requerido')
+            setDniError('El DNI es requerido')
+            setType('error')
+            setShow(true)
+            setMessage('El DNI es requerido')
+            if (!firstErrorField) firstErrorField = dniRef;
+            scrollToField(firstErrorField);
             return
         }
         if (!civilStatus) {
-            setCivilStatusError('Este campo es requerido')
+            setCivilStatusError('El estado civil es requerido')
+            setType('error')
+            setShow(true)
+            setMessage('El estado civil es requerido')
+            if (!firstErrorField) firstErrorField = civilStatusRef
+            scrollToField(firstErrorField);
             return
         }
         if (!dateOfBirth) {
-            setDateOfBirthError('Este campo es requerido')
+            setDateOfBirthError('La fecha de nacimiento es requerida')
+            setType('error')
+            setShow(true)
+            setMessage('La fecha de nacimiento es requerida')
             return
         }
-        if (!state) {
+
+        const dateRegex = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
+        if (!dateRegex.test(dateOfBirth)) {
+            setDateOfBirthError("Formato incorrecto (YYYY-MM-DD)");
+            setType("error");
+            setShow(true);
+            setMessage("El formato de fecha debe ser YYYY-MM-DD (ejemplo: 2016-09-04)");
+            return;
+        }
+
+        if (!selectedDepartment) {
             setStateError('Este campo es requerido')
             return
         }
-        if (!county) {
+        if (!selectedProvince) {
             setCountyError('Este campo es requerido')
             return
         }
         if (!city) {
             setCityError('Este campo es requerido')
+            setType('error')
+            setShow(true)
+            setMessage('La ciudad es requerida')
             return
         }
         if (!instructionGrade) {
             setInstructionGradeError('Este campo es requerido')
+            setType('error')
+            setShow(true)
+            setMessage('El grado de instrucción es requerido')
             return
         }
         if (!ocupation) {
             setOcupationError('Este campo es requerido')
+            setType('error')
+            setShow(true)
+            setMessage('La ocupación es requerida')
             return
         }
         if (!employer) {
             setEmployerError('Este campo es requerido')
+            setType('error')
+            setShow(true)
+            setMessage('El empleador es requerido')
             return
         }
         if (!phoneNumber) {
             setPhoneNumberError('Este campo es requerido')
+            setType('error')
+            setShow(true)
+            setMessage('El número de teléfono es requerido')
             return
         }
         if (!address) {
             setAddressError('Este campo es requerido')
+            setType('error')
+            setShow(true)
+            setMessage('La dirección es requerida')
             return
         }
         if (tutorType === 'O' && !tutorRelationship) {
             setTutorRelationshipError('Este campo es requerido')
+            setType('error')
+            setShow(true)
+            setMessage('El parentesco es requerido')
             return
         }
         if (!email) {
             setEmailError('Este campo es requerido')
+            setType('error')
+            setShow(true)
+            setMessage('El email es requerido')
             return
         }
 
@@ -151,8 +229,8 @@ const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen, creat
                 students: [studentId],
                 dni,
                 date_of_birth: dateOfBirth,
-                state,
-                county,
+                state: selectedDepartment,
+                county: selectedProvince,
                 city,
                 instruction_grade: instructionGrade,
                 ocupation,
@@ -169,6 +247,16 @@ const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen, creat
                 tutor_type: tutorType
             },
             access
+        }, {
+            onSuccess: () => {
+                setPage(prev => prev + 1)
+            },
+            onError: () => {
+                setType('error')
+                setShow(true)
+                setMessage('Hubo un error al guardar la información del tutor')
+            },
+            onSettled: () => setLoading(false)
         })
 
         updateTutor && updateTutor.mutate({
@@ -176,8 +264,8 @@ const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen, creat
                 students: [studentId],
                 dni,
                 date_of_birth: dateOfBirth,
-                state,
-                county,
+                state: selectedDepartment,
+                county: selectedProvince,
                 city,
                 instruction_grade: instructionGrade,
                 ocupation,
@@ -214,8 +302,8 @@ const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen, creat
                 students: [studentId],
                 dni,
                 date_of_birth: dateOfBirth,
-                state,
-                county,
+                state: selectedDepartment,
+                county: selectedDepartment,
                 city,
                 instruction_grade: instructionGrade,
                 ocupation,
@@ -289,6 +377,7 @@ const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen, creat
                         setFirstName(e.target.value)}}
                     label="Nombres"
                     error={firstNameError}
+                    ref={namesRef}
                 />
                 <Input 
                     type="text"
@@ -299,6 +388,7 @@ const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen, creat
                         setFatherLastName(e.target.value)}}
                     label="Apellido Paterno"
                     error={fatherLastNameError}
+                    ref={fatherLastNameRef}
                 />
                 <Input 
                     type="text"
@@ -309,6 +399,7 @@ const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen, creat
                         setMotherLastName(e.target.value)}}
                     label="Apellido Materno"
                     error={motherLastNameError}
+                    ref={motherLastNameRef}
                 />
             </div>
             <div className="grid grid-cols-3 gap-6 mb-12">
@@ -321,6 +412,7 @@ const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen, creat
                         setDni(e.target.value)}}
                     label="DNI"
                     error={dniError}
+                    ref={dniRef}
                 />
                 <Selector 
                     values={[{  id: 'S', name: 'Soltero'}, {id: 'M', name: 'Casado'}, {id: 'D', name: 'Divorciado'}, {id: 'W', name: 'Viudo'}, {id: 'O', name: 'Otro'}]}
@@ -330,6 +422,7 @@ const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen, creat
                     lan="ES"
                     error={civilStatusError}
                     setError={setCivilStatusError}
+                    ref={civilStatusRef}
                 />
                 
             </div>
@@ -343,25 +436,23 @@ const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen, creat
                     label="Fecha de Nacimiento"
                     error={dateOfBirthError}
                 />
-                <Input 
-                    type="text"
-                    placeholder="Departamento ..."
-                    value={state}
-                    onChange={(e) => {
-                        state && setStateError('')
-                        setState(e.target.value)}}
-                    label="Departamento"
+                <Selector 
+                    values={departments.map(d => ({id: (d.id).toString(), name: d.name}))}
+                    label='Departamento'
+                    setter={setSelectedDepartment}
+                    defaultValue={selectedDepartment}
                     error={stateError}
+                    setError={setStateError}
                 />
-                <Input 
-                    type="text"
-                    placeholder="Provincia ..."
-                    value={county}
-                    onChange={(e) => {
-                        county && setCountyError('')
-                        setCounty(e.target.value)}}
-                    label="Provincia"
+                <Selector 
+                    values={provinces
+                        .filter(p => (p.department).toString() === selectedDepartment)
+                        .map(p => ({id: (p.id).toString(), name: p.name}))}
+                    label='Provincia'
+                    setter={setSelectedProvince}
+                    defaultValue={selectedProvince}
                     error={countyError}
+                    setError={setCountyError}
                 />
                 <Input 
                     type="text"

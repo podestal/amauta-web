@@ -9,12 +9,6 @@ interface CheckboxProps {
 
 const Checkbox = ({ label, checked = false, onChange }: CheckboxProps) => {
 
-  const toggleCheckbox = () => {
-    // const newState = !isChecked;
-    // setIsChecked(newState);
-    // if (onChange) onChange(newState);
-  };
-
   return (
     <label className="flex items-center cursor-pointer gap-3">
       {/* Hidden Native Checkbox */}
@@ -31,7 +25,6 @@ const Checkbox = ({ label, checked = false, onChange }: CheckboxProps) => {
           ${checked ? "bg-blue-500 border-blue-500" : "bg-gray-200 border-gray-400"}`
         }
         whileTap={{ scale: 0.9 }}
-        onClick={toggleCheckbox}
       >
         {checked && (
           <motion.svg

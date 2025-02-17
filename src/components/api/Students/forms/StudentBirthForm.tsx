@@ -36,8 +36,8 @@ const StudentBirthForm = ({
     const updateBirthInfo = birthInfo && useUpdateBirthInfo({ birthInfoId: birthInfo.id })
     const createBirthInfoInternal = !createBirthInfo && !updateBirthInfo && useCreateBirthInfo()
 
-    const [selectedDepartment, setSelectedDepartment] = useState(birthInfo ? birthInfo.state : 'Puno')
-    const [selectedProvince, setSelectedProvince] = useState(birthInfo ? birthInfo.county : 'Puno')
+    const [selectedDepartment, setSelectedDepartment] = useState(birthInfo ? birthInfo.state : '21')
+    const [selectedProvince, setSelectedProvince] = useState(birthInfo ? birthInfo.county : '162')
     const [city, setCity] = useState(birthInfo ? birthInfo.city : '')
     const [naturalBirth, setNaturalBirth] = useState(birthInfo ? `${birthInfo.natural_birth ? '1' : '2'}` : '1')
     const [dateOfBirth, setDateOfBirth] = useState(birthInfo ? moment(birthInfo.date_of_birth).format('YYYY-MM-DD') : '')
@@ -204,7 +204,9 @@ const StudentBirthForm = ({
                     type="text"
                     placeholder="Ciudad ..."
                     value={city}
-                    onChange={(e) => setCity(e.target.value)}
+                    onChange={(e) => {
+                        city && setCityError('')
+                        setCity(e.target.value)}}
                     label="Ciudad"
                     error={cityError}
                 />
@@ -226,7 +228,7 @@ const StudentBirthForm = ({
             </div>
             {nextPrev 
             ? 
-            <div className="flex justify-between items-center gap-4 mt-12">
+            <div className="flex justify-end items-center gap-4 mt-12">
                 {/* <Button 
                     label="Anterior"
                     onClick={() => setPage(prev => prev - 1)}
