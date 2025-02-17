@@ -1,6 +1,5 @@
 import { UseMutationResult, useMutation, useQueryClient } from "@tanstack/react-query"
 import getEmergencyContactService, {EmergencyContact, EmergencyContactCreateUpdate} from "../../../../services/api/emergencyContact"
-import { getStudentsCacheKey } from "../../../../utils/cacheKeys"
 import moment from "moment"
 
 export interface CreateEmergencyContactData {

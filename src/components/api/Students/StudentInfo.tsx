@@ -81,7 +81,7 @@ const StudentInfo = ({ student, showIcons = true, picture=false }: Props) => {
         />}
         {/* <button onClick={() => handlePrint()}>print</button> */}
       </div>
-      <div className="max-md:mx-10" ref={printRef}>
+      <div className="max-md:mx-10 " ref={printRef}>
       {/* Información Principal */}
       <div 
         className="w-full flex justify-between items-start gap-6 my-8">
@@ -137,6 +137,9 @@ const StudentInfo = ({ student, showIcons = true, picture=false }: Props) => {
           <p>{showIcons && "🩸"} Peso: {student.health_info.weight || "60"} kg</p>
           <p>{showIcons && "📏"} Talla: {student.health_info.height || "1.70"} m</p>
           <p>{showIcons && "💉"} Enfermedades: {student.health_info.illness || "Ninguna"}</p>
+          <p>{showIcons && "" } Discapacidad: {student.health_info.handicap || 'Ninguna'}</p>
+          <p>{showIcons && "" } Apoyo SAANEE: {student.health_info.saanee ? 'Si' : 'No'}</p>
+          <p>{showIcons && "" } Informe Psicopedagógico: {student.health_info.psicopedagogy ? 'Si' : 'No'}</p>
         </div>
       ) : (
         <p className="text-gray-500">-</p>
@@ -179,6 +182,19 @@ const StudentInfo = ({ student, showIcons = true, picture=false }: Props) => {
             </div>
           </div>
       ))}
+      {picture && 
+      <div className="w-full flex justify-between items-start gap-4 mb-8 mt-36">
+        <div className="text-xl mt-10 py-4 border-t-2 border-slate-800 flex flex-col gap-3 ">
+          <p className="">Firma del padre o apoderado</p>
+          <p>Nombre:</p>
+          <p>DNI: </p>
+        </div>
+        <div className="flex flex-col justify-center items-center gap-4">
+          <div className="w-[120px] h-[160px] border-2 border-slate-800"/>
+          <p>Huella Digital</p>
+        </div>
+      </div>
+      }
       </div>
 
     </div>
