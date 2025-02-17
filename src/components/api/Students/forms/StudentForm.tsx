@@ -49,7 +49,7 @@ const StudentForm = ({
     student, 
     createStudent, 
     updateStudent,
-    setOpen 
+    setOpen,
   }: Props) => {
 
   const lan = useLanguageStore(s => s.lan)

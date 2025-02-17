@@ -16,9 +16,10 @@ import { motion } from "framer-motion"
 interface Props {
     student: Student
     classrooms: Classroom[]
+    classroomId: string
 }
 
-const StudentAdminCard = ({ student, classrooms }: Props) => {
+const StudentAdminCard = ({ student, classrooms, classroomId }: Props) => {
 
   const itemVariants = {
     hidden: { opacity: 0, x: 50 }, 
@@ -124,6 +125,7 @@ const StudentAdminCard = ({ student, classrooms }: Props) => {
         nextPrev={false}
         birthInfo={birthInfo}
         setOpen={setOpen}
+        classroomId={classroomId}
       />}
       {renderComponent === 'healthInfo' &&
       <StudentHealthForm 
@@ -132,6 +134,7 @@ const StudentAdminCard = ({ student, classrooms }: Props) => {
         nextPrev={false}
         healthInfo={healthInfo}
         setOpen={setOpen}
+        classroomId={classroomId}
       />}
       {renderComponent === 'emergencyContact' &&
       <StudentEmergency 
@@ -140,6 +143,7 @@ const StudentAdminCard = ({ student, classrooms }: Props) => {
         nextPrev={false}
         emergencyContact={emergencyContact}
         setOpen={setOpen}
+        classroomId={classroomId}
       />}
       {renderComponent === 'studentForm' &&
       <StudentForm

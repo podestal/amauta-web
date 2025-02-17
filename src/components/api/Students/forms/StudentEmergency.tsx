@@ -16,6 +16,7 @@ interface Props {
     emergencyContact?: EmergencyContact
     setOpen?: React.Dispatch<React.SetStateAction<boolean>>
     createEmergencyContact?: UseMutationResult<EmergencyContact, Error, CreateEmergencyContactData>
+    classroomId: string
 }
 
 const StudentEmergency = ({ 
@@ -25,13 +26,14 @@ const StudentEmergency = ({
     emergencyContact,
     setOpen,
     createEmergencyContact,
+    classroomId,
 }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
     const { setMessage, setShow, setType } = useNotificationsStore()
     const [loading, setLoading] = useState(false)
-    const updateEmergencyContact = emergencyContact && useUpdateEmergencyContact({ emergencyContactId: emergencyContact.id })
-    const createEmergencyContactInternal = !createEmergencyContact && !updateEmergencyContact && useCreateEmergencyContact()
+    const updateEmergencyContact = emergencyContact && useUpdateEmergencyContact({ emergencyContactId: emergencyContact.id, classroomId })
+    const createEmergencyContactInternal = !createEmergencyContact && !updateEmergencyContact && useCreateEmergencyContact({ classroomId })
 
     const [name, setName] = useState(emergencyContact ? emergencyContact.name : '')
     const [phoneNumber, setPhoneNumber] = useState(emergencyContact ? emergencyContact.phone_number : '')

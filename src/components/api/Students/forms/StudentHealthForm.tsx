@@ -19,6 +19,7 @@ interface Props {
     healthInfo?: HealthInfo
     createHealthInfo?: UseMutationResult<HealthInfo, Error, CreateHealthInfoData>
     setOpen?: React.Dispatch<React.SetStateAction<boolean>>
+    classroomId: string
 }
 
 const handycapOptions = [
@@ -39,13 +40,14 @@ const StudentHealthForm = ({
     healthInfo,
     createHealthInfo,
     setOpen,
+    classroomId
 }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
     const [loading, setLoading] = useState(false)
     const { setMessage, setShow, setType } = useNotificationsStore()
-    const updateHealthInfo = healthInfo && useUpdateHealthInfo({ healthInfoId: healthInfo.id })
-    const createHealthInfoInternal = !createHealthInfo && !updateHealthInfo && useCreateHealthInfo()
+    const updateHealthInfo = healthInfo && useUpdateHealthInfo({ healthInfoId: healthInfo.id, classroomId })
+    const createHealthInfoInternal = !createHealthInfo && !updateHealthInfo && useCreateHealthInfo({ classroomId })
 
     const [weight, setWeight] = useState(healthInfo ? `${healthInfo.weight}` : '')
     const [height, setHeight] = useState(healthInfo ? `${healthInfo.height}` : '')

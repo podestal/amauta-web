@@ -17,7 +17,7 @@ const StudentsAdminTable = ({ classroomId, classrooms }: Props) => {
     const today = moment().date()
     const access = useAuthStore(s => s.access) || ''
     const [studentFilter, setStudentFilter] = useState('')
-    const {data: students, isLoading, isError, error, isSuccess} = useGetStudents({ access, classroomId, day: today.toString() })
+    const {data: students, isLoading, isError, error, isSuccess} = useGetStudents({ access, classroomId, day: today.toString(), month: moment().month().toString() })
 
     if (isLoading) return <p className="animate-pulse text-2xl text-center py-20">Un Momento ...</p>
 
@@ -56,6 +56,7 @@ const StudentsAdminTable = ({ classroomId, classrooms }: Props) => {
                     key={student.uid}
                     student={student}
                     classrooms={classrooms}
+                    classroomId={classroomId}
                 />
             ))}
         </motion.div>

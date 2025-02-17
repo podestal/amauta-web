@@ -14,18 +14,19 @@ import useCreateTutor from "../../../hooks/api/tutor/useCreateTutor"
 interface Props {
   classrooms: Classroom[]
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
+  classroomId: string
 }
 
-const CreateStudent = ({ classrooms, setOpen }: Props) => {
+const CreateStudent = ({ classrooms, setOpen, classroomId }: Props) => {
 
   const [studentId, setStudentId] = useState('')
   const [page, setPage] = useState(1)
-  const createStudent = useCreateStudent()
+  const createStudent = useCreateStudent({ classroomId })
 
   // MORE INFO
-  const createBirthInfo = useCreateBirthInfo()
-  const createHealthInfo = useCreateHealthInfo()
-  const createEmergencyContact = useCreateEmergencyContact()
+  const createBirthInfo = useCreateBirthInfo({ classroomId })
+  const createHealthInfo = useCreateHealthInfo({ classroomId })
+  const createEmergencyContact = useCreateEmergencyContact({  classroomId })
   const createTutor = useCreateTutor()
 
 
@@ -45,12 +46,14 @@ const CreateStudent = ({ classrooms, setOpen }: Props) => {
         setPage={setPage}
         studentId={studentId}
         createBirthInfo={createBirthInfo}
+        classroomId={classroomId}
       />}
       {page === 3 && 
       <StudentHealthForm 
         setPage={setPage}
         studentId={studentId}
         createHealthInfo={createHealthInfo}
+        classroomId={classroomId}
       />}
 
       {page === 4 &&
@@ -58,6 +61,7 @@ const CreateStudent = ({ classrooms, setOpen }: Props) => {
         setPage={setPage}
         studentId={studentId}
         createEmergencyContact={createEmergencyContact}
+        classroomId={classroomId}
         setOpen={setOpen}
       />
       }

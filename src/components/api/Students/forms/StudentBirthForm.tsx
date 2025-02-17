@@ -19,6 +19,7 @@ interface Props {
     birthInfo?: BirthInfo
     setOpen?: React.Dispatch<React.SetStateAction<boolean>>
     createBirthInfo?: UseMutationResult<BirthInfo, Error, CreateBirthInfoData>
+    classroomId: string
 }
 
 const StudentBirthForm = ({ 
@@ -28,13 +29,14 @@ const StudentBirthForm = ({
     birthInfo, 
     setOpen,
     createBirthInfo,
+    classroomId,
 }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
     const { setMessage, setShow, setType } = useNotificationsStore()
     const [loading, setLoading] = useState(false)
-    const updateBirthInfo = birthInfo && useUpdateBirthInfo({ birthInfoId: birthInfo.id })
-    const createBirthInfoInternal = !createBirthInfo && !updateBirthInfo && useCreateBirthInfo()
+    const updateBirthInfo = birthInfo && useUpdateBirthInfo({ birthInfoId: birthInfo.id, classroomId })
+    const createBirthInfoInternal = !createBirthInfo && !updateBirthInfo && useCreateBirthInfo({ classroomId })
 
     const [selectedDepartment, setSelectedDepartment] = useState(birthInfo ? birthInfo.state : '21')
     const [selectedProvince, setSelectedProvince] = useState(birthInfo ? birthInfo.county : '162')
