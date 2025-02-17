@@ -191,6 +191,24 @@ const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen, creat
             setMessage('El empleador es requerido')
             return
         }
+
+        // if (!email) {
+        //     setEmailError('Este campo es requerido')
+        //     setType('error')
+        //     setShow(true)
+        //     setMessage('El correo electrónico es requerido')
+        //     return
+        // }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        if (email && !emailRegex.test(email)) {
+            setEmailError('El email no es válido');
+            setType('error');
+            setShow(true);
+            setMessage('Por favor, ingresa un correo electrónico válido');
+            return;
+        }
+
         if (!phoneNumber) {
             setPhoneNumberError('Este campo es requerido')
             setType('error')
@@ -210,13 +228,6 @@ const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen, creat
             setType('error')
             setShow(true)
             setMessage('El parentesco es requerido')
-            return
-        }
-        if (!email) {
-            setEmailError('Este campo es requerido')
-            setType('error')
-            setShow(true)
-            setMessage('El email es requerido')
             return
         }
 
@@ -531,12 +542,12 @@ const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen, creat
             <div className="grid grid-cols-3 gap-6 mb-12">
                 <Input 
                     type="text"
-                    placeholder="Email ..."
+                    placeholder="Correo Electrónico ..."
                     value={email}
                     onChange={(e) => {
                         email && setEmailError('')
                         setEmail(e.target.value)}}
-                    label="Email"
+                    label="Correo Electrónico"
                     error={emailError}
                 />
                 <Input 

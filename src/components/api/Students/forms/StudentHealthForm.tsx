@@ -200,12 +200,12 @@ const StudentHealthForm = ({
                     defaultValue={handicap}
                 />
                 <Checkbox 
-                    label="SAANEE"
+                    label="Cuenta con apoyo SAANEE"
                     checked={saanee}
                     onChange={setSaanee}
                 />
                 <Checkbox 
-                    label="Psicopedagogía"
+                    label="Informe psicopedagógico"
                     checked={psicopedagogy}
                     onChange={setPsicopedagogy}
                 />
