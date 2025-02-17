@@ -37,7 +37,7 @@ const StudentAdminCard = ({ student, classrooms, classroomId }: Props) => {
   const studentTutor = student.tutors.find(tutor => tutor.tutor_type === 'O')
 
   // MUTATIONS
-  const updateStudent = useUpdateStudent({ studentId: student.uid })
+  const updateStudent = useUpdateStudent({ studentId: student.uid, classroomId })
 
   return (
     <>
