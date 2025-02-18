@@ -9,12 +9,15 @@ import Selector from "../../ui/Selector"
 import getClassroomDescription from "../../../utils/getClassroomDescription"
 import StudentsAdminTable from "./StudentsAdminTable"
 import { motion } from "framer-motion"
+import StudentByDNI from "./StudentByDNI"
+import StudentByDniInfo from "./StudentByDniInfo"
 
 const StudentsAdmin = () => {
 
     const access = useAuthStore(s => s.access) || ''
     const [open, setOpen] = useState(false)
     const [selectedClassroom, setSelectedClassroom] = useState('0')
+    const [studentUid, setStudentUid] = useState('')
     const { data: classrooms, isLoading, isError, error, isSuccess } = useGetClassroom({ access })
 
     useLoader(isLoading)
@@ -52,7 +55,21 @@ const StudentsAdmin = () => {
                 />
             </div>
         </div>
-        {selectedClassroom !== '0' && <StudentsAdminTable 
+        {selectedClassroom === '0' && 
+        <>
+        <StudentByDNI 
+            setStudentUid={setStudentUid}
+        />
+        {studentUid !== '' && 
+            <StudentByDniInfo 
+                studentUid={studentUid} 
+                classrooms={classrooms}
+                classroomId={selectedClassroom}
+            />}
+        </>
+        }
+        {selectedClassroom !== '0' && 
+        <StudentsAdminTable 
             classroomId={selectedClassroom}
             classrooms={classrooms}
         />}
