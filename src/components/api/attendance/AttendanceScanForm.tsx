@@ -132,7 +132,9 @@ const AttendanceScanForm = ({ createAttendance }: Props) => {
         label={lan === "EN" ? "Kind" : "Tipo"}
       />
       <Selector
-        values={attendanceStatus}
+        values={selectedKind === 'I' 
+          ? attendanceStatus.filter( status => status.id !== 'T')
+          : attendanceStatus.filter( status => status.id !== 'L' && status.id !== 'O')}
         setter={setSelectedStatus}
         defaultValue={selectedStatus}
         label="Status"
