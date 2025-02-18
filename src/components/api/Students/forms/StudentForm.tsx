@@ -99,6 +99,7 @@ const StudentForm = ({
 
   // HEALTH
   const [insurance, setInsurance] = useState(student ? student.insurance : '')
+  const [otherInsurance, setOtherInsurance] = useState('')
 
   // ERROR HANDLING
   const [dniError, setDniError] = useState('')
@@ -118,6 +119,8 @@ const StudentForm = ({
   const [cellphoneError, setCellphoneError] = useState('')
 
   const [insuranceError, setInsuranceError] = useState('')
+  const [otherInsuranceError, setOtherInsuranceError] = useState('')
+
   const [livesWithError, setLivesWithError] = useState('')
   const [tutorNameError, setTutorNameError] = useState('')
 
@@ -281,6 +284,14 @@ const StudentForm = ({
       return
     }
 
+    if (insurance === 'O' && otherInsurance === '') {
+      setOtherInsuranceError('El nombre del seguro es requerido')
+      setType('error')
+      setShow(true)
+      setMessage('El nombre del seguro es requerido')
+      return
+    }
+
     if (livesWith === '' || livesWith === '0') {
       setLivesWithError('Con quién vive es requerido')
       setType('error')
@@ -317,6 +328,7 @@ const StudentForm = ({
         phone_number: phone,
         celphone_number: cellphone,
         insurance,
+        other_insurance: insurance === 'O' ? otherInsurance : '',
         lives_with: livesWithName,
       },
       access
@@ -348,6 +360,7 @@ const StudentForm = ({
         phone_number: phone,
         celphone_number: cellphone,
         insurance,
+        other_insurance: insurance === 'O' ? otherInsurance : '',
         lives_with: livesWithName,
       },
       access
@@ -569,7 +582,7 @@ const StudentForm = ({
         </div>
         <div className="grid grid-cols-3 gap-4">
           <Selector 
-            values={[{id: 'E', name: 'Essalud'}, {id: 'P', name: 'Privado'}, {id: 'S', name: 'SIS'}, {id: 'N', name: 'Sin Seguro'}]}
+            values={[{id: 'E', name: 'Essalud'}, {id: 'P', name: 'Privado'}, {id: 'S', name: 'SIS'}, {id: 'O', name:'Otro'}, {id: 'N', name: 'Sin Seguro'}]}
             setter={setInsurance}
             label="Seguro"
             lan={lan}
@@ -579,6 +592,18 @@ const StudentForm = ({
             defaultValue={insurance && insurance}
             ref={insuranceRef}
           />
+          {insurance === 'O' && 
+          <Input 
+            label="Nombre del seguro"
+            placeholder="Nombre del Seguro ..."
+            value={otherInsurance}
+            onChange={e => {
+              otherInsurance && setOtherInsuranceError('')
+              setOtherInsurance(e.target.value)}}
+            error={otherInsuranceError}
+          />}
+        </div>
+        <div className="grid grid-cols-3 gap-4">
           <Selector 
             values={[{id: 'Padre', name: 'Padre'}, {id: 'Madre', name: 'Madre'}, {id: 'A', name: 'Apoderado'}]}
             setter={setLivesWith}
@@ -590,23 +615,23 @@ const StudentForm = ({
             defaultValue={livesWith && livesWith}
             ref={livesWithRef}
           />
+          {livesWith === 'A' &&
+          <motion.div 
+            initial={{opacity: 0, x: 50}}
+            animate={{opacity: 1, x: 0}}
+            transition={{duration: 0.5}}
+            className="w-full grid grid-cols-2">
+            <Input 
+              label="Nombre del apoderado"
+              placeholder="Nombre ..."
+              value={tutorName}
+              onChange={e =>{
+                tutorName && setTutorNameError('')
+                setTutorName(e.target.value)}}
+              error={tutorNameError}
+            />
+          </motion.div>}
         </div>
-        {livesWith === 'A' &&
-        <motion.div 
-          initial={{opacity: 0, x: 50}}
-          animate={{opacity: 1, x: 0}}
-          transition={{duration: 0.5}}
-          className="w-full grid grid-cols-2">
-          <Input 
-            label="Nombre del apoderado"
-            placeholder="Nombre ..."
-            value={tutorName}
-            onChange={e =>{
-              tutorName && setTutorNameError('')
-              setTutorName(e.target.value)}}
-            error={tutorNameError}
-          />
-        </motion.div>}
         <div className="my-8 w-full flex justify-end">
           <Button 
             label={student ? 'Guardar' : 'Siguiente'}

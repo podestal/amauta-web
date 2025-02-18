@@ -33,6 +33,7 @@ export interface Student {
     celphone_number: string
     map_location: string
     insurance: string
+    other_insurance: string
     lives_with: string
     health_info:HealthInfo | null
     birth_info: BirthInfo | null
@@ -54,12 +55,14 @@ export type StudentCreateUpdate = Omit<
         'health_info' |
         'birth_info' |
         'emergency_contact' |
+        'other_insurance'|
         'tutor_name' | 
         'tutors'
     > & {
     uid?: string
     clase?: number
     tutor_name?: string
+    other_insurance?: string
 }
 
 interface Props {
