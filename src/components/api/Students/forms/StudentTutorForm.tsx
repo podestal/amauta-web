@@ -146,14 +146,17 @@ const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen, creat
             return
         }
 
-        const dateRegex = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
+        const dateRegex = /^(0[1-9]|[12]\d|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
+
         if (!dateRegex.test(dateOfBirth)) {
-            setDateOfBirthError("Formato incorrecto (YYYY-MM-DD)");
+            setDateOfBirthError("Formato incorrecto (DD/MM/YYYY)");
             setType("error");
             setShow(true);
-            setMessage("El formato de fecha debe ser YYYY-MM-DD (ejemplo: 2016-09-04)");
+            setMessage("El formato de fecha debe ser DD/MM/YYYY (ejemplo: 04/09/2016)");
             return;
         }
+
+        const [day, month, year] = dateOfBirth.split('/')
 
         if (!selectedDepartment) {
             setStateError('Este campo es requerido')
@@ -237,7 +240,7 @@ const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen, creat
             tutor: {
                 students: [studentId],
                 dni,
-                date_of_birth: dateOfBirth,
+                date_of_birth: moment(`${month}/${day}/${year}`).format('YYYY-MM-DD'),
                 state: selectedDepartment,
                 county: selectedProvince,
                 city,
@@ -272,7 +275,7 @@ const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen, creat
             tutor: {
                 students: [studentId],
                 dni,
-                date_of_birth: dateOfBirth,
+                date_of_birth: moment(`${month}/${day}/${year}`).format('YYYY-MM-DD'),
                 state: selectedDepartment,
                 county: selectedProvince,
                 city,
@@ -310,7 +313,7 @@ const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen, creat
             tutor: {
                 students: [studentId],
                 dni,
-                date_of_birth: dateOfBirth,
+                date_of_birth: moment(`${month}/${day}/${year}`).format('YYYY-MM-DD'),
                 state: selectedDepartment,
                 county: selectedDepartment,
                 city,

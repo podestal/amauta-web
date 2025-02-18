@@ -42,7 +42,7 @@ const StudentBirthForm = ({
     const [selectedProvince, setSelectedProvince] = useState(birthInfo ? birthInfo.county : '162')
     const [city, setCity] = useState(birthInfo ? birthInfo.city : '')
     const [naturalBirth, setNaturalBirth] = useState(birthInfo ? `${birthInfo.natural_birth ? '1' : '2'}` : '1')
-    const [dateOfBirth, setDateOfBirth] = useState(birthInfo ? moment(birthInfo.date_of_birth).format('YYYY-MM-DD') : '')
+    const [dateOfBirth, setDateOfBirth] = useState(birthInfo ? moment(birthInfo.date_of_birth).format('DD/MM/YYYY') : '')
 
     // Error handling
 
@@ -86,14 +86,18 @@ const StudentBirthForm = ({
             return
         }
 
-        const dateRegex = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
+        const dateRegex = /^(0[1-9]|[12]\d|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
+
         if (!dateRegex.test(dateOfBirth)) {
-            setDateOfBirthError("Formato incorrecto (YYYY-MM-DD)");
+            setDateOfBirthError("Formato incorrecto (DD/MM/YYYY)");
             setType("error");
             setShow(true);
-            setMessage("El formato de fecha debe ser YYYY-MM-DD (ejemplo: 2016-09-04)");
+            setMessage("El formato de fecha debe ser DD/MM/YYYY (ejemplo: 04/09/2016)");
             return;
         }
+
+        // const normalizedDateOfBirth = dateOfBirth.split('/')
+        const [day, month, year] = dateOfBirth.split('/')
 
         setLoading(true)
 
@@ -103,7 +107,7 @@ const StudentBirthForm = ({
                 county: selectedProvince,
                 city,
                 natural_birth: naturalBirth === '1',
-                date_of_birth: moment(dateOfBirth).format('YYYY-MM-DD'),
+                date_of_birth: moment(`${month}/${day}/${year}`).format('YYYY-MM-DD'),
                 student: studentId
             },
             access
@@ -125,7 +129,7 @@ const StudentBirthForm = ({
                 county: selectedProvince,
                 city,
                 natural_birth: naturalBirth === '1',
-                date_of_birth: moment(dateOfBirth).format('YYYY-MM-DD'),
+                date_of_birth: moment(`${month}/${day}/${year}`).format('YYYY-MM-DD'),
                 student: studentId
             },
             access
@@ -150,7 +154,7 @@ const StudentBirthForm = ({
                 county: selectedProvince,
                 city,
                 natural_birth: naturalBirth === '1',
-                date_of_birth: moment(dateOfBirth).format('YYYY-MM-DD'),
+                date_of_birth: moment(`${month}/${day}/${year}`).format('YYYY-MM-DD'),
                 student: studentId
             },
             access
