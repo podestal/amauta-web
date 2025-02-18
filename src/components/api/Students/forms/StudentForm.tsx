@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Button from "../../../ui/Button"
 import Input from "../../../ui/Input"
 import Selector from "../../../ui/Selector"
@@ -8,9 +8,10 @@ import { motion } from "framer-motion"
 import { CreateStudentData } from "../../../../hooks/api/student/useCreateStudent"
 import useAuthStore from "../../../../hooks/store/useAuthStore"
 import { Student } from "../../../../services/api/studentsService"
-import { UseMutationResult } from "@tanstack/react-query"
+import { UseMutationResult, useQuery } from "@tanstack/react-query"
 import { UpdateStudentData } from "../../../../hooks/api/student/useUpdateStudent"
 import useNotificationsStore from "../../../../hooks/store/useNotificationsStore"
+import axios from "axios"
 
 interface Props {
   setPage?: React.Dispatch<React.SetStateAction<number>>
@@ -41,6 +42,16 @@ const religions = [
   {id: 'R', name: 'Cristiana'},
   {id: 'O', name: 'Otra'}
 ]
+
+const fetchStudent = async (dni: string) => {
+  return axios.get(`${import.meta.env.VITE_API_URL}student/${dni}/`)
+  .then(res => res.data)
+  .catch(err => {
+    throw new Error(err.response.data.message)
+  })
+
+
+}
 
 const StudentForm = ({ 
     setPage, 
@@ -124,6 +135,24 @@ const StudentForm = ({
   const cellphoneRef = useRef<HTMLInputElement>(null);
   const insuranceRef = useRef<HTMLSelectElement>(null);
   const livesWithRef = useRef<HTMLSelectElement>(null);
+
+  const { data: studentExists } = useQuery({
+    queryKey: ['student', dni],
+    queryFn: () => fetchStudent(dni),
+    enabled: dni.length === 8,
+    staleTime: 60000,
+    retry: false
+  })
+
+  useEffect(() => {
+    if (studentExists) {
+      setDniError('El estudiante ya existe')
+      setType('error')
+      setShow(true)
+      setMessage('El estudiante ya existe')
+    }
+  }, [studentExists])
+
   
   const scrollToField = (ref: React.RefObject<HTMLElement>) => {
     if (ref.current) {
@@ -525,14 +554,14 @@ const StudentForm = ({
         <div className="grid grid-cols-3 gap-4">
             <Input 
               label="Número de Hermanos"
-              placeholder="Número ..."
+              placeholder="Número de hermanos ..."
               value={brothers}
               onChange={e => setBrothers(e.target.value)}
               type="number"
             />
             <Input 
               label="Lugar en la Familia"
-              placeholder="Lugar ..."
+              placeholder="Lugar en familia ..."
               value={place}
               onChange={e => setPlace(e.target.value)}
               type="number"

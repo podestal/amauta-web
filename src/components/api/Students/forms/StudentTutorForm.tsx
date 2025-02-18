@@ -440,7 +440,7 @@ const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen, creat
             </div>
             <div className="grid grid-cols-3 gap-6 mb-12">
                 <Input 
-                    placeholder="YYYY-MM-DD"
+                    placeholder="'DD/MM/YYYY'"
                     value={dateOfBirth}
                     onChange={(e) => {
                         dateOfBirth && setDateOfBirthError('')

@@ -218,7 +218,7 @@ const StudentBirthForm = ({
             </div>
             <div className='grid grid-cols-3 gap-6'>
                 <Input 
-                    placeholder='AAAA-MM-DD'
+                    placeholder='DD/MM/YYYY'
                     label='Fecha de Nacimiento'
                     value={dateOfBirth}
                     setValue={setDateOfBirth}
