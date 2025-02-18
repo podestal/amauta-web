@@ -39,8 +39,8 @@ const StudentBirthForm = ({
     const createBirthInfoInternal = !createBirthInfo && !updateBirthInfo && useCreateBirthInfo({ classroomId })
 
     const [selectedDepartment, setSelectedDepartment] = useState(birthInfo ? birthInfo.state : '21')
-    const [selectedProvince, setSelectedProvince] = useState(birthInfo ? birthInfo.county : '162')
-    const [city, setCity] = useState(birthInfo ? birthInfo.city : '')
+    const [selectedProvince, setSelectedProvince] = useState(birthInfo ? birthInfo.county : '172')
+    const [city, setCity] = useState(birthInfo ? birthInfo.city : 'Juliaca')
     const [naturalBirth, setNaturalBirth] = useState(birthInfo ? `${birthInfo.natural_birth ? '1' : '2'}` : '1')
     const [dateOfBirth, setDateOfBirth] = useState(birthInfo ? moment(birthInfo.date_of_birth).format('DD/MM/YYYY') : '')
 
@@ -96,7 +96,6 @@ const StudentBirthForm = ({
             return;
         }
 
-        // const normalizedDateOfBirth = dateOfBirth.split('/')
         const [day, month, year] = dateOfBirth.split('/')
 
         setLoading(true)
