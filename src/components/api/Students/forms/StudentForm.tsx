@@ -75,8 +75,8 @@ const StudentForm = ({
   const [secondLanguage, setSecondLanguage] = useState(student ? student.second_language : 'N')
 
   // FAMILY DATA
-  const [brothers, setBrothers] = useState(student ? student.number_of_siblings : 0)
-  const [place, setPlace] = useState( student ? student.place_in_family : 0)
+  const [brothers, setBrothers] = useState(student ? (student.number_of_siblings).toString() : '')
+  const [place, setPlace] = useState( student ? (student.place_in_family).toString() : '')
   const [religion, setReligion] = useState('C')
   const [livesWith, setLivesWith] = useState(student ? student.lives_with : '')
   const [tutorName, setTutorName] = useState(student ? student.tutor_name : '')
@@ -281,8 +281,8 @@ const StudentForm = ({
         clase: classroomId,
         main_language: mainLanguage,
         second_language: secondLanguage === 'N' ? '' : secondLanguage,
-        number_of_siblings: brothers,
-        place_in_family: place,
+        number_of_siblings: brothers ? parseInt(brothers) : 0,
+        place_in_family: place ? parseInt(place) : 0,
         religion,
         address,
         phone_number: phone,
@@ -312,8 +312,8 @@ const StudentForm = ({
         clase: classroomId,
         main_language: mainLanguage,
         second_language: secondLanguage === 'N' ? '' : secondLanguage,
-        number_of_siblings: brothers,
-        place_in_family: place,
+        number_of_siblings: brothers ? parseInt(brothers) : 0,
+        place_in_family: place ? parseInt(place) : 0,
         religion,
         address,
         phone_number: phone,
@@ -527,14 +527,14 @@ const StudentForm = ({
               label="Número de Hermanos"
               placeholder="Número ..."
               value={brothers}
-              onChange={e => setBrothers(Number(e.target.value))}
+              onChange={e => setBrothers(e.target.value)}
               type="number"
             />
             <Input 
               label="Lugar en la Familia"
               placeholder="Lugar ..."
               value={place}
-              onChange={e => setPlace(Number(e.target.value))}
+              onChange={e => setPlace(e.target.value)}
               type="number"
             />
         </div>
