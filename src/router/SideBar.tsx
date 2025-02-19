@@ -12,7 +12,7 @@ const groupToSpanish: Record<string, string> = {
     assistant: "Auxiliar",
     student: "Estudiante",
     tutor: "Tutor",
-    admin: 'Administrativo'
+    manager: 'Administrativo'
 }
 
 const SideBar = ({ profile }: Props) => {
@@ -36,18 +36,33 @@ const SideBar = ({ profile }: Props) => {
     //   ]
     // }
 
-    const navItems = [
-        { name: "Clases", path: "students-main" },
+    let navItems = [
+      { name: "Clases", path: "students-main" },
+      // { name: "Anuncios", path: "/announcement" },
+      // { name: "Profile", path: "/profile" },
+      // { name: "Students", path: "/students" },
+      { name: "Asistencias", path: "reports" },
+      { name: "Cursos", path: "assignatures" },
+      { name: 'Notas', path: 'grades-summary' },
+      { name: 'Categorías', path: 'categories' },
+      { name: "Alumnos", path: "student-admin" },
+      // { name: "Descargar", path: "/downloadapp" },
+    ]
+
+    if (group === 'manager') {
+      navItems = [
+        // { name: "Clases", path: "students-main" },
         // { name: "Anuncios", path: "/announcement" },
         // { name: "Profile", path: "/profile" },
         // { name: "Students", path: "/students" },
         { name: "Asistencias", path: "reports" },
-        { name: "Cursos", path: "assignatures" },
-        { name: 'Notas', path: 'grades-summary' },
-        { name: 'Categorías', path: 'categories' },
+        // { name: "Cursos", path: "assignatures" },
+        // { name: 'Notas', path: 'grades-summary' },
+        // { name: 'Categorías', path: 'categories' },
         { name: "Alumnos", path: "student-admin" },
         // { name: "Descargar", path: "/downloadapp" },
-    ];
+      ]
+    }
 
   return (
     <div className="hidden lg:block w-64 h-full bg-slate-950 px-4 py-8 fixed mr-64 z-50">

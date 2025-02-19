@@ -45,6 +45,9 @@ const Login = () => {
                 setLoading(false)
             },
             onSuccess: () => {
+                if (username === 'staff') {
+                    navigate('/app/student-admin')
+                } else
                 navigate('/app/students-main')
             },
             onError: error => {
