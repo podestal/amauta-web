@@ -45,7 +45,7 @@ const Login = () => {
                 setLoading(false)
             },
             onSuccess: () => {
-                if (username === 'staff') {
+                if (username === 'staff' || username === 'yudicita2470' || username === 'ruthevelincayocoila' || username === 'esmelinagm') {
                     navigate('/app/student-admin')
                 } else
                 navigate('/app/students-main')
