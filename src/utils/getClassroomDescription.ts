@@ -20,6 +20,7 @@ export const getClassroomGrade = (lan: string, grade: string) => {
 }
 
 const getClassroomDescription = ({lan, grade, section, level, short }: Props)  => {
+    
     const gradeConverter: Record<string, string> = {
         '1': lan === 'EN' ? 'First' : 'Primero',
         '2': lan === 'EN' ? 'Second' : 'Segundo',
@@ -41,6 +42,7 @@ const getClassroomDescription = ({lan, grade, section, level, short }: Props)  =
     const levelConverter: Record<string, string> = {
         'P': lan === 'EN' ? 'Elementary' : 'Primaria',
         'S': lan === 'EN' ? 'Middle' : 'Secundaria',
+        'I': lan === 'EN' ? 'Kinder' : 'Inicial',
     }
     
 
