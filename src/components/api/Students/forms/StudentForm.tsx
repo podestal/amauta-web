@@ -12,6 +12,7 @@ import { UseMutationResult, useQuery } from "@tanstack/react-query"
 import { UpdateStudentData } from "../../../../hooks/api/student/useUpdateStudent"
 import useNotificationsStore from "../../../../hooks/store/useNotificationsStore"
 import axios from "axios"
+import useSchoolStore from "../../../../hooks/store/useSchoolStore"
 
 interface Props {
   setPage?: React.Dispatch<React.SetStateAction<number>>
@@ -65,6 +66,7 @@ const StudentForm = ({
 
   const lan = useLanguageStore(s => s.lan)
   const access = useAuthStore(s => s.access) || ''
+  const school = useSchoolStore(s => s.school) 
 
   const [loading, setLoading] = useState(false)
   const { setMessage, setShow, setType } = useNotificationsStore()
@@ -330,6 +332,7 @@ const StudentForm = ({
         insurance,
         other_insurance: insurance === 'O' ? otherInsurance : '',
         lives_with: livesWithName,
+        school: school.id
       },
       access
     }, {
@@ -362,6 +365,7 @@ const StudentForm = ({
         insurance,
         other_insurance: insurance === 'O' ? otherInsurance : '',
         lives_with: livesWithName,
+        school: school.id
       },
       access
     }, {

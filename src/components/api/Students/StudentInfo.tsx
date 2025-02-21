@@ -7,7 +7,6 @@ import { getDepartment, getProvince } from "../../../data/mockdataForGrades";
 import { useRef } from "react";
 import {useReactToPrint} from "react-to-print";
 import logoSagrado from "../../../assets/imgs/schoolLogos/logoSagrado.png";
-import useSchoolStore from "../../../hooks/store/useSchoolStore";
 
 const school = {
   id: 1,
@@ -64,8 +63,6 @@ const StudentInfo = ({ student, showIcons = true, picture=false }: Props) => {
   });
 
   const printRef = useRef<HTMLDivElement>(null)
-  const schoolLocal = useSchoolStore(s => s.school)
-  console.log('schoolLocal',schoolLocal);
   
   const handlePrint = useReactToPrint({ 
     contentRef: printRef,

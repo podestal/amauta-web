@@ -2,12 +2,17 @@ import { create } from "zustand"
 import { School } from "../../services/api/schoolService"
 
 interface SchoolState {
-    school: School | null
+    school: School
     setSchool: (school: School) => void
 }
 
 const useSchoolStore = create<SchoolState>(set => ({
-    school: null,
+    school: {
+        id: 0,
+        name: '',
+        type: '',
+        pictureName: ''
+    },
     setSchool: (school) => {
         set({ school })
     }

@@ -12,6 +12,7 @@ import useAuthStore from "../../../../hooks/store/useAuthStore"
 import useUpdateTutor from "../../../../hooks/api/tutor/useUpdateTutor"
 import useNotificationsStore from "../../../../hooks/store/useNotificationsStore"
 import { departments, provinces } from "../../../../data/mockdataForGrades"
+import useSchoolStore from "../../../../hooks/store/useSchoolStore"
 
 interface Props {
     studentId: string
@@ -30,6 +31,8 @@ const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen, creat
     // - Update Tutor
     // - Create tutor when open this particular form
     // - Loading state for create tutor
+
+    const school = useSchoolStore(s => s.school)
     const updateTutor = tutor && useUpdateTutor({ tutorId: (tutor.id).toString(), classroomId })
     const createTutorInternal = !createTutor && !updateTutor && useCreateTutor({ classroomId })
     const [loading, setLoading] = useState(false)
@@ -256,7 +259,8 @@ const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen, creat
                 email,
                 tutor_relationship: tutorRelationship,
                 can_access: true, 
-                tutor_type: tutorType
+                tutor_type: tutorType,
+                school: school.id
             },
             access
         }, {
@@ -291,7 +295,8 @@ const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen, creat
                 email,
                 tutor_relationship: tutorRelationship,
                 can_access: true, 
-                tutor_type: tutorType
+                tutor_type: tutorType,
+                school: school.id
             },
             access
         }, {
@@ -329,7 +334,8 @@ const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen, creat
                 email,
                 tutor_relationship: tutorRelationship,
                 can_access: true, 
-                tutor_type: tutorType
+                tutor_type: tutorType,
+                school: school.id
             },
             access
         }, {
