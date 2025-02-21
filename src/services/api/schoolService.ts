@@ -3,8 +3,8 @@ import APIClient from "./apiClient"
 export interface School {
     id: number,
     name: string,
-    type: string,
-    pictureName: string,
+    type_of_institution: string,
+    picture_name: string,
 }
 
 interface Props {

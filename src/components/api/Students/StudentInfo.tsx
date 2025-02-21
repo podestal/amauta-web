@@ -4,16 +4,17 @@ import { Student } from "../../../services/api/studentsService";
 import getClassroomDescription from "../../../utils/getClassroomDescription";
 import Button from "../../ui/Button";
 import { getDepartment, getProvince } from "../../../data/mockdataForGrades";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import {useReactToPrint} from "react-to-print";
-import logoSagrado from "../../../assets/imgs/schoolLogos/logoSagrado.png";
+import useSchoolStore from "../../../hooks/store/useSchoolStore";
+// import logoSagrado from "../../../assets/imgs/schoolLogos/logoSagrado.png";
 
-const school = {
-  id: 1,
-  type: "Institución Educativa Privada",
-  name: "Sagrado Corazón de Jesús",
-  img: logoSagrado
-}
+// const school = {
+//   id: 1,
+//   type: "Institución Educativa Privada",
+//   name: "Sagrado Corazón de Jesús",
+//   img: logoSagrado
+// }
 
 interface Props {
   student: Student;
@@ -54,6 +55,19 @@ const civilStatus: Record<string, string> = {
 };
 
 const StudentInfo = ({ student, showIcons = true, picture=false }: Props) => {
+
+  const school = useSchoolStore(s => s.school)
+  // const schoolImg = import(`../../../assets/imgs/schoolLogos/${school.picture_name}.png`)
+  const [schoolImg, setSchoolImg] = useState('')
+
+  useEffect(() => {
+    import(`../../../assets/imgs/schoolLogos/${school.picture_name}.png`)
+      .then((img) => setSchoolImg(img.default))
+      .catch((err) => {
+        setSchoolImg('')
+        console.error("Error loading school image: ", err)})
+  }, [school.picture_name])
+
   const lan = useLanguageStore((s) => s.lan);
   const classroom = getClassroomDescription({
     lan,
@@ -90,12 +104,12 @@ const StudentInfo = ({ student, showIcons = true, picture=false }: Props) => {
       <div className="max-md:mx-10 " ref={printRef}>
       {/* Header */}
       <div className="w-full flex justify-between items-center gap-4 my-10">
-        <img src={school.img} alt="Logo" className="w-24 h-24" />
+        <img src={schoolImg} alt="Logo" className="w-24 h-24" />
         <div className="text-center">
-          <h2 className="text-2xl">{school.type}</h2>
+          <h2 className="text-2xl">{school.type_of_institution}</h2>
           <h2 className="text-3xl font-bold">{school.name}</h2>
         </div>
-        <img src={school.img} alt="Logo" className="w-24 h-24" />
+        <img src={schoolImg} alt="Logo" className="w-24 h-24" />
       </div>
       {/* Información Principal */}
       <h2 className="text-3xl md:text-4xl font-bold text-center my-12">
