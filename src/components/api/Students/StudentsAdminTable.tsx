@@ -11,6 +11,7 @@ import Modal from "../../ui/Modal"
 import { useReactToPrint } from "react-to-print"
 import { QRCodeSVG } from "qrcode.react"
 import { Student } from "../../../services/api/studentsService"
+import getClassroomDescription from "../../../utils/getClassroomDescription"
 
 interface Props {
     classroomId: string
@@ -20,6 +21,10 @@ interface Props {
 const StudentsAdminTable = ({ classroomId, classrooms }: Props) => {
 
     const today = moment().date()
+    const currentClassroom = classrooms.find(classroom => classroom.id === parseInt(classroomId))
+    const classroomDescription = currentClassroom && getClassroomDescription({ lan: 'ES', grade: currentClassroom.grade, section: currentClassroom.section, level: currentClassroom.level })
+    
+    
     const [open, setOpen] = useState(false)
     const access = useAuthStore(s => s.access) || ''
     const printRef = useRef<HTMLDivElement>(null)
@@ -101,8 +106,10 @@ const StudentsAdminTable = ({ classroomId, classrooms }: Props) => {
     <Modal isOpen={open} onClose={() => setOpen(false)} whole>
         <div className="flex flex-col gap-4 items-center">
             <Button label="Imprimir" onClick={() => handlePrint()} />
+            
             <div ref={printRef} className="my-10">
                 {/* Chunk students into groups of 9 */}
+                <h2 className="text-3xl my-6 text-center">{classroomDescription}</h2>
                 {students.reduce((rows, student, index) => {
                     if (index % 9 === 0) rows.push([]);
                     rows[rows.length - 1].push(student);
