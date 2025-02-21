@@ -6,6 +6,14 @@ import Button from "../../ui/Button";
 import { getDepartment, getProvince } from "../../../data/mockdataForGrades";
 import { useRef } from "react";
 import {useReactToPrint} from "react-to-print";
+import logoSagrado from "../../../assets/imgs/schoolLogos/logoSagrado.png";
+
+const school = {
+  id: 1,
+  type: "Institución Educativa Privada",
+  name: "Sagrado Corazón de Jesús",
+  img: logoSagrado
+}
 
 interface Props {
   student: Student;
@@ -65,10 +73,7 @@ const StudentInfo = ({ student, showIcons = true, picture=false }: Props) => {
     
     <div className="w-full max-w-5xl mx-auto bg-white dark:bg-gray-900 p-8 rounded-lg shadow-lg">
       {/* Header */}
-      <div className="w-full flex flex-col md:flex-row justify-between items-center my-6">
-        <h2 className="text-3xl md:text-4xl font-bold text-center">
-          {showIcons && "📘"} Ficha de Estudiante
-        </h2>
+      <div className="w-full flex justify-center items-center my-6">
         {/* <button
           className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition"
           onClick={() => console.log("Print")}
@@ -82,7 +87,19 @@ const StudentInfo = ({ student, showIcons = true, picture=false }: Props) => {
         {/* <button onClick={() => handlePrint()}>print</button> */}
       </div>
       <div className="max-md:mx-10 " ref={printRef}>
+      {/* Header */}
+      <div className="w-full flex justify-center items-center gap-4 my-10">
+        <img src={school.img} alt="Logo" className="w-24 h-24 mx-auto" />
+        <div className="text-center">
+          <h2 className="text-2xl">{school.type}</h2>
+          <h2 className="text-3xl font-bold">{school.name}</h2>
+        </div>
+        <img src={school.img} alt="Logo" className="w-24 h-24 mx-auto" />
+      </div>
       {/* Información Principal */}
+      <h2 className="text-3xl md:text-4xl font-bold text-center my-12">
+          {showIcons && "📘"} Ficha de Estudiante
+        </h2>
       <div 
         className="w-full flex justify-between items-start gap-6 my-8">
         <div>
