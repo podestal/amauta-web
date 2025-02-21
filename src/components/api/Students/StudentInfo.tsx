@@ -7,6 +7,7 @@ import { getDepartment, getProvince } from "../../../data/mockdataForGrades";
 import { useRef } from "react";
 import {useReactToPrint} from "react-to-print";
 import logoSagrado from "../../../assets/imgs/schoolLogos/logoSagrado.png";
+import useSchoolStore from "../../../hooks/store/useSchoolStore";
 
 const school = {
   id: 1,
@@ -63,6 +64,9 @@ const StudentInfo = ({ student, showIcons = true, picture=false }: Props) => {
   });
 
   const printRef = useRef<HTMLDivElement>(null)
+  const schoolLocal = useSchoolStore(s => s.school)
+  console.log('schoolLocal',schoolLocal);
+  
   const handlePrint = useReactToPrint({ 
     contentRef: printRef,
     documentTitle: `Ficha_Estudiante_${student.first_name}_${student.last_name}`,
@@ -88,13 +92,13 @@ const StudentInfo = ({ student, showIcons = true, picture=false }: Props) => {
       </div>
       <div className="max-md:mx-10 " ref={printRef}>
       {/* Header */}
-      <div className="w-full flex justify-center items-center gap-4 my-10">
-        <img src={school.img} alt="Logo" className="w-24 h-24 mx-auto" />
+      <div className="w-full flex justify-between items-center gap-4 my-10">
+        <img src={school.img} alt="Logo" className="w-24 h-24" />
         <div className="text-center">
           <h2 className="text-2xl">{school.type}</h2>
           <h2 className="text-3xl font-bold">{school.name}</h2>
         </div>
-        <img src={school.img} alt="Logo" className="w-24 h-24 mx-auto" />
+        <img src={school.img} alt="Logo" className="w-24 h-24" />
       </div>
       {/* Información Principal */}
       <h2 className="text-3xl md:text-4xl font-bold text-center my-12">

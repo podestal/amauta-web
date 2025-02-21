@@ -34,6 +34,7 @@ export interface Tutor {
     lives_with_student: boolean
     tutor_type: string
     tutor_relationship: string
+    school: number
 }
 
 export type TutorCreateUpdate = Omit<Tutor, 'id' | 'students'> & {

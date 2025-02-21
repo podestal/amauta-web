@@ -9,6 +9,7 @@ export interface Assistant {
     address: string
     email: string
     clases_details: string[]
+    school: number
 }
 
 const assistantService = new APIClient<Assistant>('assistant/me/')

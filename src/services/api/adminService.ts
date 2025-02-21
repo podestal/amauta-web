@@ -6,6 +6,7 @@ export interface Admin {
     clases_details: string[]
     first_name: string
     last_name: string
+    school: number
 }
 
 const instructorService = new APIClient<Admin>('admin/me/')

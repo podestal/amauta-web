@@ -6,6 +6,7 @@ export interface Instructor {
     clases_details: string[]
     first_name: string
     last_name: string
+    school: number
 }
 
 const instructorService = new APIClient<Instructor>('instructor/me/')

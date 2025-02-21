@@ -40,6 +40,7 @@ export interface Student {
     emergency_contact: EmergencyContact | null
     tutors: Tutor[]
     tutor_name: string
+    school: number
 }
 
 export type StudentCreateUpdate = Omit<

@@ -9,6 +9,8 @@ import isTokenExpired from "../../utils/isTokenExpired";
 import useFirebaseMessaging from "../../hooks/notifications/useFirebaseMessaging";
 import axios from "axios";
 import { getDeviceType } from "../../utils/getDeviceType";
+import useGetSchool from "../../hooks/api/school/useGetSchool";
+import useSchoolStore from "../../hooks/store/useSchoolStore";
 
 interface Props {
   children: React.ReactElement;
@@ -19,14 +21,17 @@ const PrivateRoutes = ({ children }: Props) => {
   const access = useAuthStore((s) => s.access) || ''
   const tokenExpired = isTokenExpired(access)
   const {setUser, setProfile} = useGetProfileStore()
+  const setSchool = useSchoolStore(s => s.setSchool)
   const deviceToken = useFirebaseMessaging()
   const {data: user, isLoading: isLoadingUser, isError: isErrorUser, error: errorUser} = useGetUser({ access });
   const {data: profile, isLoading: isLoadingProfile, isError: isErrorProfile, error: errorProfile, isSuccess} = useGetProfile({ access, profileName: user?.groups[0] || '' });
+  const { data: school } = useGetSchool({ access, profile })
   
   useEffect(() => {
     user && setUser(user)
     profile && setProfile(profile)
-  }, [profile, user])
+    school && setSchool(school)
+  }, [profile, user, school])
 
   useEffect(() => {
     if (access && !tokenExpired && deviceToken) {
