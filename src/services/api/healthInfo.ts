@@ -5,7 +5,7 @@ export interface HealthInfo {
     weight: number
     height: number
     illness: string
-    handicap: string
+    handycap: string
     saanee: boolean
     psicopedagogy: boolean
 }

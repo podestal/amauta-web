@@ -22,15 +22,20 @@ interface Props {
     classroomId: string
 }
 
-const handycapOptions = [
+export interface HandyCapOptions {
+    id: string
+    name: string
+}
+
+export const handycapOptions: HandyCapOptions[] = [
     { id: 'V', name: 'Visual' },
-    { id: 'A', name: 'Autism' },
-    { id: 'M', name: 'Motor' },
-    { id: 'C', name: 'Cognitive' },
-    { id: 'P', name: 'Psychological' },
-    { id: 'H', name: 'Hearing-Vision' },
-    { id: 'O', name: 'Other' },
-    { id: 'N', name: 'None' },
+    { id: 'A', name: 'Autismo' },
+    { id: 'M', name: 'Motora' },
+    { id: 'C', name: 'Cognitiva' },
+    { id: 'P', name: 'Psicológica' },
+    { id: 'H', name: 'Audio-Visual' },
+    { id: 'O', name: 'Otra' },
+    { id: 'N', name: 'Nínguna' },
 ]
 
 const StudentHealthForm = ({ 
@@ -52,7 +57,8 @@ const StudentHealthForm = ({
     const [weight, setWeight] = useState(healthInfo ? `${healthInfo.weight}` : '')
     const [height, setHeight] = useState(healthInfo ? `${healthInfo.height}` : '')
     const [illness, setIllness] = useState(healthInfo ? healthInfo.illness : '')
-    const [handicap, setHandicap] = useState(healthInfo ? `${healthInfo.handicap}` : 'N')
+    const [handycap, setHandycap] = useState(healthInfo ? `${healthInfo.handycap}` : 'N')
+    
     const [saanee, setSaanee] = useState(healthInfo ? healthInfo.saanee : false)
     const [psicopedagogy, setPsicopedagogy] = useState(healthInfo ? healthInfo.psicopedagogy : false)
 
@@ -88,7 +94,7 @@ const StudentHealthForm = ({
                     height: parseFloat(height),
                     illness,
                     student: studentId,
-                    handicap,
+                    handycap,
                     saanee,
                     psicopedagogy
                 },
@@ -104,13 +110,15 @@ const StudentHealthForm = ({
                 onSettled: () => setLoading(false)
             }
         )
+        
+
         updateHealthInfo && updateHealthInfo.mutate({  
             healthInfo: {
                 weight: parseFloat(weight),
                 height: parseFloat(height),
                 illness,
                 student: studentId,
-                handicap,
+                handycap,
                 saanee,
                 psicopedagogy
             },
@@ -135,7 +143,7 @@ const StudentHealthForm = ({
                 height: parseFloat(height),
                 illness,
                 student: studentId,
-                handicap,
+                handycap,
                 saanee,
                 psicopedagogy
             },
@@ -196,8 +204,8 @@ const StudentHealthForm = ({
                 <Selector 
                     values={handycapOptions}
                     label='Discapacidad'
-                    setter={setHandicap}
-                    defaultValue={handicap}
+                    setter={setHandycap}
+                    defaultValue={handycap}
                 />
                 <Checkbox 
                     label="Cuenta con apoyo SAANEE"

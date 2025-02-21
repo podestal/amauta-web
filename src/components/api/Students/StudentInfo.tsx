@@ -7,6 +7,7 @@ import { getDepartment, getProvince } from "../../../data/mockdataForGrades";
 import { useEffect, useRef, useState } from "react";
 import {useReactToPrint} from "react-to-print";
 import useSchoolStore from "../../../hooks/store/useSchoolStore";
+import { handycapOptions } from "./forms/StudentHealthForm";
 // import logoSagrado from "../../../assets/imgs/schoolLogos/logoSagrado.png";
 
 // const school = {
@@ -59,6 +60,12 @@ const StudentInfo = ({ student, showIcons = true, picture=false }: Props) => {
   const school = useSchoolStore(s => s.school)
   // const schoolImg = import(`../../../assets/imgs/schoolLogos/${school.picture_name}.png`)
   const [schoolImg, setSchoolImg] = useState('')
+  console.log('handicap', student.health_info?.handycap)
+  console.log('option',handycapOptions.find(option => option.id === student.health_info?.handycap));
+  
+  
+  console.log('student', student.health_info);
+  
 
   useEffect(() => {
     import(`../../../assets/imgs/schoolLogos/${school.picture_name}.png`)
@@ -169,7 +176,7 @@ const StudentInfo = ({ student, showIcons = true, picture=false }: Props) => {
           <p>{showIcons && "🩸"} Peso: {student.health_info.weight || "60"} kg</p>
           <p>{showIcons && "📏"} Talla: {student.health_info.height || "1.70"} m</p>
           <p>{showIcons && "💉"} Enfermedades: {student.health_info.illness || "Ninguna"}</p>
-          <p>{showIcons && "" } Discapacidad: {student.health_info.handicap || 'Ninguna'}</p>
+          <p>{showIcons && "" } Discapacidad: {handycapOptions.find(option => option.id === student.health_info?.handycap)?.name ?? 'Ninguna'}</p>
           <p>{showIcons && "" } Apoyo SAANEE: {student.health_info.saanee ? 'Si' : 'No'}</p>
           <p>{showIcons && "" } Informe Psicopedagógico: {student.health_info.psicopedagogy ? 'Si' : 'No'}</p>
         </div>
