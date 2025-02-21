@@ -7,7 +7,6 @@ import Button from "../../../ui/Button";
 import html2canvas from "html2canvas";
 import AttendanceReportTitle from "./AttendanceReportTitle";
 import { motion } from "framer-motion";
-import jsPDF from "jspdf"
 
 const AttendanceReport = () => {
 
@@ -54,6 +53,7 @@ const AttendanceReport = () => {
     //   };      
 
     const generatePDF = async () => {
+      const { jsPDF } = await import("jspdf");
       if (!reportRef.current) return;
       setIsLoading(true);
 
