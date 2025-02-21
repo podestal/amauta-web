@@ -7,6 +7,7 @@ import Button from "../../../ui/Button";
 import html2canvas from "html2canvas";
 import AttendanceReportTitle from "./AttendanceReportTitle";
 import { motion } from "framer-motion";
+import jsPDF from "jspdf"
 
 const AttendanceReport = () => {
 
@@ -20,37 +21,66 @@ const AttendanceReport = () => {
     const [isLoading, setIsLoading] = useState(false);
     const reportRef = useRef<HTMLDivElement | null>(null);
 
-    const generateImage = async () => {
-        if (!reportRef.current) return;
-        setIsLoading(true);
+    // const generateImage = async () => {
+    //     if (!reportRef.current) return;
+    //     setIsLoading(true);
       
-        try {
-          const scale = window.devicePixelRatio || 4; // Adjust dynamically
+    //     try {
+    //       const scale = window.devicePixelRatio || 4; // Adjust dynamically
       
+    //       const canvas = await html2canvas(reportRef.current, {
+    //         scale,
+    //         useCORS: true,
+    //         backgroundColor: "#ffffff",
+    //         width: reportRef.current.scrollWidth,
+    //         height: reportRef.current.scrollHeight,
+    //         allowTaint: true,
+    //         logging: false,
+    //       });
+      
+    //       const imgURL = canvas.toDataURL("image/png", 1.0); // Maximum quality
+      
+    //       const link = document.createElement("a");
+    //       link.href = imgURL;
+    //       link.download = `Attendance_Report_${moment().format("YYYYMMDD")}.png`;
+    //       document.body.appendChild(link);
+    //       link.click();
+    //       document.body.removeChild(link);
+    //     } catch (error) {
+    //       console.error("Error generating image:", error);
+    //     } finally {
+    //       setIsLoading(false);
+    //     }
+    //   };      
+
+    const generatePDF = async () => {
+      if (!reportRef.current) return;
+      setIsLoading(true);
+
+      try {
           const canvas = await html2canvas(reportRef.current, {
-            scale,
-            useCORS: true,
-            backgroundColor: "#ffffff",
-            width: reportRef.current.scrollWidth,
-            height: reportRef.current.scrollHeight,
-            allowTaint: true,
-            logging: false,
+              scale: 2, // Higher scale for better resolution
+              useCORS: true,
+              backgroundColor: "#ffffff",
+              allowTaint: true,
+              logging: false,
           });
-      
-          const imgURL = canvas.toDataURL("image/png", 1.0); // Maximum quality
-      
-          const link = document.createElement("a");
-          link.href = imgURL;
-          link.download = `Attendance_Report_${moment().format("YYYYMMDD")}.png`;
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-        } catch (error) {
-          console.error("Error generating image:", error);
-        } finally {
+
+          const imgData = canvas.toDataURL("image/png");
+          const pdf = new jsPDF({
+              orientation: "portrait", // or "landscape"
+              unit: "px",
+              format: [canvas.width, canvas.height], // Makes it one long page
+          });
+
+          pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
+          pdf.save(`Attendance_Report_${moment().format("YYYYMMDD")}.pdf`);
+      } catch (error) {
+          console.error("Error generating PDF:", error);
+      } finally {
           setIsLoading(false);
-        }
-      };      
+      }
+    }
       
 
     return (
@@ -69,7 +99,7 @@ const AttendanceReport = () => {
               </h2>
               <div className="col-span-2 flex justify-end items-center">
                 <Button
-                    onClick={generateImage}
+                    onClick={generatePDF}
                     loading={isLoading}
                     label="Imprimir Reporte"
                     disable={!selectedClassroom || selectedClassroom === '0'}
