@@ -1,12 +1,7 @@
 import { useState } from "react"
-import useGetClassroom from "../../../hooks/api/classroom/useGetClassroom"
-import useAuthStore from "../../../hooks/store/useAuthStore"
-import useLoader from "../../../hooks/ui/useLoader"
 import Button from "../../ui/Button"
 import Modal from "../../ui/Modal"
 import CreateStudent from "./CreateStudent"
-import Selector from "../../ui/Selector"
-import getClassroomDescription from "../../../utils/getClassroomDescription"
 import StudentsAdminTable from "./StudentsAdminTable"
 import { motion } from "framer-motion"
 import StudentByDNI from "./StudentByDNI"
@@ -16,17 +11,10 @@ import { Classroom } from "../../../services/api/classroomService"
 
 const StudentsAdmin = () => {
 
-    const access = useAuthStore(s => s.access) || ''
     const [open, setOpen] = useState(false)
     const [selectedClassroom, setSelectedClassroom] = useState('0')
     const [studentUid, setStudentUid] = useState('')
     const [classrooms, setClassrooms] = useState<Classroom[]>([])
-
-    // useLoader(isLoading)
-
-    // if (isError) return <p>Error {error.message}</p>
-
-    // if (isSuccess)
 
   return (
     <>

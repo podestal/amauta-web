@@ -11,7 +11,7 @@ const ClasroomSelector = ({ setSelectedClassroom, classrooms }: Props) => {
   return (
     <div>
         <Selector 
-            values={classrooms.map(classroom => ({ id: classroom.id.toString(), name:classroom.section }))}
+            values={classrooms.map(classroom => ({ id: classroom.id.toString(), name:`${classroom.section === 'U' ? 'Unica' : classroom.section}` }))}
             setter={setSelectedClassroom}
             label="Sección"
         />

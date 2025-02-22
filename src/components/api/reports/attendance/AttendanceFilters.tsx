@@ -8,8 +8,6 @@ import { motion } from "framer-motion"
 import { Classroom } from "../../../../services/api/classroomService"
 
 const gradesInitial = [
-    { id: '1', name: '1 Año'},
-    { id: '2', name: '2 Años'},
     { id: '3', name: '3 Años'},
     { id: '4', name: '4 Años'},
     { id: '5', name: '5 Años'},
