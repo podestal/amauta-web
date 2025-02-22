@@ -5,6 +5,7 @@ import { assignatures } from "../components/api/assignatures/Assignatures";
 import { studentsTable as initialStudents, StudentsTable } from "../data/mockdataForGrades";
 import Selector from "../components/ui/Selector";
 import Button from "../components/ui/Button";
+import Input from "../components/ui/Input";
 
 const gradeOptions = ["A", "B", "C", "AD", "NA"]; // Grade choices
 
@@ -40,6 +41,7 @@ const GradesSummaryPage = () => {
   const [selectedComeptency, setSelectedCompetency] = useState('0');
   const [selectedQuarter, setSelectedQuarter] = useState('1');
   const [selectedCategory, setSelectedCategory] = useState('0');
+  const [filterByName, setFilterByName] = useState('');
 
   // Function to update grade
   const handleGradeChange = (studentId: number, assignmentId: number, newGrade: string) => {
@@ -58,6 +60,22 @@ const GradesSummaryPage = () => {
     );
   };
 
+  const handleAverageChange = (studentId: number, competencyId: number, newGrade: string) => {
+    setStudents((prevStudents) =>
+      prevStudents.map((student) =>
+        student.id === studentId
+          ? {
+              ...student,
+              competencyGrades: {
+                ...student.competencyGrades,
+                [competencyId]: newGrade,
+              },
+            }
+          : student
+      )
+    );
+  }
+
   return (
     <div className="w-full mx-auto px-6 py-12">
         <motion.div 
@@ -74,34 +92,43 @@ const GradesSummaryPage = () => {
         initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="w-full grid grid-cols-4 gap-12 my-12">
-        <Selector 
-          label={"Curso"}
-          values={assignatures.map(assignature => ({id: assignature.id.toString(), name: assignature.name}))}
-          setter={setSelectedAssignature}
-          lan="ES"
-        />
-        <Selector 
-          label={"Competencia"}
-          values={[{id: '0', name: 'Todas'}, ...filteredCompetencies.map(competency => ({id: competency.id.toString(), name: competency.title}))]}
-          setter={setSelectedCompetency}
-          defaultValue="0"
-          lan="ES"
-        />
-        <Selector 
-          label={"Bimestre"}
-          values={[{id: '1', name: 'Bimestre 1'}, {id: '2', name: 'Bimestre 2'}, {id: '3', name: 'Bimestre 3'}, {id: '4', name: 'Bimestre 4'}]}
-          setter={setSelectedQuarter}
-          defaultValue={selectedQuarter}
-          lan="ES"
-        />
-        <Selector 
-          label="Categoría"
-          values={[{id: '0', name: 'Todas'}, {id: '1', name: 'Tarea'}, {id: '2', name: 'Examen'}, {id: '3', name: 'Participación'}, {id:'4', name: 'Proyecto'}, {id: '6', name: 'Otro'}]}
-          setter={setSelectedCategory}
-          defaultValue={selectedCategory}
-          lan="ES"
-        />
+        className="w-full my-12">
+          <div className="grid grid-cols-4 gap-12 mb-6">
+            <Selector 
+              label={"Curso"}
+              values={assignatures.map(assignature => ({id: assignature.id.toString(), name: assignature.name}))}
+              setter={setSelectedAssignature}
+              lan="ES"
+            />
+            <Selector 
+              label={"Competencia"}
+              values={[{id: '0', name: 'Todas'}, ...filteredCompetencies.map(competency => ({id: competency.id.toString(), name: competency.title}))]}
+              setter={setSelectedCompetency}
+              defaultValue="0"
+              lan="ES"
+            />
+            <Selector 
+              label={"Bimestre"}
+              values={[{id: '1', name: 'Bimestre 1'}, {id: '2', name: 'Bimestre 2'}, {id: '3', name: 'Bimestre 3'}, {id: '4', name: 'Bimestre 4'}]}
+              setter={setSelectedQuarter}
+              defaultValue={selectedQuarter}
+              lan="ES"
+            />
+            <Selector 
+              label="Categoría"
+              values={[{id: '0', name: 'Todas'}, {id: '1', name: 'Tarea'}, {id: '2', name: 'Examen'}, {id: '3', name: 'Participación'}, {id:'4', name: 'Proyecto'}, {id: '6', name: 'Otro'}]}
+              setter={setSelectedCategory}
+              defaultValue={selectedCategory}
+              lan="ES"
+            />
+          </div>
+          <Input 
+            placeholder="Buscar por nombre..."
+            onChange={e => {
+              setFilterByName(e.target.value)
+            }}
+            value={filterByName}
+          />
       </motion.div>
       <div className="overflow-x-auto">
       {selectedAssignature !== '0' && (
@@ -115,7 +142,7 @@ const GradesSummaryPage = () => {
       {/* Table Header */}
       <div className="flex items-center bg-gray-800 text-white font-bold">
         <h2 className="min-w-[300px] max-w-[300px] py-3 px-4">Estudiante</h2>
-        <h2 className="min-w-[160px] max-w-[160px] py-3 px-4 text-center">Promedio</h2>
+        {selectedComeptency !== '0' && <h2 className="min-w-[160px] max-w-[160px] py-3 px-4 text-center">Promedio</h2>}
         {selectedComeptency === '0' 
           ? 
           <>
@@ -147,7 +174,10 @@ const GradesSummaryPage = () => {
       </div>
 
       {/* Table Rows */}
-      {students.map((student, index) => (
+      {students
+        .filter(student => student.lastName.toLowerCase().includes(filterByName.toLowerCase()) || student.firstName.toLowerCase().includes(filterByName.toLowerCase()))
+        .sort((a, b) => a.lastName.localeCompare(b.lastName))
+        .map((student, index) => (
         <motion.div
           key={student.id}
           className="w-full flex border-b border-gray-700 hover:bg-gray-800 transition-colors"
@@ -161,7 +191,14 @@ const GradesSummaryPage = () => {
             {student.firstName} {student.lastName}
           </h2>
           {/* Average Grade */}
-          {selectedComeptency === '0' 
+          <>
+            {student.competencyGrades[parseInt(selectedComeptency)] && (
+              <h2 className={`min-w-[160px] max-w-[160px] py-3 px-4 text-center ${gradeStyles[student.competencyGrades[parseInt(selectedComeptency)]]}`}>
+                {student.competencyGrades[parseInt(selectedComeptency)]}
+              </h2>
+            )}
+          </>
+          {/* {selectedComeptency === '0' 
           ? 
           <>
             {student.finalGrade && (
@@ -178,7 +215,7 @@ const GradesSummaryPage = () => {
               </h2>
             )}
           </>
-          }
+          } */}
 
           {/* Grades Selection */}
           {selectedComeptency === '0' 
@@ -191,9 +228,22 @@ const GradesSummaryPage = () => {
             )} */}
             {filteredCompetencies.map(competency => (
               <>
-              <h2 className={`min-w-[160px] max-w-[160px] py-3 px-4 text-center hover:opacity-80 cursor-pointer ${gradeStyles[student.competencyGrades[competency.id]]}`}>
+              {/* <h2 className={`min-w-[160px] max-w-[160px] py-3 px-4 text-center hover:opacity-80 cursor-pointer ${gradeStyles[student.competencyGrades[competency.id]]}`}>
                 {student.competencyGrades[competency.id]}
-              </h2>
+              </h2> */}
+              <div className="min-w-[160px] max-w-[160px] text-center p-[1px]">
+              <select
+                  className={` w-full h-full text-center font-semibold cursor-pointer outline-none transition-all duration-300 ${gradeStyles[student.competencyGrades?.[competency.id]]}`}
+                  value={student.competencyGrades?.[competency.id] || "NA"}
+                  onChange={(e) => handleAverageChange(student.id, competency.id, e.target.value)}
+                >
+                  {gradeOptions.map((grade) => (
+                    <option key={grade} value={grade}>
+                      {grade}
+                    </option>
+                  ))}
+                </select>
+              </div>
               </>
             ))}
           </> 
@@ -206,10 +256,10 @@ const GradesSummaryPage = () => {
             .map((assignment) => (
               <div 
                 key={`${student.id}-${assignment.id}`} 
-                className="min-w-[160px] max-w-[160px] px-4 py-1 text-center"
+                className="min-w-[160px] max-w-[160px] text-center p-[1px]"
               >
                 <select
-                  className={` px-4 py-1 rounded-full font-semibold cursor-pointer outline-none transition-all duration-300 ${gradeStyles[student.grades?.[assignment.id]]}`}
+                  className={` w-full h-full text-center font-semibold cursor-pointer outline-none transition-all duration-300 ${gradeStyles[student.grades?.[assignment.id]]}`}
                   value={student.grades?.[assignment.id] || "NA"}
                   onChange={(e) => handleGradeChange(student.id, assignment.id, e.target.value)}
                 >
