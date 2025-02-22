@@ -6,6 +6,7 @@ import { studentsTable as initialStudents, StudentsTable } from "../data/mockdat
 import Selector from "../components/ui/Selector";
 import Button from "../components/ui/Button";
 import Input from "../components/ui/Input";
+import TextAreaRow from "../components/ui/TextAreaRow";
 
 const gradeOptions = ["A", "B", "C", "AD", "NA"]; // Grade choices
 
@@ -76,6 +77,10 @@ const GradesSummaryPage = () => {
     );
   }
 
+  const removeAccents = (str: string) => {
+    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  }
+
   return (
     <div className="w-full mx-auto px-6 py-12">
         <motion.div 
@@ -141,18 +146,19 @@ const GradesSummaryPage = () => {
     >
       {/* Table Header */}
       <div className="flex items-center bg-gray-800 text-white font-bold">
-        <h2 className="min-w-[300px] max-w-[300px] py-3 px-4">Estudiante</h2>
+        <h2 className="min-w-[200px] max-w-[200px] py-3 px-4">DNI</h2>
+        <h2 className="min-w-[360px] max-w-[360px] py-3 px-4">Nombres</h2>
         {selectedComeptency !== '0' && <h2 className="min-w-[160px] max-w-[160px] py-3 px-4 text-center">Promedio</h2>}
         {selectedComeptency === '0' 
           ? 
           <>
           {filteredCompetencies.map(competency => (
-            <h2 
-              key={competency.id} 
-              className="min-w-[160px] max-w-[160px] py-3 px-4 text-center"
-            >
-              {competency.title}
-            </h2>
+         <h2 
+            key={competency.id} 
+            className="py-3 px-4 text-center min-w-[400px] max-w-[400px]"
+          >
+            {competency.title}
+          </h2>
           ))}
           </>  
           :
@@ -175,7 +181,10 @@ const GradesSummaryPage = () => {
 
       {/* Table Rows */}
       {students
-        .filter(student => student.lastName.toLowerCase().includes(filterByName.toLowerCase()) || student.firstName.toLowerCase().includes(filterByName.toLowerCase()))
+        .filter(student => 
+          removeAccents(student.lastName).includes(removeAccents(filterByName)) || 
+          removeAccents(student.firstName).includes(removeAccents(filterByName))
+        )
         .sort((a, b) => a.lastName.localeCompare(b.lastName))
         .map((student, index) => (
         <motion.div
@@ -186,8 +195,12 @@ const GradesSummaryPage = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.3, delay: index * 0.05 }}
         >
+          {/* Student ID */}
+          <h2 className="min-w-[200px] max-w-[200px] py-3 px-4">
+            {student.id}
+          </h2>
           {/* Student Name */}
-          <h2 className="min-w-[300px] max-w-[300px] py-3 px-4">
+          <h2 className="min-w-[360px] max-w-[360px] py-3 px-4">
             {student.firstName} {student.lastName}
           </h2>
           {/* Average Grade */}
@@ -227,13 +240,11 @@ const GradesSummaryPage = () => {
               </h2>
             )} */}
             {filteredCompetencies.map(competency => (
-              <>
-              {/* <h2 className={`min-w-[160px] max-w-[160px] py-3 px-4 text-center hover:opacity-80 cursor-pointer ${gradeStyles[student.competencyGrades[competency.id]]}`}>
-                {student.competencyGrades[competency.id]}
-              </h2> */}
-              <div className="min-w-[160px] max-w-[160px] text-center p-[1px]">
+              <div 
+                key={competency.id}
+                className="min-w-[400px] max-w-[400px] text-center p-[1px] grid grid-cols-3">
               <select
-                  className={` w-full h-full text-center font-semibold cursor-pointer outline-none transition-all duration-300 ${gradeStyles[student.competencyGrades?.[competency.id]]}`}
+                  className={` w-full min-h-[46px] max-h-[46px] text-center font-semibold cursor-pointer outline-none transition-all duration-300 ${gradeStyles[student.competencyGrades?.[competency.id]]}`}
                   value={student.competencyGrades?.[competency.id] || "NA"}
                   onChange={(e) => handleAverageChange(student.id, competency.id, e.target.value)}
                 >
@@ -243,8 +254,13 @@ const GradesSummaryPage = () => {
                     </option>
                   ))}
                 </select>
+                <div className=" col-span-2 ml-2 flex items-start">
+                  <TextAreaRow 
+                    onSubmit={(e) => console.log(e)}
+                    placeholder="Conclusión descriptiva..."
+                  />
+                </div>
               </div>
-              </>
             ))}
           </> 
           : 
