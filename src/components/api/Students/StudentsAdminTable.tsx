@@ -109,22 +109,26 @@ const StudentsAdminTable = ({ classroomId, classrooms }: Props) => {
             
             <div ref={printRef} className="my-10">
                 {/* Chunk students into groups of 9 */}
-                <h2 className="text-3xl my-6 text-center">{classroomDescription}</h2>
+                <h2 className="text-3xl my-6 text-center max-md:hidden">{classroomDescription}</h2>
                 {students.reduce((rows, student, index) => {
                     if (index % 9 === 0) rows.push([]);
                     rows[rows.length - 1].push(student);
                     return rows;
                 }, [] as Student[][]).map((group, i) => (
-                    <div key={i} className="grid grid-cols-3 gap-10 print:break-after-page">
-                        {group.map((student) => (
-                            <div className="flex flex-col items-center gap-2 mt-6" key={student.uid}>
-                                <h2 className="lg:text-2xl font-bold">
-                                    {student.first_name} {student.last_name}
-                                </h2>
-                                <p>{student.uid}</p>
-                                <QRCodeSVG value={`${student.uid}-${student.first_name}`} size={200} />
-                            </div>
-                        ))}
+                    <div key={i} className="print:break-after-page">
+                        <h2 className="text-3xl my-6 text-center md:hidden">{classroomDescription}</h2>
+                        <div className="grid grid-cols-3 gap-10 ">
+                            {group.map((student) => (
+                                <div className="flex flex-col items-center gap-2 mt-6" key={student.uid}>
+                                    <h2 className="lg:text-2xl font-bold">
+                                        {student.first_name} {student.last_name}
+                                    </h2>
+                                    <p>{student.uid}</p>
+                                    <QRCodeSVG value={`${student.uid}-${student.first_name}`} size={200} />
+                                </div>
+                            ))}
+                        </div>
+                        
                     </div>
                 ))}
             </div>
