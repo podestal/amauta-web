@@ -1,10 +1,19 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import useAuthStore from "../../../../hooks/store/useAuthStore"
 import useLoader from "../../../../hooks/ui/useLoader"
 import useGetClassroom from "../../../../hooks/api/classroom/useGetClassroom"
 import ClasroomSelector from "./ClasroomSelector"
 import Selector from "../../../ui/Selector"
 import { motion } from "framer-motion"
+import { Classroom } from "../../../../services/api/classroomService"
+
+const gradesInitial = [
+    { id: '1', name: '1 Año'},
+    { id: '2', name: '2 Años'},
+    { id: '3', name: '3 Años'},
+    { id: '4', name: '4 Años'},
+    { id: '5', name: '5 Años'},
+]
 
 const gradesPrimary = [
     { id: '1', name: 'Primero'},
@@ -32,9 +41,11 @@ interface Props {
     setSelectedClassroom: React.Dispatch<React.SetStateAction<string>>
     selectedType: string
     setSelectedType: React.Dispatch<React.SetStateAction<string>>
+    onlyclassroom?: boolean
+    setClassrooms?: React.Dispatch<React.SetStateAction<Classroom[]>>
 }
 
-const AttendanceFilters = ({ setSelectedClassroom, selectedType, setSelectedType }: Props) => {
+const AttendanceFilters = ({ setSelectedClassroom, selectedType, setSelectedType, onlyclassroom=false, setClassrooms }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
 
@@ -42,6 +53,12 @@ const AttendanceFilters = ({ setSelectedClassroom, selectedType, setSelectedType
     const [selectedGrade, setSelectedGrade] = useState('1')
 
     const { data: classrooms, isLoading, isError, error, isSuccess } = useGetClassroom({ access })
+
+    useEffect(() => {
+        if (classrooms) {
+            setClassrooms && setClassrooms(classrooms)
+        }
+    }, [classrooms])
 
     useLoader(isLoading)
 
@@ -55,18 +72,19 @@ const AttendanceFilters = ({ setSelectedClassroom, selectedType, setSelectedType
         animate="visible"
         variants={variants}
         transition={{ duration: 0.5 }}
-        className="w-full grid grid-cols-4 gap-12 py-4">
+        className={`w-full grid ${onlyclassroom ? 'grid-cols-3' : 'grid-cols-4'} gap-12 py-4`}>
         <Selector 
             values={[
                 { id: 'P', name: 'Primaria' },
                 { id: 'S', name: 'Secundaria' },
+                { id: 'I', name: 'Inicial' },
             ]}
             setter={setSelectedLevel}
             defaultValue={selectedLevel}
             label="Nivel"
         />
         <Selector 
-            values={selectedLevel === 'P' ? gradesPrimary : gradesSecondary}
+            values={selectedLevel === 'P' ? gradesPrimary : selectedLevel === 'S' ? gradesSecondary : gradesInitial}
             setter={setSelectedGrade}
             defaultValue={selectedGrade}
             label="Grado"
@@ -77,6 +95,7 @@ const AttendanceFilters = ({ setSelectedClassroom, selectedType, setSelectedType
                 .filter(classroom => classroom.grade === selectedGrade && classroom.level === selectedLevel)
             }
         />
+        {!onlyclassroom &&
         <Selector 
             values={[
                 {id: '1', name: 'Mensual'},
@@ -86,7 +105,7 @@ const AttendanceFilters = ({ setSelectedClassroom, selectedType, setSelectedType
             setter={setSelectedType}
             defaultValue={selectedType}
             label="Tipo"
-        />
+        />}
     </motion.div>
   )
 }

@@ -11,6 +11,8 @@ import StudentsAdminTable from "./StudentsAdminTable"
 import { motion } from "framer-motion"
 import StudentByDNI from "./StudentByDNI"
 import StudentByDniInfo from "./StudentByDniInfo"
+import AttendanceFilters from "../reports/attendance/AttendanceFilters"
+import { Classroom } from "../../../services/api/classroomService"
 
 const StudentsAdmin = () => {
 
@@ -18,13 +20,13 @@ const StudentsAdmin = () => {
     const [open, setOpen] = useState(false)
     const [selectedClassroom, setSelectedClassroom] = useState('0')
     const [studentUid, setStudentUid] = useState('')
-    const { data: classrooms, isLoading, isError, error, isSuccess } = useGetClassroom({ access })
+    const [classrooms, setClassrooms] = useState<Classroom[]>([])
 
-    useLoader(isLoading)
+    // useLoader(isLoading)
 
-    if (isError) return <p>Error {error.message}</p>
+    // if (isError) return <p>Error {error.message}</p>
 
-    if (isSuccess)
+    // if (isSuccess)
 
   return (
     <>
@@ -38,14 +40,15 @@ const StudentsAdmin = () => {
         transition={{ duration: 0.5 }}
         
         className="pt-10 pb-20 flex flex-col gap-8 justify-center items-center">
-        <div className="w-full flex justify-between items-start gap-4">
+        <div className="w-full flex justify-between items-center gap-4">
             <h2 className="text-5xl font-bold">Alumnos</h2>
-            <div className="flex gap-4 items-center justify-center">
-                <h2 className="text-xl font-bold">Clase</h2>
-                <Selector 
-                    values={classrooms.map( classroom => ({ id: classroom.id.toString(), name: getClassroomDescription({ lan: 'ES', grade: classroom.grade, section: classroom.section, level: classroom.level }) }))}
-                    setter={setSelectedClassroom}
-                    lan={'ES'}
+            <div className="w-full mx-40">
+                <AttendanceFilters 
+                    setSelectedClassroom={setSelectedClassroom}
+                    selectedType={''}
+                    setSelectedType={() => {}}
+                    onlyclassroom={true}
+                    setClassrooms={setClassrooms}
                 />
             </div>
             <div>
