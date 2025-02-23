@@ -3,26 +3,76 @@ import { useState } from 'react'
 import useLanguageStore from '../../hooks/store/useLanguageStore'
 import Input from '../ui/Input'
 import Button from '../ui/Button'
+import useNewPassword from '../../hooks/auth/useNewPassword'
+import useNotificationsStore from '../../hooks/store/useNotificationsStore'
+import { useNavigate } from 'react-router-dom'
 
-const NewPassword = () => {
+interface Props {
+    uid: string
+    token: string
+}
+
+const NewPassword = ({ uid, token }: Props) => {
 
 
     const [loading, setLoading] = useState(false)
-    const [newPassword, setNewPassword] = useState('')
+    const { setMessage, setShow, setType } = useNotificationsStore()
+    const navigate = useNavigate()
+    const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const lan = useLanguageStore(s => s.lan)
 
     // Errors   
-    const [newPasswordError, setNewPasswordError] = useState('')
+    const [passwordError, setPasswordError] = useState('')
     const [confirmPasswordError, setConfirmPasswordError] = useState('')
 
+    // Handle New Password
+    const newPassword = useNewPassword()
 
     const handleNewPassword = (e:React.FormEvent) => {
         e.preventDefault()
+
+        if (!password) {
+            setPasswordError('Este campo es requerido')
+            return
+        }
+
+        if (!confirmPassword) {
+            setConfirmPasswordError('Este campo es requerido')
+            return
+        }
+
+        if (password !== confirmPassword) {
+            setShow(true)
+            setType('error')
+            setMessage('Las contraseña no coinciden')
+            return
+        }
+
         setLoading(true)
-        setTimeout(() => {
-            setLoading(false)
-        }, 1000)
+        newPassword.mutate({
+            credentials: {
+                uid,
+                token,
+                new_password: password,
+            }
+        }, {
+            onSuccess: () => {
+                setPassword('')
+                setConfirmPassword('')
+                setPasswordError('')
+                setConfirmPasswordError('')
+                navigate('/reset-success')
+
+            },
+            onError: (error) => {
+                setLoading(false)
+                console.log(error)
+            },
+            onSettled: () => {
+                setLoading(false)
+            }
+        })
     }
 
   return (
@@ -58,11 +108,11 @@ const NewPassword = () => {
                     <Input 
                         type="password"
                         placeholder={lan === 'EN' ? "New Password" : 'Nueva Contraseña'}
-                        value={newPassword}
+                        value={password}
                         onChange={e => {
-                            newPassword && setNewPasswordError('')
-                            setNewPassword(e.target.value)}}
-                        error={newPasswordError}
+                            newPassword && setPasswordError('')
+                            setPassword(e.target.value)}}
+                        error={passwordError}
                     />
 
                     <Input 

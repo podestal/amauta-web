@@ -25,6 +25,7 @@ import CategoriesPage from "../pages/CategoriesPage";
 import NewPasswordPage from "../pages/NewPasswordPage";
 import ForgotPasswordPage from "../pages/ForgotPasswordPage";
 import PasswordResetConfirmation from "../pages/PasswordResetConfirmation";
+import PasswordResetSuccess from "../pages/PasswordResetSuccess";
 
 const routes = createBrowserRouter([
     {
@@ -66,6 +67,10 @@ const routes = createBrowserRouter([
             {
                 path: 'reset-confirmation',
                 element: <PasswordResetConfirmation />
+            },
+            {
+                path: 'reset-success',
+                element: <PasswordResetSuccess />
             }
         ]
     },
