@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import useLogin from "../../hooks/auth/useLogin";
 import useNotificationsStore from "../../hooks/store/useNotificationsStore";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const Login = () => {
     
@@ -132,7 +133,9 @@ const Login = () => {
                             disabled={loading}
                         />
                     </div>
-                    <p className="text-xs text-center hover:text-blue-500 cursor-pointer">Olvidaeste tu Contraseña?</p>
+                    <Link 
+                        to={'/forgot-password'}
+                        className="text-xs text-center hover:text-blue-500 cursor-pointer">Olvidaeste tu Contraseña?</Link>
                 </motion.form>
             </motion.div>
         </div>

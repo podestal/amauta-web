@@ -23,6 +23,7 @@ import GradesPage from "../pages/GradesPage";
 import GradesSummaryPage from "../pages/GradesSummaryPage";
 import CategoriesPage from "../pages/CategoriesPage";
 import NewPasswordPage from "../pages/NewPasswordPage";
+import ForgotPasswordPage from "../pages/ForgotPasswordPage";
 
 const routes = createBrowserRouter([
     {
@@ -56,7 +57,11 @@ const routes = createBrowserRouter([
             {
                 path: 'new-password/:uid/:token',
                 element: <NewPasswordPage />
-            }
+            },
+            {
+                path: 'forgot-password',
+                element: <ForgotPasswordPage />
+            },
         ]
     },
     {
