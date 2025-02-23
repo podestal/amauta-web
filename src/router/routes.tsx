@@ -24,6 +24,7 @@ import GradesSummaryPage from "../pages/GradesSummaryPage";
 import CategoriesPage from "../pages/CategoriesPage";
 import NewPasswordPage from "../pages/NewPasswordPage";
 import ForgotPasswordPage from "../pages/ForgotPasswordPage";
+import PasswordResetConfirmation from "../pages/PasswordResetConfirmation";
 
 const routes = createBrowserRouter([
     {
@@ -62,6 +63,10 @@ const routes = createBrowserRouter([
                 path: 'forgot-password',
                 element: <ForgotPasswordPage />
             },
+            {
+                path: 'reset-confirmation',
+                element: <PasswordResetConfirmation />
+            }
         ]
     },
     {

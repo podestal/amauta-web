@@ -38,7 +38,7 @@ const ForgotPassword = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
                 >
-                    {lan === 'EN' ? 'New Password' : 'Nueva Contraseña'}
+                    {lan === 'EN' ? 'Password Recovery' : 'Recuperar Contraseña'}
                 </motion.h2>
 
                 {/* Form */}
@@ -50,7 +50,7 @@ const ForgotPassword = () => {
                     transition={{ duration: 0.8, delay: 0.3 }}
                 >
                     <Input 
-                        type="password"
+                        type="text"
                         placeholder={lan === 'EN' ? "Email" : 'Correo Electrónico'}
                         value={email}
                         onChange={e => {
