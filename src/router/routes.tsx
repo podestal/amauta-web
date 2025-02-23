@@ -22,6 +22,7 @@ import AssignaturePage from "../pages/AssignaturePage";
 import GradesPage from "../pages/GradesPage";
 import GradesSummaryPage from "../pages/GradesSummaryPage";
 import CategoriesPage from "../pages/CategoriesPage";
+import NewPasswordPage from "../pages/NewPasswordPage";
 
 const routes = createBrowserRouter([
     {
@@ -51,6 +52,10 @@ const routes = createBrowserRouter([
             {
                 path: "contact",
                 element: <ContactPage />
+            },
+            {
+                path: 'new-password/:uid/:token',
+                element: <NewPasswordPage />
             }
         ]
     },

@@ -77,10 +77,8 @@ const Login = () => {
     }
 
   return (
-<div className="w-full min-h-screen flex justify-center items-center relative  overflow-hidden">
+    <div className="w-full min-h-screen flex justify-center items-center relative  overflow-hidden">
             {/* Glowing Floating Lights */}
-
-
             {/* Login Card */}
             <motion.div 
                 className="relative w-[90%] sm:w-[60%] md:w-[40%] lg:w-[25%] bg-white/5 backdrop-blur-lg p-8 rounded-lg shadow-lg border border-white/20"

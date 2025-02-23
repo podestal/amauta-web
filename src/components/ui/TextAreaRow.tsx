@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { FaPaperPlane } from "react-icons/fa";
+import { FaSave } from "react-icons/fa";
 
 interface TextAreaRowProps {
   placeholder?: string;
@@ -30,7 +30,7 @@ const TextAreaRow = ({ placeholder = "Write a message...", onSubmit, initialValu
         whileTap={{ scale: 0.9 }}
         onClick={handleSubmit}
       >
-        <FaPaperPlane size={14} />
+        <FaSave size={14} />
       </motion.button>
     </div>
   );
