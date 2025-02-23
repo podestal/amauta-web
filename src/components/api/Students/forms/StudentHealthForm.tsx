@@ -58,6 +58,7 @@ const StudentHealthForm = ({
     const [height, setHeight] = useState(healthInfo ? `${healthInfo.height}` : '')
     const [illness, setIllness] = useState(healthInfo ? healthInfo.illness : '')
     const [handycap, setHandycap] = useState(healthInfo ? `${healthInfo.handycap}` : 'N')
+    const [handycapDescription, setHandycapDescription] = useState(healthInfo ? healthInfo.hsndyCap_description : '')
     
     const [saanee, setSaanee] = useState(healthInfo ? healthInfo.saanee : false)
     const [psicopedagogy, setPsicopedagogy] = useState(healthInfo ? healthInfo.psicopedagogy : false)
@@ -66,6 +67,7 @@ const StudentHealthForm = ({
 
     const [weightError, setWeightError] = useState('')
     const [heightError, setHeightError] = useState('')
+    const [handycapDescriptionError, setHandycapDescriptionError] = useState('')
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -86,6 +88,14 @@ const StudentHealthForm = ({
             return
         }
 
+        if (handycap === 'O' && !handycapDescription) {
+            setHandycapDescriptionError('La descripción de la discapacidad es requerida')
+            setType('error')
+            setShow(true)
+            setMessage('La descripción de la discapacidad es requerida')
+            return
+        }
+
         setLoading(true)
 
         createHealthInfo && createHealthInfo.mutate({
@@ -95,6 +105,7 @@ const StudentHealthForm = ({
                     illness,
                     student: studentId,
                     handycap,
+                    hsndyCap_description: handycapDescription,
                     saanee,
                     psicopedagogy
                 },
@@ -119,6 +130,7 @@ const StudentHealthForm = ({
                 illness,
                 student: studentId,
                 handycap,
+                hsndyCap_description: handycapDescription,
                 saanee,
                 psicopedagogy
             },
@@ -144,6 +156,7 @@ const StudentHealthForm = ({
                 illness,
                 student: studentId,
                 handycap,
+                hsndyCap_description: handycapDescription,
                 saanee,
                 psicopedagogy
             },
@@ -180,7 +193,7 @@ const StudentHealthForm = ({
             <div className="grid grid-cols-3 gap-6 mb-12">
                 <Input 
                     type="number"
-                    placeholder="Peso ..."
+                    placeholder="Peso kg ..."
                     value={weight}
                     onChange={(e) => setWeight(e.target.value)}
                     label="Peso"
@@ -188,7 +201,7 @@ const StudentHealthForm = ({
                 />
                 <Input 
                     type="number"
-                    placeholder="Altura ..."
+                    placeholder="Altura Cm ..."
                     value={height}
                     onChange={(e) => setHeight(e.target.value)}
                     label="Altura"
@@ -207,6 +220,25 @@ const StudentHealthForm = ({
                     setter={setHandycap}
                     defaultValue={handycap}
                 />
+                {handycap === 'O' &&
+                    <motion.div 
+                    initial={{opacity: 0, x: 50}}
+                    animate={{opacity: 1, x: 0}}
+                    transition={{duration: 0.5}}>
+                    <Input
+                        type="text"
+                        placeholder="Nombre de la discapacidad ..."
+                        value={handycapDescription}
+                        onChange={(e) => {
+                            handycapDescription && setHandycapDescriptionError('')
+                            setHandycapDescription(e.target.value)}}
+                        label="Discapacidad"
+                        error={handycapDescriptionError}
+                    />
+                    </motion.div>
+                }
+            </div>
+            <div className="grid grid-cols-3 gap-6 mb-12 items-start">
                 <Checkbox 
                     label="Cuenta con apoyo SAANEE"
                     checked={saanee}

@@ -6,6 +6,7 @@ export interface HealthInfo {
     height: number
     illness: string
     handycap: string
+    hsndyCap_description: string
     saanee: boolean
     psicopedagogy: boolean
 }
