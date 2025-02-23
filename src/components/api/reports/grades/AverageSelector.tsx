@@ -12,7 +12,7 @@ interface Props {
 }
 
 const AverageSelector = ({ student, selectedCompetency, handleAverageChange, currentGrade }: Props) => {
-  const systemSuggested = student.systemSuggestedGrades?.[parseInt(selectedCompetency)];
+//   const systemSuggested = student.systemSuggestedGrades?.[parseInt(selectedCompetency)];
   const teacherConfirmed = student.teacherConfirmedGrades?.[parseInt(selectedCompetency)];
 
   // If teacher has already confirmed or changed, it becomes the selected grade
