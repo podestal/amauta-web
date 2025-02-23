@@ -3,20 +3,39 @@ import useLanguageStore from "../../hooks/store/useLanguageStore"
 import { useState } from "react"
 import Input from "../ui/Input"
 import Button from "../ui/Button"
+import useRecoverPassword from "../../hooks/auth/useRecoverPassword"
+import { useNavigate } from "react-router-dom"
 
 const ForgotPassword = () => {
 
     const lan = useLanguageStore(s => s.lan)
+    const navigate = useNavigate()
     const [loading, setLoading] = useState(false)
     const [email, setEmail] = useState('')
     const [emailError, setEmailError] = useState('')
 
+    const recoverPassword = useRecoverPassword()
+
     const handleForgotPassword = (e:React.FormEvent) => {
         e.preventDefault()
         setLoading(true)
-        setTimeout(() => {
-            setLoading(false)
-        }, 1000)
+        recoverPassword.mutate(
+            { credentials: { email } },
+            { onSuccess: () => {
+                setEmail('')
+                setEmailError('')
+                navigate('/reset-confirmation')
+            },
+            onError: (error) => {
+                setLoading(false)
+                setEmailError('Email not found')
+                console.log(error)
+            },
+            onSettled: () => {
+                setLoading(false)
+            }
+    }
+        )
     }
 
   return (
