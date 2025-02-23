@@ -7,6 +7,7 @@ import Selector from "../components/ui/Selector";
 import Button from "../components/ui/Button";
 import Input from "../components/ui/Input";
 import TextAreaRow from "../components/ui/TextAreaRow";
+import AverageSelector from "../components/api/reports/grades/AverageSelector";
 
 const gradeOptions = ["A", "B", "C", "AD", "NA"]; // Grade choices
 
@@ -88,7 +89,7 @@ const GradesSummaryPage = () => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
           className="flex justify-between items-center gap-4 mb-6">
-            <h2 className="text-3xl font-bold ">📊 Resumen de Calificacione</h2>
+            <h2 className="text-3xl font-bold ">📊 Resumen de Calificaciones</h2>
             <Button 
               label="Exportar"
             />
@@ -205,10 +206,32 @@ const GradesSummaryPage = () => {
           </h2>
           {/* Average Grade */}
           <>
-            {student.competencyGrades[parseInt(selectedComeptency)] && (
+            {/* {student.competencyGrades[parseInt(selectedComeptency)] && (
               <h2 className={`min-w-[160px] max-w-[160px] py-3 px-4 text-center ${gradeStyles[student.competencyGrades[parseInt(selectedComeptency)]]}`}>
-                {student.competencyGrades[parseInt(selectedComeptency)]}
+                <>{console.log(student.competencyGrades[parseInt(selectedComeptency)])}</>
+                {student.competencyGrades[parseInt(selectedComeptency)]} dd
               </h2>
+            )} */}
+            {student.competencyGrades[parseInt(selectedComeptency)] && (
+              // <div className="min-w-[160px] max-w-[160px] text-center p-[1px]">
+              //   <select
+              //     className={` w-full min-h-[46px] max-h-[46px] text-center font-semibold cursor-pointer outline-none transition-all duration-300 ${gradeStyles[student.competencyGrades?.[parseInt(selectedComeptency)]]}`}
+              //     value={student.competencyGrades?.[parseInt(selectedComeptency)] || "NA"}
+              //     onChange={(e) => handleAverageChange(student.id, parseInt(selectedComeptency), e.target.value)}
+              //   >
+              //     {gradeOptions.map((grade) => (
+              //       <option key={grade} value={grade}>
+              //         {grade}
+              //       </option>
+              //     ))}
+              //   </select>
+              // </div>
+              <AverageSelector 
+                student={student}
+                selectedCompetency={selectedComeptency}
+                handleAverageChange={handleAverageChange} 
+                currentGrade={student.competencyGrades[parseInt(selectedComeptency)]}
+              />
             )}
           </>
           {/* {selectedComeptency === '0' 
