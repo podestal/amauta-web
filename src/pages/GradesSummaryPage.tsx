@@ -46,9 +46,9 @@ const GradesSummaryPage = () => {
   const [selectedCategory, setSelectedCategory] = useState('0');
   const [filterByName, setFilterByName] = useState('');
 
-  const [calculatedAverage, setCalculatedAverage] = useState('');
+  // const [calculatedAverage, setCalculatedAverage] = useState('');
 
-  console.log('calculatedAverage', calculatedAverage);
+  // console.log('calculatedAverage', calculatedAverage);
   
 
 
@@ -218,7 +218,10 @@ const GradesSummaryPage = () => {
                 student={student}
                 selectedCompetency={selectedComeptency}
                 handleAverageChange={handleAverageChange} 
-                currentGrade={student.competencyGrades[parseInt(selectedComeptency)]}
+                // currentGrade={student.competencyGrades[parseInt(selectedComeptency)]}
+                selectedAssignature={selectedAssignature}
+                selectedCategory={selectedCategory}
+                selectedComeptency={selectedComeptency}
               />
             )}
           </>
@@ -260,7 +263,7 @@ const GradesSummaryPage = () => {
                 selectedAssignature={selectedAssignature}
                 selectedCategory={selectedCategory}
                 selectedComeptency={selectedComeptency}
-                setCalculatedAverage={setCalculatedAverage}
+                // setDynamicStudents={setDynamicStudents}
               />
           </>
           }

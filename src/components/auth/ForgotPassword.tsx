@@ -4,7 +4,7 @@ import { useState } from "react"
 import Input from "../ui/Input"
 import Button from "../ui/Button"
 import useRecoverPassword from "../../hooks/auth/useRecoverPassword"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 const ForgotPassword = () => {
 
@@ -86,7 +86,12 @@ const ForgotPassword = () => {
                             disabled={loading}
                         />
                     </div>
+                    <Link 
+                        to={'/'}
+                        className="text-xs text-center hover:text-blue-500 cursor-pointer">Volver
+                    </Link>
                 </motion.form>
+     
             </motion.div>
         </div>
   )

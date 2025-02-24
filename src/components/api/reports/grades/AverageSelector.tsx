@@ -1,30 +1,94 @@
 import { CheckCircle, AlertTriangle } from "lucide-react";
 import { Tooltip } from "../../../ui/Tooltip";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { assignments } from "../../../../data/mockdataForGrades";
 
 const gradeOptions = ["A", "B", "C", "AD", "NA"];
+
+const gradeValues: Record<string, number> = {
+  "A": 3,
+  "B": 2,
+  "C": 1,
+  "AD": 4,
+  "NA": 0,
+};
+
+const gradeReverse: Record<number, string> = {
+  3: "A",
+  2: "B",
+  1: "C",
+  4: "AD",
+  0: "NA",
+};
 
 interface Props {
   student: any;
   selectedCompetency: string;
-  handleAverageChange: (studentId: number, competencyId: number, grade: string) => void;
-  currentGrade: string;
+  handleAverageChange: (studentId: number, competencyId: number, grade: string) => void
+  selectedAssignature: string
+  selectedCategory: string
+  selectedComeptency: string
 }
 
-const AverageSelector = ({ student, selectedCompetency, handleAverageChange, currentGrade }: Props) => {
+const AverageSelector = ({ 
+  student, 
+  selectedCompetency, 
+  handleAverageChange,
+  selectedAssignature,
+  selectedCategory,
+  selectedComeptency 
+}: Props) => {
 //   const systemSuggested = student.systemSuggestedGrades?.[parseInt(selectedCompetency)];
   const teacherConfirmed = student.teacherConfirmedGrades?.[parseInt(selectedCompetency)];
 
-  // If teacher has already confirmed or changed, it becomes the selected grade
-  const [selectedGrade, setSelectedGrade] = useState(currentGrade);
-  const [isApproved, setIsApproved] = useState(!!teacherConfirmed);
+  const filteredAssignments = assignments            
+      .filter(assignment => assignment.assignatureId.toString() === selectedAssignature)
+      .filter(assignment => selectedCategory === '0' || assignment.categoryId.toString() === selectedCategory)
+      .filter(assignment => assignment.competencies.includes(parseInt(selectedComeptency)))
+  
+  const filteredGrades = student.grades
+      ? Object.keys(student.grades)
+          .filter(grade => filteredAssignments.map(assignment => assignment.id).includes(parseInt(grade)))
+          .filter(grade => student.grades[grade] !== 'NA')
+          .map(grade => student.grades[grade])
+      : []
+  const numericAverage = filteredGrades.reduce((acc, grade) => acc + gradeValues[grade], 0) / filteredGrades.length;  
+  const [averageGrade, setAverageGrade] = useState( gradeReverse[Math.round(numericAverage)]);
+
+  const [selectedGrade, setSelectedGrade] = useState(averageGrade)
+  const [isApproved, setIsApproved] = useState(!!teacherConfirmed)
+  const [isManuallyChanged, setIsManuallyChanged] = useState(false)
+  console.log('isManuallyChanged', isManuallyChanged)
+  
+
+  useEffect(() => {
+
+    const filteredGrades = student.grades
+        ? Object.keys(student.grades)
+            .filter(grade => filteredAssignments.map(assignment => assignment.id).includes(parseInt(grade)))
+            .filter(grade => student.grades[grade] !== 'NA')
+            .map(grade => student.grades[grade])
+        : []
+    const numericAverage = filteredGrades.reduce((acc, grade) => acc + gradeValues[grade], 0) / filteredGrades.length;  
+    console.log('numericAverage', numericAverage);
+    
+    setAverageGrade(gradeReverse[Math.round(numericAverage)])
+    if (!isManuallyChanged) {
+      setSelectedGrade(gradeReverse[Math.round(numericAverage)]);
+    }
+    console.log('averageGrade', averageGrade);
+    
+    
+  }, [averageGrade, student]);
 
   const handleChange = (newGrade: string) => {
     console.log('Change', newGrade);
     
     setSelectedGrade(newGrade);
     setIsApproved(true)
+    setIsManuallyChanged(true)
     handleAverageChange(student.id, parseInt(selectedCompetency), newGrade);
+
   };
 
   const handleApprove = () => {
