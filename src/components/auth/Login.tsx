@@ -135,7 +135,7 @@ const Login = () => {
                     </div>
                     <Link 
                         to={'/forgot-password'}
-                        className="text-xs text-center hover:text-blue-500 cursor-pointer">Olvidaeste tu Contraseña?</Link>
+                        className="text-xs text-center hover:text-blue-500 cursor-pointer">Olvidaste tu Contraseña?</Link>
                 </motion.form>
             </motion.div>
         </div>

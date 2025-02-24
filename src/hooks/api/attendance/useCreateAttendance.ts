@@ -26,6 +26,7 @@ const useCreateAttendance = ({ classroomId }: Props): UseMutationResult<Attendan
         mutationFn: (data: CreateAttendanceData) => attendanceService.post(data.attendance, data.access),
         onSuccess: res => {
             // queryClient.invalidateQueries({queryKey: STUDENTS_CACHE_KEY})
+            console.log('STUDENTS_CACHE_KEY', STUDENTS_CACHE_KEY)
             queryClient.setQueryData<Student[]>(STUDENTS_CACHE_KEY, (oldData) => {
                 if (!oldData) return []
                 const newData = oldData.map(student => 

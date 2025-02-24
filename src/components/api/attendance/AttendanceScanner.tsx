@@ -1,9 +1,6 @@
-import { useEffect } from "react";
-import useGetAttendance from "../../../hooks/api/attendance/useGetAttendance";
-import useAuthStore from "../../../hooks/store/useAuthStore";
 import QRScanner from "../../ui/QRScanner";
 import { Attendance } from "../../../services/api/attendanceService";
-import useLoader from "../../../hooks/ui/useLoader";
+
 
 interface Props {
     onScanSuccess: (decodedText: string, pauseScanner: any, resumeScanner: any, stopScanner: any) => void
@@ -13,23 +10,7 @@ interface Props {
     errorMessage: string
 }
 
-const AttendanceScanner = ({ onScanSuccess, selectedStatus, classroomId, setAttendances, errorMessage }: Props) => {
-
-    const access = useAuthStore(s => s.access) || ''
-    
-    const { data: attendances, isLoading, isError, error, isSuccess } = useGetAttendance({ access, classroomId })
-
-    useEffect(() => {
-        if (attendances) {
-            setAttendances(attendances)
-        }
-    }, [attendances, setAttendances])
-
-    useLoader(isLoading)
-
-    if (isError) return <p>Error: {error.message}</p>
-
-    if (isSuccess)
+const AttendanceScanner = ({ onScanSuccess, selectedStatus, errorMessage }: Props) => {
 
   return (
     <QRScanner 
