@@ -58,6 +58,8 @@ const StudentsAdmin = () => {
         <StudentByDNI 
             setStudentUid={setStudentUid}
             setStudentName={setStudentName}
+            studentUid={studentUid}
+            studentName={studentName}
         />
         {studentUid && 
             <StudentByDniInfo 
@@ -71,6 +73,8 @@ const StudentsAdmin = () => {
             <StudentsByNameInfo 
                 name={studentName}
                 school={school}
+                classrooms={classrooms}
+                classroomId={selectedClassroom}
             />
         }
         {selectedClassroom !== '0' && 

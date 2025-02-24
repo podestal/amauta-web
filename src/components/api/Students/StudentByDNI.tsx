@@ -1,16 +1,20 @@
 import Input from '../../ui/Input'
 import Button from '../../ui/Button'
 import { useState } from 'react'
+import { useQueryClient } from '@tanstack/react-query'
 
 interface Props {
     setStudentUid:React.Dispatch<React.SetStateAction<string>>
     setStudentName: React.Dispatch<React.SetStateAction<string>>
+    studentUid: string
+    studentName: string
 }
 
-const StudentByDNI = ({ setStudentUid, setStudentName }: Props) => {
+const StudentByDNI = ({ setStudentUid, setStudentName, studentName, studentUid }: Props) => {
 
     const [nameOrDni, setNameOrDni] = useState('')
     const [dniError, setDniError] = useState('')
+    const queryClient = useQueryClient()
 
     const removeAccents = (str: string) => 
         str.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
@@ -26,8 +30,12 @@ const StudentByDNI = ({ setStudentUid, setStudentName }: Props) => {
                 return
             }
             setStudentUid(nameOrDni)
+            studentName && queryClient.removeQueries({ queryKey: [`students ${studentName}`] })
+            setStudentName('')
         } else if (isOnlyLetters(removeAccents(nameOrDni))) {
             setStudentName(removeAccents(nameOrDni))
+            studentUid && queryClient.removeQueries({ queryKey: [`students ${studentUid}`] })
+            setStudentUid('')
         }
     }
 
@@ -36,7 +44,7 @@ const StudentByDNI = ({ setStudentUid, setStudentName }: Props) => {
         onSubmit={handleSubmit}
         className="w-full h-full flex justify-center items-center gap-12">
         <Input 
-            placeholder="Buscar por DNI ..."
+            placeholder="Buscar por nombre, apellido o DNI ..."
             onChange={(e) => {
                 nameOrDni && setDniError('')
                 setNameOrDni(e.target.value)

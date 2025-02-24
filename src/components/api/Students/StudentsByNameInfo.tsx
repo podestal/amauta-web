@@ -1,12 +1,16 @@
 import useGetStudentsByName from "../../../hooks/api/student/useGetStudentsByName"
 import useAuthStore from "../../../hooks/store/useAuthStore"
+import { Classroom } from "../../../services/api/classroomService"
+import StudentAdminCard from "./StudentAdminCard"
 
 interface Props {
     name: string
     school: number
+    classrooms: Classroom[]
+    classroomId: string
 }
 
-const StudentsByNameInfo = ({ name, school }: Props) => {
+const StudentsByNameInfo = ({ name, school, classrooms, classroomId }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
 
@@ -19,9 +23,15 @@ const StudentsByNameInfo = ({ name, school }: Props) => {
     if (isSuccess)
 
   return (
-    <div>
-        <>{console.log('students', students)}</>
-    </div>
+    <>
+        {students.map(student => (
+            <StudentAdminCard 
+                student={student}
+                classrooms={classrooms}
+                classroomId={classroomId}
+            />
+        ))}
+    </>
   )
 }
 
