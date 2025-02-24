@@ -46,6 +46,11 @@ const GradesSummaryPage = () => {
   const [selectedCategory, setSelectedCategory] = useState('0');
   const [filterByName, setFilterByName] = useState('');
 
+  const [calculatedAverage, setCalculatedAverage] = useState('');
+
+  console.log('calculatedAverage', calculatedAverage);
+  
+
 
   // Function to update grade
   const handleGradeChange = (studentId: number, assignmentId: number, newGrade: string) => {
@@ -255,6 +260,7 @@ const GradesSummaryPage = () => {
                 selectedAssignature={selectedAssignature}
                 selectedCategory={selectedCategory}
                 selectedComeptency={selectedComeptency}
+                setCalculatedAverage={setCalculatedAverage}
               />
           </>
           }

@@ -147,6 +147,17 @@ const Navigator: React.FC = () => {
             <RiGraduationCapFill />
             <span>{lan === 'EN' ? 'Progress' : 'Progreso' }</span>
           </NavLink>
+          {/* <NavLink
+            to="tutor-grades"
+            className={({ isActive }) =>
+              `flex flex-col items-center text-sm ${
+                isActive ? 'text-blue-500' : 'text-gray-500'
+              }`
+            }
+          >
+            <RiGraduationCapFill />
+            <span>{lan === 'EN' ? 'Grades' : 'Notas' }</span>
+          </NavLink> */}
           <NavLink
             to="announcement"
             className={({ isActive }) =>

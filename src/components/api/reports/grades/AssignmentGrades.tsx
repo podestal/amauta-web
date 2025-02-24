@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import { assignments } from "../../../../data/mockdataForGrades"
 
 interface Props {
@@ -6,7 +7,7 @@ interface Props {
     selectedAssignature: string
     selectedCategory: string
     selectedComeptency: string
-
+    setCalculatedAverage: React.Dispatch<React.SetStateAction<string>>
 }
 
 const gradeOptions = ["A", "B", "C", "AD", "NA"];
@@ -41,6 +42,7 @@ const AssignmentGrades = ({
     selectedAssignature,
     selectedCategory,
     selectedComeptency,
+    setCalculatedAverage
 }: Props) => {
 
     const filteredAssignments = assignments            
@@ -56,7 +58,11 @@ const AssignmentGrades = ({
         : []
     const numericAverage = filteredGrades.reduce((acc, grade) => acc + gradeValues[grade], 0) / filteredGrades.length;
     const averageGrade = gradeReverse[Math.round(numericAverage)];    
-    console.log('averageGrade', averageGrade);
+    // console.log('averageGrade', averageGrade);
+
+    useEffect(() => {
+        setCalculatedAverage(averageGrade)
+    }, [averageGrade])
 
   return (
     <>
