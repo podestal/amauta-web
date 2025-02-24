@@ -70,15 +70,19 @@ interface Props {
     tutor?: boolean
     all?: boolean
     studentId?: string
+    byName?: Boolean
+    
 }
 
-const getStudentService = ({ tutor, all, studentId }: Props) => {
+const getStudentService = ({ tutor, all, studentId, byName }: Props) => {
 
     let url = `student/byClassroom/`
     if (tutor) {
         url = `student/byTutor/`
     } if (all) {
         url = `student/`
+    } else if (byName) {
+        url = `student/byName/`
     } else if (studentId) {
         url = `student/${studentId}/`
     }

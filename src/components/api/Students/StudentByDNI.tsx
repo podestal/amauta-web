@@ -4,20 +4,31 @@ import { useState } from 'react'
 
 interface Props {
     setStudentUid:React.Dispatch<React.SetStateAction<string>>
+    setStudentName: React.Dispatch<React.SetStateAction<string>>
 }
 
-const StudentByDNI = ({ setStudentUid }: Props) => {
+const StudentByDNI = ({ setStudentUid, setStudentName }: Props) => {
 
-    const [dni, setDni] = useState('')
+    const [nameOrDni, setNameOrDni] = useState('')
     const [dniError, setDniError] = useState('')
+
+    const removeAccents = (str: string) => 
+        str.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        if (dni.length > 8) {
-            setDniError('El DNI debe tener 8 dígitos')
-            return
+        const isOnlyNumbers = (value: string) => /^\d+$/.test(value);
+        const isOnlyLetters = (value: string) => /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(value);
+        
+        if (isOnlyNumbers(nameOrDni)) {
+            if (nameOrDni.length > 8) {
+                setDniError('El DNI debe tener 8 dígitos')
+                return
+            }
+            setStudentUid(nameOrDni)
+        } else if (isOnlyLetters(removeAccents(nameOrDni))) {
+            setStudentName(removeAccents(nameOrDni))
         }
-        setStudentUid(dni)
     }
 
   return (
@@ -26,10 +37,9 @@ const StudentByDNI = ({ setStudentUid }: Props) => {
         className="w-full h-full flex justify-center items-center gap-12">
         <Input 
             placeholder="Buscar por DNI ..."
-            type="number"
             onChange={(e) => {
-                dni && setDniError('')
-                setDni(e.target.value)
+                nameOrDni && setDniError('')
+                setNameOrDni(e.target.value)
             }}
             error={dniError}
         />

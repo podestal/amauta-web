@@ -8,13 +8,20 @@ import StudentByDNI from "./StudentByDNI"
 import StudentByDniInfo from "./StudentByDniInfo"
 import AttendanceFilters from "../reports/attendance/AttendanceFilters"
 import { Classroom } from "../../../services/api/classroomService"
+import useSchoolStore from "../../../hooks/store/useSchoolStore"
+import StudentsByNameInfo from "./StudentsByNameInfo"
 
 const StudentsAdmin = () => {
 
     const [open, setOpen] = useState(false)
     const [selectedClassroom, setSelectedClassroom] = useState('0')
     const [studentUid, setStudentUid] = useState('')
+    const [studentName, setStudentName] = useState('')
     const [classrooms, setClassrooms] = useState<Classroom[]>([])
+    const school = useSchoolStore(s => s.school).id
+
+    console.log('studentName', studentName)
+    console.log('school', school)
 
   return (
     <>
@@ -50,14 +57,21 @@ const StudentsAdmin = () => {
         <>
         <StudentByDNI 
             setStudentUid={setStudentUid}
+            setStudentName={setStudentName}
         />
-        {studentUid !== '' && 
+        {studentUid && 
             <StudentByDniInfo 
                 studentUid={studentUid} 
                 classrooms={classrooms}
                 classroomId={selectedClassroom}
             />}
         </>
+        }
+        {studentName && 
+            <StudentsByNameInfo 
+                name={studentName}
+                school={school}
+            />
         }
         {selectedClassroom !== '0' && 
         <StudentsAdminTable 
