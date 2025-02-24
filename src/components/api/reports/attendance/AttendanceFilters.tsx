@@ -48,7 +48,7 @@ const AttendanceFilters = ({ setSelectedClassroom, selectedType, setSelectedType
     const access = useAuthStore(s => s.access) || ''
 
     const [selectedLevel, setSelectedLevel] = useState('P')
-    const [selectedGrade, setSelectedGrade] = useState('1')
+    const [selectedGrade, setSelectedGrade] = useState(selectedLevel === 'I' ? '3' : '3')
 
     const { data: classrooms, isLoading, isError, error, isSuccess } = useGetClassroom({ access })
 
@@ -84,9 +84,12 @@ const AttendanceFilters = ({ setSelectedClassroom, selectedType, setSelectedType
         <Selector 
             values={selectedLevel === 'P' ? gradesPrimary : selectedLevel === 'S' ? gradesSecondary : gradesInitial}
             setter={setSelectedGrade}
-            defaultValue={selectedGrade}
+            lan="ES"
             label="Grado"
         />
+        <>{console.log('selectedLevel', selectedLevel)}</>
+        <>{console.log('selectedGrade', selectedGrade)}</>
+        <>{console.log('classrooms', classrooms)}</>
         <ClasroomSelector 
             setSelectedClassroom={setSelectedClassroom}
             classrooms={classrooms

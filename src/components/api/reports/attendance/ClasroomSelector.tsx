@@ -14,6 +14,7 @@ const ClasroomSelector = ({ setSelectedClassroom, classrooms }: Props) => {
             values={classrooms.map(classroom => ({ id: classroom.id.toString(), name:`${classroom.section === 'U' ? 'Unica' : classroom.section}` }))}
             setter={setSelectedClassroom}
             label="Sección"
+            lan="ES"
         />
     </div>
   )
