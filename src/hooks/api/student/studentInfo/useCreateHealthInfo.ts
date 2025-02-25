@@ -9,9 +9,11 @@ export interface CreateHealthInfoData {
 
 interface Props {
     classroomId: string
+    studentDni?: string
+    studentName?: string
 }
 
-const useCreateHealthInfo = ({ classroomId }: Props): UseMutationResult<HealthInfo, Error, CreateHealthInfoData> => {
+const useCreateHealthInfo = ({ classroomId, studentDni, studentName }: Props): UseMutationResult<HealthInfo, Error, CreateHealthInfoData> => {
     const queryClient = useQueryClient()
     const healthInfoService = getHealthInfoService({})
     const day = moment().date().toString()
@@ -20,6 +22,8 @@ const useCreateHealthInfo = ({ classroomId }: Props): UseMutationResult<HealthIn
         mutationFn: (data: CreateHealthInfoData) => healthInfoService.post(data.healthInfo, data.access),
         onSuccess: res => {
             console.log('res',res)
+            studentDni && queryClient.invalidateQueries({ queryKey: [`student ${studentDni}`] })
+            studentName && queryClient.invalidateQueries({ queryKey: [`students ${studentName}`] })
             queryClient.invalidateQueries({ queryKey: [`students ${classroomId} ${day} ${month}`] })
         },
         onError: err => {
