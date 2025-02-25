@@ -42,7 +42,7 @@ const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen, creat
     
 
     const [dni, setDni] = useState(tutor ? tutor.dni : '')
-    const [dateOfBirth, setDateOfBirth] = useState(tutor ? moment(tutor.date_of_birth).format('YYYY-MM-DD') : '')
+    const [dateOfBirth, setDateOfBirth] = useState(tutor ? moment(tutor.date_of_birth).format('DD/MM/YYYY') : '')
     const [selectedDepartment, setSelectedDepartment] = useState(tutor ? tutor.state : '21')
     const [selectedProvince, setSelectedProvince] = useState(tutor ? tutor.county : '172')
     const [city, setCity] = useState(tutor ? tutor.city : 'Juliaca')
@@ -446,7 +446,7 @@ const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen, creat
             </div>
             <div className="grid grid-cols-3 gap-6 mb-12">
                 <Input 
-                    placeholder="'DD/MM/YYYY'"
+                    placeholder="DD/MM/YYYY"
                     value={dateOfBirth}
                     onChange={(e) => {
                         dateOfBirth && setDateOfBirthError('')
