@@ -459,7 +459,7 @@ const StudentForm = ({
         <div className="w-full grid grid-cols-3 gap-4">
           <div>
             <Selector 
-              values={[{id: 'P', name: 'Primaria'}, {id: 'S', name: 'Secundaria'}]}
+              values={[{id: 'P', name: 'Primaria'}, {id: 'S', name: 'Secundaria'}, {id: 'I', name: 'Inicial'}]}
               lan={lan}
               setter={setLevel}
               label="Nivel"
@@ -478,7 +478,9 @@ const StudentForm = ({
             <Selector 
               values={level === 'P' 
                 ? [{id: '1', name: '1'}, {id: '2', name: '2'}, {id: '3', name: '3'}, {id: '4', name: '4'}, {id: '5', name: '5'}, {id: '6', name: '6'}]
-                : [{id: '1', name: '1'}, {id: '2', name: '2'}, {id: '3', name: '3'}, {id: '4', name: '4'}, {id: '5', name: '5'}]
+                : level === 'S'  
+                ? [{id: '1', name: '1'}, {id: '2', name: '2'}, {id: '3', name: '3'}, {id: '4', name: '4'}, {id: '5', name: '5'}]
+                : [{id: '3', name: '1 año'}, {id: '4', name: '2 años'}, {id: '5', name: '3 año'}]
               }
               lan={lan}
               setter={setGrade}
