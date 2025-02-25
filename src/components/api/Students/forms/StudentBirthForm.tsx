@@ -20,6 +20,8 @@ interface Props {
     setOpen?: React.Dispatch<React.SetStateAction<boolean>>
     createBirthInfo?: UseMutationResult<BirthInfo, Error, CreateBirthInfoData>
     classroomId: string
+    studentDni?: string
+    studentName?: string
 }
 
 const StudentBirthForm = ({ 
@@ -30,13 +32,15 @@ const StudentBirthForm = ({
     setOpen,
     createBirthInfo,
     classroomId,
+    studentDni,
+    studentName,
 }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
     const { setMessage, setShow, setType } = useNotificationsStore()
     const [loading, setLoading] = useState(false)
-    const updateBirthInfo = birthInfo && useUpdateBirthInfo({ birthInfoId: birthInfo.id, classroomId })
-    const createBirthInfoInternal = !createBirthInfo && !updateBirthInfo && useCreateBirthInfo({ classroomId })
+    const updateBirthInfo = birthInfo && useUpdateBirthInfo({ birthInfoId: birthInfo.id, classroomId, studentDni, studentName })
+    const createBirthInfoInternal = !createBirthInfo && !updateBirthInfo && useCreateBirthInfo({ classroomId, studentDni, studentName })
 
     const [selectedDepartment, setSelectedDepartment] = useState(birthInfo ? birthInfo.state : '21')
     const [selectedProvince, setSelectedProvince] = useState(birthInfo ? birthInfo.county : '172')
@@ -45,7 +49,6 @@ const StudentBirthForm = ({
     const [dateOfBirth, setDateOfBirth] = useState(birthInfo ? moment(birthInfo.date_of_birth).format('DD/MM/YYYY') : '')
 
     // Error handling
-
     const [stateError, setStateError] = useState('')
     const [countyError, setCountyError] = useState('')
     const [cityError, setCityError] = useState('')
