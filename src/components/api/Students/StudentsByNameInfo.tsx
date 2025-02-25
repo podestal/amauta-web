@@ -39,6 +39,7 @@ const StudentsByNameInfo = ({ name, school, classrooms, classroomId }: Props) =>
                 student={student}
                 classrooms={classrooms}
                 classroomId={classroomId}
+                studentName={name}
             />
         ))}
     </>

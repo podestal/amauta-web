@@ -17,9 +17,11 @@ interface Props {
     student: Student
     classrooms: Classroom[]
     classroomId: string
+    studentDni?: string
+    studentName?: string
 }
 
-const StudentAdminCard = ({ student, classrooms, classroomId }: Props) => {
+const StudentAdminCard = ({ student, classrooms, classroomId, studentDni, studentName }: Props) => {
 
   const itemVariants = {
     hidden: { opacity: 0, x: 50 }, 
@@ -37,7 +39,7 @@ const StudentAdminCard = ({ student, classrooms, classroomId }: Props) => {
   const studentTutor = student.tutors.find(tutor => tutor.tutor_type === 'O')
 
   // MUTATIONS
-  const updateStudent = useUpdateStudent({ studentId: student.uid, classroomId })
+  const updateStudent = useUpdateStudent({ studentId: student.uid, classroomId, studentDni, studentName })
 
   return (
     <>
@@ -153,6 +155,7 @@ const StudentAdminCard = ({ student, classrooms, classroomId }: Props) => {
         setPage={() => {}}
         student={student}
         updateStudent={updateStudent}
+        setOpen={setOpen}
       />}
       {renderComponent === 'studentFatherForm' &&
       <StudentTutorForm 

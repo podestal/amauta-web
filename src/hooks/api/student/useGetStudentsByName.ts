@@ -13,7 +13,7 @@ const useGetStudentsByName = ({ access, name, school }: Props): UseQueryResult<S
     const params = { name, school }
 
     return useQuery({
-        queryKey: ['students', name],
+        queryKey: [`students ${name}` ],
         queryFn: () => studentService.get(access, params),
     })
 }

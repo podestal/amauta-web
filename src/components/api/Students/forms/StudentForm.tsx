@@ -375,7 +375,6 @@ const StudentForm = ({
         setType('success')
         setShow(true)
         setMessage('Información del tutor actualizada exitosamente!')
-        
       },
       onError: err => {
         setType('error')

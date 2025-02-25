@@ -11,7 +11,7 @@ const useRetrieveStudent = ({ access, studentId }: Props): UseQueryResult<Studen
     const studentService = getStudentService({studentId})
 
     return useQuery({
-        queryKey: ['student', studentId],
+        queryKey: [`student ${studentId}`],
         queryFn: () => studentService.get(access),
     })
 }

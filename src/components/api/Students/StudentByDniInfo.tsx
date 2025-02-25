@@ -36,6 +36,7 @@ const StudentByDniInfo = ({ studentUid, classrooms, classroomId }: Props) => {
             student={student}
             classrooms={classrooms}
             classroomId={classroomId}
+            studentDni={studentUid}
         />
     </>
   )
