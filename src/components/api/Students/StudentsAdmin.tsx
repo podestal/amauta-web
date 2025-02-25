@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Button from "../../ui/Button"
 import Modal from "../../ui/Modal"
 import CreateStudent from "./CreateStudent"
@@ -22,6 +22,13 @@ const StudentsAdmin = () => {
 
     console.log('studentName', studentName)
     console.log('school', school)
+
+    useEffect(() => {
+        if (selectedClassroom !== '0') {
+            setStudentUid('')
+            setStudentName('')
+        }
+    }, [selectedClassroom, setSelectedClassroom])
 
   return (
     <>
