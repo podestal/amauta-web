@@ -3,14 +3,21 @@ import getClassroomService, {Classroom} from "../../../services/api/clasroomServ
 
 interface Props {
     access: string
+    school: string
 }
 
-const useGetClassroom = ({ access }: Props): UseQueryResult<Classroom[], Error> => {
+const useGetClassroom = ({ access, school }: Props): UseQueryResult<Classroom[], Error> => {
 
     const classroomService = getClassroomService()
+    const params = { school }
+
+    console.log('getting classrooms', params);
+    
+
     return useQuery({
         queryKey: ['classroom'],
-        queryFn: () => classroomService.get(access),
+        queryFn: () => classroomService.get(access, params),
+        enabled: school !== '0'
     })
 }
 

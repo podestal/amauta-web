@@ -8,12 +8,6 @@ import { useLocation } from "react-router-dom"
 import useGetProfileStore from "../../../hooks/store/useGetProfileStore"
 import { Instructor } from "../../../services/api/instructorService"
 import moment from "moment"
-// import Tabs from "../../ui/Tabs"
-// import StudentAdminCard from "./StudentAdminCard"
-// import Modal from "../../ui/Modal"
-// import Button from "../../ui/Button"
-// import CreateStudent from "./CreateStudent"
-// import useGetClassroom from "../../../hooks/api/classroom/useGetClassroom"
 import useLoader from "../../../hooks/ui/useLoader"
 
 interface Props {

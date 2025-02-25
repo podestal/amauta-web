@@ -6,6 +6,7 @@ import ClasroomSelector from "./ClasroomSelector"
 import Selector from "../../../ui/Selector"
 import { motion } from "framer-motion"
 import { Classroom } from "../../../../services/api/classroomService"
+import useSchoolStore from "../../../../hooks/store/useSchoolStore"
 
 const gradesInitial = [
     { id: '3', name: '3 Años'},
@@ -49,8 +50,12 @@ const AttendanceFilters = ({ setSelectedClassroom, selectedType, setSelectedType
 
     const [selectedLevel, setSelectedLevel] = useState('P')
     const [selectedGrade, setSelectedGrade] = useState(selectedLevel === 'I' ? '3' : '3')
+    const school = useSchoolStore(s => s.school)
 
-    const { data: classrooms, isLoading, isError, error, isSuccess } = useGetClassroom({ access })
+    console.log('school', school);
+    
+
+    const { data: classrooms, isLoading, isError, error, isSuccess } = useGetClassroom({ access, school: school.id.toString() })
 
     useEffect(() => {
         if (classrooms) {

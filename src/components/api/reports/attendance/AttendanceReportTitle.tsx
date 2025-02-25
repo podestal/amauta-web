@@ -3,6 +3,7 @@ import useGetClassroom from '../../../../hooks/api/classroom/useGetClassroom'
 import useAuthStore from '../../../../hooks/store/useAuthStore'
 import useLoader from '../../../../hooks/ui/useLoader'
 import getClassroomDescription from '../../../../utils/getClassroomDescription'
+import useSchoolStore from '../../../../hooks/store/useSchoolStore'
 
 interface Props {
     classroomId: string
@@ -12,7 +13,8 @@ const AttendanceReportTitle = ({ classroomId }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
     const [classroomLabel, setClassroomLabel] = useState('')
-    const { data: classrooms, isLoading, isError, error, isSuccess } = useGetClassroom({ access })
+    const school = useSchoolStore(s => s.school).id.toString()
+    const { data: classrooms, isLoading, isError, error, isSuccess } = useGetClassroom({ access, school })
 
     useEffect(() => {
         const classroom = classrooms && classrooms.find( classroom => classroom.id.toString() === classroomId)
