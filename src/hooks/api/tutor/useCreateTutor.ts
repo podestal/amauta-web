@@ -9,9 +9,11 @@ export interface CreateTutorData {
 
 interface Props {
     classroomId: string
+    studentDni?: string
+    studentName?: string
 }
 
-const useCreateTutor = ({ classroomId }: Props): UseMutationResult<Tutor, Error, CreateTutorData> => {
+const useCreateTutor = ({ classroomId, studentDni, studentName }: Props): UseMutationResult<Tutor, Error, CreateTutorData> => {
     const tutorService = getTutorService({})
     const queryClient = useQueryClient()
     const day = moment().date().toString()
@@ -20,6 +22,8 @@ const useCreateTutor = ({ classroomId }: Props): UseMutationResult<Tutor, Error,
         mutationFn: (data: CreateTutorData) => tutorService.post(data.tutor, data.access),
         onSuccess: res => {
             console.log('res', res)
+            studentDni && queryClient.invalidateQueries({ queryKey: [`student ${studentDni}`] })
+            studentName && queryClient.invalidateQueries({ queryKey: [`students ${studentName}`] })
             queryClient.invalidateQueries({queryKey: [`students ${classroomId} ${day} ${month}`] })
             // queryClient.setQueryData<Student[]>(getStudentsCacheKey((res.clase).toString()), (oldData) => {
             //     if (!oldData) return []

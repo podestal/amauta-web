@@ -171,6 +171,8 @@ const StudentAdminCard = ({ student, classrooms, classroomId, studentDni, studen
         tutor={studentFather}
         setOpen={setOpen}
         classroomId={classroomId}
+        studentDni={studentDni}
+        studentName={studentName}
       />}
       {renderComponent === 'studentMotherForm' &&
       <StudentTutorForm
@@ -180,6 +182,8 @@ const StudentAdminCard = ({ student, classrooms, classroomId, studentDni, studen
         tutor={studentMother}
         setOpen={setOpen}
         classroomId={classroomId}
+        studentDni={studentDni}
+        studentName={studentName}
       />}
       {renderComponent === 'studentTutorForm' &&
       <StudentTutorForm
@@ -189,6 +193,8 @@ const StudentAdminCard = ({ student, classrooms, classroomId, studentDni, studen
         tutor={studentTutor}
         setOpen={setOpen}
         classroomId={classroomId}
+        studentDni={studentDni}
+        studentName={studentName}
       />}
     </Modal>
     </>

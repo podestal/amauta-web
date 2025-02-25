@@ -23,18 +23,24 @@ interface Props {
     createTutor?: UseMutationResult<Tutor, Error, CreateTutorData>
     classroomId: string
     // updateTutor?: UseMutationResult<Tutor, Error, CreateTutorData>
+    studentDni?: string
+    studentName?: string
 }
 
-const StudentTutorForm = ({ studentId, tutor, tutorType, setPage, setOpen, createTutor, classroomId }: Props) => {
-
-    // TODOS
-    // - Update Tutor
-    // - Create tutor when open this particular form
-    // - Loading state for create tutor
+const StudentTutorForm = ({ 
+    studentId, 
+    tutor, 
+    tutorType, 
+    setPage, 
+    setOpen, 
+    createTutor,
+    classroomId, 
+    studentDni, 
+    studentName, }: Props) => {
 
     const school = useSchoolStore(s => s.school)
-    const updateTutor = tutor && useUpdateTutor({ tutorId: (tutor.id).toString(), classroomId })
-    const createTutorInternal = !createTutor && !updateTutor && useCreateTutor({ classroomId })
+    const updateTutor = tutor && useUpdateTutor({ tutorId: (tutor.id).toString(), classroomId, studentDni, studentName })
+    const createTutorInternal = !createTutor && !updateTutor && useCreateTutor({ classroomId, studentDni, studentName })
     const [loading, setLoading] = useState(false)
     const { setMessage, setShow, setType } = useNotificationsStore()
     const [tutorInfo, setTutorInfo] = useState(true)

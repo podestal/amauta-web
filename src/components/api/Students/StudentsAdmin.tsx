@@ -20,9 +20,6 @@ const StudentsAdmin = () => {
     const [classrooms, setClassrooms] = useState<Classroom[]>([])
     const school = useSchoolStore(s => s.school).id
 
-    console.log('studentName', studentName)
-    console.log('school', school)
-
     useEffect(() => {
         if (selectedClassroom !== '0') {
             setStudentUid('')
