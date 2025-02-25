@@ -11,9 +11,11 @@ interface Props {
     studentId?: string
     emergencyContactId: string
     classroomId: string
+    studentDni?: string
+    studentName?: string
 }
 
-const useUpdateEmergencyContact = ({ studentId, emergencyContactId, classroomId }: Props): UseMutationResult<EmergencyContact, Error, UpdateEmergencyContactData> => {
+const useUpdateEmergencyContact = ({ studentId, emergencyContactId, classroomId, studentDni, studentName }: Props): UseMutationResult<EmergencyContact, Error, UpdateEmergencyContactData> => {
     const queryClient = useQueryClient()
     const emergencyContactService = getEmergencyContactService({ emergencyContactId })
     console.log('studentId', studentId)
@@ -24,6 +26,8 @@ const useUpdateEmergencyContact = ({ studentId, emergencyContactId, classroomId 
         mutationFn: (data: UpdateEmergencyContactData) => emergencyContactService.update(data.emergencyContact, data.access),
         onSuccess: res => {
             console.log('res',res)
+            studentDni && queryClient.invalidateQueries({ queryKey: [`student ${studentDni}`] })
+            studentName && queryClient.invalidateQueries({ queryKey: [`students ${studentName}`] })
             queryClient.invalidateQueries({ queryKey: [`students ${classroomId} ${day} ${month}`] })
         },
         onError: err => {

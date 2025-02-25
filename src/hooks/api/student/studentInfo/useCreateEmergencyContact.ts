@@ -9,9 +9,11 @@ export interface CreateEmergencyContactData {
 
 interface Props {
     classroomId: string
+    studentDni?: string
+    studentName?: string
 }
 
-const useCreateEmergencyContact = ({ classroomId }: Props): UseMutationResult<EmergencyContact, Error, CreateEmergencyContactData> => {
+const useCreateEmergencyContact = ({ classroomId, studentDni, studentName }: Props): UseMutationResult<EmergencyContact, Error, CreateEmergencyContactData> => {
     const queryClient = useQueryClient()
     const emergencyContactService = getEmergencyContactService({})
     const day = moment().date().toString()
@@ -20,6 +22,8 @@ const useCreateEmergencyContact = ({ classroomId }: Props): UseMutationResult<Em
         mutationFn: (data: CreateEmergencyContactData) => emergencyContactService.post(data.emergencyContact, data.access),
         onSuccess: res => {
             console.log('res',res)
+            studentDni && queryClient.invalidateQueries({ queryKey: [`student ${studentDni}`] })
+            studentName && queryClient.invalidateQueries({ queryKey: [`students ${studentName}`] })
             queryClient.invalidateQueries({ queryKey: [`students ${classroomId} ${day} ${month}`] })
         },
         onError: err => {

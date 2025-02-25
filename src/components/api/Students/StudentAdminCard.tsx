@@ -151,6 +151,8 @@ const StudentAdminCard = ({ student, classrooms, classroomId, studentDni, studen
         emergencyContact={emergencyContact}
         setOpen={setOpen}
         classroomId={classroomId}
+        studentDni={studentDni}
+        studentName={studentName}
       />}
       {renderComponent === 'studentForm' &&
       <StudentForm
