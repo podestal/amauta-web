@@ -480,7 +480,7 @@ const StudentForm = ({
                 ? [{id: '1', name: '1'}, {id: '2', name: '2'}, {id: '3', name: '3'}, {id: '4', name: '4'}, {id: '5', name: '5'}, {id: '6', name: '6'}]
                 : level === 'S'  
                 ? [{id: '1', name: '1'}, {id: '2', name: '2'}, {id: '3', name: '3'}, {id: '4', name: '4'}, {id: '5', name: '5'}]
-                : [{id: '3', name: '1 año'}, {id: '4', name: '2 años'}, {id: '5', name: '3 año'}]
+                : [{id: '3', name: '3 años'}, {id: '4', name: '4 años'}, {id: '5', name: '5 años'}]
               }
               lan={lan}
               setter={setGrade}
