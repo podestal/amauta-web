@@ -11,9 +11,6 @@ const useGetClassroom = ({ access, school }: Props): UseQueryResult<Classroom[],
     const classroomService = getClassroomService()
     const params = { school }
 
-    console.log('getting classrooms', params);
-    
-
     return useQuery({
         queryKey: ['classroom'],
         queryFn: () => classroomService.get(access, params),

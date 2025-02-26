@@ -4,6 +4,7 @@ interface Props {
     section: string
     level: string
     short?: boolean
+    noLevel?: boolean
 }
 
 export const getClassroomGrade = (lan: string, grade: string) => {
@@ -19,7 +20,7 @@ export const getClassroomGrade = (lan: string, grade: string) => {
     return gradeConverter[grade]
 }
 
-const getClassroomDescription = ({lan, grade, section, level, short }: Props)  => {
+const getClassroomDescription = ({lan, grade, section, level, short, noLevel=false }: Props)  => {
 
     const gradeToYears: Record<string, string> = {
         '1': '1 Año',
@@ -45,7 +46,7 @@ const getClassroomDescription = ({lan, grade, section, level, short }: Props)  =
     }
     
 
-    return level === 'I' ? `${gradeToYears[grade]} ${section === 'U' && 'Unica'} ${levelConverter[level]}` : `${gradeConverter[grade]} ${section} ${levelConverter[level]}`
+    return level === 'I' ? `${gradeToYears[grade]} ${section === 'U' && 'Unica'}${!noLevel ? `${levelConverter[level]}` : ''}` : `${gradeConverter[grade]} ${section} ${!noLevel ? `${levelConverter[level]}`: ''}`
 }
 
 export default getClassroomDescription

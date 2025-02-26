@@ -5,6 +5,7 @@ export interface Classroom {
     grade: string
     level: string
     section: string
+    total_students: number
 }
 
 export default new APIClient<Classroom>('clase/')

@@ -5,6 +5,7 @@ export interface Classroom {
     level: string
     section: string
     grade: string
+    total_students: number
 }
 
 const getClassroomService = () => {

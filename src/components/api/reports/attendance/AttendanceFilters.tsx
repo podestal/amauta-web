@@ -51,8 +51,6 @@ const AttendanceFilters = ({ setSelectedClassroom, selectedType, setSelectedType
     const [selectedLevel, setSelectedLevel] = useState('P')
     const [selectedGrade, setSelectedGrade] = useState(selectedLevel === 'I' ? '3' : '3')
     const school = useSchoolStore(s => s.school)
-
-    console.log('school', school);
     
 
     const { data: classrooms, isLoading, isError, error, isSuccess } = useGetClassroom({ access, school: school.id.toString() })

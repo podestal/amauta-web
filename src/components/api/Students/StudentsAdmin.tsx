@@ -12,13 +12,18 @@ import useSchoolStore from "../../../hooks/store/useSchoolStore"
 import StudentsByNameInfo from "./StudentsByNameInfo"
 import StudentAdminTableLastTen from "./StudentAdminTableLastTen"
 
-const StudentsAdmin = () => {
+interface Props {
+    setClassrooms: React.Dispatch<React.SetStateAction<Classroom[]>>
+    classrooms: Classroom[]
+}
+
+const StudentsAdmin = ({ setClassrooms, classrooms }: Props) => {
 
     const [open, setOpen] = useState(false)
     const [selectedClassroom, setSelectedClassroom] = useState('0')
     const [studentUid, setStudentUid] = useState('')
     const [studentName, setStudentName] = useState('')
-    const [classrooms, setClassrooms] = useState<Classroom[]>([])
+    // const [classrooms, setClassrooms] = useState<Classroom[]>([])
     const school = useSchoolStore(s => s.school).id
 
     useEffect(() => {
