@@ -82,8 +82,27 @@ const StudentForm = ({
 
   // CLASSROOM
   const [level, setLevel] = useState(student ? student.clase.level : '')
-  const [grade, setGrade] = useState(student ? student.clase.grade : '')
-  const [section, setSection] = useState(student ? student.clase.section : '')
+  const [grade, setGrade] = useState(student ? student.clase.grade : '0')
+  const [section, setSection] = useState(student ? student.clase.section : '0')
+
+  const setGradeSectionToDefault = () => {
+    setGrade('0')
+    setSection('0')
+  }
+
+  useEffect(() => {
+    console.log('level', level);
+    setGrade('0')
+    // setSection('0')
+  }, [level])
+
+  // console.log('level', level)
+  // console.log('grade', grade)
+  // console.log('section', section)
+  const classroomId = classrooms && section && classrooms.find(c => c.grade === grade && c.section === section && c.level === level)?.id
+  // console.log('classroomId', classroomId)
+  
+
 
   // LANGUAGE
   const [mainLanguage, setMainLanguage] = useState(student ? student.main_language : 'S')
@@ -489,21 +508,17 @@ const StudentForm = ({
               setError={setLevelError}
               defaultValue={level && level}
               ref={levelRef}
+              setToDefault={setGradeSectionToDefault}
             />
           </div>
-          {level && <motion.div
+          {level === 'P' &&
+          <motion.div
             initial={{opacity: 0, x: 50}}
             animate={{opacity: 1, x: 0}}
             transition={{duration: 0.5}}
           >
             <Selector 
-              values={level === 'P' 
-                ? [{id: '1', name: '1'}, {id: '2', name: '2'}, {id: '3', name: '3'}, {id: '4', name: '4'}, {id: '5', name: '5'}, {id: '6', name: '6'}]
-                : level === 'S'  
-                ? [{id: '1', name: '1'}, {id: '2', name: '2'}, {id: '3', name: '3'}, {id: '4', name: '4'}, {id: '5', name: '5'}]
-                : [{id: '3', name: '3 años'}, {id: '4', name: '4 años'}, {id: '5', name: '5 años'}]
-              }
-              lan={lan}
+              values={[{id: '0', name: 'Selecciona'}, {id: '1', name: '1'}, {id: '2', name: '2'}, {id: '3', name: '3'}, {id: '4', name: '4'}, {id: '5', name: '5'}, {id: '6', name: '6'}]}
               setter={setGrade}
               label="Grado"
               error={gradeError}
@@ -513,7 +528,41 @@ const StudentForm = ({
               ref={gradeRef}
             />
           </motion.div>}
-          {grade && <motion.div
+          {level === 'S' &&
+          <motion.div
+            initial={{opacity: 0, x: 50}}
+            animate={{opacity: 1, x: 0}}
+            transition={{duration: 0.5}}
+          >
+            <Selector 
+              values={[{id: '0', name: 'Selecciona'}, {id: '1', name: '1'}, {id: '2', name: '2'}, {id: '3', name: '3'}, {id: '4', name: '4'}, {id: '5', name: '5'}]}
+              setter={setGrade}
+              label="Grado"
+              error={gradeError}
+              value={grade}
+              setError={setGradeError}
+              defaultValue={grade && grade}
+              ref={gradeRef}
+            />
+          </motion.div>}
+          {level === 'I' &&
+          <motion.div
+            initial={{opacity: 0, x: 50}}
+            animate={{opacity: 1, x: 0}}
+            transition={{duration: 0.5}}
+          >
+            <Selector 
+              values={[{id: '0', name: 'Selecciona'}, {id: '3', name: '3 años'}, {id: '4', name: '4 años'}, {id: '5', name: '5 años'}]}
+              setter={setGrade}
+              label="Grado"
+              error={gradeError}
+              value={grade}
+              setError={setGradeError}
+              defaultValue={grade && grade}
+              ref={gradeRef}
+            />
+          </motion.div>}
+          {grade !== '0' && <motion.div
             initial={{opacity: 0, x: 50}}
             animate={{opacity: 1, x: 0}}
             transition={{duration: 0.5}}

@@ -15,6 +15,7 @@ interface Props<T extends Item> {
     error?: string
     setError?: (value: string) => void
     lan?: string
+    setToDefault?: () => void
 }
 
 const styles = {
@@ -50,7 +51,7 @@ const styles = {
 
 // Selector component that uses a generic type T, extending the Item interface
 const Selector = forwardRef<HTMLSelectElement, Props<Item>>(
-  ({ values, defaultValue, value, setter, label, all, error, setError, lan = "EN" }, ref) => {
+  ({ values, defaultValue, value, setter, label, all, error, setError, lan = "EN", setToDefault }, ref) => {
   
     return (
         <div className="lg:w-full w-[60%] flex flex-col mx-auto justify-center items-center gap-2">
@@ -65,6 +66,9 @@ const Selector = forwardRef<HTMLSelectElement, Props<Item>>(
                   if(setError) {
                     value && setError('')
                   }
+                  setToDefault && setToDefault()
+                  console.log('is Changing', e.target.value);
+                  
                   setter(e.target.value)
                 }}
                 className={`dark:bg-gray-950 bg-slate-100  rounded-lg w-full dark:text-slate-50 text-xs pl-2 py-[10px] border-2 ${error ? 'border-red-600 shake' : ' border-neutral-400 dark:border-gray-800'}`}
