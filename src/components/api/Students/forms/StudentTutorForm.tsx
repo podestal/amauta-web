@@ -182,27 +182,27 @@ const StudentTutorForm = ({
             setMessage('La ciudad es requerida')
             return
         }
-        if (!instructionGrade) {
-            setInstructionGradeError('Este campo es requerido')
-            setType('error')
-            setShow(true)
-            setMessage('El grado de instrucción es requerido')
-            return
-        }
-        if (!ocupation) {
-            setOcupationError('Este campo es requerido')
-            setType('error')
-            setShow(true)
-            setMessage('La ocupación es requerida')
-            return
-        }
-        if (!employer) {
-            setEmployerError('Este campo es requerido')
-            setType('error')
-            setShow(true)
-            setMessage('El empleador es requerido')
-            return
-        }
+        // if (!instructionGrade) {
+        //     setInstructionGradeError('Este campo es requerido')
+        //     setType('error')
+        //     setShow(true)
+        //     setMessage('El grado de instrucción es requerido')
+        //     return
+        // }
+        // if (!ocupation) {
+        //     setOcupationError('Este campo es requerido')
+        //     setType('error')
+        //     setShow(true)
+        //     setMessage('La ocupación es requerida')
+        //     return
+        // }
+        // if (!employer) {
+        //     setEmployerError('Este campo es requerido')
+        //     setType('error')
+        //     setShow(true)
+        //     setMessage('El empleador es requerido')
+        //     return
+        // }
 
         // if (!email) {
         //     setEmailError('Este campo es requerido')

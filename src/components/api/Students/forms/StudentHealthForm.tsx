@@ -76,29 +76,29 @@ const StudentHealthForm = ({
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        if (!weight) {
-            setWeightError('El peso es requerido')
-            setType('error')
-            setShow(true)
-            setMessage('El peso es requerido')
-            return
-        }
+        // if (!weight) {
+        //     setWeightError('El peso es requerido')
+        //     setType('error')
+        //     setShow(true)
+        //     setMessage('El peso es requerido')
+        //     return
+        // }
 
-        if (!height) {
-            setHeightError('La altura es requerida')
-            setType('error')
-            setShow(true)
-            setMessage('La altura es requerida')
-            return
-        }
+        // if (!height) {
+        //     setHeightError('La altura es requerida')
+        //     setType('error')
+        //     setShow(true)
+        //     setMessage('La altura es requerida')
+        //     return
+        // }
 
-        if (handycap === 'O' && !handycapDescription) {
-            setHandycapDescriptionError('La descripción de la discapacidad es requerida')
-            setType('error')
-            setShow(true)
-            setMessage('La descripción de la discapacidad es requerida')
-            return
-        }
+        // if (handycap === 'O' && !handycapDescription) {
+        //     setHandycapDescriptionError('La descripción de la discapacidad es requerida')
+        //     setType('error')
+        //     setShow(true)
+        //     setMessage('La descripción de la discapacidad es requerida')
+        //     return
+        // }
 
         setLoading(true)
 

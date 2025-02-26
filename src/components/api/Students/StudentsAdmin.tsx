@@ -84,10 +84,13 @@ const StudentsAdmin = () => {
         }
         {selectedClassroom === '0' 
         ? 
-        <StudentAdminTableLastTen 
-            school={school}
-            classrooms={classrooms}
-        /> 
+        <>
+        {!studentName && !studentUid &&
+            <StudentAdminTableLastTen 
+                school={school}
+                classrooms={classrooms}
+            />}
+        </> 
         : 
         <StudentsAdminTable 
             classroomId={selectedClassroom}
