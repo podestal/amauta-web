@@ -92,14 +92,14 @@ const StudentForm = ({
 
   useEffect(() => {
     console.log('level', level);
-    setGrade('0')
+    // setGrade('0')
     // setSection('0')
   }, [level])
 
   // console.log('level', level)
   // console.log('grade', grade)
-  // console.log('section', section)
-  const classroomId = classrooms && section && classrooms.find(c => c.grade === grade && c.section === section && c.level === level)?.id
+  console.log('section', section)
+  // const classroomId = classrooms && section && classrooms.find(c => c.grade === grade && c.section === section && c.level === level)?.id
   // console.log('classroomId', classroomId)
   
 
@@ -562,13 +562,13 @@ const StudentForm = ({
               ref={gradeRef}
             />
           </motion.div>}
-          {grade !== '0' && <motion.div
+          {grade && <motion.div
             initial={{opacity: 0, x: 50}}
             animate={{opacity: 1, x: 0}}
             transition={{duration: 0.5}}
           >
             <Selector 
-              values={classrooms.filter(c => c.grade === grade && c.level === level).map(c => ({id: c.section, name: c.section}))}
+              values={[{id: '0', name: 'selecciona'}, ...classrooms.filter(c => c.grade === grade && c.level === level).map(c => ({id: c.section, name: c.section}))]}
               setter={setSection}
               lan={lan}
               label="Sección"
