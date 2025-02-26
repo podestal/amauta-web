@@ -9,11 +9,12 @@ import useNotificationsStore from "../../../../hooks/store/useNotificationsStore
 interface Props {
     student: Student
     updateStudent: UseMutationResult<Student, Error, UpdateStudentData>
+    isActive: boolean
+    setIsActive: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const UpdateStudentStatus = ({ student, updateStudent }: Props) => {
+const UpdateStudentStatus = ({ student, updateStudent, isActive, setIsActive }: Props) => {
 
-    const [isActive, setIsActive] = useState(student.is_active)
     const { setMessage, setType, setShow } = useNotificationsStore()
     const access = useAuthStore(s => s.access) || ''
     const {

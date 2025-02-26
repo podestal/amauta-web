@@ -428,6 +428,9 @@ const StudentForm = ({
           <UpdateStudentStatus 
             student={student} 
             updateStudent={updateStudent}
+            isActive={isActive}
+            setIsActive={setIsActive}
+
           />
           :
           <div className="flex gap-8 items-center">
@@ -657,7 +660,7 @@ const StudentForm = ({
         </div>
         <div className="grid grid-cols-3 gap-4">
           <Selector 
-            values={[{id: 'E', name: 'Essalud'}, {id: 'P', name: 'Privado'}, {id: 'S', name: 'SIS'}, {id: 'O', name:'Otro'}, {id: 'N', name: 'Sin Seguro'}]}
+            values={[{id: 'E', name: 'Essalud'}, {id: 'P', name: 'Privado'}, {id: 'S', name: 'SIS'}, {id: 'O', name:'Otro'}, {id: 'N', name: 'Sin Seguro'}, {id: 'S', name: 'No especifica'}]}
             setter={setInsurance}
             label="Seguro"
             lan={lan}
