@@ -13,6 +13,8 @@ import { UpdateStudentData } from "../../../../hooks/api/student/useUpdateStuden
 import useNotificationsStore from "../../../../hooks/store/useNotificationsStore"
 import axios from "axios"
 import useSchoolStore from "../../../../hooks/store/useSchoolStore"
+import Switch from "../../../ui/Switch"
+import UpdateStudentStatus from "./UpdateStudentStatus"
 
 interface Props {
   setPage?: React.Dispatch<React.SetStateAction<number>>
@@ -102,6 +104,9 @@ const StudentForm = ({
   // HEALTH
   const [insurance, setInsurance] = useState(student ? student.insurance : '')
   const [otherInsurance, setOtherInsurance] = useState('')
+
+  // STATUS
+  const [isActive, setIsActive] = useState(student ? student.is_active : true)
 
   // ERROR HANDLING
   const [dniError, setDniError] = useState('')
@@ -332,7 +337,8 @@ const StudentForm = ({
         insurance,
         other_insurance: insurance === 'O' ? otherInsurance : '',
         lives_with: livesWithName,
-        school: school.id
+        school: school.id,
+        is_active: true
       },
       access
     }, {
@@ -365,7 +371,8 @@ const StudentForm = ({
         insurance,
         other_insurance: insurance === 'O' ? otherInsurance : '',
         lives_with: livesWithName,
-        school: school.id
+        school: school.id,
+        is_active: isActive
       },
       access
     }, {
@@ -395,8 +402,22 @@ const StudentForm = ({
       <form 
       onSubmit={handleSubmit}
       className="flex flex-col gap-12 py-12">
-        <div className="w-full border-b-2 dark:border-gray-600 border-gray-300 mb-12">
+        <div className="w-full border-b-2 dark:border-gray-600 border-gray-300 mb-12 flex justify-between">
           <h2 className="text-2xl text-left font-semibold mb-6">Datos Personales</h2>
+          {updateStudent && student
+          ?
+          <UpdateStudentStatus 
+            student={student} 
+            updateStudent={updateStudent}
+          />
+          :
+          <div className="flex gap-8 items-center">
+            <p className={`font-bold ${isActive ? 'text-green-600' : 'text-amber-400'}`}>{isActive ? 'Activo' : 'Inactivo'}</p>
+            <Switch 
+              value={isActive}
+              setter={setIsActive}
+            />
+          </div>}
         </div>
         <div className="w-full grid grid-cols-3 gap-4">
           <Input 

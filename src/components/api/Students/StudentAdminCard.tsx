@@ -45,7 +45,7 @@ const StudentAdminCard = ({ student, classrooms, classroomId, studentDni, studen
     <>
         <motion.div 
             variants={itemVariants}
-            className="w-full grid grid-cols-10 gap-6 items-center bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-700 py-4 px-6 rounded-xl shadow-md transition-all"
+            className={`w-full grid grid-cols-10 gap-6 items-center hover:bg-slate-700  ${!student.is_active ? 'bg-slate-950 ' : 'bg-slate-900'}  py-4 px-6 rounded-xl shadow-md transition-all`}
         >  
             {/* Student Name & Icon */}
             <div className="col-span-3 flex items-center gap-4">
@@ -56,7 +56,7 @@ const StudentAdminCard = ({ student, classrooms, classroomId, studentDni, studen
                         setOpen(true)
                     }}
                 />
-                <p className="font-medium text-lg">{student.first_name} {student.last_name}</p>
+                <p className={`font-medium text-lg ${!student.is_active && 'line-through text-slate-400'}`}>{student.first_name} {student.last_name}</p>
             </div>
 
             {/* Information Progress Indicators */}

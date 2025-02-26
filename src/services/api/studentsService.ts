@@ -41,6 +41,7 @@ export interface Student {
     tutors: Tutor[]
     tutor_name: string
     school: number
+    is_active: boolean
 }
 
 export type StudentCreateUpdate = Omit<
@@ -64,6 +65,7 @@ export type StudentCreateUpdate = Omit<
     clase?: number
     tutor_name?: string
     other_insurance?: string
+    is_active?: boolean
 }
 
 interface Props {
