@@ -29,6 +29,7 @@ const useUpdateEmergencyContact = ({ studentId, emergencyContactId, classroomId,
             studentDni && queryClient.invalidateQueries({ queryKey: [`student ${studentDni}`] })
             studentName && queryClient.invalidateQueries({ queryKey: [`students ${studentName}`] })
             queryClient.invalidateQueries({ queryKey: [`students ${classroomId} ${day} ${month}`] })
+            queryClient.invalidateQueries({ queryKey: [`students last ten`] })
         },
         onError: err => {
             console.log(err)

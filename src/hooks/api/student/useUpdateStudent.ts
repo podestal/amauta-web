@@ -32,6 +32,7 @@ const useUpdateStudent = ({ studentId, classroomId, studentDni, studentName }: P
             console.log('res',res)
             studentDni && queryClient.invalidateQueries({ queryKey: [`student ${studentDni}`] })
             studentName && queryClient.invalidateQueries({ queryKey: [`students ${studentName}`] })
+            queryClient.invalidateQueries({ queryKey: [`students last ten`] })
             queryClient.invalidateQueries({ queryKey: [`students ${classroomId} ${day} ${month}`] })
 
             // queryClient.setQueryData<Student[]>(getStudentsCacheKey((res.clase).toString()), (oldData) => {

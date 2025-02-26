@@ -25,6 +25,7 @@ const useCreateTutor = ({ classroomId, studentDni, studentName }: Props): UseMut
             studentDni && queryClient.invalidateQueries({ queryKey: [`student ${studentDni}`] })
             studentName && queryClient.invalidateQueries({ queryKey: [`students ${studentName}`] })
             queryClient.invalidateQueries({queryKey: [`students ${classroomId} ${day} ${month}`] })
+            queryClient.invalidateQueries({ queryKey: [`students last ten`] })
             // queryClient.setQueryData<Student[]>(getStudentsCacheKey((res.clase).toString()), (oldData) => {
             //     if (!oldData) return []
             //     return [...oldData, res]

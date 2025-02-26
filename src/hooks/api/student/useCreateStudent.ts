@@ -22,6 +22,7 @@ const useCreateStudent = ({ classroomId }: Props): UseMutationResult<Student, Er
         onSuccess: res => {
             console.log('res',res)
             queryClient.invalidateQueries({ queryKey: [`students ${classroomId} ${day} ${month}`] })
+            queryClient.invalidateQueries({ queryKey: [`students last ten`] })
             // queryClient.setQueryData<Student[]>(getStudentsCacheKey((res.clase).toString()), (oldData) => {
             //     if (!oldData) return []
             //     return [...oldData, res]

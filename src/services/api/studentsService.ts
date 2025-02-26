@@ -73,10 +73,11 @@ interface Props {
     all?: boolean
     studentId?: string
     byName?: Boolean
+    byLastTen?: Boolean
     
 }
 
-const getStudentService = ({ tutor, all, studentId, byName }: Props) => {
+const getStudentService = ({ tutor, all, studentId, byName, byLastTen }: Props) => {
 
     let url = `student/byClassroom/`
     if (tutor) {
@@ -85,7 +86,10 @@ const getStudentService = ({ tutor, all, studentId, byName }: Props) => {
         url = `student/`
     } else if (byName) {
         url = `student/byName/`
-    } else if (studentId) {
+    } else if (byLastTen) {
+        url = `student/byLastTen/`
+    }
+    else if (studentId) {
         url = `student/${studentId}/`
     }
 

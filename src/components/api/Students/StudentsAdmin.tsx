@@ -10,6 +10,7 @@ import AttendanceFilters from "../reports/attendance/AttendanceFilters"
 import { Classroom } from "../../../services/api/classroomService"
 import useSchoolStore from "../../../hooks/store/useSchoolStore"
 import StudentsByNameInfo from "./StudentsByNameInfo"
+import StudentAdminTableLastTen from "./StudentAdminTableLastTen"
 
 const StudentsAdmin = () => {
 
@@ -81,11 +82,18 @@ const StudentsAdmin = () => {
                 classroomId={selectedClassroom}
             />
         }
-        {selectedClassroom !== '0' && 
+        {selectedClassroom === '0' 
+        ? 
+        <StudentAdminTableLastTen 
+            school={school}
+            classrooms={classrooms}
+        /> 
+        : 
         <StudentsAdminTable 
             classroomId={selectedClassroom}
             classrooms={classrooms}
-        />}
+        /> 
+        }
     </motion.div>
     <Modal 
         isOpen={open}
