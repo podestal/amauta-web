@@ -46,7 +46,7 @@ const getClassroomDescription = ({lan, grade, section, level, short, noLevel=fal
     }
     
 
-    return level === 'I' ? `${gradeToYears[grade]} ${section === 'U' && 'Unica'}${!noLevel ? `${levelConverter[level]}` : ''}` : `${gradeConverter[grade]} ${section} ${!noLevel ? `${levelConverter[level]}`: ''}`
+    return level === 'I' ? `${gradeToYears[grade]} ${section === 'U' && 'Unica '}${!noLevel ? `${levelConverter[level]}` : ''}` : `${gradeConverter[grade]} ${section} ${!noLevel ? `${levelConverter[level]}`: ''}`
 }
 
 export default getClassroomDescription
