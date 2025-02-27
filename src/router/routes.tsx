@@ -27,6 +27,7 @@ import ForgotPasswordPage from "../pages/ForgotPasswordPage";
 import PasswordResetConfirmation from "../pages/PasswordResetConfirmation";
 import PasswordResetSuccess from "../pages/PasswordResetSuccess";
 import GradesSummaryTutorPage from "../pages/GradesSummaryTutorPage";
+import StudentsAdminByClassroom from "../pages/StudentsAdminByClassroom";
 
 const routes = createBrowserRouter([
     {
@@ -191,6 +192,13 @@ const routes = createBrowserRouter([
                 element:
                 <PrivateRoutes>
                     <GradesSummaryTutorPage />
+                </PrivateRoutes>
+            },
+            {
+                path: 'student-admin/subscribed/:classroomId',
+                element:
+                <PrivateRoutes>
+                    <StudentsAdminByClassroom />
                 </PrivateRoutes>
             }
         ]

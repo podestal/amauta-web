@@ -20,10 +20,10 @@ const useUpdateStudent = ({ studentId, classroomId, studentDni, studentName }: P
     const day = moment().date().toString()
     const month = moment().month().toString()
 
-    console.log('studentDni',studentDni)
-    console.log('studentName',studentName);
+    // console.log('studentDni',studentDni)
+    // console.log('studentName',studentName);
     
-    console.log('Querykey:', ["students", studentName]);
+    // console.log('Querykey:', ["students", studentName]);
     
 
     return useMutation({

@@ -65,11 +65,13 @@ const SideBar = ({ profile }: Props) => {
         { name: "Cursos", path: "assignatures" },
         { name: 'Notas', path: 'grades-summary' },
         { name: 'Categorías', path: 'categories' },
+        { name: "Alumnos", path: "student-admin" },
       ]
     } else if (group === 'assistant') {
       navItems = [
         { name: "Clases", path: "students-main" },
         { name: "Asistencias", path: "reports" },
+        { name: "Alumnos", path: "student-admin" },
       ]
     }
 
