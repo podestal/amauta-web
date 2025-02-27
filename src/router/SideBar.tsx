@@ -56,11 +56,20 @@ const SideBar = ({ profile }: Props) => {
         // { name: "Profile", path: "/profile" },
         // { name: "Students", path: "/students" },
         { name: "Asistencias", path: "reports" },
-        // { name: "Cursos", path: "assignatures" },
-        // { name: 'Notas', path: 'grades-summary' },
-        // { name: 'Categorías', path: 'categories' },
         { name: "Alumnos", path: "student-admin" },
-        // { name: "Descargar", path: "/downloadapp" },
+      ]
+    } else if (group === 'instructor') {
+      navItems = [
+        { name: "Clases", path: "students-main" },
+        { name: "Asistencias", path: "reports" },
+        { name: "Cursos", path: "assignatures" },
+        { name: 'Notas', path: 'grades-summary' },
+        { name: 'Categorías', path: 'categories' },
+      ]
+    } else if (group === 'assistant') {
+      navItems = [
+        { name: "Clases", path: "students-main" },
+        { name: "Asistencias", path: "reports" },
       ]
     }
 

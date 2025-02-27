@@ -75,7 +75,8 @@ const StudentHealthForm = ({
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-
+        setWeightError('')
+        setHeightError('')
         // if (!weight) {
         //     setWeightError('El peso es requerido')
         //     setType('error')

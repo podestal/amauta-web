@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { Student } from "../../../../services/api/studentsService"
 import Switch from "../../../ui/Switch"
 import { UpdateStudentData } from "../../../../hooks/api/student/useUpdateStudent"
