@@ -58,9 +58,8 @@ const Assignatures = () => {
         className="text-3xl md:text-4xl font-bold text-center text-gray-800 dark:text-gray-200 mb-10">
         📚 Asignaturas
       </motion.h2>
-      <>{console.log('assignatures', assignaturesWeb)}</>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
-        {assignatures.map((assignature, idx) => (
+        {assignaturesWeb.map((assignature, idx) => (
             <AssignatureCard 
                 key={assignature.id}
                 assignature={assignature}

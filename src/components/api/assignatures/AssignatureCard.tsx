@@ -1,5 +1,5 @@
 import { motion } from "framer-motion"
-import { Assignature } from "./Assignatures"
+import { Assignature } from "../../../services/api/assignatureService"
 import { useNavigate } from "react-router-dom"
 
 interface Props {
@@ -13,7 +13,7 @@ const AssignatureCard = ({ assignature, icon, styles, idx }: Props) => {
 
     const navigate = useNavigate()
     const handleNavigate = () => {
-        navigate(`/app/assignature/${assignature.id}`, { state: { area: assignature.area } })
+        navigate(`/app/assignatures/${assignature.id}`, { state: { area: assignature.area, assignatureId: assignature.id } })
     }
 
   return (
@@ -27,7 +27,7 @@ const AssignatureCard = ({ assignature, icon, styles, idx }: Props) => {
         transition={{ duration: 0.5, delay: idx * 0.2 }}
     >
         <div className="text-4xl">{icon}</div>
-        <p className="mt-4">{assignature.name}</p>
+        <p className="mt-4">{assignature.title}</p>
   </motion.div>
   )
 }
