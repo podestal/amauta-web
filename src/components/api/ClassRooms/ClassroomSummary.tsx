@@ -20,7 +20,7 @@ const ClassroomSummary = ({ classrooms }: Props) => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h2 className="text-3xl font-bold text-center mb-6 dark:text-white">Alumnos matrículados: {totalStudents}</h2>
+      <h2 className="text-3xl font-bold text-center mb-6 dark:text-white">Alumnos matriculados: {totalStudents}</h2>
       <div className="w-full flex flex-col items-center justify-center gap-8 mt-10">
         <h2 className="text-2xl font-bold text-center mb-6 dark:text-white">📚 Secundaria</h2>
         <div className="w-full grid gap-6 xl:grid-cols-4">
