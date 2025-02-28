@@ -44,7 +44,7 @@ const CategoriesPage = () => {
   };
 
   return (
-    <div className="w-full max-h-screen max-w-[95%] sm:max-w-[600px] md:max-w-[800px] lg:max-w-[1024px] xl:max-w-[1200px] 2xl:max-w-[1280px] mx-auto overflow-hidden h-screen flex flex-col justify-start items-center py-10">
+    <div className="w-full max-h-screen max-w-[95%] sm:max-w-[600px] md:max-w-[800px] lg:max-w-[1024px] xl:max-w-[1200px] 2xl:max-w-[1280px] mx-auto overflow-hidden h-screen flex flex-col justify-start items-center pt-10">
       <Categories />
     </div>
 
@@ -82,17 +82,7 @@ const CategoriesPage = () => {
 
 
     //   {/* Chart */}
-      // <div className="mt-8">
-      //   <h3 className="text-xl font-bold text-center mb-4">📈 Distribución de Peso</h3>
-      //   <ResponsiveContainer width="100%" height={250}>
-      //     <BarChart data={categories}>
-      //       <XAxis dataKey="name" />
-      //       <YAxis />
-      //       <Tooltip />
-      //       <Bar dataKey="weight" fill={(totalWeight).toFixed(2) === '100.00' ? "#3b82f6" : "#F44336"} radius={[5, 5, 0, 0]} />
-      //     </BarChart>
-      //   </ResponsiveContainer>
-      // </div>
+
     // </div>
   );
 };
