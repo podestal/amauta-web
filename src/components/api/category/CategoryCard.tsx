@@ -1,7 +1,8 @@
-import { RiEditFill } from "@remixicon/react"
+
 import { motion } from "framer-motion"
 import { Category } from "../../../services/api/categoryService"
 import RemoveCategory from "./RemoveCategory"
+import UpdateCategory from "./UpdateCategory"
 
 interface Props {
     category: Category
@@ -19,19 +20,9 @@ const CategoryCard = ({ category }: Props) => {
             animate={{ opacity: 1, y: 0 }}
         >
             <span className="font-semibold">{category.title} - {category.weight * 100}%</span>
-            <div className="flex gap-2">
-            <button
-                className="text-blue-500 hover:text-blue-700"
-            >
-                <RiEditFill size={20} />
-            </button>
+            <div className="flex gap-4">
+            <UpdateCategory category={category} />
             <RemoveCategory categoryId={category.id} />
-            {/* <button onClick={() => {
-                setEditing(category.id);
-                setNewCategory(category);
-            }} className="text-blue-500 hover:text-blue-700">
-                <RiEditFill size={20} />
-            </button> */}
             </div>
         </motion.div>
     </>
