@@ -31,6 +31,7 @@ const Activities = () => {
             <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-200">📌 Tareas Asignadas</h2>
             <CreateActivity 
                 area={state.area}
+                assignatureId={state.assignatureId}
             />
             {/* <CreateAssignment 
             setLocalAssignments={setLocalAssignments}

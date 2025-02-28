@@ -1,5 +1,5 @@
 import { useState } from "react";
-import useNotificationsStore from "../../../hooks/store/useNotificationsStore";
+// import useNotificationsStore from "../../../hooks/store/useNotificationsStore";
 import Input from "../../ui/Input";
 import Calendar from "../../ui/Calendar";
 import { capacities, competencies } from "../../../data/mockdataForGrades";
@@ -7,18 +7,28 @@ import { AnimatePresence, motion } from "framer-motion";
 import TextArea from "../../ui/TextArea";
 import Button from "../../ui/Button";
 import CategorySelector from "../category/CategorySelector";
+import { UseMutationResult } from "@tanstack/react-query";
+import { CreateActivityData } from "../../../hooks/api/activity/useCreateActivity";
+import { Activity } from "../../../services/api/activityService";
+import useAuthStore from "../../../hooks/store/useAuthStore";
+import useNotificationsStore from "../../../hooks/store/useNotificationsStore";
+import moment from "moment";
 
 interface Props {
     area: number;
+    assignatureId: string;
+    activity?: Activity;
+    createActivity?: UseMutationResult<Activity, Error, CreateActivityData>
 }
 
-const ActivityForm = ({ area }: Props) => {
+const ActivityForm = ({ area, assignatureId, activity, createActivity }: Props) => {
 
-    // const { setMessage, setShow, setType } = useNotificationsStore();
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [selectedCategory, setSelectedCategory] = useState("");
-    const [dueDate, setDueDate] = useState<Date | undefined>(new Date());
+    const { setMessage, setShow, setType } = useNotificationsStore();
+    const access =useAuthStore(state => state.access) || '';
+    const [title, setTitle] = useState(activity ? activity.title : "");
+    const [description, setDescription] = useState(activity ? activity.description : "");
+    const [selectedCategory, setSelectedCategory] = useState( activity ? activity.category.toString() : "");
+    const [dueDate, setDueDate] = useState<Date | undefined>(undefined);
 
     const [selectedCompetencies, setSelectedCompetencies] = useState<number[]>([]);
     const [selectedCapacities, setSelectedCapacities] = useState<number[]>([]);
@@ -26,6 +36,71 @@ const ActivityForm = ({ area }: Props) => {
     const [titleError, setTitleError] = useState("");
     const [descriptionError, setDescriptionError] = useState("");
     const [categoryError, setCategoryError] = useState("");
+
+    const [loading, setLoading] = useState(false);
+
+    const handleCreateActivity = (e: React.FormEvent<HTMLFormElement>) => {
+
+        e.preventDefault()
+
+        console.log('dueDate', dueDate);
+        
+        if (!title) {
+            setTitleError("El título es requerido");
+            return;
+        }
+        if (!selectedCategory) {
+            setCategoryError("La categoría es requerida");
+            return;
+        }
+
+        // if (!dueDate) {
+        //     setDueDateError("La fecha de entrega es requerida");
+        //     return;
+        // }
+
+        if (selectedCompetencies.length === 0) {
+            setMessage("Selecciona al menos una competencia");
+            setType("error");
+            setShow(true);
+            return;
+        }
+
+        if (selectedCapacities.length === 0) {
+            setMessage("Selecciona al menos una capacidad");
+            setType("error");
+            setShow(true);
+            return;
+        }
+
+        setLoading(true);
+
+        createActivity && createActivity.mutate({
+            access,
+            activity: {
+                title: title,
+                description: description,
+                category: parseInt(selectedCategory),
+                competences: selectedCompetencies,
+                capacities: selectedCapacities,
+                due_date: moment(dueDate).format('YYYY-MM-DD'),
+                quarter: "Q1",
+                assignature: parseInt(assignatureId),
+            },
+        }, {
+            onSuccess: () => {
+                setMessage("Tarea creada");
+                setType("success");
+                setShow(true);
+            },
+            onError: () => {
+                setMessage("Error al crear la tarea");
+                setType("error");
+                setShow(true);
+            },
+            onSettled: () => setLoading(false),
+        });
+    }
 
     // Toggle Competency Selection
   const toggleCompetency = (id: number) => {
@@ -52,7 +127,9 @@ const ActivityForm = ({ area }: Props) => {
         <h1 className="text-3xl font-bold text-center text-gray-100 mb-6">
         📝 Crear Nueva Tarea
         </h1>
-        <form className="flex flex-col justify-start items-center gap-6 pb-20 w-full lg:w-[65%] mx-auto py-10">
+        <form 
+            onSubmit={handleCreateActivity}
+            className="flex flex-col justify-start items-center gap-6 pb-20 w-full lg:w-[65%] mx-auto py-10">
             <Input
                 placeholder="Título"
                 value={title}
@@ -164,7 +241,7 @@ const ActivityForm = ({ area }: Props) => {
 
             {/* Submit Button */}
             <div className="sm:col-span-2 flex justify-center">
-              <Button label="✅ Crear Tarea" />
+              <Button loading={loading} label="✅ Crear Tarea" />
             </div>
         </form>
     </motion.div>

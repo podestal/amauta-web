@@ -4,7 +4,6 @@ import getActivityService, { Activity } from "../../../services/api/activityServ
 interface Props {
     access: string
     assignatureId: string
-    
 }
 
 const useGetActivitiesByAssignature = ({ access, assignatureId }: Props): UseQueryResult<Activity[]> => {
@@ -12,7 +11,7 @@ const useGetActivitiesByAssignature = ({ access, assignatureId }: Props): UseQue
     const params = { assignature: assignatureId }
     
     return useQuery({
-        queryKey: ['activities'],
+        queryKey: [`activities ${assignatureId}`],
         queryFn: () => activityService.get(access, params),
     })
 }

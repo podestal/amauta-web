@@ -10,6 +10,7 @@ interface Props {
 }
 
 const ActivityCard = ({ activity, isPastDue }: Props) => {
+
   return (
     <motion.li
         key={activity.id}

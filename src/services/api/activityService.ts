@@ -5,7 +5,7 @@ export interface Activity {
     title: string
     description: string
     created_at: Date
-    due_date: Date
+    due_date: string
     quarter: string
     assignature: number
     category: number
