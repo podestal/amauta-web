@@ -2,19 +2,27 @@ import { motion } from 'framer-motion';
 import { Activity } from '../../../services/api/activityService';
 import moment from 'moment';
 import { capacities, competencies } from '../../../data/mockdataForGrades';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
     activity: Activity
     isPastDue: boolean
+    assignatureId: string
     // handleClick: () => void
 }
 
-const ActivityCard = ({ activity, isPastDue }: Props) => {
+const ActivityCard = ({ activity, isPastDue, assignatureId }: Props) => {
+
+    const navigate = useNavigate()
+
+    const handleClick = () => {
+        navigate(`/app/assignatures/${assignatureId}/activity/${activity.id}`, { state: { activity: activity } })
+    }
 
   return (
     <motion.li
         key={activity.id}
-        // onClick={handleClick}
+        onClick={handleClick}
         className={`bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md cursor-pointer transition-transform transform hover:scale-105 hover:shadow-lg border-l-4 
             ${isPastDue ? "border-gray-500" : "border-blue-500"}`}
         initial={{ opacity: 0, x: -50 }}

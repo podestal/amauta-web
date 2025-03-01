@@ -25,6 +25,7 @@ const CreateActivity = ({ area, assignatureId }: Props) => {
                 area={area}
                 createActivity={createActivity}
                 assignatureId={assignatureId}
+                setOpen={setOpen}
             />
         </Modal>
     </>

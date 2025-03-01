@@ -62,6 +62,7 @@ const Activities = () => {
                         key={assignment.id} 
                         activity={assignment}
                         isPastDue={moment(assignment.due_date).isBefore(moment(), "day")}
+                        assignatureId={state.assignatureId}
                     />
             ))}
             </ul>

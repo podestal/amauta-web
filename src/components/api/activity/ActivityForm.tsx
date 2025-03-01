@@ -19,9 +19,10 @@ interface Props {
     assignatureId: string;
     activity?: Activity;
     createActivity?: UseMutationResult<Activity, Error, CreateActivityData>
+    setOpen?: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const ActivityForm = ({ area, assignatureId, activity, createActivity }: Props) => {
+const ActivityForm = ({ area, assignatureId, activity, createActivity, setOpen }: Props) => {
 
     const { setMessage, setShow, setType } = useNotificationsStore();
     const access =useAuthStore(state => state.access) || '';
@@ -92,6 +93,7 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity }: Props) 
                 setMessage("Tarea creada");
                 setType("success");
                 setShow(true);
+                setOpen && setOpen(false);
             },
             onError: () => {
                 setMessage("Error al crear la tarea");

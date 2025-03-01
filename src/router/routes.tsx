@@ -160,7 +160,7 @@ const routes = createBrowserRouter([
                 </PrivateRoutes>
             },
             {
-                path: 'grades/:assignmentId',
+                path: 'assignatures/:assignatureId/activity/:activityId',
                 element:
                 <PrivateRoutes>
                     <GradesPage />
