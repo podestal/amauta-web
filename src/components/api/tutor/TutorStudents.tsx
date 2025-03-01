@@ -3,11 +3,15 @@ import useGetStudents from "../../../hooks/api/student/useGetStudents"
 import useAuthStore from "../../../hooks/store/useAuthStore"
 import useLoader from "../../../hooks/ui/useLoader"
 import TutorStudentCard from "./TutorStudentCard"
+import useGetProfileStore from "../../../hooks/store/useGetProfileStore"
 
 
 const TutorStudents = () => {
 
     const access = useAuthStore(s => s.access) || ''
+    const profile = useGetProfileStore(s => s.profile)
+    console.log('profile', profile)
+    
     const {data: students, isLoading, isError, error, isSuccess} = useGetStudents({ access, tutor:true })
 
     useLoader(isLoading)

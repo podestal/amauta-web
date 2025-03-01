@@ -22,6 +22,80 @@ export interface StudentsTable {
     finalGrade: string;
 }
 
+export const mockStudents = [
+    {
+      uid: "12345",
+      first_name: "Todd",
+      last_name: "Hall",
+      grades: {
+        "Matemática": 3,
+        "Comunicación": 4,
+        "Ciencia y Tecnología": 1,
+        "Inglés": 2,
+        "Arte y Cultura": 4,
+      },
+      activities: {
+        "Matemática": [
+            { id: 1, name: "Examen de Álgebra", observation: 'Gnerated Automatically', grade: 2 },
+            { id: 2, name: "Trabajo de Geometría", observation: 'Gnerated Automatically', grade: 3 },
+            { id: 3, name: "Evaluación de Funciones", observation: 'Gnerated Automatically', grade: 1 },
+
+        ],
+        "Comunicación": [
+            { id: 4, name: "Ensayo Literario", observation: 'Gnerated Automatically', grade: 4 },
+            { id: 5, name: "Análisis de Poemas", observation: 'Gnerated Automatically', grade: 3 },
+        ],
+        "Ciencia y Tecnología": [
+            { id: 6, name: "Proyecto de Biología", observation: 'Gnerated Automatically', grade: 2 },
+            { id: 7, name: "Experimento de Química", observation: 'Gnerated Automatically', grade: 1 },
+        ],
+        "Inglés": [
+            { id: 8, name: "Speaking Test", observation: 'Gnerated Automatically', grade: 3 },
+            { id: 9, name: "Grammar Quiz", observation: 'Gnerated Automatically', grade: 2 },
+        ],
+        "Arte y Cultura": [
+            {  id: 10, name: "Exposición de Pintura", observation: 'Gnerated Automatically', grade: 4 },
+            {  id: 11, name: "Análisis de una Obra", observation: 'Gnerated Automatically', grade: 3 },
+        ],
+      },
+    },
+    {
+      uid: "67890",
+      first_name: "María",
+      last_name: "González",
+      grades: {
+        "Matemática": 2,
+        "Comunicación": 4,
+        "Ciencia y Tecnología": 1,
+        "Inglés": 2,
+        "Arte y Cultura": 3,
+      },
+      activities: {
+        "Matemática": [
+          { id: 12, name: "Examen de Álgebra", grade: 14 },
+          { id: 13, name: "Trabajo de Geometría", grade: 12 },
+        ],
+        "Comunicación": [
+          { id: 14, name: "Ensayo Literario", grade: 16 },
+          { id: 15, name: "Análisis de Poemas", grade: 17 },
+        ],
+        "Ciencia y Tecnología": [
+          { id: 16, name: "Proyecto de Biología", grade: 12 },
+          { id: 17, name: "Experimento de Química", grade: 13 },
+        ],
+        "Inglés": [
+          { id: 18, name: "Speaking Test", grade: 14 },
+          { id: 19, name: "Grammar Quiz", grade: 15 },
+        ],
+        "Arte y Cultura": [
+          { id: 20, name: "Exposición de Pintura", grade: 17 },
+          { id: 21, name: "Análisis de una Obra", grade: 16 },
+        ],
+      },
+    }
+  ];
+  
+
 
 export const studentsTable = [
     {

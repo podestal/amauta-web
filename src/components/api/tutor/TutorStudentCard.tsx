@@ -8,16 +8,26 @@ import { RiArrowDownSFill } from "@remixicon/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AttendanceSummaryChart from "../../ui/AttendanceSummaryChart";
+import GradesSummaryChart from "../grade/GradesSummaryChart";
+import { mockStudents } from "../../../data/mockdataForGrades";
 
 interface Props {
     student: Student;
 }
+
+const quarters = [
+    { id: 'Q1', name: 'Bimestre 1' },
+    { id: 'Q2', name: 'Bimestre 2' },
+    { id: 'Q3', name: 'Bimestre 3' },
+    { id: 'Q4', name: 'Bimestre 4' },
+]
 
 const TutorStudentCard = ({ student }: Props) => {
     const lan = useLanguageStore(s => s.lan);
     const { grade, section, level } = student.clase || {};
     const classroomDescription = getClassroomDescription({ lan, grade, section, level });
     const { onTime, excused, leftEarly, notAttended, late } = getAttendanceStatusCount(student.attendances);
+    const [selectedQuarter, setSelectedQuarter] = useState('Q1');
     const navigate = useNavigate();
 
     const [show, setShow] = useState(false);
@@ -56,6 +66,18 @@ const TutorStudentCard = ({ student }: Props) => {
             >
                 <div className="mt-4 p-4 bg-gray-800 rounded-lg shadow-md">
                     {/* Attendance Chart */}
+                    <div className="w-full flex justify-evenly gap-4">
+                        {quarters.map((quarter) => (
+                            <div
+                                key={quarter.id}
+                                className={`p-2 cursor-pointer rounded-lg hover:bg-blue-600 transition ${selectedQuarter === quarter.id ? 'bg-blue-500' : 'bg-gray-700'}`}
+                                onClick={() => setSelectedQuarter(quarter.id)}
+                            >
+                                <p className="text-center text-xs">{quarter.name}</p>
+                            </div>
+                        ))}
+                    </div>
+                    <h3 className="text-white text-lg font-semibold my-6 text-center">{lan === 'EN' ? 'Attendance Summary' : 'Resumen de Asistencia'}</h3>
                     <AttendanceSummaryChart 
                         onTime={onTime}
                         leftEarly={leftEarly}
@@ -67,13 +89,22 @@ const TutorStudentCard = ({ student }: Props) => {
                         student={student}
                         navigate={navigate}
                     />
+                    <GradesSummaryChart 
+                        student={mockStudents[0]}
+                        // navigate={navigate}
+                    />
 
                     {/* Action Button */}
-                    <div className="mt-6 flex justify-center">
+                    <div className="mt-6 flex justify-between">
                         <Button 
-                            onClick={() => navigate(`/app/attendance/${student.uid}`)}
-                            label={lan === 'EN' ? 'View Details' : 'Ver Detalles'}
-                            className="px-6 py-2 text-white bg-blue-500 hover:bg-blue-600 transition rounded-md shadow-md"
+                        onClick={() => navigate(`/app/attendance/${student.uid}`)}
+                        label={lan === 'EN' ? 'View Attendance' : 'Ver Asistencia'}
+                        className="px-4 py-2 text-white bg-blue-500 hover:bg-blue-600 transition rounded-md shadow-md"
+                        />
+                        <Button 
+                        onClick={() => navigate(`/app/students-main/gradesForTutor`)}
+                        label={lan === 'EN' ? 'View Grades' : 'Ver Notas'}
+                        className="px-4 py-2 text-white bg-green-500 hover:bg-green-600 transition rounded-md shadow-md"
                         />
                     </div>
                 </div>
