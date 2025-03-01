@@ -91,6 +91,7 @@ const TutorStudentCard = ({ student }: Props) => {
                     />
                     <GradesSummaryChart 
                         student={mockStudents[0]}
+                        studentId={student.uid}
                         // navigate={navigate}
                     />
 

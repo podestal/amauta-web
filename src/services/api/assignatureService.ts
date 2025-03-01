@@ -8,15 +8,25 @@ export interface Assignature {
     area: number,
 }
 
-interface Props {
-    byInstructor?: boolean
+export interface AssignatureByTutor {
+    id: number
+    title: string
+    average: string
 }
 
-const getAssignatureService = ({ byInstructor }: Props) => {
+
+interface Props {
+    byInstructor?: boolean
+    byTutor?: boolean
+}
+
+const getAssignatureService = ({ byInstructor, byTutor }: Props) => {
 
     let url = 'assignature/'
     if (byInstructor) {
         url = 'assignature/byInstructor/'
+    } else if (byTutor) {
+        url = 'assignature/byTutor/'
     }
 
     return new APIClient<Assignature>(url)
