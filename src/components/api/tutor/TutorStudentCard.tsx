@@ -9,7 +9,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AttendanceSummaryChart from "../../ui/AttendanceSummaryChart";
 import GradesSummaryChart from "../grade/GradesSummaryChart";
-import { mockStudents } from "../../../data/mockdataForGrades";
+import { AssignatureByTutor } from "../../../services/api/assignatureService";
 
 interface Props {
     student: Student;
@@ -28,6 +28,7 @@ const TutorStudentCard = ({ student }: Props) => {
     const classroomDescription = getClassroomDescription({ lan, grade, section, level });
     const { onTime, excused, leftEarly, notAttended, late } = getAttendanceStatusCount(student.attendances);
     const [selectedQuarter, setSelectedQuarter] = useState('Q1');
+    const [assignatures, setAssignatures] = useState<AssignatureByTutor[]>([]);
     const navigate = useNavigate();
 
     const [show, setShow] = useState(false);
@@ -90,22 +91,22 @@ const TutorStudentCard = ({ student }: Props) => {
                         navigate={navigate}
                     />
                     <GradesSummaryChart 
-                        student={mockStudents[0]}
                         studentId={student.uid}
+                        setAssignatures={setAssignatures}
                         // navigate={navigate}
                     />
 
                     {/* Action Button */}
                     <div className="mt-6 flex justify-between">
                         <Button 
-                        onClick={() => navigate(`/app/attendance/${student.uid}`)}
-                        label={lan === 'EN' ? 'View Attendance' : 'Ver Asistencia'}
-                        className="px-4 py-2 text-white bg-blue-500 hover:bg-blue-600 transition rounded-md shadow-md"
+                            onClick={() => navigate(`/app/attendance/${student.uid}`)}
+                            label={lan === 'EN' ? 'View Attendance' : 'Ver Asistencia'}
+                            className="px-4 py-2 text-white bg-blue-500 hover:bg-blue-600 transition rounded-md shadow-md"
                         />
                         <Button 
-                        onClick={() => navigate(`/app/students-main/gradesForTutor`)}
-                        label={lan === 'EN' ? 'View Grades' : 'Ver Notas'}
-                        className="px-4 py-2 text-white bg-green-500 hover:bg-green-600 transition rounded-md shadow-md"
+                            onClick={() => navigate(`/app/students-main/gradesForTutor`, { state: { assignatures, student}})}
+                            label={lan === 'EN' ? 'View Grades' : 'Ver Notas'}
+                            className="px-4 py-2 text-white bg-green-500 hover:bg-green-600 transition rounded-md shadow-md"
                         />
                     </div>
                 </div>

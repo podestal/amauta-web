@@ -1,10 +1,12 @@
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, Cell } from "recharts";
 import useAuthStore from "../../../hooks/store/useAuthStore";
 import useGetAssignaturesByTutor from "../../../hooks/api/assignature/useGetAssignatureByTutor";
+import { useEffect } from "react";
+import { AssignatureByTutor } from "../../../services/api/assignatureService";
 
 interface Props {
-  student: any;
   studentId: string;
+  setAssignatures:  React.Dispatch<React.SetStateAction<AssignatureByTutor[]>>;
 }
 
 // Mapping number grades to letter grades (Peruvian system)
@@ -23,15 +25,18 @@ const gradesReverseScale: Record<string, number> = {
     "AD": 4,
 }
 
-// Function to convert numeric grades to letter grades
-const getLetterGrade = (grade: number) => gradeScale[grade] || "C";
 
-
-const GradesSummaryChart = ({ student, studentId }: Props) => {
+const GradesSummaryChart = ({ studentId, setAssignatures }: Props) => {
   const colors = ["#EF4444", "#FBBF24", "#34D399", "#3B82F6", "#A855F7", "#F472B6", "#10B981"];
   const access = useAuthStore((s) => s.access) || ""
 
   const { data: assignatures, isLoading, isError, error, isSuccess } = useGetAssignaturesByTutor({ access, studentId });
+
+  useEffect(() => {
+    if (assignatures) {
+      setAssignatures(assignatures);
+    }
+  }, [assignatures])
 
   const data = assignatures && assignatures.map((assignature, index) => ({
     subject: assignature.title,
@@ -47,33 +52,8 @@ const GradesSummaryChart = ({ student, studentId }: Props) => {
 
     if (isSuccess)
 
-  // Convert grades into chart-friendly format
-
 
   return (
-    // <div className="p-4 rounded-lg shadow-md w-full">
-    //   <h2 className="text-white text-lg font-semibold mb-2 text-center">Promedio por Curso</h2>
-    //   <ResponsiveContainer width="100%" height={data.length * 45}>
-    //     <BarChart layout="vertical" data={data} margin={{ top: 10, right: 30, left: 10, bottom: 10 }}>
-    //       {/* Custom X Axis to show letter grades instead of numbers */}
-    //       <XAxis
-    //         type="number"
-    //         stroke="#fff"
-    //         domain={[0, 3]} // Adjusted to fit the letter scale
-    //         tickFormatter={(value) => gradeScale[value] || ''} // Convert numbers to letters
-    //       />
-    //       <YAxis dataKey="subject" type="category" stroke="#fff" width={150} />
-    //       <Tooltip cursor={{ fill: "#333" }} />
-    //       <Legend />
-
-    //       <Bar dataKey="grade" radius={[0, 8, 8, 0]} name="Promedio">
-    //         {data.map((entry, index) => (
-    //           <Cell key={`cell-${index}`} fill={entry.color} />
-    //         ))}
-    //       </Bar>
-    //     </BarChart>
-    //   </ResponsiveContainer>
-    // </div>
     <div className="p-4 rounded-lg shadow-md w-full">
         <h2 className="text-white text-lg font-semibold mb-2 text-center">Promedio por Curso</h2>
         <>{console.log('assignatures', assignatures)}</>
