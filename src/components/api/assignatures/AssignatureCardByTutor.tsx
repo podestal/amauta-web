@@ -6,6 +6,7 @@ import ActivitiesByTutor from "../activity/ActivitiesByTutor";
 
 interface Props {
     assignature: AssignatureByTutor
+    studentUid: string
     index: number
 }
 
@@ -28,7 +29,7 @@ const assignatureStyles = [
     { id: 16, icon: <FaAtom />, styles: "bg-sky-500 text-sky-100 hover:bg-sky-600" }         // Physics
   ];
 
-const AssignatureCardByTutor = ({ assignature, index }: Props) => {
+const AssignatureCardByTutor = ({ assignature, studentUid, index }: Props) => {
 
     const [show, setShow] = useState(false);
 
@@ -56,6 +57,7 @@ const AssignatureCardByTutor = ({ assignature, index }: Props) => {
             {show && 
             <ActivitiesByTutor 
                 assignatureId={(assignature.id).toString()} 
+                studentUid={studentUid}
                 show={show}
             />}
         </motion.div>
