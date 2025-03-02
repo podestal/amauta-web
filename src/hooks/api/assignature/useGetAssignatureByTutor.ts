@@ -4,16 +4,15 @@ import getAssignatureService, { AssignatureByTutor } from "../../../services/api
 interface Props {
     access: string
     studentId: string
+    quarter: string
 }
 
-const useGetAssignaturesByTutor = ({ access, studentId }: Props): UseQueryResult<AssignatureByTutor[]> => {
-
-    console.log('studentId', studentId);
+const useGetAssignaturesByTutor = ({ access, studentId, quarter }: Props): UseQueryResult<AssignatureByTutor[]> => {
     
     const assignatureService = getAssignatureService({ byTutor: true })
-    const params = { student: studentId }
+    const params = { student: studentId, quarter }
     return useQuery({
-        queryKey: ['assignatures', studentId],
+        queryKey: [`assignatures ${studentId} ${quarter}`],
         queryFn: () => assignatureService.get(access, params),
         // enabled: !!studentId
     })

@@ -93,7 +93,7 @@ const TutorStudentCard = ({ student }: Props) => {
                     <GradesSummaryChart 
                         studentId={student.uid}
                         setAssignatures={setAssignatures}
-                        // navigate={navigate}
+                        quarter={selectedQuarter}
                     />
 
                     {/* Action Button */}
@@ -104,7 +104,7 @@ const TutorStudentCard = ({ student }: Props) => {
                             className="px-4 py-2 text-white bg-blue-500 hover:bg-blue-600 transition rounded-md shadow-md"
                         />
                         <Button 
-                            onClick={() => navigate(`/app/students-main/gradesForTutor`, { state: { assignatures, student}})}
+                            onClick={() => navigate(`/app/students-main/gradesForTutor`, { state: { assignatures, student, quarter: selectedQuarter}})}
                             label={lan === 'EN' ? 'View Grades' : 'Ver Notas'}
                             className="px-4 py-2 text-white bg-green-500 hover:bg-green-600 transition rounded-md shadow-md"
                         />

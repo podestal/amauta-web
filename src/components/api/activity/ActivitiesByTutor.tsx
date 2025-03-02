@@ -7,12 +7,13 @@ interface Props {
     assignatureId: string
     studentUid: string
     show: boolean
+    quarter: string
 }
 
-const ActivitiesByTutor = ({ assignatureId, studentUid, show }: Props) => {
+const ActivitiesByTutor = ({ assignatureId, studentUid, show, quarter }: Props) => {
 
     const access = useAuthStore((s) => s.access) || ""
-    const { data: activities, isLoading, isError, error, isSuccess } = useGetActivitiesByTutor({ access, assignatureId, studentUid, show })
+    const { data: activities, isLoading, isError, error, isSuccess } = useGetActivitiesByTutor({ access, assignatureId, studentUid, show, quarter })
 
     if (isLoading) return <p className="animate-pulse text-center py-2">Un Momento ...</p>
 

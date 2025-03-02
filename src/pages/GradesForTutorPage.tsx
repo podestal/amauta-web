@@ -8,6 +8,8 @@ const GradesForTutorPage = () => {
 
   const student = useLocation().state.student
   const assignatures: AssignatureByTutor[] = useLocation().state.assignatures
+  const quarter = useLocation().state.quarter
+  
 
   return (
     <motion.div
@@ -23,6 +25,7 @@ const GradesForTutorPage = () => {
             assignature={assignature} 
             studentUid={student.uid}
             index={index}
+            quarter={quarter}
           />
        ))}
     </motion.div>

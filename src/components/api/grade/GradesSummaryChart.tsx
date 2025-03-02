@@ -7,6 +7,7 @@ import { AssignatureByTutor } from "../../../services/api/assignatureService";
 interface Props {
   studentId: string;
   setAssignatures:  React.Dispatch<React.SetStateAction<AssignatureByTutor[]>>;
+  quarter: string;
 }
 
 // Mapping number grades to letter grades (Peruvian system)
@@ -26,11 +27,11 @@ const gradesReverseScale: Record<string, number> = {
 }
 
 
-const GradesSummaryChart = ({ studentId, setAssignatures }: Props) => {
+const GradesSummaryChart = ({ studentId, setAssignatures, quarter }: Props) => {
   const colors = ["#EF4444", "#FBBF24", "#34D399", "#3B82F6", "#A855F7", "#F472B6", "#10B981"];
   const access = useAuthStore((s) => s.access) || ""
 
-  const { data: assignatures, isLoading, isError, error, isSuccess } = useGetAssignaturesByTutor({ access, studentId });
+  const { data: assignatures, isLoading, isError, error, isSuccess } = useGetAssignaturesByTutor({ access, studentId, quarter });
 
   useEffect(() => {
     if (assignatures) {

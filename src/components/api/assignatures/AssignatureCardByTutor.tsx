@@ -8,6 +8,7 @@ interface Props {
     assignature: AssignatureByTutor
     studentUid: string
     index: number
+    quarter: string
 }
 
 const assignatureStyles = [
@@ -29,9 +30,10 @@ const assignatureStyles = [
     { id: 16, icon: <FaAtom />, styles: "bg-sky-500 text-sky-100 hover:bg-sky-600" }         // Physics
   ];
 
-const AssignatureCardByTutor = ({ assignature, studentUid, index }: Props) => {
+const AssignatureCardByTutor = ({ assignature, studentUid, index, quarter }: Props) => {
 
     const [show, setShow] = useState(false);
+    
 
   return (
         <motion.div 
@@ -58,9 +60,10 @@ const AssignatureCardByTutor = ({ assignature, studentUid, index }: Props) => {
             <AnimatePresence>
             {show && 
                 <ActivitiesByTutor 
-                assignatureId={(assignature.id).toString()} 
-                studentUid={studentUid}
-                show={show}
+                    assignatureId={(assignature.id).toString()} 
+                    studentUid={studentUid}
+                    show={show}
+                    quarter={quarter}
             />}
             </AnimatePresence>
         </motion.div>
