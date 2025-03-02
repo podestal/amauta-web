@@ -53,7 +53,11 @@ const AssignatureCardByTutor = ({ assignature, index }: Props) => {
                     <FaChevronDown className="text-xl" />
                 </motion.div>
             </div>
-            {show && <ActivitiesByTutor />}
+            {show && 
+            <ActivitiesByTutor 
+                assignatureId={(assignature.id).toString()} 
+                show={show}
+            />}
         </motion.div>
   )
 }
