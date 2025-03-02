@@ -35,7 +35,77 @@ const assignatureStyle = [
     id:3,
     icon: <FaSuperscript />,
     styles: "bg-purple-500 text-purple-100 hover:bg-purple-600"
-  }
+  },
+  {
+    id:4,
+    icon: <FaShapes />,
+    styles: "bg-blue-500 text-blue-100 hover:bg-blue-600"
+  },
+  {
+    id:5,
+    icon: <FaCalculator />,
+    styles: "bg-green-500 text-green-100 hover:bg-green-600"
+  },
+  {
+    id:6,
+    icon: <FaSuperscript />,
+    styles: "bg-purple-500 text-purple-100 hover:bg-purple-600"
+  },
+  {
+    id:7,
+    icon: <FaShapes />,
+    styles: "bg-blue-500 text-blue-100 hover:bg-blue-600"
+  },
+  {
+    id:8,
+    icon: <FaCalculator />,
+    styles: "bg-green-500 text-green-100 hover:bg-green-600"
+  },
+  {
+    id:9,
+    icon: <FaSuperscript />,
+    styles: "bg-purple-500 text-purple-100 hover:bg-purple-600"
+  },
+  {
+    id:10,
+    icon: <FaShapes />,
+    styles: "bg-blue-500 text-blue-100 hover:bg-blue-600"
+  },
+  {
+    id:11,
+    icon: <FaCalculator />,
+    styles: "bg-green-500 text-green-100 hover:bg-green-600"
+  },
+  {
+    id:12,
+    icon: <FaSuperscript />,
+    styles: "bg-purple-500 text-purple-100 hover:bg-purple-600"
+  },
+  {
+    id:13,
+    icon: <FaShapes />,
+    styles: "bg-blue-500 text-blue-100 hover:bg-blue-600"
+  },
+  {
+    id:14,
+    icon: <FaCalculator />,
+    styles: "bg-green-500 text-green-100 hover:bg-green-600"
+  },
+  {
+    id:15,
+    icon: <FaSuperscript />,
+    styles: "bg-purple-500 text-purple-100 hover:bg-purple-600"
+  },
+  {
+    id:16,
+    icon: <FaShapes />,
+    styles: "bg-blue-500 text-blue-100 hover:bg-blue-600"
+  },
+  {
+    id:17,
+    icon: <FaCalculator />,
+    styles: "bg-green-500 text-green-100 hover:bg-green-600"
+  },
 ]
 
 const Assignatures = () => {

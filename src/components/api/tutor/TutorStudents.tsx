@@ -24,6 +24,7 @@ const TutorStudents = () => {
       initial={{ opacity: 0, y: -100 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
+      className="pb-20"
     >
         <h2 className="text-4xl font-poppins font-bold mb-10 text-center">{students.length > 1 ? 'Alumnos' : 'Alumno'}</h2>
         {students?.map(student => (

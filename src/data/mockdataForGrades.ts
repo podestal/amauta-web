@@ -368,7 +368,19 @@ export const assignments = [
     { id: 25, name: "Examen sobre Factores Comunes", description: "Evaluación sobre factorización de polinomios.", dueDate: "2025-04-10", assignatureId: 3, categoryId: 2, competencies: [22], capacities: [80, 81] },
     { id: 26, name: "Tarea sobre Resolución de Sistemas", description: "Ejercicios de sistemas de ecuaciones.", dueDate: "2025-04-18", assignatureId: 3, categoryId: 1, competencies: [22], capacities: [79] },
     { id: 27, name: "Proyecto Final: Aplicaciones del Álgebra", description: "Estudio de casos reales en los que se aplica el álgebra.", dueDate: "2025-04-25", assignatureId: 3, categoryId: 4, competencies: [22], capacities: [81, 82] },
-  ];
+  
+    // Historia Universal
+    { id: 28, name: "Tarea de Mesopotamia", description: "Investigar sobre la civilización mesopotámica y su legado.", dueDate: "2025-02-20", assignatureId: 4, categoryId: 1, competencies: [3], capacities: [79, 80] },
+    { id: 29, name: "Proyecto: Civilizaciones Antiguas", description: "Presentación sobre las civilizaciones de Mesopotamia, Egipto y Grecia.", dueDate: "2025-03-05", assignatureId: 4, categoryId: 4, competencies: [3], capacities: [81, 82] },
+    { id: 30, name: "Examen de Edad Antigua", description: "Evaluación sobre las civilizaciones de Mesopotamia, Egipto y Grecia.", dueDate: "2025-02-28", assignatureId: 4, categoryId: 2, competencies: [3], capacities: [80, 81] },
+    { id: 31, name: "Investigación sobre Roma", description: "Análisis de la civilización romana y su influencia en la actualidad.", dueDate: "2025-03-10", assignatureId: 4, categoryId: 6, competencies: [3], capacities: [81, 82] },
+
+    // Gramática
+    { id: 32, name: "Tarea de Sintaxis", description: "Ejercicios sobre la estructura de las oraciones.", dueDate: "2025-02-18", assignatureId: 5, categoryId: 1, competencies: [10], capacities: [79, 80] },
+    { id: 33, name: "Proyecto: Creación de Cuentos", description: "Escribir un cuento aplicando las reglas gramaticales.", dueDate: "2025-03-10", assignatureId: 5, categoryId: 4, competencies: [10], capacities: [81, 82] },
+    { id: 34, name: "Examen de Ortogragía", description: "Evaluación sobre la escritura correcta de las palabras.", dueDate: "2025-02-25", assignatureId: 5, categoryId: 2, competencies: [10], capacities: [80, 81] },
+    { id: 35, name: "Investigación sobre Literatura", description: "Análisis de obras literarias y sus autores.", dueDate: "2025-03-14", assignatureId: 5, categoryId: 6, competencies: [10], capacities: [81, 82] },
+];
 
   
   
