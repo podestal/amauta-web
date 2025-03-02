@@ -1,4 +1,4 @@
-import { motion } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 import { AssignatureByTutor } from "../../../services/api/assignatureService"
 import { FaBookOpen, FaCalculator, FaChevronDown, FaFlask, FaLanguage, FaPaintBrush, FaShapes, FaSuperscript, FaGlobeAmericas, FaTheaterMasks, FaDumbbell, FaRobot, FaChalkboardTeacher, FaLaptopCode, FaMusic, FaLeaf, FaAtom } from "react-icons/fa";
 import { useState } from "react";
@@ -54,12 +54,15 @@ const AssignatureCardByTutor = ({ assignature, studentUid, index }: Props) => {
                     <FaChevronDown className="text-xl" />
                 </motion.div>
             </div>
+            
+            <AnimatePresence>
             {show && 
-            <ActivitiesByTutor 
+                <ActivitiesByTutor 
                 assignatureId={(assignature.id).toString()} 
                 studentUid={studentUid}
                 show={show}
             />}
+            </AnimatePresence>
         </motion.div>
   )
 }
