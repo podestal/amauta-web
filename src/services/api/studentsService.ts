@@ -5,6 +5,20 @@ import { EmergencyContact } from "./emergencyContact"
 import { HealthInfo } from "./healthInfo"
 import { Tutor } from "./tutorService"
 
+export interface Average {
+    id: number
+    calification: string
+    competence: string
+    conclusion: string
+}
+
+export interface StudentByQuarterGrade {
+    uid: number
+    first_name: string
+    last_name: string
+    averages: Average[]
+}
+
 export interface SimpleAttendance {
     id: number
     status: 'N' | 'E' | 'L' | 'T' | 'O'
@@ -74,10 +88,11 @@ interface Props {
     studentId?: string
     byName?: Boolean
     byLastTen?: Boolean
+    byQuarterGrade?: Boolean
     
 }
 
-const getStudentService = ({ tutor, all, studentId, byName, byLastTen }: Props) => {
+const getStudentService = ({ tutor, all, studentId, byName, byLastTen, byQuarterGrade }: Props) => {
 
     let url = `student/byClassroom/`
     if (tutor) {
@@ -88,9 +103,10 @@ const getStudentService = ({ tutor, all, studentId, byName, byLastTen }: Props) 
         url = `student/byName/`
     } else if (byLastTen) {
         url = `student/byLastTen/`
-    }
-    else if (studentId) {
+    } else if (studentId) {
         url = `student/${studentId}/`
+    } else if (byQuarterGrade) {
+        url = `student/byQuarterGrade/`
     }
 
     return new APIClient<Student, StudentCreateUpdate>(url)

@@ -5,8 +5,8 @@ import Selector from "../../ui/Selector"
 
 interface Props {
     setSelectedCategory: React.Dispatch<React.SetStateAction<string>>
-    categoryError: string
-    setCategoryError: React.Dispatch<React.SetStateAction<string>>
+    categoryError?: string
+    setCategoryError?: React.Dispatch<React.SetStateAction<string>>
 }
 
 const CategorySelector = ({ setCategoryError, setSelectedCategory, categoryError }: Props) => {

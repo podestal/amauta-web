@@ -380,6 +380,12 @@ export const assignments = [
     { id: 33, name: "Proyecto: Creación de Cuentos", description: "Escribir un cuento aplicando las reglas gramaticales.", dueDate: "2025-03-10", assignatureId: 5, categoryId: 4, competencies: [10], capacities: [81, 82] },
     { id: 34, name: "Examen de Ortogragía", description: "Evaluación sobre la escritura correcta de las palabras.", dueDate: "2025-02-25", assignatureId: 5, categoryId: 2, competencies: [10], capacities: [80, 81] },
     { id: 35, name: "Investigación sobre Literatura", description: "Análisis de obras literarias y sus autores.", dueDate: "2025-03-14", assignatureId: 5, categoryId: 6, competencies: [10], capacities: [81, 82] },
+
+    // Biología
+    { id: 36, name: "Tarea de Células", description: "Investigar sobre la estructura y función de las células.", dueDate: "2025-02-20", assignatureId: 6, categoryId: 1, competencies: [7], capacities: [79, 80] },
+    { id: 37, name: "Proyecto: Ecosistemas", description: "Presentación sobre los ecosistemas y su conservación.", dueDate: "2025-03-05", assignatureId: 6, categoryId: 4, competencies: [7], capacities: [81, 82] },
+    { id: 38, name: "Examen de Genética", description: "Evaluación sobre los principios de la genética.", dueDate: "2025-02-28", assignatureId: 6, categoryId: 2, competencies: [7], capacities: [80, 81] },
+    { id: 39, name: "Investigación sobre Biodiversidad", description: "Análisis de la variedad de especies en un ecosistema.", dueDate: "2025-03-10", assignatureId: 6, categoryId: 6, competencies: [7], capacities: [81, 82] },
 ];
 
   
@@ -460,6 +466,12 @@ export const areas = [
         title: "Educación religiosa"
     }
 ]
+
+export interface Competency {
+    id: number
+    title: string
+    area: number
+}
 
 export const competencies = [
     {
