@@ -4,14 +4,19 @@ import getActivityService, { Activity } from "../../../services/api/activityServ
 interface Props {
     access: string
     assignatureId: string
+    competence?: string
 }
 
-const useGetActivitiesByAssignature = ({ access, assignatureId }: Props): UseQueryResult<Activity[]> => {
+const useGetActivitiesByAssignature = ({ access, assignatureId, competence }: Props): UseQueryResult<Activity[]> => {
     const activityService = getActivityService({ byAssignature: true })
-    const params = { assignature: assignatureId }
+    const ACTIVITY_QUERY_KEY = competence ? [`activities ${assignatureId} ${competence}`] : [`activities ${assignatureId}`] 
+    let params: { assignature: string; competence?: string } = { assignature: assignatureId }
+    if (competence) {
+        params = { ...params, competence }
+    }
     
     return useQuery({
-        queryKey: [`activities ${assignatureId}`],
+        queryKey: ACTIVITY_QUERY_KEY,
         queryFn: () => activityService.get(access, params),
     })
 }

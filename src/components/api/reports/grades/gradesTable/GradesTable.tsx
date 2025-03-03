@@ -8,6 +8,7 @@ import useGetAssignature from "../../../../../hooks/api/assignature/useGetAssign
 import useLoader from "../../../../../hooks/ui/useLoader";
 import GradesTableHeader from "./GradesTableHeader";
 import GradesTableBody from "./GradesTableBody";
+import GradesTableActivitiesHeader from "./GradesTableActivitiesHeader";
 
 const GradesTable = () => {
 
@@ -59,7 +60,7 @@ const GradesTable = () => {
             selectedCategory={selectedCategory}
             setSelectedArea={setSelectedArea}
         />
-        <>
+        {selectedComeptency === '0' && <>
             {selectedArea !== '0' && 
             <GradesTableHeader 
                 comptencies={competencies.filter(competency => competency.area.toString() === selectedArea)}
@@ -69,7 +70,14 @@ const GradesTable = () => {
                 classroomId={(assignatures.find(assignature => assignature.id.toString() === selectedAssignature)?.clase)?.toString() || '0'}
                 competencies={competencies.filter(competency => competency.area.toString() === selectedArea).map(competency => competency.id.toString())}
             />}
-        </>
+        </>}
+        {selectedComeptency !== '0' && <>
+            <GradesTableActivitiesHeader 
+                assignatureId={selectedAssignature}
+                competence={selectedComeptency}
+            />
+        </>}
+
     </div>
   )
 }
