@@ -19,7 +19,7 @@ export interface StudentByQuarterGrade {
     averages: Average[]
 }
 
-export interface Grade{
+export interface StudentGrade{
     id: number
     calification: string
     observations: string
@@ -30,7 +30,7 @@ export interface StudentByGrade {
     uid: number
     first_name: string
     last_name: string
-    filtered_grades: Grade[]
+    filtered_grades: StudentGrade[]
 }
 
 export interface SimpleAttendance {
