@@ -31,6 +31,7 @@ export interface StudentByGrade {
     first_name: string
     last_name: string
     filtered_grades: StudentGrade[]
+    averages: Average[]
 }
 
 export interface SimpleAttendance {

@@ -8,6 +8,7 @@ interface Props {
     grade: StudentGrade
     classroomId: string
     competence: string
+    setGradeChanged: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 // `students ${classroomId} ${competence}`
@@ -22,7 +23,7 @@ const gradeStyles: Record<string, string> = {
     "NA": "bg-gray-300 text-gray-700", 
   };
 
-const GradesTableGradeCell = ({ grade, classroomId, competence }: Props) => {
+const GradesTableGradeCell = ({ grade, classroomId, competence, setGradeChanged }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
     const updateCacheKey = [`students ${classroomId} ${competence}`]
@@ -32,6 +33,7 @@ const GradesTableGradeCell = ({ grade, classroomId, competence }: Props) => {
 
     const handleUpdateGrade = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setCalification(e.target.value)
+        setGradeChanged(prev => !prev)
         updateGrade.mutate(
             {
                 access, grade: { calification: e.target.value, observations: ''}
@@ -46,7 +48,7 @@ const GradesTableGradeCell = ({ grade, classroomId, competence }: Props) => {
                 setShow(true)
                 setType('error')
                 setMessage('Error al actualizar la calificación')
-            }
+            },
         })
     }
 

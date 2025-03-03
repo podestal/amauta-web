@@ -2,6 +2,7 @@ import { CheckCircle, AlertTriangle } from "lucide-react";
 import { Tooltip } from "../../../ui/Tooltip";
 import { useEffect, useState } from "react";
 import { assignments } from "../../../../data/mockdataForGrades";
+import { StudentByGrade, StudentGrade } from "../../../../services/api/studentsService";
 
 const gradeOptions = ["A", "B", "C", "AD", "NA"];
 
@@ -22,91 +23,136 @@ const gradeReverse: Record<number, string> = {
 };
 
 interface Props {
-  student: any;
+  student:  StudentByGrade;
   selectedCompetency: string;
   handleAverageChange: (studentId: number, competencyId: number, grade: string) => void
   selectedAssignature: string
   selectedCategory: string
   selectedComeptency: string
+  grades: StudentGrade[]
+  gradeChanged: boolean
 }
 
 const AverageSelector = ({ 
-  student, 
+  // student, 
   selectedCompetency, 
   handleAverageChange,
   selectedAssignature,
   selectedCategory,
-  selectedComeptency 
+  selectedComeptency,
+  grades ,
+  gradeChanged,
+  student,
 }: Props) => {
-//   const systemSuggested = student.systemSuggestedGrades?.[parseInt(selectedCompetency)];
-  const teacherConfirmed = student.teacherConfirmedGrades?.[parseInt(selectedCompetency)];
 
-  const filteredAssignments = assignments            
-      .filter(assignment => assignment.assignatureId.toString() === selectedAssignature)
-      .filter(assignment => selectedCategory === '0' || assignment.categoryId.toString() === selectedCategory)
-      .filter(assignment => assignment.competencies.includes(parseInt(selectedComeptency)))
-  
-  const filteredGrades = student.grades
-      ? Object.keys(student.grades)
-          .filter(grade => filteredAssignments.map(assignment => assignment.id).includes(parseInt(grade)))
-          .filter(grade => student.grades[grade] !== 'NA')
-          .map(grade => student.grades[grade])
-      : []
-  const numericAverage = filteredGrades.reduce((acc, grade) => acc + gradeValues[grade], 0) / filteredGrades.length;  
-  const [averageGrade, setAverageGrade] = useState( gradeReverse[Math.round(numericAverage)]);
-
-  const [selectedGrade, setSelectedGrade] = useState(averageGrade)
-  const [isApproved, setIsApproved] = useState(!!teacherConfirmed)
+  const [averageGrade, setAverageGrade] = useState('NA');
+  // const [isApproved, setIsApproved] = useState(!!teacherConfirmed)
+  const [isApproved, setIsApproved] = useState(false)
   const [isManuallyChanged, setIsManuallyChanged] = useState(false)
-  console.log('isManuallyChanged', isManuallyChanged)
+
+  // This is quite important, you have to fix the promise to be resolved in the useEffect
+
+  // useEffect(() => {
+  //   const fetchUpdatedGrades = async () => {
   
+  //     if (!student.filtered_grades || student.filtered_grades.length === 0) {
+  //       setAverageGrade("NA");
+  //       return;
+  //     }
+  
+  //     try {
+
+  //       await new Promise(resolve => {setTimeout(resolve, 500)}); 
+  //       const numericGrades = student.filtered_grades.map(grade => gradeValues[grade.calification]);
+  //       const validGrades = numericGrades.filter(grade => grade !== 0);
+  //       const numericAverage = validGrades.length > 0
+  //         ? validGrades.reduce((acc, grade) => acc + grade, 0) / validGrades.length
+  //         : 0;
+  
+  //       const newAverageGrade = gradeReverse[Math.round(numericAverage)] || "NA";
+  //       console.log('Updated Average Grade:', newAverageGrade);
+  
+  //       setAverageGrade(newAverageGrade);
+  
+  //     } catch (error) {
+  //       console.error("Error fetching updated grades:", error);
+  //     }
+  //   };
+  
+  //   fetchUpdatedGrades();  // Call the async function
+  
+  // }, [student.filtered_grades, gradeChanged]);
 
   useEffect(() => {
-
-    const filteredGrades = student.grades
-        ? Object.keys(student.grades)
-            .filter(grade => filteredAssignments.map(assignment => assignment.id).includes(parseInt(grade)))
-            .filter(grade => student.grades[grade] !== 'NA')
-            .map(grade => student.grades[grade])
-        : []
-    const numericAverage = filteredGrades.reduce((acc, grade) => acc + gradeValues[grade], 0) / filteredGrades.length;  
-    console.log('numericAverage', numericAverage);
     
-    setAverageGrade(gradeReverse[Math.round(numericAverage)])
-    if (!isManuallyChanged) {
-      setSelectedGrade(gradeReverse[Math.round(numericAverage)]);
+    if (student.filtered_grades.length === 0) {
+      setAverageGrade('NA')
+      return
     }
-    console.log('averageGrade', averageGrade);
+    const numericGrades = student.filtered_grades.map(grade => gradeValues[grade.calification])
+    // console.log('numericGrades', numericGrades);
     
+    const validGrades = numericGrades.filter(grade => grade !== 0)
+    // console.log('validGrades', validGrades);
     
-  }, [averageGrade, student]);
+    const numericAverage = validGrades.length > 0
+      ? validGrades.reduce((acc, grade) => acc + grade, 0) / validGrades.length
+      : 0;
+    console.log('numericAverage', gradeReverse[Math.round(numericAverage)]);
+    
+    setAverageGrade(gradeReverse[Math.round(numericAverage)] || "NA")
+  }, [student, gradeChanged]);
 
-  const handleChange = (newGrade: string) => {
-    console.log('Change', newGrade);
-    
-    setSelectedGrade(newGrade);
-    setIsApproved(true)
-    setIsManuallyChanged(true)
-    handleAverageChange(student.id, parseInt(selectedCompetency), newGrade);
 
-  };
 
-  const handleApprove = () => {
-    console.log('Approve', selectedGrade);
+
+  // useEffect(() => {
+
+  //   const filteredGrades = student.grades
+  //       ? Object.keys(student.grades)
+  //           .filter(grade => filteredAssignments.map(assignment => assignment.id).includes(parseInt(grade)))
+  //           .filter(grade => student.grades[grade] !== 'NA')
+  //           .map(grade => student.grades[grade])
+  //       : []
+  //   const numericAverage = filteredGrades.reduce((acc, grade) => acc + gradeValues[grade], 0) / filteredGrades.length;  
+  //   console.log('numericAverage', numericAverage);
     
-    setIsApproved(true);
-    handleAverageChange(student.id, parseInt(selectedCompetency), selectedGrade);
-  };
+  //   setAverageGrade(gradeReverse[Math.round(numericAverage)])
+  //   if (!isManuallyChanged) {
+  //     setSelectedGrade(gradeReverse[Math.round(numericAverage)]);
+  //   }
+  //   console.log('averageGrade', averageGrade);
+    
+    
+  // }, [averageGrade, student]);
+
+  // const handleChange = (newGrade: string) => {
+  //   console.log('Change', newGrade);
+    
+  //   setSelectedGrade(newGrade);
+  //   setIsApproved(true)
+  //   setIsManuallyChanged(true)
+  //   handleAverageChange(student.id, parseInt(selectedCompetency), newGrade);
+
+  // };
+
+  // const handleApprove = () => {
+  //   console.log('Approve', selectedGrade);
+    
+  //   setIsApproved(true);
+  //   handleAverageChange(student.id, parseInt(selectedCompetency), selectedGrade);
+  // };
 
   return (
     <div className="relative min-w-[160px] max-w-[160px] text-center p-[1px]">
+      {/* <>{console.log('average', averageGrade)}</> */}
       <select
         className={`w-full min-h-[46px] max-h-[46px] text-center font-semibold cursor-pointer outline-none transition-all duration-300 
           ${isApproved ? "border-green-500 bg-green-100 dark:bg-green-900 dark:border-green-300" : 
            "border-yellow-500 bg-yellow-100 dark:bg-yellow-900 dark:border-yellow-300"}
         `}
-        value={selectedGrade}
-        onChange={(e) => handleChange(e.target.value)}
+        value={averageGrade}
+        onChange={(e) => setAverageGrade(e.target.value)}
       >
         {gradeOptions.map((grade) => (
           <option key={grade} value={grade}>
@@ -132,7 +178,7 @@ const AverageSelector = ({
       {!isApproved && (
         <button
           className="absolute bottom-1 right-1 flex items-center gap-1 text-xs  text-gray-600 bg-yellow-200 hover:bg-yellow-300 dark:bg-yellow-800 dark:hover:bg-yellow-700 dark:text-gray-200 rounded-md shadow-md transition"
-          onClick={handleApprove}
+          onClick={() => {}}
         >
          Aprobar
         </button>

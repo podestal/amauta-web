@@ -2,6 +2,8 @@ import { motion } from "framer-motion"
 import useGetStudentsByGrade from "../../../../../hooks/api/student/useGetStudentsByGrades"
 import useAuthStore from "../../../../../hooks/store/useAuthStore"
 import GradesTableGradeCell from "./GradesTableGradeCell"
+import AverageSelector from "../AverageSelector"
+import { useState } from "react"
 
 interface Props {
     classroomId: string
@@ -10,6 +12,9 @@ interface Props {
 
 const GradesTableActivitiesBody = ({ classroomId, competence }: Props) => {
 
+    const [gradeChanged, setGradeChanged] = useState(false)
+    // console.log('gradeChanged', gradeChanged)
+    
     const access = useAuthStore(s => s.access) || ''
     const { data: students, isLoading, isError, error, isSuccess } = useGetStudentsByGrade({ access, classroomId, competence })
 
@@ -21,6 +26,7 @@ const GradesTableActivitiesBody = ({ classroomId, competence }: Props) => {
 
   return (
     <div className="w-full">
+        {/* <>{console.log('students', students)}</> */}
         {students.map( (student, index) => (
                     <motion.div
                     key={student.uid}
@@ -36,6 +42,17 @@ const GradesTableActivitiesBody = ({ classroomId, competence }: Props) => {
                     <h2 className="min-w-[360px] max-w-[360px] py-3 px-4">
                         {student.first_name} {student.last_name}
                     </h2>
+                    <AverageSelector 
+                        student={student}
+                        selectedCompetency={competence}
+                        handleAverageChange={() => {}} 
+                        // currentGrade={student.competencyGrades[parseInt(selectedComeptency)]}
+                        selectedAssignature={'1'}
+                        selectedCategory={'1'}
+                        selectedComeptency={competence}
+                        grades={student.filtered_grades}
+                        gradeChanged={gradeChanged}
+                    />
                     {student.filtered_grades
                     .sort((a, b) => a.activity - b.activity)
                     .map(grade => (
@@ -44,6 +61,7 @@ const GradesTableActivitiesBody = ({ classroomId, competence }: Props) => {
                             grade={grade}
                             classroomId={classroomId}
                             competence={competence}
+                            setGradeChanged={setGradeChanged}
                         />
                     ))}
                 </motion.div>
