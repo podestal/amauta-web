@@ -150,11 +150,11 @@ const GradesSummaryPage = () => {
 //       <div className="overflow-x-auto">
 //       {selectedAssignature !== '0' && (
 //   <div className="w-full overflow-x-auto">
-//     <motion.div
-      // className="w-full min-w-max border-collapse bg-white dark:bg-gray-900 shadow-md rounded-lg"
-      // initial={{ opacity: 0, y: 20 }}
-      // animate={{ opacity: 1, y: 0 }}
-      // transition={{ duration: 0.5 }}
+    // <motion.div
+    //   className="w-full min-w-max border-collapse bg-white dark:bg-gray-900 shadow-md rounded-lg"
+    //   initial={{ opacity: 0, y: 20 }}
+    //   animate={{ opacity: 1, y: 0 }}
+    //   transition={{ duration: 0.5 }}
 //     >
 //       {/* Table Header */}
 //       <div className="flex items-center bg-gray-800 text-white font-bold">
@@ -174,21 +174,21 @@ const GradesSummaryPage = () => {
 //           ))}
 //           </>  
 //           :
-//           <>
-//           {assignments
-//           .filter(assignment => assignment.assignatureId.toString() === selectedAssignature)
-//           .filter(assignment => selectedCategory === '0' || assignment.categoryId.toString() === selectedCategory)
-//           .filter(assignment => assignment.competencies.includes(parseInt(selectedComeptency)))
-//           .map((assignment) => (
-//             <h2 
-//               key={assignment.id} 
-//               className="min-w-[160px] max-w-[160px] h-[100px] py-3 px-4 text-center"
-//             >
-//               {assignment.name}
-//             </h2>
-//           ))}
-//           </>
-//         }
+          // <>
+          // {assignments
+          // .filter(assignment => assignment.assignatureId.toString() === selectedAssignature)
+          // .filter(assignment => selectedCategory === '0' || assignment.categoryId.toString() === selectedCategory)
+          // .filter(assignment => assignment.competencies.includes(parseInt(selectedComeptency)))
+          // .map((assignment) => (
+          //   <h2 
+          //     key={assignment.id} 
+          //     className="min-w-[160px] max-w-[160px] h-[100px] py-3 px-4 text-center"
+          //   >
+          //     {assignment.name}
+          //   </h2>
+          // ))}
+          // </>
+        // }
 //       </div>
 
 //       {/* Table Rows */}

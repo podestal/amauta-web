@@ -19,6 +19,20 @@ export interface StudentByQuarterGrade {
     averages: Average[]
 }
 
+export interface Grade{
+    id: number
+    calification: string
+    observations: string
+    activity: number
+}
+
+export interface StudentByGrade {
+    uid: number
+    first_name: string
+    last_name: string
+    filtered_grades: Grade[]
+}
+
 export interface SimpleAttendance {
     id: number
     status: 'N' | 'E' | 'L' | 'T' | 'O'
@@ -89,10 +103,11 @@ interface Props {
     byName?: Boolean
     byLastTen?: Boolean
     byQuarterGrade?: Boolean
+    byGrade?: Boolean
     
 }
 
-const getStudentService = ({ tutor, all, studentId, byName, byLastTen, byQuarterGrade }: Props) => {
+const getStudentService = ({ tutor, all, studentId, byName, byLastTen, byQuarterGrade, byGrade }: Props) => {
 
     let url = `student/byClassroom/`
     if (tutor) {
@@ -107,6 +122,8 @@ const getStudentService = ({ tutor, all, studentId, byName, byLastTen, byQuarter
         url = `student/${studentId}/`
     } else if (byQuarterGrade) {
         url = `student/byQuarterGrade/`
+    } else if (byGrade) {
+        url = `student/byGrade/`
     }
 
     return new APIClient<Student, StudentCreateUpdate>(url)

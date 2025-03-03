@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { StudentsTable, competencies, studentsTable as initialStudents } from "../../../../../data/mockdataForGrades";
+import { competencies, } from "../../../../../data/mockdataForGrades";
 import { motion } from "framer-motion";
 import Button from "../../../../ui/Button";
 import GradesTableFilters from "./GradesTableFilters";
@@ -9,24 +9,25 @@ import useLoader from "../../../../../hooks/ui/useLoader";
 import GradesTableHeader from "./GradesTableHeader";
 import GradesTableBody from "./GradesTableBody";
 import GradesTableActivitiesHeader from "./GradesTableActivitiesHeader";
+import GradesTableActivitiesBody from "./GradesTableActivitiesBody";
 
 const GradesTable = () => {
 
-        const gradeStyles: Record<string, string> = {
-            "A": "bg-blue-500 text-white",
-            "B": "bg-yellow-500 text-white",
-            "C": "bg-red-500 text-white",
-            "AD": "bg-green-500 text-white",
-            "NA": "bg-gray-300 text-gray-700", 
-        };
+        // const gradeStyles: Record<string, string> = {
+        //     "A": "bg-blue-500 text-white",
+        //     "B": "bg-yellow-500 text-white",
+        //     "C": "bg-red-500 text-white",
+        //     "AD": "bg-green-500 text-white",
+        //     "NA": "bg-gray-300 text-gray-700", 
+        // };
         
-        const [students, setStudents] = useState<StudentsTable[]>(initialStudents);
+        // const [students, setStudents] = useState<StudentsTable[]>(initialStudents);
         const [selectedAssignature, setSelectedAssignature] = useState('0');
         const [selectedArea, setSelectedArea] = useState('0');
         const [selectedComeptency, setSelectedCompetency] = useState('0');
         const [selectedQuarter, setSelectedQuarter] = useState('1');
         const [selectedCategory, setSelectedCategory] = useState('0');
-        const [filterByName, setFilterByName] = useState('');
+        // const [filterByName, setFilterByName] = useState('');
 
         const access = useAuthStore(s => s.access) || ''
         const { data: assignatures, isLoading, isError, error, isSuccess } = useGetAssignature({ access, byInstructor: true })
@@ -74,6 +75,10 @@ const GradesTable = () => {
         {selectedComeptency !== '0' && <>
             <GradesTableActivitiesHeader 
                 assignatureId={selectedAssignature}
+                competence={selectedComeptency}
+            />
+            <GradesTableActivitiesBody 
+                classroomId={(assignatures.find(assignature => assignature.id.toString() === selectedAssignature)?.clase)?.toString() || '0'}
                 competence={selectedComeptency}
             />
         </>}

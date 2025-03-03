@@ -33,7 +33,6 @@ const GradesTableBody = ({ classroomId, competencies }: Props) => {
 
   return (
     <div className="w-full">
-        <>{console.log('students', students)}</>
         {students.map( (student, index) => (
             <motion.div
                 key={student.uid}
@@ -87,58 +86,6 @@ const GradesTableBody = ({ classroomId, competencies }: Props) => {
                         </div>
                     )
                 })}
-                {/* {student.quarter_grades
-                    .sort((a, b) => parseInt(a.competency) - parseInt(b.competency))
-                    .map((grade, index) => (
-                    <div
-                        key={index}
-                        className="min-w-[400px] max-w-[400px] text-center p-[1px] grid grid-cols-3"
-                    >
-                    <select
-                        className={` w-full min-h-[46px] max-h-[46px] text-center font-semibold cursor-pointer outline-none transition-all duration-300 ${gradeStyles[grade.calification]}`}
-                        value={grade.calification || "NA"}
-                        // onChange={(e) => handleAverageChange(student.id, competency.id, e.target.value)}
-                        onChange={(e) => console.log(e)}
-                        >
-                        {gradeOptions.map((grade) => (
-                            <option key={grade} value={grade}>
-                            {grade}
-                            </option>
-                        ))}
-                        </select>
-                        <div className=" col-span-2 ml-2 flex items-start">
-                            <TextAreaRow 
-                                onSubmit={(e) => console.log(e)}
-                                placeholder="Conclusión descriptiva..."
-                            />
-                        </div>
-                    </div>
-                ))} */}
-             {/* {competencies.map(competency => (
-                <div 
-                    key={competency}
-                    className="min-w-[400px] max-w-[400px] text-center p-[1px] grid grid-cols-3">
-                <select
-                    className={` w-full min-h-[46px] max-h-[46px] text-center font-semibold cursor-pointer outline-none transition-all duration-300 ${gradeStyles[student.competencyGrades?.[competency.id]]}`}
-                    value={student.grade[competency.toString()] || "NA"}
-                    // onChange={(e) => handleAverageChange(student.id, competency.id, e.target.value)}
-                    onChange={(e) => console.log(e)}
-                    >
-                    {gradeOptions.map((grade) => (
-                        <option key={grade} value={grade}>
-                        {grade}
-                        </option>
-                    ))}
-                    </select>
-                    <div className=" col-span-2 ml-2 flex items-start">
-                        <TextAreaRow 
-                            onSubmit={(e) => console.log(e)}
-                            placeholder="Conclusión descriptiva..."
-                        />
-                    </div>
-              </div>
-            ))} */}
-
             </motion.div>
         ))}
     </div>
