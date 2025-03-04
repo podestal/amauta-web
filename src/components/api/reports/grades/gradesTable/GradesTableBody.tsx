@@ -6,6 +6,7 @@ import TextAreaRow from "../../../../ui/TextAreaRow"
 interface Props {
     classroomId: string
     competencies: string[]
+    selectedQuarter: string
 }
 
 const gradeOptions = ["A", "B", "C", "AD", "NA"]
@@ -18,10 +19,10 @@ const gradeStyles: Record<string, string> = {
     "NA": "bg-gray-300 text-gray-700", 
   };
 
-const GradesTableBody = ({ classroomId, competencies }: Props) => {
+const GradesTableBody = ({ classroomId, competencies, selectedQuarter }: Props) => {
     
     const access = useAuthStore(s => s.access) || ''
-    const { data: students, isLoading, isError, error, isSuccess } = useGetStudentsByQuarterGrade({ access, classroomId, competencies, assignatureId: '' })
+    const { data: students, isLoading, isError, error, isSuccess } = useGetStudentsByQuarterGrade({ access, classroomId, competencies, assignatureId: '', quarter: selectedQuarter })
 
     if (isLoading) return <p className="animate-pulse text-center my-8 text-xl">Cargando...</p>
 

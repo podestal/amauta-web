@@ -10,6 +10,7 @@ import GradesTableHeader from "./GradesTableHeader";
 import GradesTableBody from "./GradesTableBody";
 import GradesTableActivitiesHeader from "./GradesTableActivitiesHeader";
 import GradesTableActivitiesBody from "./GradesTableActivitiesBody";
+import getCurrentQuarter from "../../../../../utils/getCurrentCuarter";
 
 const GradesTable = () => {
 
@@ -25,7 +26,7 @@ const GradesTable = () => {
         const [selectedAssignature, setSelectedAssignature] = useState('0');
         const [selectedArea, setSelectedArea] = useState('0');
         const [selectedComeptency, setSelectedCompetency] = useState('0');
-        const [selectedQuarter, setSelectedQuarter] = useState('1');
+        const [selectedQuarter, setSelectedQuarter] = useState(getCurrentQuarter());
         const [selectedCategory, setSelectedCategory] = useState('0');
         // const [filterByName, setFilterByName] = useState('');
 
@@ -70,6 +71,7 @@ const GradesTable = () => {
             <GradesTableBody 
                 classroomId={(assignatures.find(assignature => assignature.id.toString() === selectedAssignature)?.clase)?.toString() || '0'}
                 competencies={competencies.filter(competency => competency.area.toString() === selectedArea).map(competency => competency.id.toString())}
+                selectedQuarter={selectedQuarter}
             />}
         </>}
         {selectedComeptency !== '0' && <>

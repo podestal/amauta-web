@@ -1,6 +1,6 @@
 import { motion } from "framer-motion"
 import Selector from "../../../../ui/Selector"
-import Input from "../../../../ui/Input"
+// import Input from "../../../../ui/Input"
 import { Assignature } from "../../../../../services/api/assignatureService"
 import { competencies } from "../../../../../data/mockdataForGrades"
 import CategorySelector from "../../../category/CategorySelector"
