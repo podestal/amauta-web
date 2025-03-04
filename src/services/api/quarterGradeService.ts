@@ -15,11 +15,11 @@ export type QuarterGradeCreateUpdate = Omit<QuarterGrade, 'id'> & {
 }
 
 interface Props {
-    averageId?: string
+    quarterGradeId?: string
 }
 
-const getQuarterGradeService = ({ averageId }: Props) => {
-    const url = averageId ? `quarter-grade/${averageId}/` : `quarter-grade/`
+const getQuarterGradeService = ({ quarterGradeId }: Props) => {
+    const url = quarterGradeId ? `quarter-grade/${quarterGradeId}/` : `quarter-grade/`
     return new APIClient<QuarterGrade, QuarterGradeCreateUpdate>(url)
 }
 

@@ -50,6 +50,7 @@ const GradesTableActivitiesBody = ({ classroomId, competence, selectedAssignatur
                         selectedCompetency={competence}
                         grades={student.filtered_grades}
                         gradeChanged={gradeChanged}
+                        classroomId={classroomId}
                     />
                     {student.filtered_grades
                     .sort((a, b) => a.activity - b.activity)

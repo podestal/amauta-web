@@ -50,11 +50,11 @@ const GradesTableBody = ({ classroomId, competencies }: Props) => {
                 </h2>
                 {competencies.map((competency, index) => {
                     console.log('competency', competency)
-                    let quarterGrade = student.averages.find(average => average.competence === competency)
+                    let quarterGrade = student.averages.find(average => (average.competence).toString() === competency)
                     if (!quarterGrade) {
                         quarterGrade = {
                             id: 0,
-                            competence: competency,
+                            competence: parseInt(competency),
                             calification: "NA",
                             conclusion: ""
                         }

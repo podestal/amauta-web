@@ -4,6 +4,10 @@ import { useEffect, useState } from "react";
 import { assignments } from "../../../../data/mockdataForGrades";
 import { StudentByGrade, StudentGrade } from "../../../../services/api/studentsService";
 import useCreateQuarterGrade from "../../../../hooks/api/quarterGrade/useCreateQuarterGrade";
+import useNotificationsStore from "../../../../hooks/store/useNotificationsStore";
+import useUpdateQuarterGrade from "../../../../hooks/api/quarterGrade/useUpdateQuarterGrade";
+import useAuthStore from "../../../../hooks/store/useAuthStore";
+import CreateAverageGrade from "./CreateAverageGrade";
 
 const gradeOptions = ["A", "B", "C", "AD", "NA"];
 
@@ -31,6 +35,7 @@ interface Props {
   selectedCategory: string
   grades: StudentGrade[]
   gradeChanged: boolean
+  classroomId: string
 }
 
 const AverageSelector = ({ 
@@ -42,17 +47,28 @@ const AverageSelector = ({
   grades ,
   gradeChanged,
   student,
+  classroomId
 }: Props) => {
 
+  const access = useAuthStore(s => s.access) || ''
   const [averageGrade, setAverageGrade] = useState('NA');
   // const [isApproved, setIsApproved] = useState(!!teacherConfirmed)
   const savedAvarageGrade = student.averages.find(average => (average.competence).toString() === selectedCompetency)
+  const gradeQueryKey = [`students ${classroomId} ${selectedCompetency}`]
   const [isApproved, setIsApproved] = useState(false)
   const [isManuallyChanged, setIsManuallyChanged] = useState(false)
-  const createQuarterGrade = useCreateQuarterGrade({})
-  console.log('selectedComeptency', selectedCompetency);
-  console.log('student.averages', student.averages);
-  
+  const createQuarterGrade = useCreateQuarterGrade({ updateCacheKey: gradeQueryKey })
+  // const updateQuarterGrade = savedAvarageGrade && useUpdateQuarterGrade({ quarterGradeId: (savedAvarageGrade.id).toString(), updateCacheKey: gradeQueryKey })
+  const getUpdateQuarterGrade = () => {
+    if (!savedAvarageGrade) return null;
+    return useUpdateQuarterGrade({ 
+      quarterGradeId: (savedAvarageGrade.id).toString(), 
+      updateCacheKey: gradeQueryKey 
+    });
+  };
+  // const updateQuarterGrade = getUpdateQuarterGrade()
+  const { setShow, setType, setMessage } = useNotificationsStore()
+  const [isLoading, setIsLoading] = useState(false)
   // console.log('savedAvarageGrade', savedAvarageGrade);
   
 
@@ -148,10 +164,41 @@ const AverageSelector = ({
   //   handleAverageChange(student.id, parseInt(selectedCompetency), selectedGrade);
   // };
 
+  // const handleUpdate = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  //   setAverageGrade(e.target.value)
+  //   setIsLoading(true)
+  //   updateQuarterGrade && updateQuarterGrade.mutate({
+  //     access,
+  //     quarterGrade: {
+  //       calification: e.target.value,
+  //       conclusion: '',
+  //       student: student.uid,
+  //       competence: parseInt(selectedCompetency),
+  //       assignature: parseInt(selectedAssignature),
+  //       quarter: 'Q1'
+  //     }
+  //   }, {
+  //     onSuccess: () => {
+  //       setShow(true)
+  //       setType('success')
+  //       setMessage('Nota actualizada exitosamente')
+  //     },
+  //     onError: () => {
+  //       setShow(true)
+  //       setType('error')
+  //       setMessage('Error al actualizar la nota')
+  //     },
+  //     onSettled: () => {
+  //       setIsLoading(false)
+  //     }
+  //   })
+  // }
+
 
   const handleApprove = () => {
+    setIsLoading(true)
     createQuarterGrade.mutate({
-      access: '',
+      access,
       quarterGrade: {
         calification: averageGrade,
         conclusion: '',
@@ -160,27 +207,44 @@ const AverageSelector = ({
         assignature: parseInt(selectedAssignature),
         quarter: 'Q1'
       }
+    }, {
+      onSuccess: () => {
+        setShow(true)
+        setType('success')
+        setMessage('Nota aprobada exitosamente')
+      },
+      onError: () => {
+        setShow(true)
+        setType('error')
+        setMessage('Error al aprobar la nota')
+      },
+      onSettled: () => {
+        setIsLoading(false)
+      }
     })
   }
 
   return (
     <div className="relative min-w-[160px] max-w-[160px] text-center p-[1px]">
       {/* <>{console.log('average', averageGrade)}</> */}
-      <select
-        className={`w-full min-h-[46px] max-h-[46px] text-center font-semibold cursor-pointer outline-none transition-all duration-300 
-          ${savedAvarageGrade ? "border-green-500 bg-green-100 dark:bg-green-900 dark:border-green-300" : 
-           "border-yellow-500 bg-yellow-100 dark:bg-yellow-900 dark:border-yellow-300"}
-        `}
-        value={savedAvarageGrade ? savedAvarageGrade.calification : averageGrade}
-        onChange={(e) => setAverageGrade(e.target.value)}
-      >
-        {gradeOptions.map((grade) => (
-          <option key={grade} value={grade}>
-            {grade}
-          </option>
-        ))}
-      </select>
-
+      {isLoading 
+      ? 
+      <div className={`w-full min-h-[46px] max-h-[46px] text-center font-semibold cursor-pointer outline-none transition-all duration-300 
+        ${savedAvarageGrade ? "border-green-500 bg-green-100 dark:bg-green-900 dark:border-green-300" : 
+         "border-yellow-500 bg-yellow-100 dark:bg-yellow-900 dark:border-yellow-300"}
+      `}>...</div>
+      : 
+      <CreateAverageGrade 
+        savedAvarageGrade={savedAvarageGrade}
+        averageGrade={averageGrade}
+        createQuarterGrade={createQuarterGrade}
+        setIsLoading={setIsLoading}
+        setAverageGrade={setAverageGrade}
+        studentId={student.uid}
+        competency={selectedCompetency}
+        assignature={selectedAssignature}
+      />
+      }
       {/* Status Icon with Tooltip */}
       <div className="absolute top-1 left-1">
         <Tooltip
@@ -195,14 +259,15 @@ const AverageSelector = ({
       </div>
 
       {/* Approve Button (Only if it's a system-suggested grade) */}
-      {!savedAvarageGrade && (
+      {!savedAvarageGrade 
+      ? 
         <button
-          className="absolute bottom-1 right-1 flex items-center gap-1 text-xs  text-gray-600 bg-yellow-200 hover:bg-yellow-300 dark:bg-yellow-800 dark:hover:bg-yellow-700 dark:text-gray-200 rounded-md shadow-md transition"
+          className={`${isLoading && 'hidden'} absolute bottom-1 right-1 flex items-center gap-1 text-xs  text-gray-600 bg-yellow-200 hover:bg-yellow-300 dark:bg-yellow-800 dark:hover:bg-yellow-700 dark:text-gray-200 rounded-md shadow-md transition`}
           onClick={handleApprove}
         >
          Aprobar
         </button>
-      )}
+      : ''}
     </div>
   );
 };
