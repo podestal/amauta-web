@@ -2,6 +2,7 @@ import APIClient from "./apiClient"
 
 export interface QuarterGrade {
     id: number
+    calification: string
     quarter: string
     conclusion: string
     assignature: number

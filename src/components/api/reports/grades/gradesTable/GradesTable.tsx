@@ -80,6 +80,7 @@ const GradesTable = () => {
             <GradesTableActivitiesBody 
                 classroomId={(assignatures.find(assignature => assignature.id.toString() === selectedAssignature)?.clase)?.toString() || '0'}
                 competence={selectedComeptency}
+                selectedAssignature={selectedAssignature}
             />
         </>}
 

@@ -8,9 +8,10 @@ import { useState } from "react"
 interface Props {
     classroomId: string
     competence: string
+    selectedAssignature: string
 }
 
-const GradesTableActivitiesBody = ({ classroomId, competence }: Props) => {
+const GradesTableActivitiesBody = ({ classroomId, competence, selectedAssignature }: Props) => {
 
     const [gradeChanged, setGradeChanged] = useState(false)
     // console.log('gradeChanged', gradeChanged)
@@ -47,7 +48,7 @@ const GradesTableActivitiesBody = ({ classroomId, competence }: Props) => {
                         selectedCompetency={competence}
                         handleAverageChange={() => {}} 
                         // currentGrade={student.competencyGrades[parseInt(selectedComeptency)]}
-                        selectedAssignature={'1'}
+                        selectedAssignature={selectedAssignature}
                         selectedCategory={'1'}
                         selectedComeptency={competence}
                         grades={student.filtered_grades}

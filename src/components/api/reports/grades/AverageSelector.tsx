@@ -3,6 +3,7 @@ import { Tooltip } from "../../../ui/Tooltip";
 import { useEffect, useState } from "react";
 import { assignments } from "../../../../data/mockdataForGrades";
 import { StudentByGrade, StudentGrade } from "../../../../services/api/studentsService";
+import useCreateQuarterGrade from "../../../../hooks/api/quarterGrade/useCreateQuarterGrade";
 
 const gradeOptions = ["A", "B", "C", "AD", "NA"];
 
@@ -49,6 +50,7 @@ const AverageSelector = ({
   // const [isApproved, setIsApproved] = useState(!!teacherConfirmed)
   const [isApproved, setIsApproved] = useState(false)
   const [isManuallyChanged, setIsManuallyChanged] = useState(false)
+  const createQuarterGrade = useCreateQuarterGrade({})
 
   // This is quite important, you have to fix the promise to be resolved in the useEffect
 
@@ -143,6 +145,21 @@ const AverageSelector = ({
   //   handleAverageChange(student.id, parseInt(selectedCompetency), selectedGrade);
   // };
 
+
+  const handleApprove = () => {
+    createQuarterGrade.mutate({
+      access: '',
+      quarterGrade: {
+        calification: averageGrade,
+        conclusion: '',
+        student: student.uid,
+        competence: parseInt(selectedCompetency),
+        assignature: parseInt(selectedAssignature),
+        quarter: 'Q1'
+      }
+    })
+  }
+
   return (
     <div className="relative min-w-[160px] max-w-[160px] text-center p-[1px]">
       {/* <>{console.log('average', averageGrade)}</> */}
@@ -178,7 +195,7 @@ const AverageSelector = ({
       {!isApproved && (
         <button
           className="absolute bottom-1 right-1 flex items-center gap-1 text-xs  text-gray-600 bg-yellow-200 hover:bg-yellow-300 dark:bg-yellow-800 dark:hover:bg-yellow-700 dark:text-gray-200 rounded-md shadow-md transition"
-          onClick={() => {}}
+          onClick={handleApprove}
         >
          Aprobar
         </button>
