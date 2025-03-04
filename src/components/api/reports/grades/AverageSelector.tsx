@@ -9,6 +9,7 @@ import useUpdateQuarterGrade from "../../../../hooks/api/quarterGrade/useUpdateQ
 import useAuthStore from "../../../../hooks/store/useAuthStore";
 import CreateAverageGrade from "./CreateAverageGrade";
 import UpdateQuarterGrade from "./UpdateQuarterGrade";
+import RemoveQuarterGrade from "./RemoveQuarterGrade";
 
 const gradeOptions = ["A", "B", "C", "AD", "NA"];
 
@@ -283,7 +284,12 @@ const AverageSelector = ({
         >
          Aprobar
         </button>
-      : ''}
+      : <RemoveQuarterGrade 
+          isLoading={isLoading} 
+          updateCacheKey={gradeQueryKey}
+          quarterGradeId={(savedAvarageGrade.id).toString()}
+          setIsLoading={setIsLoading}
+        />}
     </div>
   );
 };
