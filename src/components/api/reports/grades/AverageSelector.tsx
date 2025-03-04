@@ -1,8 +1,7 @@
 import { CheckCircle, AlertTriangle } from "lucide-react";
 import { Tooltip } from "../../../ui/Tooltip";
 import { useEffect, useState } from "react";
-import { assignments } from "../../../../data/mockdataForGrades";
-import { StudentByGrade, StudentGrade } from "../../../../services/api/studentsService";
+import { StudentByGrade } from "../../../../services/api/studentsService";
 import useCreateQuarterGrade from "../../../../hooks/api/quarterGrade/useCreateQuarterGrade";
 import useNotificationsStore from "../../../../hooks/store/useNotificationsStore";
 import useUpdateQuarterGrade from "../../../../hooks/api/quarterGrade/useUpdateQuarterGrade";
@@ -10,8 +9,6 @@ import useAuthStore from "../../../../hooks/store/useAuthStore";
 import CreateAverageGrade from "./CreateAverageGrade";
 import UpdateQuarterGrade from "./UpdateQuarterGrade";
 import RemoveQuarterGrade from "./RemoveQuarterGrade";
-
-const gradeOptions = ["A", "B", "C", "AD", "NA"];
 
 const gradeValues: Record<string, number> = {
   "A": 3,
@@ -32,21 +29,16 @@ const gradeReverse: Record<number, string> = {
 interface Props {
   student:  StudentByGrade;
   selectedCompetency: string;
-  handleAverageChange: (studentId: number, competencyId: number, grade: string) => void
   selectedAssignature: string
   selectedCategory: string
-  grades: StudentGrade[]
   gradeChanged: boolean
   classroomId: string
 }
 
 const AverageSelector = ({ 
-  // student, 
   selectedCompetency, 
-  handleAverageChange,
   selectedAssignature,
   selectedCategory,
-  grades ,
   gradeChanged,
   student,
   classroomId
@@ -54,13 +46,13 @@ const AverageSelector = ({
 
   const access = useAuthStore(s => s.access) || ''
   const [averageGrade, setAverageGrade] = useState('NA');
-  // const [isApproved, setIsApproved] = useState(!!teacherConfirmed)
   const savedAvarageGrade = student.averages.find(average => (average.competence).toString() === selectedCompetency)
   const gradeQueryKey = [`students ${classroomId} ${selectedCompetency}`]
-  const [isApproved, setIsApproved] = useState(false)
-  const [isManuallyChanged, setIsManuallyChanged] = useState(false)
   const createQuarterGrade = useCreateQuarterGrade({ updateCacheKey: gradeQueryKey })
-  // const updateQuarterGrade = savedAvarageGrade && useUpdateQuarterGrade({ quarterGradeId: (savedAvarageGrade.id).toString(), updateCacheKey: gradeQueryKey })
+
+  console.log('selectedCategory', selectedCategory);
+  
+
   const getUpdateQuarterGrade = () => {
     if (!savedAvarageGrade) return null;
     return useUpdateQuarterGrade({ 
@@ -71,41 +63,6 @@ const AverageSelector = ({
   // const updateQuarterGrade = getUpdateQuarterGrade()
   const { setShow, setType, setMessage } = useNotificationsStore()
   const [isLoading, setIsLoading] = useState(false)
-  // console.log('savedAvarageGrade', savedAvarageGrade);
-  
-
-  // This is quite important, you have to fix the promise to be resolved in the useEffect
-
-  // useEffect(() => {
-  //   const fetchUpdatedGrades = async () => {
-  
-  //     if (!student.filtered_grades || student.filtered_grades.length === 0) {
-  //       setAverageGrade("NA");
-  //       return;
-  //     }
-  
-  //     try {
-
-  //       await new Promise(resolve => {setTimeout(resolve, 500)}); 
-  //       const numericGrades = student.filtered_grades.map(grade => gradeValues[grade.calification]);
-  //       const validGrades = numericGrades.filter(grade => grade !== 0);
-  //       const numericAverage = validGrades.length > 0
-  //         ? validGrades.reduce((acc, grade) => acc + grade, 0) / validGrades.length
-  //         : 0;
-  
-  //       const newAverageGrade = gradeReverse[Math.round(numericAverage)] || "NA";
-  //       console.log('Updated Average Grade:', newAverageGrade);
-  
-  //       setAverageGrade(newAverageGrade);
-  
-  //     } catch (error) {
-  //       console.error("Error fetching updated grades:", error);
-  //     }
-  //   };
-  
-  //   fetchUpdatedGrades();  // Call the async function
-  
-  // }, [student.filtered_grades, gradeChanged]);
 
   useEffect(() => {
     
@@ -114,10 +71,8 @@ const AverageSelector = ({
       return
     }
     const numericGrades = student.filtered_grades.map(grade => gradeValues[grade.calification])
-    // console.log('numericGrades', numericGrades);
     
     const validGrades = numericGrades.filter(grade => grade !== 0)
-    // console.log('validGrades', validGrades);
     
     const numericAverage = validGrades.length > 0
       ? validGrades.reduce((acc, grade) => acc + grade, 0) / validGrades.length
@@ -125,76 +80,6 @@ const AverageSelector = ({
     
     setAverageGrade(gradeReverse[Math.round(numericAverage)] || "NA")
   }, [student, gradeChanged]);
-
-
-
-
-  // useEffect(() => {
-
-  //   const filteredGrades = student.grades
-  //       ? Object.keys(student.grades)
-  //           .filter(grade => filteredAssignments.map(assignment => assignment.id).includes(parseInt(grade)))
-  //           .filter(grade => student.grades[grade] !== 'NA')
-  //           .map(grade => student.grades[grade])
-  //       : []
-  //   const numericAverage = filteredGrades.reduce((acc, grade) => acc + gradeValues[grade], 0) / filteredGrades.length;  
-  //   console.log('numericAverage', numericAverage);
-    
-  //   setAverageGrade(gradeReverse[Math.round(numericAverage)])
-  //   if (!isManuallyChanged) {
-  //     setSelectedGrade(gradeReverse[Math.round(numericAverage)]);
-  //   }
-  //   console.log('averageGrade', averageGrade);
-    
-    
-  // }, [averageGrade, student]);
-
-  // const handleChange = (newGrade: string) => {
-  //   console.log('Change', newGrade);
-    
-  //   setSelectedGrade(newGrade);
-  //   setIsApproved(true)
-  //   setIsManuallyChanged(true)
-  //   handleAverageChange(student.id, parseInt(selectedCompetency), newGrade);
-
-  // };
-
-  // const handleApprove = () => {
-  //   console.log('Approve', selectedGrade);
-    
-  //   setIsApproved(true);
-  //   handleAverageChange(student.id, parseInt(selectedCompetency), selectedGrade);
-  // };
-
-  // const handleUpdate = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    // setAverageGrade(e.target.value)
-    // setIsLoading(true)
-    // updateQuarterGrade && updateQuarterGrade.mutate({
-    //   access,
-    //   quarterGrade: {
-    //     calification: e.target.value,
-    //     conclusion: '',
-    //     student: student.uid,
-    //     competence: parseInt(selectedCompetency),
-    //     assignature: parseInt(selectedAssignature),
-    //     quarter: 'Q1'
-    //   }
-    // }, {
-    //   onSuccess: () => {
-    //     setShow(true)
-    //     setType('success')
-    //     setMessage('Nota actualizada exitosamente')
-    //   },
-    //   onError: () => {
-    //     setShow(true)
-    //     setType('error')
-    //     setMessage('Error al actualizar la nota')
-    //   },
-    //   onSettled: () => {
-    //     setIsLoading(false)
-    //   }
-    // })
-  // }
 
 
   const handleApprove = () => {
@@ -228,7 +113,6 @@ const AverageSelector = ({
 
   return (
     <div className="relative min-w-[160px] max-w-[160px] text-center p-[1px]">
-      {/* <>{console.log('average', averageGrade)}</> */}
       {isLoading 
       ? 
       <div className={`w-full min-h-[46px] max-h-[46px] text-center font-semibold cursor-pointer outline-none transition-all duration-300 
@@ -275,7 +159,6 @@ const AverageSelector = ({
         </Tooltip>
       </div>
 
-      {/* Approve Button (Only if it's a system-suggested grade) */}
       {!savedAvarageGrade 
       ? 
         <button
