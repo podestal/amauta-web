@@ -8,7 +8,7 @@ import { Tutor } from "./tutorService"
 export interface Average {
     id: number
     calification: string
-    competence: string
+    competence: number
     conclusion: string
 }
 

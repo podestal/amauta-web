@@ -14,7 +14,6 @@ interface Props {
 const GradesTableActivitiesBody = ({ classroomId, competence, selectedAssignature }: Props) => {
 
     const [gradeChanged, setGradeChanged] = useState(false)
-    // console.log('gradeChanged', gradeChanged)
     
     const access = useAuthStore(s => s.access) || ''
     const { data: students, isLoading, isError, error, isSuccess } = useGetStudentsByGrade({ access, classroomId, competence })
@@ -45,12 +44,10 @@ const GradesTableActivitiesBody = ({ classroomId, competence, selectedAssignatur
                     </h2>
                     <AverageSelector 
                         student={student}
-                        selectedCompetency={competence}
                         handleAverageChange={() => {}} 
-                        // currentGrade={student.competencyGrades[parseInt(selectedComeptency)]}
                         selectedAssignature={selectedAssignature}
                         selectedCategory={'1'}
-                        selectedComeptency={competence}
+                        selectedCompetency={competence}
                         grades={student.filtered_grades}
                         gradeChanged={gradeChanged}
                     />
