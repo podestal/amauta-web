@@ -8,6 +8,7 @@ import useNotificationsStore from "../../../../hooks/store/useNotificationsStore
 import useUpdateQuarterGrade from "../../../../hooks/api/quarterGrade/useUpdateQuarterGrade";
 import useAuthStore from "../../../../hooks/store/useAuthStore";
 import CreateAverageGrade from "./CreateAverageGrade";
+import UpdateQuarterGrade from "./UpdateQuarterGrade";
 
 const gradeOptions = ["A", "B", "C", "AD", "NA"];
 
@@ -165,33 +166,33 @@ const AverageSelector = ({
   // };
 
   // const handleUpdate = (e: React.ChangeEvent<HTMLSelectElement>) => {
-  //   setAverageGrade(e.target.value)
-  //   setIsLoading(true)
-  //   updateQuarterGrade && updateQuarterGrade.mutate({
-  //     access,
-  //     quarterGrade: {
-  //       calification: e.target.value,
-  //       conclusion: '',
-  //       student: student.uid,
-  //       competence: parseInt(selectedCompetency),
-  //       assignature: parseInt(selectedAssignature),
-  //       quarter: 'Q1'
-  //     }
-  //   }, {
-  //     onSuccess: () => {
-  //       setShow(true)
-  //       setType('success')
-  //       setMessage('Nota actualizada exitosamente')
-  //     },
-  //     onError: () => {
-  //       setShow(true)
-  //       setType('error')
-  //       setMessage('Error al actualizar la nota')
-  //     },
-  //     onSettled: () => {
-  //       setIsLoading(false)
-  //     }
-  //   })
+    // setAverageGrade(e.target.value)
+    // setIsLoading(true)
+    // updateQuarterGrade && updateQuarterGrade.mutate({
+    //   access,
+    //   quarterGrade: {
+    //     calification: e.target.value,
+    //     conclusion: '',
+    //     student: student.uid,
+    //     competence: parseInt(selectedCompetency),
+    //     assignature: parseInt(selectedAssignature),
+    //     quarter: 'Q1'
+    //   }
+    // }, {
+    //   onSuccess: () => {
+    //     setShow(true)
+    //     setType('success')
+    //     setMessage('Nota actualizada exitosamente')
+    //   },
+    //   onError: () => {
+    //     setShow(true)
+    //     setType('error')
+    //     setMessage('Error al actualizar la nota')
+    //   },
+    //   onSettled: () => {
+    //     setIsLoading(false)
+    //   }
+    // })
   // }
 
 
@@ -234,6 +235,20 @@ const AverageSelector = ({
          "border-yellow-500 bg-yellow-100 dark:bg-yellow-900 dark:border-yellow-300"}
       `}>...</div>
       : 
+      <>
+      {savedAvarageGrade 
+      ? 
+      <UpdateQuarterGrade 
+        getUpdateQuarterGrade={getUpdateQuarterGrade}
+        savedAvarageGrade={savedAvarageGrade}
+        averageGrade={averageGrade}
+        setIsLoading={setIsLoading}
+        setAverageGrade={setAverageGrade}
+        studentId={student.uid}
+        competency={selectedCompetency}
+        assignature={selectedAssignature}
+      /> 
+      : 
       <CreateAverageGrade 
         savedAvarageGrade={savedAvarageGrade}
         averageGrade={averageGrade}
@@ -243,7 +258,8 @@ const AverageSelector = ({
         studentId={student.uid}
         competency={selectedCompetency}
         assignature={selectedAssignature}
-      />
+      />}
+      </>
       }
       {/* Status Icon with Tooltip */}
       <div className="absolute top-1 left-1">

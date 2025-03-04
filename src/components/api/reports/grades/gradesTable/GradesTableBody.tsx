@@ -19,8 +19,6 @@ const gradeStyles: Record<string, string> = {
   };
 
 const GradesTableBody = ({ classroomId, competencies }: Props) => {
-
-    console.log('competencies', competencies);
     
     const access = useAuthStore(s => s.access) || ''
     const { data: students, isLoading, isError, error, isSuccess } = useGetStudentsByQuarterGrade({ access, classroomId, competencies, assignatureId: '' })
@@ -49,7 +47,6 @@ const GradesTableBody = ({ classroomId, competencies }: Props) => {
                     {student.first_name} {student.last_name}
                 </h2>
                 {competencies.map((competency, index) => {
-                    console.log('competency', competency)
                     let quarterGrade = student.averages.find(average => (average.competence).toString() === competency)
                     if (!quarterGrade) {
                         quarterGrade = {

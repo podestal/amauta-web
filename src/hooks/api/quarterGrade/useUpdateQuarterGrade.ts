@@ -14,8 +14,6 @@ interface Props {
 const useUpdateQuarterGrade = ({ quarterGradeId, updateCacheKey }: Props): UseMutationResult<QuarterGrade, Error, CreateQuarterGradeData> => {
     const quarterGradeService = getQuarterGradeService({ quarterGradeId })
     const queryClient = useQueryClient()
-    console.log('quarterGradeId', quarterGradeId)
-    console.log('updateCacheKey', updateCacheKey)
     
     return useMutation({
         mutationFn: (data: CreateQuarterGradeData) => quarterGradeService.update(data.quarterGrade, data.access),
