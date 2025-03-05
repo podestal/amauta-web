@@ -145,14 +145,15 @@ const StudentInfo = ({ student, showIcons = true, picture=false }: Props) => {
       <h2 className="text-xl font-bold my-4">{showIcons && "📌"} Datos Personales</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4  dark:bg-gray-800 p-4 rounded-lg lg:shadow-md max-lg:border-b-2 border-slate-200">
         <p>{showIcons && "👨‍👩‍👦"} Número de Hermanos: {student.number_of_siblings || "3"}</p>
-        <p>{showIcons && "📍"} Lugar que Ocupa: {student.place_in_family || "1"}</p>
-        <p>{showIcons && "🏫"} Escuela Anterior: {student.prev_school || "San Francisco de Asís"}</p>
-        <p>{showIcons && "🛐"} Religión: {religions[student.religion] || "Católica"}</p>
-        <p>{showIcons && "🗣️"} Lengua Materna: {languages[student.main_language] || "Español"}</p>
+        <p>{showIcons && "📍"} Lugar que Ocupa: {student.place_in_family || "-"}</p>
+        <p>{showIcons && "🏫"} Escuela Anterior: {student.prev_school || "-"}</p>
+        <p>{showIcons && "📞"} Teléfono del Apoderado: {student.tutor_phone} || '-</p>
+        <p>{showIcons && "🛐"} Religión: {religions[student.religion] || "-"}</p>
+        <p>{showIcons && "🗣️"} Lengua Materna: {languages[student.main_language] || "-"}</p>
         <p>{showIcons && "🌎"} Segunda Lengua: {languages[student.second_language] || "-"}</p>
-        <p>{showIcons && "🏡"} Dirección: {student.address || "Avenida Cortes 245"}</p>
-        <p>{showIcons && "📞"} Teléfono: {student.phone_number || "123456"}</p>
-        <p>{showIcons && "📱"} Celular: {student.celphone_number || "123456"}</p>
+        <p>{showIcons && "🏡"} Dirección: {student.address || "-"}</p>
+        <p>{showIcons && "📞"} Teléfono: {student.phone_number || "-"}</p>
+        <p>{showIcons && "📱"} Celular: {student.celphone_number || "-"}</p>
       </div>
 
       {/* Información de Nacimiento */}
@@ -173,10 +174,10 @@ const StudentInfo = ({ student, showIcons = true, picture=false }: Props) => {
       <h2 className="text-xl font-bold my-4">{showIcons && "🚨"} Información de Salud</h2>
       {student.health_info ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 dark:bg-gray-800 p-4 rounded-lg lg:shadow-md max-lg:border-b-2 border-slate-200">
-          <p>{showIcons && "🩸"} Peso: {student.health_info.weight || "60"} kg</p>
-          <p>{showIcons && "📏"} Talla: {student.health_info.height || "1.70"} m</p>
-          <p>{showIcons && "💉"} Enfermedades: {student.health_info.illness || "Ninguna"}</p>
-          <p>{showIcons && "" } Discapacidad: {handycapOptions.find(option => option.id === student.health_info?.handycap)?.name ?? 'Ninguna'}</p>
+          <p>{showIcons && "🩸"} Peso: {student.health_info.weight || "-"} kg</p>
+          <p>{showIcons && "📏"} Talla: {student.health_info.height || "-"} m</p>
+          <p>{showIcons && "💉"} Enfermedades: {student.health_info.illness || "-"}</p>
+          <p>{showIcons && "" } Discapacidad: {handycapOptions.find(option => option.id === student.health_info?.handycap)?.name ?? '-'}</p>
           <p>{showIcons && "" } Apoyo SAANEE: {student.health_info.saanee ? 'Si' : 'No'}</p>
           <p>{showIcons && "" } Informe Psicopedagógico: {student.health_info.psicopedagogy ? 'Si' : 'No'}</p>
         </div>
@@ -188,9 +189,9 @@ const StudentInfo = ({ student, showIcons = true, picture=false }: Props) => {
       <h2 className="text-xl font-bold my-4">{showIcons && "🚨"} Contacto de Emergencia</h2>
       {student.emergency_contact ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 dark:bg-gray-800 p-4 rounded-lg lg:shadow-md max-lg:border-b-2 border-slate-200">
-          <p>{showIcons && "👤"} Nombre: {student.emergency_contact.name || "Juan Pérez"}</p>
-          <p>{showIcons && "📞"} Teléfono: {student.emergency_contact.phone_number || "123456"}</p>
-          <p>{showIcons && "🏡"} Dirección: {student.emergency_contact.address || "Avenida Cortes 245"}</p>
+          <p>{showIcons && "👤"} Nombre: {student.emergency_contact.name || "-"}</p>
+          <p>{showIcons && "📞"} Teléfono: {student.emergency_contact.phone_number || "-"}</p>
+          <p>{showIcons && "🏡"} Dirección: {student.emergency_contact.address || "-"}</p>
         </div>
       ) : (
         <p className="text-gray-500">-</p>
@@ -203,20 +204,20 @@ const StudentInfo = ({ student, showIcons = true, picture=false }: Props) => {
               {showIcons && "👨‍👩‍👦"} Información {tutor.tutor_type === "M" ? "de la" : "del"} {tutorTypes[tutor.tutor_type]}
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4  dark:bg-gray-800 p-4 rounded-lg lg:shadow-md max-lg:border-b-2 border-slate-200">
-              <p>{showIcons && "📜"} DNI: {tutor.dni || "54673322"}</p>
-              <p>{showIcons && "👤"} Nombres: {tutor.first_name}</p>
-              <p>{showIcons && "👥"} Apellidos: {tutor.last_name}</p>
-              <p>{showIcons && "📧"} Correo electrónico: {tutor.email}</p>
-              <p>{showIcons && "📞"} Teléfono: {tutor.phone_number}</p>
-              <p>{showIcons && "📅"} Fecha de Nacimiento: {moment(tutor.date_of_birth).format("DD-MM-YYYY")}</p>
-              <p>{showIcons && "🏛️"} Departamento: {getDepartment(parseInt(tutor.state))?.name}</p
-              ><p>{showIcons && "🏙️"} Provincia: {getProvince(parseInt(tutor.county))?.name}</p
-              ><p>{showIcons && "🌆"} Distrito: {tutor.city}</p
-              ><p>{showIcons && "📚"} Grado de Instrucción: {tutor.instruction_grade}</p
-              ><p>{showIcons && "🏢"} Ocupación: {tutor.ocupation}</p>
-              <p>{showIcons && "🏭"} Empleador: {tutor.employer}</p>
-              <p>{showIcons && "👫"} Estado Civil: {civilStatus[tutor.civil_status]}</p>
-              <p>{showIcons && "👪"} Parentesco: {tutor.tutor_relationship}</p>
+              <p>{showIcons && "📜"} DNI: {tutor.dni || "-"}</p>
+              <p>{showIcons && "👤"} Nombres: {tutor.first_name || "-"}</p>
+              <p>{showIcons && "👥"} Apellidos: {tutor.last_name || "-"}</p>
+              <p>{showIcons && "📧"} Correo electrónico: {tutor.email || "-"}</p>
+              <p>{showIcons && "📞"} Teléfono: {tutor.phone_number || "-"}</p>
+              <p>{showIcons && "📅"} Fecha de Nacimiento: {moment(tutor.date_of_birth).format("DD-MM-YYYY") || "-"}</p>
+              <p>{showIcons && "🏛️"} Departamento: {getDepartment(parseInt(tutor.state))?.name || "-"}</p
+              ><p>{showIcons && "🏙️"} Provincia: {getProvince(parseInt(tutor.county))?.name || "-"}</p
+              ><p>{showIcons && "🌆"} Distrito: {tutor.city || "-"}</p
+              ><p>{showIcons && "📚"} Grado de Instrucción: {tutor.instruction_grade || "-"}</p
+              ><p>{showIcons && "🏢"} Ocupación: {tutor.ocupation || "-"}</p>
+              <p>{showIcons && "🏭"} Empleador: {tutor.employer || "-"}</p>
+              <p>{showIcons && "👫"} Estado Civil: {civilStatus[tutor.civil_status] || "-"}</p>
+              <p>{showIcons && "👪"} Parentesco: {tutor.tutor_relationship || "-"}</p>
               <p>{showIcons && "🏡"} Vive con el estudiante: {tutor.lives_with_student ? "Sí" : "No"}</p>
             </div>
           </div>

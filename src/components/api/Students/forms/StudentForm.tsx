@@ -221,15 +221,15 @@ const StudentForm = ({
       return
     }
 
-    if (oldSchool === '') {
-      setOldSchoolError('La IE de procedencia es requerida')
-      setType('error')
-      setShow(true)
-      setMessage('La IE de procedencia es requerida')
-      if (!firstErrorField) firstErrorField = oldSchoolRef
-      scrollToField(firstErrorField);
-      return;
-    }
+    // if (oldSchool === '') {
+    //   setOldSchoolError('La IE de procedencia es requerida')
+    //   setType('error')
+    //   setShow(true)
+    //   setMessage('La IE de procedencia es requerida')
+    //   if (!firstErrorField) firstErrorField = oldSchoolRef
+    //   scrollToField(firstErrorField);
+    //   return;
+    // }
 
     if (fatherLastName === '') {
       setFatherLastNameError('El apellido paterno es requerido')

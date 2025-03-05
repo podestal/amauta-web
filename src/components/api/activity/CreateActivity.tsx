@@ -7,12 +7,13 @@ import useCreateActivity from "../../../hooks/api/activity/useCreateActivity"
 interface Props {
     area: number
     assignatureId: string
+    selectedQuarter: string
 }
 
-const CreateActivity = ({ area, assignatureId }: Props) => {
+const CreateActivity = ({ area, assignatureId, selectedQuarter }: Props) => {
 
     const [open, setOpen] = useState(false)
-    const createActivity = useCreateActivity({ assignatureId })
+    const createActivity = useCreateActivity({ assignatureId, quarter:selectedQuarter })
 
   return (
     <>

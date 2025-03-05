@@ -5,12 +5,13 @@ interface Props {
     access: string
     assignatureId: string
     competence?: string
+    quarter: string
 }
 
-const useGetActivitiesByAssignature = ({ access, assignatureId, competence }: Props): UseQueryResult<Activity[]> => {
+const useGetActivitiesByAssignature = ({ access, assignatureId, competence, quarter }: Props): UseQueryResult<Activity[]> => {
     const activityService = getActivityService({ byAssignature: true })
-    const ACTIVITY_QUERY_KEY = competence ? [`activities ${assignatureId} ${competence}`] : [`activities ${assignatureId}`] 
-    let params: { assignature: string; competence?: string } = { assignature: assignatureId }
+    const ACTIVITY_QUERY_KEY = competence ? [`activities ${assignatureId} ${quarter} ${competence}`] : [`activities ${quarter} ${assignatureId}`] 
+    let params: { assignature: string; quarter: string; competence?: string } = { assignature: assignatureId, quarter }
     if (competence) {
         params = { ...params, competence }
     }

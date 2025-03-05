@@ -50,9 +50,6 @@ const AverageSelector = ({
   const gradeQueryKey = [`students ${classroomId} ${selectedCompetency}`]
   const createQuarterGrade = useCreateQuarterGrade({ updateCacheKey: gradeQueryKey })
 
-  console.log('selectedCategory', selectedCategory);
-  
-
   const getUpdateQuarterGrade = () => {
     if (!savedAvarageGrade) return null;
     return useUpdateQuarterGrade({ 

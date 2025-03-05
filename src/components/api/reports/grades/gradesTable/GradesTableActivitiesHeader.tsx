@@ -6,12 +6,13 @@ import useLoader from "../../../../../hooks/ui/useLoader"
 interface Props {
     assignatureId: string
     competence: string
+    quarter: string
 }
 
-const GradesTableActivitiesHeader = ({ assignatureId, competence }: Props) => {
+const GradesTableActivitiesHeader = ({ assignatureId, competence, quarter }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
-    const { data: activities, isLoading, isError, error, isSuccess } = useGetActivitiesByAssignature({ access, assignatureId, competence })
+    const { data: activities, isLoading, isError, error, isSuccess } = useGetActivitiesByAssignature({ access, assignatureId, competence, quarter })
 
     useLoader(isLoading)
 
