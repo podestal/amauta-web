@@ -1,11 +1,10 @@
-import { useLocation } from 'react-router-dom'
-import Assignments from '../components/api/assignments/Assignments'
+// import { useLocation } from 'react-router-dom'
 import Activities from '../components/api/activity/Activities'
 
 const AssignaturePage = () => {
 
-    const assignatureId = useLocation().pathname.split('/')[3]
-    const area = useLocation().state.area
+    // const assignatureId = useLocation().pathname.split('/')[3]
+    // const area = useLocation().state.area
     
 
   return (
