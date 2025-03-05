@@ -9,6 +9,7 @@ interface Props {
     classroomId: string
     competence: string
     setGradeChanged: React.Dispatch<React.SetStateAction<boolean>>
+    quarter: string
 }
 
 // `students ${classroomId} ${competence}`
@@ -23,10 +24,10 @@ const gradeStyles: Record<string, string> = {
     "NA": "bg-gray-300 text-gray-700", 
   };
 
-const GradesTableGradeCell = ({ grade, classroomId, competence, setGradeChanged }: Props) => {
+const GradesTableGradeCell = ({ grade, classroomId, competence, setGradeChanged, quarter }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
-    const updateCacheKey = [`students ${classroomId} ${competence}`]
+    const updateCacheKey = [`students ${classroomId} ${competence} ${quarter}`]
     const { setType, setMessage, setShow } = useNotificationsStore()
     const [calification, setCalification] = useState(grade.calification)
     const updateGrade = useUpdateGrade({gradeId: grade.id, activityId: (grade.activity).toString(), updateCacheKey})

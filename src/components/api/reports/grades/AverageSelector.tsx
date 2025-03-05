@@ -33,24 +33,26 @@ interface Props {
   selectedCategory: string
   gradeChanged: boolean
   classroomId: string
+  quarter: string
 }
 
 const AverageSelector = ({ 
   selectedCompetency, 
   selectedAssignature,
-  selectedCategory,
+  // selectedCategory,
   gradeChanged,
   student,
-  classroomId
+  classroomId,
+  quarter
 }: Props) => {
 
   const access = useAuthStore(s => s.access) || ''
   const [averageGrade, setAverageGrade] = useState('NA');
   const savedAvarageGrade = student.averages.find(average => (average.competence).toString() === selectedCompetency)
-  const gradeQueryKey = [`students ${classroomId} ${selectedCompetency}`]
+  const gradeQueryKey = [`students ${classroomId} ${selectedCompetency} ${quarter}`]
   const createQuarterGrade = useCreateQuarterGrade({ updateCacheKey: gradeQueryKey })
 
-  console.log('selectedCategory', selectedCategory);
+  // console.log('selectedCategory', selectedCategory);
   
   const getUpdateQuarterGrade = () => {
     if (!savedAvarageGrade) return null;

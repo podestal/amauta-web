@@ -9,14 +9,15 @@ interface Props {
     classroomId: string
     competence: string
     selectedAssignature: string
+    quarter: string
 }
 
-const GradesTableActivitiesBody = ({ classroomId, competence, selectedAssignature }: Props) => {
+const GradesTableActivitiesBody = ({ classroomId, competence, selectedAssignature, quarter }: Props) => {
 
     const [gradeChanged, setGradeChanged] = useState(false)
     
     const access = useAuthStore(s => s.access) || ''
-    const { data: students, isLoading, isError, error, isSuccess } = useGetStudentsByGrade({ access, classroomId, competence })
+    const { data: students, isLoading, isError, error, isSuccess } = useGetStudentsByGrade({ access, classroomId, competence, quarter})
 
     if (isLoading) return <p className="animate-pulse text-center my-8 text-xl">Cargando...</p>
 
@@ -49,6 +50,7 @@ const GradesTableActivitiesBody = ({ classroomId, competence, selectedAssignatur
                         selectedCompetency={competence}
                         gradeChanged={gradeChanged}
                         classroomId={classroomId}
+                        quarter={quarter}
                     />
                     {student.filtered_grades
                     .sort((a, b) => a.activity - b.activity)
@@ -59,6 +61,7 @@ const GradesTableActivitiesBody = ({ classroomId, competence, selectedAssignatur
                             classroomId={classroomId}
                             competence={competence}
                             setGradeChanged={setGradeChanged}
+                            quarter={quarter}
                         />
                     ))}
                 </motion.div>

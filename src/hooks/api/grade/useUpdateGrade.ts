@@ -16,7 +16,6 @@ interface Props {
 const useUpdateGrade = ({ gradeId, activityId, updateCacheKey }: Props): UseMutationResult<Grade, Error, UpdateGradeData> => {
     const gradeService = getGradeService({ gradeId: gradeId.toString() })
     const queryClient = useQueryClient()
-    
     return useMutation({
         mutationFn: (data: UpdateGradeData) => gradeService.update(data.grade, data.access),
         onSuccess: res => {
