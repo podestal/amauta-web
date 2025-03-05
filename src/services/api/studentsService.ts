@@ -52,6 +52,7 @@ export interface Student {
     clase: Classroom
     picture: string
     prev_school: string
+    tutor_phone: string
     main_language: string
     second_language: string
     number_of_siblings: number
@@ -81,6 +82,17 @@ export type StudentCreateUpdate = Omit<
         'attendances_out' | 
         'attendances' |
         'picture' | 
+        'prev_school' |
+        'main_language' |
+        'second_language' |
+        'number_of_siblings' |
+        'place_in_family' |
+        'religion' |
+        'address' |
+        'phone_number' |
+        'celphone_number' |
+        'lives_with' |
+        'insurance' |
         'map_location' | 
         'clase' |
         'health_info' |
@@ -95,6 +107,17 @@ export type StudentCreateUpdate = Omit<
     tutor_name?: string
     other_insurance?: string
     is_active?: boolean
+    prev_school?: string
+    main_language?: string
+    second_language?: string
+    number_of_siblings?: number
+    place_in_family?: number
+    religion?: string
+    address?: string
+    phone_number?: string
+    celphone_number?: string
+    lives_with?: string
+    insurance?: string
 }
 
 interface Props {

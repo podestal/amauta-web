@@ -4,7 +4,7 @@ import Input from "../../../ui/Input"
 import Selector from "../../../ui/Selector"
 import { Classroom } from "../../../../services/api/classroomService"
 import useLanguageStore from "../../../../hooks/store/useLanguageStore"
-import { motion } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 import { CreateStudentData } from "../../../../hooks/api/student/useCreateStudent"
 import useAuthStore from "../../../../hooks/store/useAuthStore"
 import { Student } from "../../../../services/api/studentsService"
@@ -15,6 +15,7 @@ import axios from "axios"
 import useSchoolStore from "../../../../hooks/store/useSchoolStore"
 import Switch from "../../../ui/Switch"
 import UpdateStudentStatus from "./UpdateStudentStatus"
+import { RiArrowDownSFill } from "@remixicon/react"
 
 interface Props {
   setPage?: React.Dispatch<React.SetStateAction<number>>
@@ -79,11 +80,15 @@ const StudentForm = ({
   const [names, setNames] = useState(student ? student.first_name : '')
   const [fatherLastName, setFatherLastName] = useState(student ? student.last_name.split(' ')[0] : '')
   const [motherLastName, setMotherLastName] = useState(student ? student.last_name.split(' ')[1] : '')
+  const [tutorPhone, setTutorPhone] = useState(student ? student.tutor_phone : '')
 
   // CLASSROOM
   const [level, setLevel] = useState(student ? student.clase.level : '')
   const [grade, setGrade] = useState(student ? student.clase.grade : '0')
   const [section, setSection] = useState(student ? student.clase.section : '0')
+
+  // Completemntary info show
+  const [showComplementary, setShowComplementary] = useState(false)
 
   const setGradeSectionToDefault = () => {
     setGrade('0')
@@ -280,59 +285,59 @@ const StudentForm = ({
       return
     }
 
-    if (religion === '' || religion === '0') {
-      setReligionError('La religión es requerida')
-      setType('error')
-      setShow(true)
-      setMessage('La religión es requerida')
-      return
-    }
+    // if (religion === '' || religion === '0') {
+    //   setReligionError('La religión es requerida')
+    //   setType('error')
+    //   setShow(true)
+    //   setMessage('La religión es requerida')
+    //   return
+    // }
 
-    if (address === '') {
-      setAddressError('La dirección es requerida')
-      setType('error')
-      setShow(true)
-      setMessage('La dirección es requerida')
-      return
-    }
+    // if (address === '') {
+    //   setAddressError('La dirección es requerida')
+    //   setType('error')
+    //   setShow(true)
+    //   setMessage('La dirección es requerida')
+    //   return
+    // }
 
-    if (phone === '' && cellphone === '') {
-      setPhoneError('El teléfono es requerido')
-      setCellphoneError('El celular es requerido')
-      return
-    }
+    // if (phone === '' && cellphone === '') {
+    //   setPhoneError('El teléfono es requerido')
+    //   setCellphoneError('El celular es requerido')
+    //   return
+    // }
 
-    if (insurance === '' || insurance === '0') {
-      setInsuranceError('El seguro es requerido')
-      setType('error')
-      setShow(true)
-      setMessage('El seguro es requerido')
-      return
-    }
+    // if (insurance === '' || insurance === '0') {
+    //   setInsuranceError('El seguro es requerido')
+    //   setType('error')
+    //   setShow(true)
+    //   setMessage('El seguro es requerido')
+    //   return
+    // }
 
-    if (insurance === 'O' && otherInsurance === '') {
-      setOtherInsuranceError('El nombre del seguro es requerido')
-      setType('error')
-      setShow(true)
-      setMessage('El nombre del seguro es requerido')
-      return
-    }
+    // if (insurance === 'O' && otherInsurance === '') {
+    //   setOtherInsuranceError('El nombre del seguro es requerido')
+    //   setType('error')
+    //   setShow(true)
+    //   setMessage('El nombre del seguro es requerido')
+    //   return
+    // }
 
-    if (livesWith === '' || livesWith === '0') {
-      setLivesWithError('Con quién vive es requerido')
-      setType('error')
-      setShow(true)
-      setMessage('Con quién vive es requerido')
-      return
-    }
+    // if (livesWith === '' || livesWith === '0') {
+    //   setLivesWithError('Con quién vive es requerido')
+    //   setType('error')
+    //   setShow(true)
+    //   setMessage('Con quién vive es requerido')
+    //   return
+    // }
 
-    if (livesWith === 'A' && tutorName === '') {
-      setTutorNameError('El nombre del apoderado es requerido')
-      setType('error')
-      setShow(true)
-      setMessage('El nombre del apoderado es requerido')
-      return
-    }
+    // if (livesWith === 'A' && tutorName === '') {
+    //   setTutorNameError('El nombre del apoderado es requerido')
+    //   setType('error')
+    //   setShow(true)
+    //   setMessage('El nombre del apoderado es requerido')
+    //   return
+    // }
 
     const livesWithName = livesWith === 'A' ? tutorName : livesWith
 
@@ -342,6 +347,7 @@ const StudentForm = ({
       student: {
         uid: dni,
         prev_school: oldSchool,
+        tutor_phone: tutorPhone,
         first_name: names,
         last_name: `${fatherLastName} ${motherLastName}`,
         clase: classroomId,
@@ -362,8 +368,22 @@ const StudentForm = ({
       access
     }, {
       onSuccess: res => {
-        setPage && setPage(prev => prev + 1)
+        setPage && showComplementary && setPage(prev => prev + 1)
+        setShow(true)
+        setType('success')
+        setMessage('Estudiante creado exitosamente!')
         setStudentId(res.uid)
+        if (!showComplementary) {
+          setDni('')
+          setOldSchool('')
+          setFatherLastName('')
+          setMotherLastName('')
+          setNames('')
+          setTutorPhone('')
+          setLevel('')
+          setGrade('0')
+          setSection('0')
+        }
       },
       onError: err => {
         setType('error')
@@ -376,6 +396,7 @@ const StudentForm = ({
       student: {
         uid: dni,
         prev_school: oldSchool,
+        tutor_phone: tutorPhone,
         first_name: names,
         last_name: `${fatherLastName} ${motherLastName}`,
         clase: classroomId,
@@ -583,7 +604,51 @@ const StudentForm = ({
             />
           </motion.div>}
         </div>
-        <div className="grid grid-cols-3 gap-4 items-start">
+        <div className="w-full grid grid-cols-3 gap-4">
+            <Input 
+              label="Número telefónico del apoderado"
+              placeholder="Número telefónico ..."
+              value={tutorPhone}
+              onChange={e => setTutorPhone(e.target.value)}
+            />
+            <AnimatePresence>
+            {!showComplementary && 
+            <motion.div 
+              animate={{opacity: 1}}
+              transition={{duration: 0.5}}
+              exit={{opacity: 0}}
+              className="w-full  h-full flex justify-end items-end mt-6 col-span-2">
+              <Button 
+                label={'Guardar'}
+                onClick={handleSubmit}
+                type="submit"
+                loading={loading}
+                minWidth
+              />
+            </motion.div>}
+            </AnimatePresence>
+        </div>
+        <div className="flex justify-start items-center gap-4">
+          <p className="text-xl font-bold my-6">Información Complementaria</p>
+          <motion.div
+              className="cursor-pointer p-2 rounded-full bg-gray-700 hover:bg-gray-600 transition"
+              onClick={() => setShowComplementary(prev => !prev)}
+              animate={{ rotate: showComplementary ? 180 : 0 }}
+              transition={{ duration: 0.3 }}
+          >
+              <RiArrowDownSFill size={24} />
+          </motion.div>
+        </div>
+        <AnimatePresence>
+        {showComplementary && 
+        
+        <motion.div
+          initial={{opacity: 0, x: 50}}
+          animate={{opacity: 1, x: 0}}
+          transition={{duration: 0.5}}
+          exit={{opacity: 0, x: 50}}
+        >
+        <div className="grid grid-cols-3 gap-4 items-start my-8">
           <Selector 
             values={languages.filter(l => l.id !== 'N')}
             setter={setMainLanguage}
@@ -610,7 +675,7 @@ const StudentForm = ({
             defaultValue={religion && religion}
           />
         </div>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-3 gap-4 my-8">
           <Input 
             label="Dirección de Domicilio"
             value={address}
@@ -642,7 +707,7 @@ const StudentForm = ({
             ref={cellphoneRef}
           />
         </div>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-3 gap-4 my-8">
             <Input 
               label="Número de Hermanos"
               placeholder="Número de hermanos ..."
@@ -658,7 +723,7 @@ const StudentForm = ({
               type="number"
             />
         </div>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-3 gap-4 my-8">
           <Selector 
             values={[{id: 'E', name: 'Essalud'}, {id: 'P', name: 'Privado'}, {id: 'S', name: 'SIS'}, {id: 'O', name:'Otro'}, {id: 'N', name: 'Sin Seguro'}, {id: 'S', name: 'No especifica'}]}
             setter={setInsurance}
@@ -719,6 +784,9 @@ const StudentForm = ({
             minWidth
           />
         </div> 
+        </motion.div>  
+        }
+        </AnimatePresence>
     </form>
     </motion.div>
   )
