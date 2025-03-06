@@ -1,4 +1,3 @@
-import React from "react"
 import useGetCategories from "../../../hooks/api/category/useGetCategories"
 import useAuthStore from "../../../hooks/store/useAuthStore"
 import Selector from "../../ui/Selector"

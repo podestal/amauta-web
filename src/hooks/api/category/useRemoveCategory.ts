@@ -1,5 +1,6 @@
 import { UseMutationResult, useMutation, useQueryClient } from "@tanstack/react-query"
 import getCategoryService, { Category } from "../../../services/api/categoryService"
+import { AxiosError } from "axios"
 
 interface RemoveCategoryData {
     access: string
@@ -9,7 +10,7 @@ interface Props {
     categoryId: number
 }
 
-const useRemoveCategory = ({ categoryId }: Props): UseMutationResult<Category, Error, RemoveCategoryData> => {
+const useRemoveCategory = ({ categoryId }: Props): UseMutationResult<Category, AxiosError, RemoveCategoryData> => {
     const categoryService = getCategoryService({ categoryId: categoryId.toString() })
     const queryClient = useQueryClient()
     return useMutation({

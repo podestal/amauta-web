@@ -26,6 +26,14 @@ const gradeReverse: Record<number, string> = {
   0: "NA",
 };
 
+const gradeStyles: Record<string, string> = {
+  "A": "bg-blue-500 text-white",
+  "B": "bg-yellow-500 text-white",
+  "C": "bg-red-500 text-white",
+  "AD": "bg-green-500 text-white",
+  "NA": "bg-gray-300 text-gray-700", 
+};
+
 interface Props {
   student:  StudentByGrade;
   selectedCompetency: string;
@@ -39,11 +47,11 @@ interface Props {
 const AverageSelector = ({ 
   selectedCompetency, 
   selectedAssignature,
-  // selectedCategory,
+  selectedCategory,
   gradeChanged,
   student,
   classroomId,
-  quarter
+  quarter,
 }: Props) => {
 
   const access = useAuthStore(s => s.access) || ''
@@ -51,6 +59,7 @@ const AverageSelector = ({
   const savedAvarageGrade = student.averages.find(average => (average.competence).toString() === selectedCompetency)
   const gradeQueryKey = [`students ${classroomId} ${selectedCompetency} ${quarter}`]
   const createQuarterGrade = useCreateQuarterGrade({ updateCacheKey: gradeQueryKey })
+  
 
   // console.log('selectedCategory', selectedCategory);
   
@@ -64,6 +73,7 @@ const AverageSelector = ({
   // const updateQuarterGrade = getUpdateQuarterGrade()
   const { setShow, setType, setMessage } = useNotificationsStore()
   const [isLoading, setIsLoading] = useState(false)
+  
 
   useEffect(() => {
     
@@ -71,16 +81,33 @@ const AverageSelector = ({
       setAverageGrade('NA')
       return
     }
-    const numericGrades = student.filtered_grades.map(grade => gradeValues[grade.calification])
     
-    const validGrades = numericGrades.filter(grade => grade !== 0)
-    
-    const numericAverage = validGrades.length > 0
-      ? validGrades.reduce((acc, grade) => acc + grade, 0) / validGrades.length
-      : 0;
-    
-    setAverageGrade(gradeReverse[Math.round(numericAverage)] || "NA")
-  }, [student, gradeChanged]);
+
+    if (selectedCategory !== '0') {
+      const numericGrades = student.filtered_grades.map(grade => gradeValues[grade.calification])
+      const validGrades = numericGrades.filter(grade => grade !== 0)
+      const numericAverage = validGrades.length > 0
+        ? validGrades.reduce((acc, grade) => acc + grade, 0) / validGrades.length
+        : 0;
+      
+      setAverageGrade(gradeReverse[Math.round(numericAverage)] || "NA")
+    } else {
+      const numericGrades = student.filtered_grades.map(grade => ({
+        value: gradeValues[grade.calification] * grade.weight,
+        weight: grade.weight
+      }));
+      
+      const totalWeight = numericGrades.reduce((acc, grade) => acc + grade.weight, 0);
+      
+      const weightedAverage = totalWeight > 0
+        ? numericGrades.reduce((acc, grade) => acc + grade.value, 0) / totalWeight
+        : 0;
+      
+      setAverageGrade(gradeReverse[Math.round(weightedAverage)] || "NA")
+    }
+
+
+  }, [student, gradeChanged, selectedCategory]);
 
 
   const handleApprove = () => {
@@ -113,6 +140,9 @@ const AverageSelector = ({
   }
 
   return (
+    <>
+    {selectedCategory === '0' 
+    ? 
     <div className="relative min-w-[160px] max-w-[160px] text-center p-[1px]">
       {isLoading 
       ? 
@@ -174,7 +204,13 @@ const AverageSelector = ({
           quarterGradeId={(savedAvarageGrade.id).toString()}
           setIsLoading={setIsLoading}
         />}
+    </div> 
+    : 
+    <div className="min-w-[160px] max-w-[160px] text-center p-[1px]">
+      <p className={`w-full h-full flex justify-center items-center text-center font-semibold outline-none transition-all duration-300 ${gradeStyles[averageGrade]}`}>{averageGrade}</p>
     </div>
+    }
+    </>
   );
 };
 

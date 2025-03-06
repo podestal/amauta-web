@@ -26,8 +26,8 @@ const RemoveCategory = ({ categoryId }: Props) => {
                     setShow(true)
                     setOpen(false)
                 },
-                onError: () => {
-                    setMessage('Error al eliminar la categoría')
+                onError: (error) => {
+                    setMessage(error.status === 400 ? 'Esta categoría no puede ser eliminada porque tiene actividades asociadas.' : 'Error al eliminar la categoría')
                     setType('error')
                     setShow(true)
                     setOpen(false)

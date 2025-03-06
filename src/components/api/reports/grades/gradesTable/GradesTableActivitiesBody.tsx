@@ -47,7 +47,7 @@ const GradesTableActivitiesBody = ({ classroomId, competence, selectedAssignatur
                     <AverageSelector 
                         student={student}
                         selectedAssignature={selectedAssignature}
-                        selectedCategory={'1'}
+                        selectedCategory={category}
                         selectedCompetency={competence}
                         gradeChanged={gradeChanged}
                         classroomId={classroomId}
