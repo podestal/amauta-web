@@ -63,6 +63,7 @@ const GradesTableFilters = ({
             />
             <CategorySelector 
                 setSelectedCategory={setSelectedCategory}
+                all
             />
         </div>
         {/* <Input 

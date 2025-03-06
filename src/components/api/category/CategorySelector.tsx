@@ -7,9 +7,10 @@ interface Props {
     setSelectedCategory: React.Dispatch<React.SetStateAction<string>>
     categoryError?: string
     setCategoryError?: React.Dispatch<React.SetStateAction<string>>
+    all?: boolean
 }
 
-const CategorySelector = ({ setCategoryError, setSelectedCategory, categoryError }: Props) => {
+const CategorySelector = ({ setCategoryError, setSelectedCategory, categoryError, all }: Props) => {
 
     const access = useAuthStore(state => state.access) || ''
     const { data: categories, isLoading, isError, error, isSuccess } = useGetCategories({ access })
@@ -20,10 +21,10 @@ const CategorySelector = ({ setCategoryError, setSelectedCategory, categoryError
 
   return (
     <Selector
-        values={categories.map(category => ({ id: category.id.toString(), name: category.title }))}
+        values={all ? [ {id: '0', name: 'Todas'}, ...categories.map(category => ({ id: category.id.toString(), name: category.title }))] : categories.map(category => ({ id: category.id.toString(), name: category.title })) }
         label="Categoría"
         setter={setSelectedCategory}
-        lan="ES"
+        defaultValue="0"
         error={categoryError}
         setError={setCategoryError}
     />

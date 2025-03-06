@@ -24,6 +24,7 @@ export interface StudentGrade{
     calification: string
     observations: string
     activity: number
+    category: number
 }
 
 export interface StudentByGrade {

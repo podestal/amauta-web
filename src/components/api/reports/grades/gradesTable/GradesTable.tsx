@@ -79,12 +79,14 @@ const GradesTable = () => {
                 assignatureId={selectedAssignature}
                 competence={selectedComeptency}
                 quarter={selectedQuarter}
+                category={selectedCategory}
             />
             <GradesTableActivitiesBody 
                 classroomId={(assignatures.find(assignature => assignature.id.toString() === selectedAssignature)?.clase)?.toString() || '0'}
                 competence={selectedComeptency}
                 selectedAssignature={selectedAssignature}
                 quarter={selectedQuarter}
+                category={selectedCategory}
             />
         </>}
 

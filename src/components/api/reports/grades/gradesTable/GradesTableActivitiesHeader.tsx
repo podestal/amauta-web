@@ -7,9 +7,10 @@ interface Props {
     assignatureId: string
     competence: string
     quarter: string
+    category: string
 }
 
-const GradesTableActivitiesHeader = ({ assignatureId, competence, quarter }: Props) => {
+const GradesTableActivitiesHeader = ({ assignatureId, competence, quarter, category }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
     const { data: activities, isLoading, isError, error, isSuccess } = useGetActivitiesByAssignature({ access, assignatureId, competence, quarter })
@@ -31,7 +32,7 @@ const GradesTableActivitiesHeader = ({ assignatureId, competence, quarter }: Pro
             <h2 className="min-w-[360px] max-w-[360px] py-3 px-4">Nombres</h2>
             <h2 className="min-w-[160px] max-w-[160px] py-3 px-4 text-center">Promedio</h2>
             {activities
-            // .filter(assignment => selectedCategory === '0' || assignment.categoryId.toString() === selectedCategory)
+            .filter(assignment => category === '0' || assignment.category.toString() === category)
             .sort((a, b) => a.id - b.id)
             .map((activity) => (
                 <h2 

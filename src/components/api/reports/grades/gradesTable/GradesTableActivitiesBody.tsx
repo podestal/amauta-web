@@ -10,9 +10,10 @@ interface Props {
     competence: string
     selectedAssignature: string
     quarter: string
+    category: string
 }
 
-const GradesTableActivitiesBody = ({ classroomId, competence, selectedAssignature, quarter }: Props) => {
+const GradesTableActivitiesBody = ({ classroomId, competence, selectedAssignature, quarter, category }: Props) => {
 
     const [gradeChanged, setGradeChanged] = useState(false)
     
@@ -27,7 +28,7 @@ const GradesTableActivitiesBody = ({ classroomId, competence, selectedAssignatur
 
   return (
     <div className="w-full">
-        {/* <>{console.log('students', students)}</> */}
+        <>{console.log('students', students)}</>
         {students.map( (student, index) => (
                     <motion.div
                     key={student.uid}
@@ -53,6 +54,7 @@ const GradesTableActivitiesBody = ({ classroomId, competence, selectedAssignatur
                         quarter={quarter}
                     />
                     {student.filtered_grades
+                    .filter(grade => category === '0' || grade.category.toString() === category)
                     .sort((a, b) => a.activity - b.activity)
                     .map(grade => (
                         <GradesTableGradeCell 
