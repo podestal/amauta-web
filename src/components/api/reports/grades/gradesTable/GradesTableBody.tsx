@@ -79,6 +79,8 @@ const GradesTableBody = ({ classroomId, competencies, selectedQuarter }: Props) 
                                 <TextAreaRow 
                                     onSubmit={(e) => console.log(e)}
                                     placeholder="Conclusión descriptiva..."
+                                    canUpdate={quarterGrade.calification !== "NA"}
+                                    quarterGrade={quarterGrade}
                                 />
                             </div>
                         </div>

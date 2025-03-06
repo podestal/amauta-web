@@ -1,20 +1,44 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { FaSave } from "react-icons/fa";
+import useUpdateQuarterGrade from "../../hooks/api/quarterGrade/useUpdateQuarterGrade";
+import useAuthStore from "../../hooks/store/useAuthStore";
+import useNotificationsStore from "../../hooks/store/useNotificationsStore";
+import { Average } from "../../services/api/studentsService";
 
 interface TextAreaRowProps {
   placeholder?: string;
   onSubmit: (text: string) => void;
   initialValue?: string;
+  canUpdate: boolean;
+  quarterGrade: Average;
 }
 
-const TextAreaRow = ({ placeholder = "Write a message...", onSubmit, initialValue = "" }: TextAreaRowProps) => {
-  const [text, setText] = useState(initialValue);
+const TextAreaRow = ({ placeholder = "Write a message...", onSubmit, canUpdate, quarterGrade }: TextAreaRowProps) => {
+  const [text, setText] = useState(quarterGrade ? quarterGrade.conclusion : '');
+  const { setShow, setType, setMessage } = useNotificationsStore()
+  const access = useAuthStore((state) => state.access) || ""
+  const updateQuarterGrade = useUpdateQuarterGrade({ quarterGradeId: quarterGrade.id.toString() });
 
   const handleSubmit = () => {
-    if (!text.trim()) return;
+    // if (!text.trim()) return;
     onSubmit(text);
-    setText(""); // Clear after submit
+    updateQuarterGrade.mutate(
+      { 
+        access, 
+        quarterGrade: { conclusion: text, calification: quarterGrade.calification } 
+      },
+      {onSuccess: () => {
+        setShow(true)
+        setType('success')
+        setMessage('Conclusión actualizada correctamente')
+      },
+      onError: () => {
+        setShow(true)
+        setType('error')
+        setMessage('Error al actualizar la conclusión')
+      }}
+    );
   };
 
   return (
@@ -26,11 +50,12 @@ const TextAreaRow = ({ placeholder = "Write a message...", onSubmit, initialValu
         onChange={(e) => setText(e.target.value)}
       />
       <motion.button
-        className="absolute right-2 bottom-2 p-2 rounded-lg bg-blue-500 hover:bg-blue-600 text-white shadow-md transition-all"
+        className={`absolute right-2 bottom-2 p-2 rounded-lg bg-blue-500 ${canUpdate && 'hover:bg-blue-600'} text-white shadow-md transition-all`}
         whileTap={{ scale: 0.9 }}
         onClick={handleSubmit}
+        disabled={!canUpdate}
       >
-        <FaSave size={14} />
+        <FaSave size={14} className={`${!canUpdate && 'opacity-40'}`} />
       </motion.button>
     </div>
   );

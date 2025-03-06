@@ -10,8 +10,12 @@ export interface QuarterGrade {
     competence: number
 }
 
-export type QuarterGradeCreateUpdate = Omit<QuarterGrade, 'id'> & {
+export type QuarterGradeCreateUpdate = Omit<QuarterGrade, 'id' | 'conclusion' | 'assignature' | 'student' | 'competence' | 'quarter'> & {
     conclusion?: string
+    assignature?: number
+    student?: number
+    competence?: number
+    quarter?: string
 }
 
 interface Props {
