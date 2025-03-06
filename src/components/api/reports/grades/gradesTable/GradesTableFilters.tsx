@@ -1,4 +1,4 @@
-import { motion } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 import Selector from "../../../../ui/Selector"
 // import Input from "../../../../ui/Input"
 import { Assignature } from "../../../../../services/api/assignatureService"
@@ -11,6 +11,7 @@ interface Props {
     setSelectedAssignature: React.Dispatch<React.SetStateAction<string>>
     selectedAssignature: string
     setSelectedCompetency: React.Dispatch<React.SetStateAction<string>>
+    selectedCompetency: string
     setSelectedQuarter: React.Dispatch<React.SetStateAction<string>>
     setSelectedCategory: React.Dispatch<React.SetStateAction<string>>
     selectedQuarter: string
@@ -23,16 +24,24 @@ const GradesTableFilters = ({
     setSelectedAssignature,
     selectedAssignature,
     setSelectedCompetency,
+    selectedCompetency,
     setSelectedQuarter,
     setSelectedCategory,
     selectedQuarter,
     setSelectedArea,
  }: Props) => {
 
-          const filteredCompetencies = competencies.filter(competency => competency.area.toString() === assignatures.find(assignature => assignature.id.toString() === selectedAssignature)?.area.toString());
+        const filteredCompetencies = competencies.filter(competency => competency.area.toString() === assignatures.find(assignature => assignature.id.toString() === selectedAssignature)?.area.toString());
+        
         useEffect(() => {
             setSelectedArea(assignatures.find(assignature => assignature.id.toString() === selectedAssignature)?.area.toString() || '0')
         }, [filteredCompetencies])
+
+        useEffect(() => {
+            if (selectedCompetency === '0' || selectedAssignature === '0') {
+                setSelectedCategory('0')
+            }
+        }, [selectedCompetency, selectedAssignature])
 
   return (
     <motion.div 
@@ -42,29 +51,64 @@ const GradesTableFilters = ({
         className="w-full my-12">
         <div className="grid grid-cols-4 gap-12 mb-6">
             <Selector 
-            label={"Curso"}
-            values={assignatures.map(assignature => ({id: assignature.id.toString(), name: assignature.title}))}
-            setter={setSelectedAssignature}
-            lan="ES"
+                label={"Curso"}
+                values={assignatures.map(assignature => ({id: assignature.id.toString(), name: assignature.title}))}
+                setter={setSelectedAssignature}
+                lan="ES"
             />
-            <Selector 
-            label={"Competencia"}
-            values={[{id: '0', name: 'Todas'}, ...filteredCompetencies.map(competency => ({id: competency.id.toString(), name: competency.title}))]}
-            setter={setSelectedCompetency}
-            defaultValue="0"
-            lan="ES"
-            />
-            <Selector 
-            label={"Bimestre"}
-            values={[{id: 'Q1', name: 'Bimestre 1'}, {id: 'Q2', name: 'Bimestre 2'}, {id: 'Q3', name: 'Bimestre 3'}, {id: 'Q4', name: 'Bimestre 4'}]}
-            setter={setSelectedQuarter}
-            defaultValue={selectedQuarter}
-            lan="ES"
-            />
-            <CategorySelector 
-                setSelectedCategory={setSelectedCategory}
-                all
-            />
+            <AnimatePresence>
+                {selectedAssignature !== '0' && 
+                <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    transition={{ duration: 0.3 }}
+                >
+                    <Selector 
+                        label={"Competencia"}
+                        values={[{id: '0', name:'Todas'},...filteredCompetencies.map(competency => ({id: competency.id.toString(), name: competency.title}))]}
+                        setter={setSelectedCompetency}
+                        lan="ES"
+                        defaultValue={'0'}
+                    />
+                </motion.div>}
+            </AnimatePresence>
+            <AnimatePresence>
+                {selectedAssignature !== '0' && 
+                <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    transition={{ duration: 0.3 }}
+                >
+                    <Selector 
+                        label={"Bimestre"}
+                        values={[
+                            {id: 'Q1', name: 'Bimestre 1'},
+                            {id: 'Q2', name: 'Bimestre 2'},
+                            {id: 'Q3', name: 'Bimestre 3'},
+                            {id: 'Q4', name: 'Bimestre 4'},
+                        ]}
+                        setter={setSelectedQuarter}
+                        defaultValue={selectedQuarter}
+                        lan="ES"
+                    />
+                </motion.div>}
+            </AnimatePresence>
+            <AnimatePresence>
+                {selectedAssignature !== '0' && selectedCompetency !== '0' && 
+                <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    transition={{ duration: 0.3 }}
+                >
+                    <CategorySelector 
+                        setSelectedCategory={setSelectedCategory}
+                        all
+                    />
+                </motion.div>}
+            </AnimatePresence>
         </div>
         {/* <Input 
             placeholder="Buscar por nombre..."

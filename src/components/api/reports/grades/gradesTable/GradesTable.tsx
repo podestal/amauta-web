@@ -56,6 +56,7 @@ const GradesTable = () => {
             setSelectedAssignature={setSelectedAssignature}
             selectedAssignature={selectedAssignature}
             setSelectedCompetency={setSelectedCompetency}
+            selectedCompetency={selectedComeptency}
             setSelectedQuarter={setSelectedQuarter}
             setSelectedCategory={setSelectedCategory}
             selectedQuarter={selectedQuarter}
