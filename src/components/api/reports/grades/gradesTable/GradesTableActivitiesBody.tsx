@@ -11,9 +11,10 @@ interface Props {
     selectedAssignature: string
     quarter: string
     category: string
+    filterByName: string
 }
 
-const GradesTableActivitiesBody = ({ classroomId, competence, selectedAssignature, quarter, category }: Props) => {
+const GradesTableActivitiesBody = ({ classroomId, competence, selectedAssignature, quarter, category, filterByName }: Props) => {
 
     const [gradeChanged, setGradeChanged] = useState(false)
     
@@ -28,8 +29,9 @@ const GradesTableActivitiesBody = ({ classroomId, competence, selectedAssignatur
 
   return (
     <div className="w-full">
-        <>{console.log('students', students)}</>
-        {students.map( (student, index) => (
+        {students
+        .filter(student => student.first_name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(filterByName.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")) || student.last_name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(filterByName.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")))
+        .map( (student, index) => (
                     <motion.div
                     key={student.uid}
                     className="w-full flex border-b border-gray-700 hover:bg-gray-800 transition-colors"

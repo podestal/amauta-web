@@ -7,9 +7,8 @@ interface Props {
     classroomId: string
     competencies: string[]
     selectedQuarter: string
+    filterByName: string
 }
-
-const gradeOptions = ["A", "B", "C", "AD", "NA"]
 
 const gradeStyles: Record<string, string> = {
     "A": "bg-blue-500 text-white",
@@ -19,7 +18,7 @@ const gradeStyles: Record<string, string> = {
     "NA": "bg-gray-300 text-gray-700", 
   };
 
-const GradesTableBody = ({ classroomId, competencies, selectedQuarter }: Props) => {
+const GradesTableBody = ({ classroomId, competencies, selectedQuarter, filterByName }: Props) => {
     
     const access = useAuthStore(s => s.access) || ''
     const { data: students, isLoading, isError, error, isSuccess } = useGetStudentsByQuarterGrade({ access, classroomId, competencies, assignatureId: '', quarter: selectedQuarter })
@@ -32,7 +31,9 @@ const GradesTableBody = ({ classroomId, competencies, selectedQuarter }: Props) 
 
   return (
     <div className="w-full">
-        {students.map( (student, index) => (
+        {students
+            .filter(student => student.first_name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(filterByName.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")) || student.last_name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(filterByName.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")))
+            .map( (student, index) => (
             <motion.div
                 key={student.uid}
                 className="w-full flex border-b border-gray-700 hover:bg-gray-800 transition-colors"
@@ -63,18 +64,7 @@ const GradesTableBody = ({ classroomId, competencies, selectedQuarter }: Props) 
                             key={index}
                             className="min-w-[400px] max-w-[400px] text-center p-[1px] grid grid-cols-3"
                         >
-                        <select
-                            className={` w-full min-h-[46px] max-h-[46px] text-center font-semibold cursor-pointer outline-none transition-all duration-300 ${gradeStyles[quarterGrade.calification]}`}
-                            value={quarterGrade.calification}
-                            // onChange={(e) => handleAverageChange(student.id, competency.id, e.target.value)}
-                            onChange={(e) => console.log(e)}
-                            >
-                            {gradeOptions.map((grade) => (
-                                <option key={grade} value={grade}>
-                                {grade}
-                                </option>
-                            ))}
-                            </select>
+                            <p className={`w-ful min-h-[46px] max-h-[46px] flex justify-center items-center text-center font-semibold outline-none transition-all duration-300 ${gradeStyles[quarterGrade.calification]}`}>{quarterGrade.calification}</p>
                             <div className=" col-span-2 ml-2 flex items-start">
                                 <TextAreaRow 
                                     onSubmit={(e) => console.log(e)}

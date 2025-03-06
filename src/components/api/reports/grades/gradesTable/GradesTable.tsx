@@ -28,7 +28,7 @@ const GradesTable = () => {
         const [selectedComeptency, setSelectedCompetency] = useState('0');
         const [selectedQuarter, setSelectedQuarter] = useState(getCurrentQuarter());
         const [selectedCategory, setSelectedCategory] = useState('0');
-        // const [filterByName, setFilterByName] = useState('');
+        const [filterByName, setFilterByName] = useState('');
 
         const access = useAuthStore(s => s.access) || ''
         const { data: assignatures, isLoading, isError, error, isSuccess } = useGetAssignature({ access, byInstructor: true })
@@ -67,12 +67,15 @@ const GradesTable = () => {
             {selectedArea !== '0' && 
             <GradesTableHeader 
                 comptencies={competencies.filter(competency => competency.area.toString() === selectedArea)}
+                filterByName={filterByName}
+                setFilterByName={setFilterByName}
             />}
             {selectedAssignature !== '0' && 
             <GradesTableBody 
                 classroomId={(assignatures.find(assignature => assignature.id.toString() === selectedAssignature)?.clase)?.toString() || '0'}
                 competencies={competencies.filter(competency => competency.area.toString() === selectedArea).map(competency => competency.id.toString())}
                 selectedQuarter={selectedQuarter}
+                filterByName={filterByName}
             />}
         </>}
         {selectedComeptency !== '0' && <>
@@ -81,6 +84,8 @@ const GradesTable = () => {
                 competence={selectedComeptency}
                 quarter={selectedQuarter}
                 category={selectedCategory}
+                filterByName={filterByName}
+                setFilterByName={setFilterByName}
             />
             <GradesTableActivitiesBody 
                 classroomId={(assignatures.find(assignature => assignature.id.toString() === selectedAssignature)?.clase)?.toString() || '0'}
@@ -88,6 +93,7 @@ const GradesTable = () => {
                 selectedAssignature={selectedAssignature}
                 quarter={selectedQuarter}
                 category={selectedCategory}
+                filterByName={filterByName}
             />
         </>}
 
