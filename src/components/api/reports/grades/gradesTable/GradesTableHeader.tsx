@@ -16,7 +16,7 @@ const GradesTableHeader = ({ comptencies, filterByName, setFilterByName }: Props
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
     >
-        <div className="py-10 bg-gray-950">
+        <div className="pb-10 bg-gray-950">
             <Input 
                 placeholder="Buscar por nombre..."
                 onChange={e => {
