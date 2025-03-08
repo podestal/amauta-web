@@ -9,6 +9,7 @@ export interface Activity {
     quarter: string
     assignature: number
     category: number
+    category_name: string
     competences: number[]
     capacities: number[]
 }

@@ -33,6 +33,9 @@ const ActivityCard = ({ activity, isPastDue, assignatureId }: Props) => {
         >
         <h3 className="text-lg font-semibold">{activity.title}</h3>
         <p className="text-gray-600 dark:text-gray-300">Descripción: {activity.description}</p>
+        <div className='my-2'>
+            <span className='bg-blue-600 text-sm font-medium px-3 py-1 rounded-full'>{activity.category_name}</span>
+        </div>
         <p className="text-sm text-gray-500 mt-2">
             📅 Fecha de entrega: {moment(activity.due_date).format("DD/MM/YYYY")}
         </p>
