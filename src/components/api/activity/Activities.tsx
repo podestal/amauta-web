@@ -27,6 +27,7 @@ const Activities = () => {
 
         <ActivitiesList 
             assignatureId={state.assignatureId}
+            area={state.area}
             quarter={selectedQuarter}
         />
         </motion.div>

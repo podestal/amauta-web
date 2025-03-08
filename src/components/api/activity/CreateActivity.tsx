@@ -17,7 +17,9 @@ const CreateActivity = ({ area, assignatureId, selectedQuarter }: Props) => {
 
   return (
     <>
-        <Button label="➕ Nueva Tarea" onClick={() => setOpen(true)} />
+        <div className="flex justify-center items-center">
+            <Button label="➕ Nueva Actividad" onClick={() => setOpen(true)} />
+        </div>
         <Modal
             isOpen={open}
             onClose={() => setOpen(false)}

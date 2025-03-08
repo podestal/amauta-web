@@ -23,7 +23,7 @@ export interface ActivityByTutor {
     observations: string
 }
 
-export type UpdateCreateActivity = Omit<Activity, 'id' | 'created_at'>
+export type UpdateCreateActivity = Omit<Activity, 'id' | 'created_at' | 'category_name'>
 
 interface Props {
     activityId?: string

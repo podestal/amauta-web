@@ -8,15 +8,15 @@ interface Props {
     activity: Activity
     isPastDue: boolean
     assignatureId: string
-    // handleClick: () => void
+    area: string
 }
 
-const ActivityCard = ({ activity, isPastDue, assignatureId }: Props) => {
+const ActivityCard = ({ activity, isPastDue, assignatureId, area }: Props) => {
 
     const navigate = useNavigate()
 
     const handleClick = () => {
-        navigate(`/app/assignatures/${assignatureId}/activity/${activity.id}`, { state: { activity: activity } })
+        navigate(`/app/assignatures/${assignatureId}/activity/${activity.id}`, { state: { activity: activity, assignatureId, area } })
     }
 
   return (

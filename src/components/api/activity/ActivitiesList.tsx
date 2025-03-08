@@ -8,9 +8,10 @@ import useGetActivitiesByAssignature from "../../../hooks/api/activity/useGetAct
 interface Props {
     assignatureId: string
     quarter: string
+    area: string
 }
 
-const ActivitiesList = ({ assignatureId, quarter }: Props) => {
+const ActivitiesList = ({ assignatureId, quarter, area }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
     const { data: activities, isLoading, isError, error, isSuccess } = useGetActivitiesByAssignature({ access, assignatureId, quarter })
@@ -46,6 +47,7 @@ const ActivitiesList = ({ assignatureId, quarter }: Props) => {
                     activity={assignment}
                     isPastDue={moment(assignment.due_date).isBefore(moment(), "day")}
                     assignatureId={assignatureId}
+                    area={area}
                 />
         ))}
         </ul>
