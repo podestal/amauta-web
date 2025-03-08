@@ -6,6 +6,7 @@ export interface Assignature {
     clase: number
     instructor: number
     area: number,
+    classroom_description: string
 }
 
 export interface AssignatureByTutor {

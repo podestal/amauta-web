@@ -1,7 +1,7 @@
 
 import { motion } from "framer-motion"
 import { Category } from "../../../services/api/categoryService"
-import RemoveCategory from "./RemoveCategory"
+// import RemoveCategory from "./RemoveCategory"
 import UpdateCategory from "./UpdateCategory"
 
 interface Props {
@@ -22,7 +22,7 @@ const CategoryCard = ({ category }: Props) => {
             <span className="font-semibold">{category.title} - {category.weight * 100}%</span>
             <div className="flex gap-4">
             <UpdateCategory category={category} />
-            <RemoveCategory categoryId={category.id} />
+            {/* <RemoveCategory categoryId={category.id} /> */}
             </div>
         </motion.div>
     </>
