@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { competencies, } from "../../../../../data/mockdataForGrades";
 import { motion } from "framer-motion";
-import Button from "../../../../ui/Button";
 import GradesTableFilters from "./GradesTableFilters";
 import useAuthStore from "../../../../../hooks/store/useAuthStore";
 import useGetAssignature from "../../../../../hooks/api/assignature/useGetAssignature";
@@ -11,6 +10,7 @@ import GradesTableBody from "./GradesTableBody";
 import GradesTableActivitiesHeader from "./GradesTableActivitiesHeader";
 import GradesTableActivitiesBody from "./GradesTableActivitiesBody";
 import getCurrentQuarter from "../../../../../utils/getCurrentCuarter";
+import GetQuarterGradesExcel from "./GetQuarterGradesExcel";
 
 const GradesTable = () => {
 
@@ -47,9 +47,7 @@ const GradesTable = () => {
             transition={{ duration: 0.5 }}
             className="flex justify-between items-center gap-4 mb-6">
             <h2 className="text-3xl font-bold ">📊 Resumen de Calificaciones</h2>
-            <Button 
-                label="Exportar"
-            />
+            <GetQuarterGradesExcel />
         </motion.div>
         <GradesTableFilters 
             assignatures={assignatures}

@@ -32,7 +32,7 @@ const ActivityCard = ({ activity, isPastDue, assignatureId }: Props) => {
         whileTap={{ scale: 0.98 }}
         >
         <h3 className="text-lg font-semibold">{activity.title}</h3>
-        <p className="text-gray-600 dark:text-gray-300">{activity.description}</p>
+        <p className="text-gray-600 dark:text-gray-300">Descripción: {activity.description}</p>
         <p className="text-sm text-gray-500 mt-2">
             📅 Fecha de entrega: {moment(activity.due_date).format("DD/MM/YYYY")}
         </p>
