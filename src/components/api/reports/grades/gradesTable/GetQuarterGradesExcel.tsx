@@ -3,21 +3,34 @@ import useGetProfileStore from '../../../../../hooks/store/useGetProfileStore'
 import { Instructor } from '../../../../../services/api/instructorService'
 import Button from '../../../../ui/Button'
 import useAuthStore from '../../../../../hooks/store/useAuthStore'
+import Modal from '../../../../ui/Modal'
+import { useState } from 'react'
+import Selector from '../../../../ui/Selector'
+import getClassroomDescription from '../../../../../utils/getClassroomDescription'
 
-const GetQuarterGradesExcel = () => {
+interface Props {
+    selectedQuarter: string
+}
+
+const GetQuarterGradesExcel = ({ selectedQuarter }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
     const profile = useGetProfileStore(s => s.profile)
     const instructor = profile as Instructor
-    const classroom = instructor.clases_details[0].split('-').pop()
-    
+    const classroom = instructor.clases_details.length === 1 && instructor.clases_details[0].split('-').pop()
+    const [selectedClassroom, setSelectedClassroom] = useState(classroom || '')
+    const [open, setOpen] = useState(false)
 
     
 
     const handleGetQuarterGradesExcel = () => {
+        console.log('selectedClassroom', selectedClassroom);
+        
         axios.get('http://127.0.0.1:8000/api/student/export_to_excel/', {
             params: {
-                classroom: classroom,
+                classroom: selectedClassroom,
+                quarter: selectedQuarter,
+                instructor_id: instructor.id
             },
             headers: {
                 Authorization: `JWT ${access}`
@@ -50,10 +63,36 @@ const GetQuarterGradesExcel = () => {
     
 
   return (
-    <Button 
-        label="Exportar"
-        onClick={handleGetQuarterGradesExcel}
-    />
+    <>
+        <Button 
+            label="Exportar"
+            onClick={() => {
+                if (instructor.clases_details.length === 1) {
+                    handleGetQuarterGradesExcel()
+                }
+                else {
+                    setOpen(true)
+                }
+            }}
+        />
+        <Modal
+            isOpen={open}
+            onClose={() => setOpen(false)}
+        >
+            <div className='flex justify-center items-center flex-col gap-4'>
+                <Selector 
+                    label="Clase"
+                    values={instructor.clases_details.map(classroom => ({id: classroom.split('-').pop() || '', name: getClassroomDescription({grade: classroom.split('-')[0], section: classroom.split('-')[1], level: classroom.split('-')[2], lan: 'ES', short: true})}))}
+                    setter={setSelectedClassroom}
+                    lan='ES'
+                />
+                <Button 
+                    label="Exportar"
+                    onClick={handleGetQuarterGradesExcel}
+                />
+            </div>
+        </Modal>
+    </>
   )
 }
 

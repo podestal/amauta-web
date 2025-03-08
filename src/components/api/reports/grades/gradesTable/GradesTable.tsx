@@ -47,7 +47,9 @@ const GradesTable = () => {
             transition={{ duration: 0.5 }}
             className="flex justify-between items-center gap-4 mb-6">
             <h2 className="text-3xl font-bold ">📊 Resumen de Calificaciones</h2>
-            <GetQuarterGradesExcel />
+            <GetQuarterGradesExcel 
+                selectedQuarter={selectedQuarter}
+            />
         </motion.div>
         <GradesTableFilters 
             assignatures={assignatures}
