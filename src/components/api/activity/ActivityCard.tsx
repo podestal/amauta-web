@@ -3,6 +3,7 @@ import { Activity } from '../../../services/api/activityService';
 import moment from 'moment';
 import { capacities, competencies } from '../../../data/mockdataForGrades';
 import { useNavigate } from 'react-router-dom';
+import UpdateActivity from './UpdateActivity';
 
 interface Props {
     activity: Activity
@@ -20,16 +21,17 @@ const ActivityCard = ({ activity, isPastDue, assignatureId, area }: Props) => {
     }
 
   return (
-    <motion.li
+    <div 
         key={activity.id}
-        onClick={handleClick}
-        className={`bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md cursor-pointer transition-transform transform hover:scale-105 hover:shadow-lg border-l-4 
-            ${isPastDue ? "border-gray-500" : "border-blue-500"}`}
+        className='flex'>
+    <motion.li
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.2 }}
-        whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.98 }}
+        onClick={handleClick}
+        className={` flex-1 bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md cursor-pointer transition-transform transform hover:shadow-lg border-l-4 
+            ${isPastDue ? "border-gray-500" : "border-blue-500"}`}
         >
         <h3 className="text-lg font-semibold">{activity.title}</h3>
         <p className="text-gray-600 dark:text-gray-300">Descripción: {activity.description}</p>
@@ -74,6 +76,12 @@ const ActivityCard = ({ activity, isPastDue, assignatureId, area }: Props) => {
             </div>
         )}
         </motion.li>
+        <UpdateActivity 
+            activity={activity} 
+            assignatureId={assignatureId} 
+            area={parseInt(area)}
+        />
+    </div>
 
   )
 }

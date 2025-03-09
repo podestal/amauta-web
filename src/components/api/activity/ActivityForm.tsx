@@ -28,7 +28,7 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, setOpen }
     const access =useAuthStore(state => state.access) || '';
     const [title, setTitle] = useState(activity ? activity.title : "");
     const [description, setDescription] = useState(activity ? activity.description : "");
-    const [selectedCategory, setSelectedCategory] = useState( activity ? activity.category.toString() : "");
+    const [selectedCategory, setSelectedCategory] = useState( activity ? activity.category.toString() : "0");
     const [dueDate, setDueDate] = useState<Date | undefined>(undefined);
 
     const [selectedCompetencies, setSelectedCompetencies] = useState<number[]>([]);
@@ -141,7 +141,7 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, setOpen }
         transition={{ duration: 0.3 }}
     >
         <h1 className="text-3xl font-bold text-center text-gray-100 mb-6">
-        📝 Crear Nueva Tarea
+        📝 {activity ? 'Modificar Tarea' : 'Crear Nueva Tarea'}
         </h1>
         <form 
             onSubmit={handleCreateActivity}
@@ -163,6 +163,7 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, setOpen }
                 categoryError={categoryError}
                 setCategoryError={setCategoryError}
                 categoryRef={categoryRef}
+                selectedCategory={selectedCategory}
             />
 
             {/* Due Date */}
