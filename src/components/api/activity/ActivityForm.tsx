@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 // import useNotificationsStore from "../../../hooks/store/useNotificationsStore";
 import Input from "../../ui/Input";
 import Calendar from "../../ui/Calendar";
@@ -29,14 +29,24 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, setOpen }
     const [title, setTitle] = useState(activity ? activity.title : "");
     const [description, setDescription] = useState(activity ? activity.description : "");
     const [selectedCategory, setSelectedCategory] = useState( activity ? activity.category.toString() : "0");
-    const [dueDate, setDueDate] = useState<Date | undefined>(undefined);
+    const [removedCompetency, setRemovedCompetency] = useState(0);
+    const [dueDate, setDueDate] = useState<Date | undefined>(
+      activity ? new Date(activity.due_date + "T00:00:00") : undefined
+  )
 
-    const [selectedCompetencies, setSelectedCompetencies] = useState<number[]>([]);
-    const [selectedCapacities, setSelectedCapacities] = useState<number[]>([]);
+    const [selectedCompetencies, setSelectedCompetencies] = useState<number[]>(activity ? activity.competences : []);
+    const [selectedCapacities, setSelectedCapacities] = useState<number[]>(activity ? activity.capacities : []);
   
     const [titleError, setTitleError] = useState("");
     const [descriptionError, setDescriptionError] = useState("");
     const [categoryError, setCategoryError] = useState("");
+
+    console.log('activity', activity)
+    console.log('selectedCompetencies', selectedCompetencies)
+    console.log('selectedCapacities', selectedCapacities);
+    console.log('removedCompetency', removedCompetency);
+    
+    
 
     // REFS
     const titleRef = useRef<HTMLInputElement>(null);
@@ -50,6 +60,30 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, setOpen }
         ref.current.focus();
       }
     };
+
+    useEffect(() => {
+      if (selectedCompetencies.length === 0) {
+        setSelectedCapacities([]);
+      }
+      if (!selectedCompetencies.includes(removedCompetency)) {
+        const capacitiesToExclude = capacities.filter( capacity => (capacity.competence === removedCompetency)).map(capacity => capacity.id)
+        const filteredCapacities = selectedCapacities.filter( capacity => !capacitiesToExclude.includes(capacity))
+        setSelectedCapacities(filteredCapacities);
+      }
+    }, [selectedCompetencies])
+
+    // useEffect(() => {
+    //   if (selectedCompetencies.length === 0) {
+    //     setSelectedCapacities([]);
+    //   } else {
+    //     if (selectedCompetencies.includes(removedCompetency)) {
+    //     // const capacitiesToExclude = capacities.filter( capacity => (capacity.competence === removedCompetency))
+    //     // console.log('capacitiesToExclude', capacitiesToExclude);
+        
+
+    //   }
+      
+    // }, [selectedCompetencies])
 
     const handleCreateActivity = (e: React.FormEvent<HTMLFormElement>) => {
 
@@ -185,7 +219,9 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, setOpen }
                     type="button"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    onClick={() => toggleCompetency(competency.id)}
+                    onClick={() => {
+                      setRemovedCompetency(competency.id)
+                      toggleCompetency(competency.id)}}
                     className={`px-3 py-1 text-sm rounded-full transition-all duration-300 ${
                       selectedCompetencies.includes(competency.id)
                         ? "bg-blue-500 text-white"
