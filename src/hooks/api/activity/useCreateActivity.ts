@@ -19,7 +19,7 @@ const useCreateActivity = ({ assignatureId, quarter }: Props): UseMutationResult
         onSuccess: res => {
             queryClient.setQueryData<Activity[]>([`activities ${quarter} ${assignatureId}`], (oldData) => {
                 if (!oldData) return [res]
-                return [...oldData, res]
+                return [res, ...oldData]
             })
         },
         onError: err => {

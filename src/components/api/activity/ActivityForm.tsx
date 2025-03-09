@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 // import useNotificationsStore from "../../../hooks/store/useNotificationsStore";
 import Input from "../../ui/Input";
 import Calendar from "../../ui/Calendar";
@@ -38,20 +38,34 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, setOpen }
     const [descriptionError, setDescriptionError] = useState("");
     const [categoryError, setCategoryError] = useState("");
 
+    // REFS
+    const titleRef = useRef<HTMLInputElement>(null);
+    const categoryRef = useRef<HTMLSelectElement>(null);
+
     const [loading, setLoading] = useState(false);
+
+    const scrollToField = (ref: React.RefObject<HTMLElement>) => {
+      if (ref.current) {
+        ref.current.scrollIntoView({ behavior: "smooth", block: "center" });
+        ref.current.focus();
+      }
+    };
 
     const handleCreateActivity = (e: React.FormEvent<HTMLFormElement>) => {
 
         e.preventDefault()
+        let firstErrorField: React.RefObject<HTMLElement> | null = null
 
-        console.log('dueDate', dueDate);
-        
         if (!title) {
             setTitleError("El título es requerido");
+            if (!firstErrorField) firstErrorField = titleRef;
+            scrollToField(firstErrorField);
             return;
         }
         if (!selectedCategory) {
             setCategoryError("La categoría es requerida");
+            if (!firstErrorField) firstErrorField = categoryRef;
+            scrollToField(firstErrorField);
             return;
         }
 
@@ -140,6 +154,7 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, setOpen }
                   setTitle(e.target.value);
                 }}
                 error={titleError}
+                ref={titleRef}
               />
 
             {/* Category Selector */}
@@ -147,6 +162,7 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, setOpen }
                 setSelectedCategory={setSelectedCategory}
                 categoryError={categoryError}
                 setCategoryError={setCategoryError}
+                categoryRef={categoryRef}
             />
 
             {/* Due Date */}

@@ -40,6 +40,7 @@ const ActivitiesList = ({ assignatureId, quarter, area }: Props) => {
     
             return dueA.diff(dueB); // Sort by date
             })
+            .sort((a, b) => a.id + b.id)
             .map((assignment) => (
                 
                 <ActivityCard 

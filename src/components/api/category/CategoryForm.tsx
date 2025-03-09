@@ -24,7 +24,7 @@ const CategoryForm = ({ category, editing, createCategory, updateCategory, setOp
     const access = useAuthStore(state => state.access) || ''
     const instructor = useGetProfileStore(state => state.profile)
     const [name, setName] = useState(category ? category.title : '')
-    const [weight, setWeight] = useState(category ? category.weight : 0)
+    const [weight, setWeight] = useState(category ? (category.weight*100).toString() : '')
     const { setMessage, setShow, setType } = useNotificationsStore()
     const [loading, setLoading] = useState(false)
 
@@ -44,12 +44,18 @@ const CategoryForm = ({ category, editing, createCategory, updateCategory, setOp
             return
         }
 
+
+        
+        const normalizedWeight = (parseInt(weight)/100)
+        console.log('normalizedWeight', normalizedWeight);
+        
+
         setLoading(true)
         updateCategory && updateCategory.mutate({
             access,
             category: {
                 title: name,
-                weight: weight,
+                weight: normalizedWeight, 
                 instructor: instructor ? instructor.id : 0
             }
         }
@@ -80,13 +86,16 @@ const CategoryForm = ({ category, editing, createCategory, updateCategory, setOp
             setWeightError('El peso es requerido')
             return
         }
+        console.log('weight', weight);
+        const normalizedWeight = parseInt(weight)/100
+        console.log('normalizedWeight', normalizedWeight);
 
         setLoading(true)
         createCategory && createCategory.mutate({
             access,
             category: {
                 title: name,
-                weight: weight,
+                weight: normalizedWeight,
                 instructor: instructor ? instructor.id : 0
             }
         }
@@ -96,7 +105,7 @@ const CategoryForm = ({ category, editing, createCategory, updateCategory, setOp
                 setType('success')
                 setShow(true)
                 setName('')
-                setWeight(0)
+                setWeight('')
             },
             onError: () => {
                 setMessage('Error al añadir la categoría')
@@ -124,11 +133,11 @@ const CategoryForm = ({ category, editing, createCategory, updateCategory, setOp
         />
         <Input 
             name="weight"
-            placeholder="Peso (ej. 0.3)"
+            placeholder="Peso (ejm 20)"
             value={weight}
             onChange={(e) => {
-                weight > 0 && setWeightError('')
-                setWeight(parseFloat(e.target.value))}}
+                weight && setWeightError('')
+                setWeight(e.target.value)}}
             type="number"
             min="0"
             step="0.01"

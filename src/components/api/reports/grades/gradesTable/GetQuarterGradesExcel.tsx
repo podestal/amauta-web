@@ -26,7 +26,7 @@ const GetQuarterGradesExcel = ({ selectedQuarter }: Props) => {
     const handleGetQuarterGradesExcel = () => {
         console.log('selectedClassroom', selectedClassroom);
         
-        axios.get('http://127.0.0.1:8000/api/student/export_to_excel/', {
+        axios.get(`${import.meta.env.VITE_API_URL}student/export_to_excel/`, {
             params: {
                 classroom: selectedClassroom,
                 quarter: selectedQuarter,
