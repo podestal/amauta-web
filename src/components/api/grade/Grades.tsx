@@ -22,7 +22,7 @@ const Grades = ({ activityId }: Props) => {
 
   return (
     <>
-        <div className="overflow-x-auto max-lg:hidden">
+        <div className="overflow-x-auto">
         <motion.div
           className="w-full border-collapse bg-white dark:bg-gray-900 shadow-md rounded-lg overflow-hidden"
           initial={{ opacity: 0, y: 20 }}
@@ -30,7 +30,7 @@ const Grades = ({ activityId }: Props) => {
           transition={{ duration: 0.5 }}
         >
           {/* Table Header */}
-          <div className="grid grid-cols-8 bg-gray-800 text-white font-bold min-h-14">
+          <div className="grid grid-cols-8 bg-gray-800 text-white font-bold min-h-14 max-lg:hidden">
               <h2 className="flex items-center justify-left px-2">DNI</h2>
               <h2 className="flex items-center justify-left">Nombres</h2>
               <h2 className="flex items-center justify-left">Apellido</h2>

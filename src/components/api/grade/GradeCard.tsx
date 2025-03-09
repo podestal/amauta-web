@@ -36,15 +36,19 @@ const GradeCard = ({ grade, index, activityId }: Props) => {
   return (
     <motion.div
         key={grade.student.uid}
-        className="border-bborder-gray-700 hover:bg-gray-800 transition-colors grid grid-cols-8"
+        className="border-bborder-gray-700 hover:bg-gray-800 transition-colors lg:grid lg:grid-cols-8 flex flex-col"
         initial={{ opacity: 0, y: 10 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.3, delay: index * 0.05 }}
         >
-        <h2 className="flex items-center justify-left px-2">{grade.student.uid}</h2>
-        <h2 className="flex items-center justify-left">{grade.student.last_name}</h2>
-        <h2 className="flex items-center justify-left">{grade.student.first_name}</h2>
+        <h2 className="flex items-center justify-left px-2 max-lg:hidden">{grade.student.uid}</h2>
+        <div className="flex items-center justify-center gap-2 lg:hidden my-6">
+            <h2 className="flex items-center justify-left text-xl font-bold">{grade.student.last_name}</h2>
+            <h2 className="flex items-center justify-left text-xl font-bold">{grade.student.first_name}</h2>
+        </div>
+        <h2 className="flex items-center justify-left max-lg:hidden">{grade.student.last_name}</h2>
+        <h2 className="flex items-center justify-left max-lg:hidden">{grade.student.first_name}</h2>
         <div className="py-3 px-4 text-center col-span-5">
             <div className="w-full flex justify-evenly gap-2">
             {gradeOptions.map( optionGrade => (
@@ -56,7 +60,7 @@ const GradeCard = ({ grade, index, activityId }: Props) => {
             ))}
             </div>
         </div>
-        </motion.div>
+    </motion.div>
   )
 }
 
