@@ -12,7 +12,7 @@ const CategoryChart = ({ categories, totalWeight }: Props) => {
         <h3 className="text-xl font-bold text-center mb-4">📈 Distribución de Peso</h3>
         <ResponsiveContainer width="100%" height={250}>
         <BarChart data={categories}>
-            <XAxis dataKey="name" />
+            <XAxis dataKey="title" />
             <YAxis />
             <Tooltip />
             <Bar dataKey="weight" fill={(totalWeight).toFixed(2) === '100.00' ? "#3b82f6" : "#F44336"} radius={[5, 5, 0, 0]} />
