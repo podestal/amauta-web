@@ -4,6 +4,7 @@ import ActivityForm from "./ActivityForm"
 import { useState } from "react"
 import Modal from "../../ui/Modal"
 import { motion } from "framer-motion"
+import useUpdateActivity from "../../../hooks/api/activity/useUpdateActivity"
 
 interface Props {
     activity: Activity
@@ -11,15 +12,10 @@ interface Props {
     assignatureId: string
 }
 
-// area: number;
-// assignatureId: string;
-// activity?: Activity;
-// createActivity?: UseMutationResult<Activity, Error, CreateActivityData>
-// setOpen?: React.Dispatch<React.SetStateAction<boolean>>
-
 const UpdateActivity = ({ activity, area, assignatureId }: Props) => {
 
     const [open, setOpen] = useState(false)
+    const updateActivity  = useUpdateActivity({ activityId: activity.id.toString(), assignatureId, quarter: activity.quarter })
   return (
     <>
         <motion.div 
@@ -45,6 +41,7 @@ const UpdateActivity = ({ activity, area, assignatureId }: Props) => {
                 setOpen={setOpen}
                 area={area}
                 assignatureId={assignatureId}
+                updateActivity={updateActivity}
             />
         </Modal>
     </>

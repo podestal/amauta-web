@@ -19,10 +19,11 @@ interface Props {
     assignatureId: string;
     activity?: Activity;
     createActivity?: UseMutationResult<Activity, Error, CreateActivityData>
+    updateActivity?: UseMutationResult<Activity, Error, CreateActivityData>
     setOpen?: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const ActivityForm = ({ area, assignatureId, activity, createActivity, setOpen }: Props) => {
+const ActivityForm = ({ area, assignatureId, activity, createActivity, updateActivity, setOpen }: Props) => {
 
     const { setMessage, setShow, setType } = useNotificationsStore();
     const access =useAuthStore(state => state.access) || '';
@@ -41,12 +42,7 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, setOpen }
     const [descriptionError, setDescriptionError] = useState("");
     const [categoryError, setCategoryError] = useState("");
 
-    console.log('activity', activity)
-    console.log('selectedCompetencies', selectedCompetencies)
-    console.log('selectedCapacities', selectedCapacities);
-    console.log('removedCompetency', removedCompetency);
-    
-    
+    console.log('activity', activity)    
 
     // REFS
     const titleRef = useRef<HTMLInputElement>(null);
@@ -150,6 +146,30 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, setOpen }
             },
             onSettled: () => setLoading(false),
         });
+
+        console.log('due_date', moment(dueDate).format('YYYY-MM-DD'));
+        
+
+        updateActivity && updateActivity.mutate({
+            access,
+            activity: {
+                title: title,
+                description: description,
+                category: parseInt(selectedCategory),
+                competences: selectedCompetencies,
+                capacities: selectedCapacities,
+                due_date: moment(dueDate).format('YYYY-MM-DD'),
+                quarter: "Q1",
+                assignature: parseInt(assignatureId),
+            },
+        }, {
+            onSuccess: () => {
+                setMessage("Tarea actualizada");
+                setType("success");
+                setShow(true);
+                setOpen && setOpen(false);
+            }
+        })
     }
 
     // Toggle Competency Selection
