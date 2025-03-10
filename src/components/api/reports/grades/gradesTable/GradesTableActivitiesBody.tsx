@@ -46,7 +46,7 @@ const GradesTableActivitiesBody = ({ classroomId, competence, selectedAssignatur
                     <h2 className="min-w-[360px] max-w-[360px] py-3 px-4">
                         {student.first_name} {student.last_name}
                     </h2>
-                    <AverageSelector 
+                    {category === '0' && <AverageSelector 
                         student={student}
                         selectedAssignature={selectedAssignature}
                         selectedCategory={category}
@@ -54,7 +54,7 @@ const GradesTableActivitiesBody = ({ classroomId, competence, selectedAssignatur
                         gradeChanged={gradeChanged}
                         classroomId={classroomId}
                         quarter={quarter}
-                    />
+                    />}
                     {student.filtered_grades
                     .filter(grade => category === '0' || grade.category.toString() === category)
                     .sort((a, b) => a.activity - b.activity)
@@ -66,6 +66,7 @@ const GradesTableActivitiesBody = ({ classroomId, competence, selectedAssignatur
                             competence={competence}
                             setGradeChanged={setGradeChanged}
                             quarter={quarter}
+                            studentUid={(student.uid).toString()}
                         />
                     ))}
                 </motion.div>

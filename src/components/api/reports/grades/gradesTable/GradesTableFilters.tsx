@@ -5,6 +5,7 @@ import { Assignature } from "../../../../../services/api/assignatureService"
 import { competencies } from "../../../../../data/mockdataForGrades"
 import CategorySelector from "../../../category/CategorySelector"
 import { useEffect } from "react"
+import getClassroomDescription from "../../../../../utils/getClassroomDescription"
 
 interface Props {
     assignatures: Assignature[]
@@ -52,7 +53,12 @@ const GradesTableFilters = ({
         <div className="grid grid-cols-4 gap-12 mb-6">
             <Selector 
                 label={"Curso"}
-                values={assignatures.map(assignature => ({id: assignature.id.toString(), name: assignature.title}))}
+                values={assignatures.map(assignature => {
+                    const [grade, section, level] = assignature.classroom_description.split("-");
+                    const classRoomDescription = getClassroomDescription({ lan:'ES', grade, section, level, short: true });
+                    return {id: assignature.id.toString(), name: `${assignature.title} - ${classRoomDescription
+                    }`}
+                })}
                 setter={setSelectedAssignature}
                 lan="ES"
             />

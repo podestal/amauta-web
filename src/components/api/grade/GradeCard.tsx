@@ -21,7 +21,7 @@ const gradeStyles: Record<string, string> = {
 const GradeCard = ({ grade, index, activityId }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
-    const updateGrade = useUpdateGrade({ gradeId: grade.id, activityId })
+    const updateGrade = useUpdateGrade({ gradeId: grade.id, activityId, studentUid: (grade.student.uid).toString() })
 
     const handleUpdateGrade = (newGrade: string) => {
         updateGrade.mutate({

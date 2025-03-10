@@ -25,8 +25,8 @@ if ("serviceWorker" in navigator) {
 
       // Example: Show a test notification
       navigator.serviceWorker.ready.then((registration) => {
-        registration.showNotification("Welcome!", {
-          body: "You have enabled notifications.",
+        registration.showNotification("Bienvenido!", {
+          body: "Haz activado notificaciones",
           icon: "/icons/quenteh.png",
           badge: "/icons/quenteh.png",
           data: { url: "/" }, // Optional URL to navigate when clicked
