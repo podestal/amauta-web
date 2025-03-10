@@ -10,13 +10,15 @@ interface Props {
     activityId?: string
     assignatureId: string
     quarter: string
+    classroom: string
 }
 
-const useUpdateActivity = ({ activityId, assignatureId, quarter }: Props): UseMutationResult<Activity, Error, CreateActivityData> => {
+const useUpdateActivity = ({ activityId, assignatureId, quarter, classroom }: Props): UseMutationResult<Activity, Error, CreateActivityData> => {
     const activityService = getActivityService({ activityId })
     const queryClient = useQueryClient()
+    const params = { classroom }
     return useMutation({
-        mutationFn: (data: CreateActivityData) => activityService.update(data.activity, data.access),
+        mutationFn: (data: CreateActivityData) => activityService.update(data.activity, data.access, params),
         onSuccess: res => {
             console.log('res', res)
             // queryClient.setQueryData<Activity[]>([`activities ${quarter} ${assignatureId}`], (oldData) => {

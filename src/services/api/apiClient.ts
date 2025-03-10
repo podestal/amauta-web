@@ -45,15 +45,15 @@ class APIClient<ResponseType, RequestType = ResponseType> {
             .then(res => res.data)            
     }
 
-    update = (data: RequestType, access?: string, email?: string) => {
+    update = (data: RequestType, access?: string, params?: Record<string, string>) => {
 
         const config: any = {}
         if (access) {
             config.headers = { Authorization: `JWT ${access}` }
         }
 
-        if (email) {
-            config.params = { email }
+        if (params) {
+            config.params = params
         }
 
         return axiosInstance

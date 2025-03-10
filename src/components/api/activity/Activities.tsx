@@ -32,6 +32,7 @@ const Activities = () => {
             assignatureId={state.assignatureId}
             area={state.area}
             quarter={selectedQuarter}
+            classroom={state.classroom}
         />
         </motion.div>
     </div>
