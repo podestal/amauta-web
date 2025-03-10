@@ -55,10 +55,11 @@ const GradesSummaryChart = ({ studentId, setAssignatures, quarter }: Props) => {
 
 
   return (
-    <div className="p-4 rounded-lg shadow-md w-full">
+    <div className="py-4 rounded-lg shadow-md w-full">
         <h2 className="text-white text-lg font-semibold mb-2 text-center">Promedio por Curso</h2>
         <>{console.log('assignatures', assignatures)}</>
-        {data && <ResponsiveContainer width="100%" height={200}>
+        {data && 
+        <ResponsiveContainer width="100%" height={200}>
         <BarChart layout="vertical" data={data} margin={{ top: 10, right: 30, left: 10, bottom: 10 }}>
           {/* Custom X Axis to show letter grades instead of numbers */}
           <XAxis

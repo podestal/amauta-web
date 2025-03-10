@@ -65,7 +65,7 @@ const TutorStudentCard = ({ student }: Props) => {
                 transition={{ duration: 0.5, ease: "easeInOut" }}
                 className="overflow-hidden"
             >
-                <div className="mt-4 p-4 bg-gray-800 rounded-lg shadow-md">
+                <div className="w-full mt-4 py-4 bg-gray-800 rounded-lg shadow-md">
                     {/* Attendance Chart */}
                     <div className="w-full flex justify-evenly gap-4">
                         {quarters.map((quarter) => (
