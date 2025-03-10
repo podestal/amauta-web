@@ -29,19 +29,15 @@ class APIClient<ResponseType, RequestType = ResponseType> {
             .then(res => res.data);
     }
 
-    post = (data: RequestType, access?: string, option?: string, cart?: number) => {
+    post = (data: RequestType, access?: string, params?: Record<string, string>) => {
 
         const config: any = {}
         if (access) {
             config.headers = { Authorization: `JWT ${access}` }
         }
 
-        if (cart) {
-            config.params = { cart }
-        }
-
-        if (option) {
-            config.data =  { option }
+        if (params) {
+            config.params = params
         }
 
         return axiosInstance

@@ -8,12 +8,13 @@ interface Props {
     area: number
     assignatureId: string
     selectedQuarter: string
+    classroom: string
 }
 
-const CreateActivity = ({ area, assignatureId, selectedQuarter }: Props) => {
+const CreateActivity = ({ area, assignatureId, selectedQuarter, classroom }: Props) => {
 
     const [open, setOpen] = useState(false)
-    const createActivity = useCreateActivity({ assignatureId, quarter:selectedQuarter })
+    const createActivity = useCreateActivity({ assignatureId, quarter:selectedQuarter, classroom })
 
   return (
     <>

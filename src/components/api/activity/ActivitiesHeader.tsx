@@ -7,9 +7,10 @@ interface Props {
     assignatureId: string
     selectedQuarter: string
     setSelectedQuarter: React.Dispatch<React.SetStateAction<string>>
+    classroom: string
 }
 
-const ActivitiesHeader = ({ area, assignatureId, setSelectedQuarter, selectedQuarter }: Props) => {
+const ActivitiesHeader = ({ area, assignatureId, setSelectedQuarter, selectedQuarter, classroom }: Props) => {
   return (
     <div>
       <div className='flex justify-center gap-6'>
@@ -39,6 +40,7 @@ const ActivitiesHeader = ({ area, assignatureId, setSelectedQuarter, selectedQua
             area={parseInt(area)}
             assignatureId={assignatureId}
             selectedQuarter={selectedQuarter}
+            classroom={classroom}
         />
         </div>
         <div className='max-lg:hidden'>
@@ -54,6 +56,7 @@ const ActivitiesHeader = ({ area, assignatureId, setSelectedQuarter, selectedQua
             area={parseInt(area)}
             assignatureId={assignatureId}
             selectedQuarter={selectedQuarter}
+            classroom={classroom}
         />
         </div>
     </div>

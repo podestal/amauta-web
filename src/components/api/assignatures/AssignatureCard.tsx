@@ -14,7 +14,7 @@ const AssignatureCard = ({ assignature, icon, styles, idx }: Props) => {
 
     const navigate = useNavigate()
     const handleNavigate = () => {
-        navigate(`/app/assignatures/${assignature.id}`, { state: { area: assignature.area, assignatureId: assignature.id } })
+        navigate(`/app/assignatures/${assignature.id}`, { state: { area: assignature.area, assignatureId: assignature.id, classroom: assignature.clase } })
     }
     const [grade, section, level] = assignature.classroom_description.split("-");
     const classRoomDescription = getClassroomDescription({ lan:'ES', grade, section, level, short: true });

@@ -9,6 +9,8 @@ const Activities = () => {
 
     const [selectedQuarter, setSelectedQuarter] = useState(getCurrentQuarter());
     const state = useLocation().state
+    console.log('state', state);
+    
 
   return (
     <div>
@@ -23,6 +25,7 @@ const Activities = () => {
             area={state.area}
             selectedQuarter={selectedQuarter}
             setSelectedQuarter={setSelectedQuarter}
+            classroom={state.classroom}
         />
 
         <ActivitiesList 
