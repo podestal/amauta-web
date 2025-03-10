@@ -92,7 +92,7 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, updateAct
             scrollToField(firstErrorField);
             return;
         }
-        if (!selectedCategory) {
+        if (selectedCategory === '0') {
             setCategoryError("La categoría es requerida");
             if (!firstErrorField) firstErrorField = categoryRef;
             scrollToField(firstErrorField);

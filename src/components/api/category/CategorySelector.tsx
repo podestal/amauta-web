@@ -22,12 +22,11 @@ const CategorySelector = ({ setCategoryError, setSelectedCategory, categoryError
 
   return (
     <Selector
-        values={all ? [ {id: '0', name: 'Todas'}, ...categories.map(category => ({ id: category.id.toString(), name: category.title }))] : categories.map(category => ({ id: category.id.toString(), name: category.title })) }
+        values={all ? [ {id: '0', name: 'Todas'}, ...categories.map(category => ({ id: category.id.toString(), name: category.title }))] : [{id: '0', name: 'Seleciona'}, ...categories.map(category => ({ id: category.id.toString(), name: category.title }))] }
         label="Categoría"
         setter={setSelectedCategory}
         defaultValue={all ? '0' : selectedCategory}
         error={categoryError}
-        lan='ES'
         setError={setCategoryError}
         ref={categoryRef}
     />
