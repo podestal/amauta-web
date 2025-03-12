@@ -38,7 +38,7 @@ const MonthlyAttendanceReportBody = ({ selectedClassroom, selectedMonth }: Props
                 className="w-full grid grid-cols-12 px-2 py-6 font-palanquin text-left hover:bg-slate-100 dark:hover:bg-slate-900"
             >
                 <div className="flex justify-start items-start">
-                    <p>{student.uid}</p>
+                    <p>{student.dni}</p>
                 </div>
                 <div className="flex justify-start items-start col-span-2">
                     <p>{student.last_name}</p>

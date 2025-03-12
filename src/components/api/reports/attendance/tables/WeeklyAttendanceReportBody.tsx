@@ -51,7 +51,7 @@ const WeeklyAttendanceReportBody = ({ weekDays, selectedClassroom, selectedWeek 
                 )}
             </div> */}
             <div className="flex justify-start items-center">
-                <p>{student.uid}</p>
+                <p>{student.dni}</p>
             </div>
             <div className="flex justify-start items-center col-span-2">
                 <p>{student.last_name}</p>

@@ -120,10 +120,9 @@ const StudentsAdminTable = ({ classroomId, classrooms }: Props) => {
                         <div className="grid grid-cols-3 gap-10 ">
                             {group.map((student) => (
                                 <div className="flex flex-col items-center gap-2 mt-6" key={student.uid}>
-                                    <h2 className="lg:text-2xl font-bold">
+                                    <h2 className="lg:text-sm font-semibold text-center mb-2">
                                         {student.first_name} {student.last_name}
                                     </h2>
-                                    <p>{student.uid}</p>
                                     <QRCodeSVG value={`${student.uid}-${student.first_name}`} size={200} />
                                 </div>
                             ))}
