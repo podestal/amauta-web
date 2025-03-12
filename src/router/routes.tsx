@@ -29,6 +29,7 @@ import PasswordResetSuccess from "../pages/PasswordResetSuccess";
 import GradesSummaryTutorPage from "../pages/GradesSummaryTutorPage";
 import StudentsAdminByClassroom from "../pages/StudentsAdminByClassroom";
 import GradesForTutorPage from "../pages/GradesForTutorPage";
+import DownloadPage from "../pages/DownloadPage";
 
 const routes = createBrowserRouter([
     {
@@ -46,6 +47,10 @@ const routes = createBrowserRouter([
             {
                 path: "downloadapp",
                 element: <DownloadappPage />
+            },
+            {
+                path: 'download',
+                element: <DownloadPage />
             },
             {
                 path: "about",

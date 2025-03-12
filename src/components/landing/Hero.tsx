@@ -7,14 +7,14 @@ const heroVariants = {
 
 const Hero = () => {
   return (
-    <div className="h-screen w-full flex flex-col justify-center items-center gap-4 relative">
+    <div className="h-screen w-full flex flex-col justify-center items-center gap-4 px-4 sm:px-8 relative text-center">
       <motion.div 
         className="flex flex-col justify-center items-center gap-4"
         initial="hidden"
         animate="visible"
       >
         <motion.h2 
-          className="font-poppins text-8xl font-bold leading-[6.5rem] text-center"
+          className="font-poppins text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-tight sm:leading-[4rem] md:leading-[5rem] lg:leading-[6.5rem] text-center"
           initial={{ opacity: 0, scale: 0.8 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1 }}
@@ -24,7 +24,7 @@ const Hero = () => {
         </motion.h2>
 
         <motion.p 
-          className="font-inter text-slate-800 dark:text-slate-400 text-lg text-center"
+          className="font-inter text-slate-800 dark:text-slate-400 text-base sm:text-lg md:text-xl text-center max-w-3xl"
           variants={heroVariants}
         >
           Una plataforma inteligente que simplifica la administración escolar. Registra asistencia en tiempo real, gestiona calificaciones, 
