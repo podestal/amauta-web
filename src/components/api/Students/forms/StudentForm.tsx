@@ -8,14 +8,15 @@ import { AnimatePresence, motion } from "framer-motion"
 import { CreateStudentData } from "../../../../hooks/api/student/useCreateStudent"
 import useAuthStore from "../../../../hooks/store/useAuthStore"
 import { Student } from "../../../../services/api/studentsService"
-import { UseMutationResult, useQuery } from "@tanstack/react-query"
+import { UseMutationResult } from "@tanstack/react-query"
 import { UpdateStudentData } from "../../../../hooks/api/student/useUpdateStudent"
 import useNotificationsStore from "../../../../hooks/store/useNotificationsStore"
-import axios from "axios"
+// import axios from "axios"
 import useSchoolStore from "../../../../hooks/store/useSchoolStore"
 import Switch from "../../../ui/Switch"
 import UpdateStudentStatus from "./UpdateStudentStatus"
 import { RiArrowDownSFill } from "@remixicon/react"
+import useGetStudentByDni from "../../../../hooks/api/student/useGetStudentByDni"
 
 interface Props {
   setPage?: React.Dispatch<React.SetStateAction<number>>
@@ -47,15 +48,15 @@ const religions = [
   {id: 'O', name: 'Otra'}
 ]
 
-const fetchStudent = async (dni: string) => {
-  return axios.get(`${import.meta.env.VITE_API_URL}student/${dni}/`)
-  .then(res => res.data)
-  .catch(err => {
-    throw new Error(err.response.data.message)
-  })
+// const fetchStudent = async (dni: string) => {
+//   return axios.get(`${import.meta.env.VITE_API_URL}student/${dni}/`)
+//   .then(res => res.data)
+//   .catch(err => {
+//     throw new Error(err.response.data.message)
+//   })
 
 
-}
+// }
 
 const StudentForm = ({ 
     setPage, 
@@ -94,18 +95,6 @@ const StudentForm = ({
     setGrade('0')
     setSection('0')
   }
-
-  useEffect(() => {
-    console.log('level', level);
-    // setGrade('0')
-    // setSection('0')
-  }, [level])
-
-  // console.log('level', level)
-  // console.log('grade', grade)
-  console.log('section', section)
-  // const classroomId = classrooms && section && classrooms.find(c => c.grade === grade && c.section === section && c.level === level)?.id
-  // console.log('classroomId', classroomId)
   
   console.log('student', student);
   
@@ -171,20 +160,22 @@ const StudentForm = ({
   const insuranceRef = useRef<HTMLSelectElement>(null);
   const livesWithRef = useRef<HTMLSelectElement>(null);
 
-  const { data: studentExists } = useQuery({
-    queryKey: ['student', dni],
-    queryFn: () => fetchStudent(dni),
-    enabled: dni.length === 8,
-    staleTime: 60000,
-    retry: false
-  })
+  // const { data: studentExists } = useQuery({
+  //   queryKey: ['student', dni],
+  //   queryFn: () => fetchStudent(dni),
+  //   enabled: dni.length === 8,
+  //   staleTime: 60000,
+  //   retry: false
+  // })
+
+  const { data: studentExists} = useGetStudentByDni({ dni, access, validator: true })
 
   useEffect(() => {
-    if (studentExists) {
-      setDniError('El estudiante ya existe')
-      setType('error')
-      setShow(true)
-      setMessage('El estudiante ya existe')
+    if (studentExists && !student?.dni || student?.dni !== dni) {
+      dni.length === 8 && setDniError('El estudiante ya existe')
+      dni.length === 8 &&setType('error')
+      dni.length === 8 &&setShow(true)
+      dni.length === 8 &&setMessage('El estudiante ya existe')
     }
   }, [studentExists])
 
@@ -346,7 +337,7 @@ const StudentForm = ({
 
     createStudent && createStudent.mutate({
       student: {
-        dni: dni,
+        dni: dni.length === 8 ? dni : null,
         prev_school: oldSchool,
         tutor_phone: tutorPhone,
         first_name: names,
@@ -395,7 +386,7 @@ const StudentForm = ({
 
     updateStudent && updateStudent.mutate({
       student: {
-        dni: dni,
+        dni: dni.length === 8 ? dni : null,
         prev_school: oldSchool,
         tutor_phone: tutorPhone,
         first_name: names,
@@ -473,7 +464,7 @@ const StudentForm = ({
               placeholder="DNI ..."
               type="number"
               error={dniError}
-              disable={!!student}
+              // disable={!!student}
               ref={dniRef}
           />
           <div className="col-span-2">

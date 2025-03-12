@@ -32,15 +32,15 @@ const ClassroomSummary = ({ classrooms }: Props) => {
               animate={{ opacity: 1, y: 0 }}
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.3 }}
-              className="cursor-pointer relative bg-gray-800 hover:bg-gray-600 shadow-lg rounded-xl p-6 flex flex-col items-center justify-center border border-gray-200 dark:border-gray-700"
+              className={`cursor-pointer relative bg-gray-800 hover:bg-gray-600 shadow-lg rounded-xl p-6 flex flex-col items-center justify-center border ${classroom.missing_dni ? 'border-red-500' : 'border-gray-700'}`}
             >
 
               <School className="text-blue-500 dark:text-blue-400 w-12 h-12 mb-4" />
-              
+              {classroom.missing_dni > 0 && <p className="absolute top-0 left-0 rounded-3xl bg-red-500 text-xs px-2">Faltan {classroom.missing_dni} DNIs</p>}
               <h3 className="text-lg font-semibold text-gray-800 dark:text-white">{getClassroomDescription({lan: 'ES', grade: classroom.grade, section: classroom.section, level: classroom.level, noLevel:true })}</h3>
               
               <div className="flex items-center mt-2 text-gray-600 dark:text-gray-300">
-                <Users className="w-5 h-5 mr-2 text-green-500" />
+                <Users className={`w-5 h-5 mr-2 ${classroom.missing_dni ? 'text-red-500' : 'text-green-500'}`} />
                 <p className="text-lg font-medium">{classroom.total_students} estudiantes</p>
               </div>
             </motion.div>
@@ -56,15 +56,15 @@ const ClassroomSummary = ({ classrooms }: Props) => {
               animate={{ opacity: 1, y: 0 }}
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.3 }}
-              className="cursor-pointer relative bg-gray-800 hover:bg-gray-600 shadow-lg rounded-xl p-6 flex flex-col items-center justify-center border border-gray-200 dark:border-gray-700"
+              className={`cursor-pointer relative bg-gray-800 hover:bg-gray-600 shadow-lg rounded-xl p-6 flex flex-col items-center justify-center border ${classroom.missing_dni ? 'border-red-500' : 'border-gray-700'}`}
             >
 
               <School className="text-blue-500 dark:text-blue-400 w-12 h-12 mb-4" />
-              
+              {classroom.missing_dni > 0 && <p className="absolute top-0 left-0 rounded-3xl bg-red-500 text-xs px-2">Faltan {classroom.missing_dni} DNIs</p>}
               <h3 className="text-lg font-semibold text-gray-800 dark:text-white">{getClassroomDescription({lan: 'ES', grade: classroom.grade, section: classroom.section, level: classroom.level, noLevel:true })}</h3>
               
               <div className="flex items-center mt-2 text-gray-600 dark:text-gray-300">
-                <Users className="w-5 h-5 mr-2 text-green-500" />
+                <Users className={`w-5 h-5 mr-2 ${classroom.missing_dni ? 'text-red-500' : 'text-green-500'}`} />
                 <p className="text-lg font-medium">{classroom.total_students} estudiantes</p>
               </div>
             </motion.div>
@@ -80,15 +80,15 @@ const ClassroomSummary = ({ classrooms }: Props) => {
               animate={{ opacity: 1, y: 0 }}
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.3 }}
-              className="cursor-pointer relative bg-gray-800 hover:bg-gray-600 shadow-lg rounded-xl p-6 flex flex-col items-center justify-center border border-gray-200 dark:border-gray-700"
+              className={`cursor-pointer relative bg-gray-800 hover:bg-gray-600 shadow-lg rounded-xl p-6 flex flex-col items-center justify-center border ${classroom.missing_dni ? 'border-red-500' : 'border-gray-700'}`}
             >
 
               <School className="text-blue-500 dark:text-blue-400 w-12 h-12 mb-4" />
-              
+              {classroom.missing_dni > 0 && <p className="absolute top-0 left-0 rounded-3xl bg-red-500 text-xs px-2">Faltan {classroom.missing_dni} DNIs</p>}
               <h3 className="text-lg font-semibold text-gray-800 dark:text-white">{getClassroomDescription({lan: 'ES', grade: classroom.grade, section: classroom.section, level: classroom.level, noLevel:true })}</h3>
               
               <div className="flex items-center mt-2 text-gray-600 dark:text-gray-300">
-                <Users className="w-5 h-5 mr-2 text-green-500" />
+                <Users className={`w-5 h-5 mr-2 ${classroom.missing_dni ? 'text-red-500' : 'text-green-500'}`} />
                 <p className="text-lg font-medium">{classroom.total_students} estudiantes</p>
               </div>
             </motion.div>

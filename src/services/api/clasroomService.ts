@@ -6,6 +6,7 @@ export interface Classroom {
     section: string
     grade: string
     total_students: number
+    missing_dni: number
 }
 
 const getClassroomService = () => {

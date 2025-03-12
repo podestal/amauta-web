@@ -109,7 +109,7 @@ export type StudentCreateUpdate = Omit<
     uid?: string
     clase?: number
     tutor_name?: string
-    dni?: string
+    dni?: string | null
     other_insurance?: string
     is_active?: boolean
     prev_school?: string

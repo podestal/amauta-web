@@ -8,7 +8,6 @@ const StudentsAdminByClassroom = () => {
     const classroomId = params.classroomId || ''
     const location = useLocation()
     const classrooms = location.state.classrooms || []
-    console.log('classrooms',classrooms);
     
 
   return (

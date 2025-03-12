@@ -3,7 +3,7 @@ import { Student } from "../../../services/api/studentsService"
 import Modal from "../../ui/Modal"
 import StudentInfo from "./StudentInfo"
 import { RiBookletFill } from "@remixicon/react"
-
+import { AlertTriangle } from "lucide-react";
 import StudentEmergency from "./forms/StudentEmergency"
 import StudentBirthForm from "./forms/StudentBirthForm"
 import StudentHealthForm from "./forms/StudentHealthForm"
@@ -56,7 +56,15 @@ const StudentAdminCard = ({ student, classrooms, classroomId, studentDni, studen
                         setOpen(true)
                     }}
                 />
-                <p className={`font-medium text-lg ${!student.is_active && 'line-through text-slate-400'}`}>{student.first_name} {student.last_name}</p>
+                  <div className="flex items-center gap-2">
+                    {!student.dni && (
+                        <AlertTriangle className="text-red-500 w-5 h-5" />
+                    )}
+                    <p className={`font-medium text-lg ${!student.is_active && 'line-through text-slate-400'}`}>
+                        {student.first_name} {student.last_name}
+                    </p>
+                </div>
+                {/* <p className={`font-medium text-lg ${!student.is_active && 'line-through text-slate-400'}`}>{student.first_name} {student.last_name}</p> */}
             </div>
 
             {/* Information Progress Indicators */}
