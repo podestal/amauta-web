@@ -17,7 +17,7 @@ interface Props {
 const StudentsAdmin = ({ classrooms }: Props) => {
 
     const [open, setOpen] = useState(false)
-    const [studentUid, setStudentUid] = useState('')
+    const [studentDni, setStudentDni] = useState('')
     const [studentName, setStudentName] = useState('')
     const school = useSchoolStore(s => s.school).id
 
@@ -50,14 +50,14 @@ const StudentsAdmin = ({ classrooms }: Props) => {
             </div>
         </div>
         <StudentByDNI 
-            setStudentUid={setStudentUid}
+            setStudentDni={setStudentDni}
             setStudentName={setStudentName}
-            studentUid={studentUid}
+            studentDni={studentDni}
             studentName={studentName}
         />
-        {studentUid && 
+        {studentDni && 
             <StudentByDniInfo 
-                studentUid={studentUid} 
+            studentDni={studentDni} 
                 classrooms={classrooms}
                 classroomId={'1'}
             />}
@@ -69,7 +69,7 @@ const StudentsAdmin = ({ classrooms }: Props) => {
                 classroomId={'1'}
             />
         }
-        {!studentName && !studentUid &&
+        {!studentName && !studentDni &&
             <StudentAdminTableLastTen 
                 school={school}
                 classrooms={classrooms}

@@ -47,6 +47,7 @@ export interface Student {
     uid: string
     first_name: string
     last_name: string
+    dni: string
     attendance: SimpleAttendance[] | null
     attendances: SimpleAttendance[]
     attendances_in: SimpleAttendance[]
@@ -82,6 +83,7 @@ export type StudentCreateUpdate = Omit<
         'attendance' | 
         'attendances_in' | 
         'attendances_out' | 
+        'dni' |
         'attendances' |
         'picture' | 
         'prev_school' |
@@ -107,6 +109,7 @@ export type StudentCreateUpdate = Omit<
     uid?: string
     clase?: number
     tutor_name?: string
+    dni?: string
     other_insurance?: string
     is_active?: boolean
     prev_school?: string
@@ -127,13 +130,14 @@ interface Props {
     all?: boolean
     studentId?: string
     byName?: Boolean
+    byDni?: Boolean
     byLastTen?: Boolean
     byQuarterGrade?: Boolean
     byGrade?: Boolean
     
 }
 
-const getStudentService = ({ tutor, all, studentId, byName, byLastTen, byQuarterGrade, byGrade }: Props) => {
+const getStudentService = ({ tutor, all, studentId, byName, byDni, byLastTen, byQuarterGrade, byGrade }: Props) => {
 
     let url = `student/byClassroom/`
     if (tutor) {
@@ -142,6 +146,8 @@ const getStudentService = ({ tutor, all, studentId, byName, byLastTen, byQuarter
         url = `student/`
     } else if (byName) {
         url = `student/byName/`
+    } else if (byDni) {
+        url = `student/byDni/`
     } else if (byLastTen) {
         url = `student/byLastTen/`
     } else if (studentId) {

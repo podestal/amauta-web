@@ -75,7 +75,7 @@ const StudentForm = ({
   const { setMessage, setShow, setType } = useNotificationsStore()
 
   // PERSONAL DATA
-  const [dni, setDni] = useState(student ? student.uid : '')
+  const [dni, setDni] = useState(student ? student.dni : '')
   const [oldSchool, setOldSchool] = useState(student ? student.prev_school : '')
   const [names, setNames] = useState(student ? student.first_name : '')
   const [fatherLastName, setFatherLastName] = useState(student ? student.last_name.split(' ')[0] : '')
@@ -107,7 +107,8 @@ const StudentForm = ({
   // const classroomId = classrooms && section && classrooms.find(c => c.grade === grade && c.section === section && c.level === level)?.id
   // console.log('classroomId', classroomId)
   
-
+  console.log('student', student);
+  
 
   // LANGUAGE
   const [mainLanguage, setMainLanguage] = useState(student ? student.main_language : 'S')
@@ -201,17 +202,17 @@ const StudentForm = ({
     const classroomId = classrooms && classrooms.find(c => c.grade === grade && c.section === section && c.level === level)?.id
     let firstErrorField: React.RefObject<HTMLElement> | null = null;
     
-    if (dni === '') {
-      setDniError('El DNI es requerido')
-      setType('error')
-      setShow(true)
-      setMessage('El DNI es requerido')
-      if (!firstErrorField) firstErrorField = dniRef;
-      scrollToField(firstErrorField);
-      return
-    }
+    // if (dni === '') {
+    //   setDniError('El DNI es requerido')
+    //   setType('error')
+    //   setShow(true)
+    //   setMessage('El DNI es requerido')
+    //   if (!firstErrorField) firstErrorField = dniRef;
+    //   scrollToField(firstErrorField);
+    //   return
+    // }
 
-    if (dni.length > 8) {
+    if (dni !== '' && dni.length > 8) {
       setDniError('El DNI debe tener 8 dígitos')
       setType('error')
       setShow(true)
@@ -345,7 +346,7 @@ const StudentForm = ({
 
     createStudent && createStudent.mutate({
       student: {
-        uid: dni,
+        dni: dni,
         prev_school: oldSchool,
         tutor_phone: tutorPhone,
         first_name: names,
@@ -380,9 +381,9 @@ const StudentForm = ({
           setMotherLastName('')
           setNames('')
           setTutorPhone('')
-          setLevel('')
-          setGrade('0')
-          setSection('0')
+          // setLevel('')
+          // setGrade('0')
+          // setSection('0')
         }
       },
       onError: err => {
@@ -394,7 +395,7 @@ const StudentForm = ({
 
     updateStudent && updateStudent.mutate({
       student: {
-        uid: dni,
+        dni: dni,
         prev_school: oldSchool,
         tutor_phone: tutorPhone,
         first_name: names,

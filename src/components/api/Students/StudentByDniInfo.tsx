@@ -1,18 +1,18 @@
-import useRetrieveStudent from "../../../hooks/api/student/useRetrieveStudent"
+import useGetStudentByDni from "../../../hooks/api/student/useGetStudentByDni"
 import useAuthStore from "../../../hooks/store/useAuthStore"
 import { Classroom } from "../../../services/api/classroomService"
 import StudentAdminCard from "./StudentAdminCard"
 
 interface Props {
-    studentUid: string
+    studentDni: string
     classrooms: Classroom[]
     classroomId: string
 }
 
-const StudentByDniInfo = ({ studentUid, classrooms, classroomId }: Props) => {
+const StudentByDniInfo = ({ studentDni, classrooms, classroomId }: Props) => {
 
     const access = useAuthStore (s => s.access) || ''
-    const { data: student, isLoading, isError, error, isSuccess } = useRetrieveStudent({ access, studentId: studentUid })
+    const { data: student, isLoading, isError, error, isSuccess } = useGetStudentByDni({ dni: studentDni, access })
 
     if (isLoading) return <p className="animate-pulse text-2xl text-center py-20">Un Momento ...</p>
 
@@ -36,7 +36,7 @@ const StudentByDniInfo = ({ studentUid, classrooms, classroomId }: Props) => {
             student={student}
             classrooms={classrooms}
             classroomId={classroomId}
-            studentDni={studentUid}
+            studentDni={studentDni}
         />
     </>
   )

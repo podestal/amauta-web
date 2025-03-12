@@ -127,7 +127,7 @@ const StudentInfo = ({ student, showIcons = true, picture=false }: Props) => {
         <div>
           <p className="text-2xl font-bold">{student.first_name} {student.last_name}</p>
           <p className="text-lg text-gray-600 dark:text-gray-400">
-            {showIcons && "📄"} DNI: {student.uid}
+            {showIcons && "📄"} DNI: {student.dni}
           </p>
           <p className="text-lg text-gray-600 dark:text-gray-400">
             {showIcons && "🏫"} Clase: {classroom}

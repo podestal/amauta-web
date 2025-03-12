@@ -4,13 +4,13 @@ import { useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 
 interface Props {
-    setStudentUid:React.Dispatch<React.SetStateAction<string>>
+    setStudentDni:React.Dispatch<React.SetStateAction<string>>
     setStudentName: React.Dispatch<React.SetStateAction<string>>
-    studentUid: string
+    studentDni: string
     studentName: string
 }
 
-const StudentByDNI = ({ setStudentUid, setStudentName, studentName, studentUid }: Props) => {
+const StudentByDNI = ({ setStudentDni, setStudentName, studentName, studentDni }: Props) => {
 
     const [nameOrDni, setNameOrDni] = useState('')
     const [dniError, setDniError] = useState('')
@@ -29,13 +29,13 @@ const StudentByDNI = ({ setStudentUid, setStudentName, studentName, studentUid }
                 setDniError('El DNI debe tener 8 dígitos')
                 return
             }
-            setStudentUid(nameOrDni)
+            setStudentDni(nameOrDni)
             studentName && queryClient.removeQueries({ queryKey: [`students ${studentName}`] })
             setStudentName('')
         } else if (isOnlyLetters(removeAccents(nameOrDni))) {
             setStudentName(removeAccents(nameOrDni))
-            studentUid && queryClient.removeQueries({ queryKey: [`students ${studentUid}`] })
-            setStudentUid('')
+            studentDni && queryClient.removeQueries({ queryKey: [`student ${studentDni}`] })
+            setStudentDni('')
         }
     }
 
