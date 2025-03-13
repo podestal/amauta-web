@@ -67,8 +67,6 @@ const Selector = forwardRef<HTMLSelectElement, Props<Item>>(
                     value && setError('')
                   }
                   setToDefault && setToDefault()
-                  console.log('is Changing', e.target.value);
-                  
                   setter(e.target.value)
                 }}
                 className={`dark:bg-gray-950 bg-slate-100  rounded-lg w-full dark:text-slate-50 text-xs pl-2 py-[10px] border-2 ${error ? 'border-red-600 shake' : ' border-neutral-400 dark:border-gray-800'}`}

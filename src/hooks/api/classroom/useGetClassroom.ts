@@ -1,5 +1,5 @@
 import { useQuery, UseQueryResult } from "@tanstack/react-query"
-import getClassroomService, {Classroom} from "../../../services/api/clasroomService"
+import getClassroomService, {Classroom} from "../../../services/api/classroomService"
 
 interface Props {
     access: string

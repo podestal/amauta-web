@@ -1,3 +1,4 @@
+import useCreateClassroom from "../../../hooks/api/classroom/useCreateClassroom"
 import ClassroomForm from "./ClassroomForm"
 
 interface Props {
@@ -5,9 +6,13 @@ interface Props {
 }
 
 const CreateClassroom = ({ level }: Props) => {
+
+    const createClassroom = useCreateClassroom()
+
   return (
     <ClassroomForm 
         level={level}
+        createClassroom={createClassroom}
     />
   )
 }

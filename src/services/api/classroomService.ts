@@ -2,11 +2,20 @@ import APIClient from "./apiClient"
 
 export interface Classroom {
     id: number
-    grade: string
     level: string
     section: string
+    grade: string
     total_students: number
     missing_dni: number
 }
 
-export default new APIClient<Classroom>('clase/')
+export type CreateClassroom = Omit<Classroom, 'id' | 'total_students' | 'missing_dni'> & {
+    school: number
+}
+
+const getClassroomService = () => {
+    const url = 'clase/'
+    return new APIClient<Classroom, CreateClassroom>(url)
+}
+
+export default getClassroomService
