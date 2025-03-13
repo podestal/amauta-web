@@ -18,12 +18,13 @@ const DownloadPage = () => {
         <h3 className="text-2xl font-semibold mt-6">📱 Instalar Amautapp en Android</h3>
         <ol className="list-decimal list-inside space-y-2 pl-5 md:pl-8">
           <li>Asegúrate de tener la última versión de **Google Chrome** en tu dispositivo.</li>
+          <li>Abre Google Chrome en tu dispositivo.</li>
           <li>Abre <a href="https://amautapp.com" className="text-blue-400 hover:underline">Amautapp</a> en el navegador.</li>
-          <li>Desliza la página hacia abajo hasta que aparezca la opción **"Añadir Amautapp a la pantalla de inicio"**.</li>
-          <li>Toca en **"Añadir"**.</li>
-          <li>Busca el ícono de Amautapp en tu pantalla de inicio y ábrela como una app nativa.</li>
+          <li>Abre el menú de Chrome (toca los tres puntos en la esquina superior derecha).</li>
+          <li>Selecciona "Añadir a pantalla de inicio".</li>
+          <li>Confirma tocando "Añadir" en la ventana emergente.</li>
+          <li>El ícono de Amautapp aparecerá en tu pantalla de inicio, permitiéndote abrirla como una app nativa.</li>
         </ol>
-
         <h3 className="text-2xl font-semibold mt-6">💻 Instalar Amautapp en Windows</h3>
         <ol className="list-decimal list-inside space-y-2 pl-5 md:pl-8">
           <li>Asegúrate de tener la última versión de **Google Chrome** o **Microsoft Edge** en tu PC.</li>

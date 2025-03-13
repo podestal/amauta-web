@@ -93,7 +93,7 @@ const StudentInfo = ({ student, showIcons = true, picture=false }: Props) => {
 
   return (
     
-    <div className="w-full max-w-5xl mx-auto bg-white dark:bg-gray-900 p-8 rounded-lg shadow-lg">
+    <div className="w-full max-w-5xl mx-auto bg-white dark:bg-gray-900 p-8 rounded-lg shadow-lg mb-10">
       {/* Header */}
       <div className="w-full flex justify-center items-center my-6">
         {/* <button
@@ -111,12 +111,12 @@ const StudentInfo = ({ student, showIcons = true, picture=false }: Props) => {
       <div className="max-md:mx-10 " ref={printRef}>
       {/* Header */}
       <div className="w-full flex justify-between items-center gap-4 my-10">
-        <img src={schoolImg} alt="Logo" className="w-24 h-24" />
-        <div className="text-center">
+        <img src={schoolImg} alt="Logo" className="w-24 h-24 max-lg:hidden" />
+        <div className="text-center mx-auto">
           <h2 className="text-2xl">{school.type_of_institution}</h2>
           <h2 className="text-3xl font-bold">{school.name}</h2>
         </div>
-        <img src={schoolImg} alt="Logo" className="w-24 h-24" />
+        <img src={schoolImg} alt="Logo" className="w-24 h-24 max-lg:hidden" />
       </div>
       {/* Información Principal */}
       <h2 className="text-3xl md:text-4xl font-bold text-center my-12">
@@ -125,7 +125,7 @@ const StudentInfo = ({ student, showIcons = true, picture=false }: Props) => {
       <div 
         className="w-full flex justify-between items-start gap-6 my-8">
         <div>
-          <p className="text-2xl font-bold">{student.first_name} {student.last_name}</p>
+          <p className="text-2xl font-bold my-4">{student.first_name} {student.last_name}</p>
           <p className="text-lg text-gray-600 dark:text-gray-400">
             {showIcons && "📄"} DNI: {student.dni}
           </p>
@@ -134,7 +134,7 @@ const StudentInfo = ({ student, showIcons = true, picture=false }: Props) => {
           </p>
         </div>
         {!showIcons && <img className="border-4 border-black max-md:hidden" src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${student.uid}-${student.first_name}`} alt="QR Code" />}
-        {picture && <div className="w-44 h-52 border-2 border-gray-400 dark:border-gray-600 flex justify-center items-center rounded-lg overflow-hidden">
+        {picture && <div className="w-44 h-52 border-2 border-gray-400 dark:border-gray-600 flex justify-center items-center rounded-lg overflow-hidden max-lg:hidden">
           {/* Aquí puedes colocar la imagen del estudiante */}
           {/* <img src={student.photo || "https://via.placeholder.com/150"} alt="Foto" className="object-cover w-full h-full" /> */}
             Foto
@@ -223,13 +223,13 @@ const StudentInfo = ({ student, showIcons = true, picture=false }: Props) => {
           </div>
       ))}
       {picture && 
-      <div className="w-full flex justify-between items-start gap-4 mb-8 mt-36">
+      <div className="w-full flex justify-between items-start gap-4 mb-8 mt-36 max-lg:hidden">
         <div className="text-xl mt-10 py-4 border-t-2 border-slate-800 flex flex-col gap-3 ">
           <p className="">Firma del padre o apoderado</p>
           <p>Nombre:</p>
           <p>DNI: </p>
         </div>
-        <div className="flex flex-col justify-center items-center gap-4">
+        <div className="flex flex-col justify-center items-center gap-4 max-lg:hidden">
           <div className="w-[120px] h-[160px] border-2 border-slate-800"/>
           <p>Huella Digital</p>
         </div>

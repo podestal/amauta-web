@@ -53,7 +53,7 @@ const Navigator: React.FC = () => {
           <RiUserSearchFill />
           <span>{lan === 'EN' ? 'Student' : 'Alumno' }</span>
         </NavLink>
-        <NavLink
+        {/* <NavLink
           to="assignatures"
           className={({ isActive }) =>
             `flex flex-col items-center text-sm ${
@@ -63,7 +63,7 @@ const Navigator: React.FC = () => {
         >
           <RiBookShelfFill />
           <span>{lan === 'EN' ? 'Assignatures' : 'Cursos' }</span>
-        </NavLink>
+        </NavLink> */}
         <NavLink
           to="profile"
           className={({ isActive }) =>

@@ -1,9 +1,15 @@
 import { RiFacebookBoxFill, RiInstagramFill, RiTwitterXFill } from "@remixicon/react";
 import logo from "../assets/icons/amautapp.png";
+import { useLocation } from "react-router-dom";
 
 const Footer = () => {
+
+  const location = useLocation()
+  console.log(location.pathname);
+  
+
   return (
-    <footer className="bg-gradient-to-r from-gray-900 to-black text-white py-12">
+    <footer className={`bg-gradient-to-r from-gray-900 to-black text-white py-12 ${location.pathname === '/' ? 'max-lg:hidden' : 'block'}`}>
       <div className="max-w-[1280px] mx-auto px-6">
         {/* Responsive Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 text-center md:text-left">
