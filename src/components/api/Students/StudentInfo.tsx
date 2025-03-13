@@ -147,7 +147,7 @@ const StudentInfo = ({ student, showIcons = true, picture=false }: Props) => {
         <p>{showIcons && "👨‍👩‍👦"} Número de Hermanos: {student.number_of_siblings || "3"}</p>
         <p>{showIcons && "📍"} Lugar que Ocupa: {student.place_in_family || "-"}</p>
         <p>{showIcons && "🏫"} Escuela Anterior: {student.prev_school || "-"}</p>
-        <p>{showIcons && "📞"} Teléfono del Apoderado: {student.tutor_phone} || '-</p>
+        <p>{showIcons && "📞"} Teléfono del Apoderado: {student.tutor_phone}</p>
         <p>{showIcons && "🛐"} Religión: {religions[student.religion] || "-"}</p>
         <p>{showIcons && "🗣️"} Lengua Materna: {languages[student.main_language] || "-"}</p>
         <p>{showIcons && "🌎"} Segunda Lengua: {languages[student.second_language] || "-"}</p>

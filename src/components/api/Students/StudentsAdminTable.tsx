@@ -109,21 +109,21 @@ const StudentsAdminTable = ({ classroomId, classrooms }: Props) => {
             
             <div ref={printRef} className="my-10">
                 {/* Chunk students into groups of 9 */}
-                <h2 className="text-3xl my-6 text-center max-md:hidden">{classroomDescription}</h2>
+                <h2 className="text-3xl my-6 text-center max-lg:hidden">{classroomDescription}</h2>
                 {students.reduce((rows, student, index) => {
                     if (index % 9 === 0) rows.push([]);
                     rows[rows.length - 1].push(student);
                     return rows;
                 }, [] as Student[][]).map((group, i) => (
-                    <div key={i} className="print:break-after-page">
+                    <div key={i} className="print:break-after-page mx-10">
                         <h2 className="text-3xl my-6 text-center md:hidden">{classroomDescription}</h2>
-                        <div className="grid grid-cols-3 gap-10 ">
+                        <div className="grid grid-cols-3 gap-8 ">
                             {group.map((student) => (
                                 <div className="flex flex-col items-center gap-2 mt-6" key={student.uid}>
                                     <h2 className="lg:text-sm font-semibold text-center mb-2">
                                         {student.first_name} {student.last_name}
                                     </h2>
-                                    <QRCodeSVG value={`${student.uid}-${student.first_name}`} size={200} />
+                                    <QRCodeSVG value={`${student.uid}-${student.first_name}`} size={160} />
                                 </div>
                             ))}
                         </div>
