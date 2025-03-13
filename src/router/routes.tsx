@@ -30,6 +30,7 @@ import GradesSummaryTutorPage from "../pages/GradesSummaryTutorPage";
 import StudentsAdminByClassroom from "../pages/StudentsAdminByClassroom";
 import GradesForTutorPage from "../pages/GradesForTutorPage";
 import DownloadPage from "../pages/DownloadPage";
+import AdminPage from "../pages/AdminPage";
 
 const routes = createBrowserRouter([
     {
@@ -212,6 +213,13 @@ const routes = createBrowserRouter([
                 element:
                 <PrivateRoutes>
                     <GradesForTutorPage />
+                </PrivateRoutes>
+            },
+            {
+                path: 'admin',
+                element:
+                <PrivateRoutes>
+                    <AdminPage />
                 </PrivateRoutes>
             }
         ]
