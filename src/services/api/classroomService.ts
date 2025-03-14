@@ -13,8 +13,12 @@ export type CreateClassroom = Omit<Classroom, 'id' | 'total_students' | 'missing
     school: number
 }
 
-const getClassroomService = () => {
-    const url = 'clase/'
+interface Props {
+    classroomId?: string
+}
+
+const getClassroomService = ({ classroomId }: Props) => {
+    const url = classroomId ? `clase/${classroomId}/` : 'clase/'
     return new APIClient<Classroom, CreateClassroom>(url)
 }
 

@@ -3,6 +3,9 @@ import { Classroom } from "../../../services/api/classroomService"
 import Modal from "../../ui/Modal"
 import { useState } from "react"
 import Button from "../../ui/Button"
+import useRemoveClassroom from "../../../hooks/api/classroom/useRemoveClassroom"
+import useAuthStore from "../../../hooks/store/useAuthStore"
+import useSchoolStore from "../../../hooks/store/useSchoolStore"
 
 interface Props {
     classroom: Classroom
@@ -10,7 +13,14 @@ interface Props {
 
 const RemoveClassroom = ({ classroom }: Props) => {
 
+    const access = useAuthStore(s => s.access) || ''
+    const school = useSchoolStore(s => s.school) || ''
     const [open, setOpen] = useState(false)
+    const removeClassroom = useRemoveClassroom({ classroomId: (classroom.id).toString(), school: (school.id).toString() })
+
+    const handleRemoveClassroom = () => {
+        removeClassroom.mutate({ access })
+    }
 
   return (
     <>
@@ -28,7 +38,7 @@ const RemoveClassroom = ({ classroom }: Props) => {
             <div className="flex justify-center items-center gap-12 mt-8">
                 <Button 
                     label="Eliminar"
-                    onClick={() => console.log('Eliminando...')}
+                    onClick={handleRemoveClassroom}
                     color="red"
                 />
                 <Button

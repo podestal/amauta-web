@@ -61,12 +61,16 @@ class APIClient<ResponseType, RequestType = ResponseType> {
             .then(res => res.data)
     }
 
-    delete = (access?: string) => {
+    delete = (access?: string, params?: Record<string, string>) => {
 
         const config: any = {}
 
         if (access) {
             config.headers = { Authorization: `JWT ${access}` }
+        }
+
+        if (params) {
+            config.params = params
         }
 
         return axiosInstance

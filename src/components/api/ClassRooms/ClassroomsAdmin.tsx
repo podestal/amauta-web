@@ -1,4 +1,4 @@
-import { motion } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 import useGetClassroom from "../../../hooks/api/classroom/useGetClassroom"
 import useAuthStore from "../../../hooks/store/useAuthStore"
 import useSchoolStore from "../../../hooks/store/useSchoolStore"
@@ -38,12 +38,14 @@ const ClassroomsAdmin = () => {
                     level={level.id}
                 />
                 <div className="flex flex-col gap-4">
-                    {classrooms.filter(classroom => classroom.level === level.id).map(classroom => (
-                        <ClassroomAdminCard 
-                            key={classroom.id}
-                            classroom={classroom}
-                        />
-                    ))}
+                    <AnimatePresence>
+                        {classrooms.filter(classroom => classroom.level === level.id).map(classroom => (
+                            <ClassroomAdminCard 
+                                key={classroom.id}
+                                classroom={classroom}
+                            />
+                        ))}
+                    </AnimatePresence>
                 </div>
             </motion.div>
         ))}

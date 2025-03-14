@@ -8,7 +8,7 @@ interface Props {
 
 const useGetClassroom = ({ access, school }: Props): UseQueryResult<Classroom[], Error> => {
 
-    const classroomService = getClassroomService()
+    const classroomService = getClassroomService({})
     const params = { school }
 
     return useQuery({

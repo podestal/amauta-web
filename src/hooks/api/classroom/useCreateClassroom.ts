@@ -7,7 +7,7 @@ export interface CreateClassroomData {
 }
 
 const useCreateClassroom = (): UseMutationResult<Classroom, Error, CreateClassroomData> => {
-    const classroomService = getClassroomService()
+    const classroomService = getClassroomService({})
     const queryClient = useQueryClient()
     return useMutation({
         mutationFn: (data: CreateClassroomData) => classroomService.post(data.classroom, data.access),

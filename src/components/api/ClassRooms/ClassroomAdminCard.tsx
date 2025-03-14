@@ -13,6 +13,7 @@ const ClassroomAdminCard = ({ classroom }: Props) => {
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5 }}
+        exit={{ opacity: 0 }}
         layout
         className="relative flex flex-col gap-4 bg-gray-800 p-4 rounded-2xl hover:bg-gray-700 cursor-pointer border-l-8 border-blue-600">
         <h3 className="font-bold">{getClassroomDescription({ lan:'ES', grade: classroom.grade, section:classroom.section, level: classroom.level, short: true, noLevel:true})}</h3>
