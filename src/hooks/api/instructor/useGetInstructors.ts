@@ -3,11 +3,10 @@ import getInstructorService, { Instructor } from "../../../services/api/instruct
 
 interface Props {
     access: string
-    group: string
     school: string
 }
 
-const useGetInstructors = ({ access, group, school }: Props): UseQueryResult<Instructor[], Error> => {
+const useGetInstructors = ({ access, school }: Props): UseQueryResult<Instructor[], Error> => {
 
     const instructorService = getInstructorService({ })
     const params = { school }
@@ -15,8 +14,6 @@ const useGetInstructors = ({ access, group, school }: Props): UseQueryResult<Ins
     return useQuery({
         queryKey: ['instructors'],
         queryFn: () => instructorService.get(access, params),
-        enabled: group === 'instructor',
-        staleTime: Infinity, 
     })
 }
 

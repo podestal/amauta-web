@@ -1,3 +1,4 @@
+import StaffAssistants from "./StaffAssistants"
 import StaffInstructors from "./StaffInstructors"
 
 const profiles = [
@@ -15,7 +16,10 @@ const Staff = () => {
             <div key={profile.id}>
                 <h2 className="text-center">{profile.name}</h2>
                 {profile.group === 'instructor' && <StaffInstructors
-                    group={profile.group}
+
+                />}
+                {profile.group === 'assistant' && <StaffAssistants
+
                 />}
             </div>
         ))}

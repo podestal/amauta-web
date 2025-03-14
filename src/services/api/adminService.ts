@@ -9,6 +9,16 @@ export interface Admin {
     school: number
 }
 
-const instructorService = new APIClient<Admin>('admin/me/')
+interface Props {
+    me?: boolean
+}
 
-export default instructorService
+const getAdminService = ({ me }: Props) => {
+    let url = 'admin/'
+    if (me) {
+        url = 'admin/me/'
+    }
+    return new APIClient<Admin>(url)
+}
+
+export default getAdminService

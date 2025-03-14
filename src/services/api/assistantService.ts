@@ -12,6 +12,16 @@ export interface Assistant {
     school: number
 }
 
-const assistantService = new APIClient<Assistant>('assistant/me/')
+interface Props {
+    me?: boolean
+}
 
-export default assistantService
+const getAssistantService = ({ me }: Props) => {
+    let url = 'assistant/'
+    if (me) {
+        url = 'assistant/me/'
+    }
+    return new APIClient<Assistant>(url)
+}
+
+export default getAssistantService
