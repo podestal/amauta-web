@@ -22,7 +22,9 @@ const ClassroomAdminCard = ({ classroom }: Props) => {
             <p className="text-xs text-slate-300">Alumnos: {classroom.total_students}</p>
             <p className="text-xs text-slate-300">Instructores: -</p>
         </div>
-        <RemoveClassroom classroom={classroom} />
+        <RemoveClassroom 
+            classroom={classroom} 
+        />
     </motion.div>
   )
 }

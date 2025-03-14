@@ -6,6 +6,7 @@ import Button from "../../ui/Button"
 import useRemoveClassroom from "../../../hooks/api/classroom/useRemoveClassroom"
 import useAuthStore from "../../../hooks/store/useAuthStore"
 import useSchoolStore from "../../../hooks/store/useSchoolStore"
+import useNotificationsStore from "../../../hooks/store/useNotificationsStore"
 
 interface Props {
     classroom: Classroom
@@ -15,11 +16,29 @@ const RemoveClassroom = ({ classroom }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
     const school = useSchoolStore(s => s.school) || ''
+    const { setMessage, setShow, setType } = useNotificationsStore()
+    const [loading, setLoading] = useState(false)
     const [open, setOpen] = useState(false)
     const removeClassroom = useRemoveClassroom({ classroomId: (classroom.id).toString(), school: (school.id).toString() })
 
     const handleRemoveClassroom = () => {
-        removeClassroom.mutate({ access })
+        setLoading(true)
+        removeClassroom.mutate({ access }, {
+            onSuccess: () => {
+                setMessage("Clase eliminada correctamente")
+                setType("success")
+                setShow(true)
+            },
+            onError: () => {
+                setMessage("Error al eliminar la clase")
+                setType("error")
+                setShow(true)
+            },
+            onSettled: () => {
+                setLoading(false)
+                setOpen(false)
+            }
+        })
     }
 
   return (
@@ -40,6 +59,7 @@ const RemoveClassroom = ({ classroom }: Props) => {
                     label="Eliminar"
                     onClick={handleRemoveClassroom}
                     color="red"
+                    loading={loading}
                 />
                 <Button
                     label="Cancelar"
