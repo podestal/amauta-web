@@ -1,7 +1,7 @@
 import useGetAdmins from "../../../hooks/api/admin/useGetadmins"
 import useAuthStore from "../../../hooks/store/useAuthStore"
 import useSchoolStore from "../../../hooks/store/useSchoolStore"
-
+import StaffCard from "./StaffCard"
 
 const StaffAdmin = () => {
 
@@ -16,16 +16,18 @@ const StaffAdmin = () => {
     if (isSuccess)
 
   return (
-    <div className="w-full flex flex-col gap-4 justify-center items-center">
-        {managers.map( manager => (
-            <div 
-                className="bg-gray-800 px-4 py-2 rounded-lg text-white w-[70%]"
-                key={manager.id}
-            >
-                <p className="font-bold">{manager.first_name} {manager.last_name}</p>
-            </div>
-        ))}
-    </div>
+    <>
+        <div className="w-full flex flex-col gap-4 justify-center items-center">
+            {managers.map( manager => (
+                <StaffCard 
+                    profile={manager}
+                    key={manager.id}
+                    group="manager"
+                />
+            ))}
+        </div>
+
+    </>
   )
 }
 

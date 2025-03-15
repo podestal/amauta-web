@@ -3,7 +3,6 @@ import Button from "../../ui/Button"
 import StaffAdmin from "./StaffAdmin"
 import StaffAssistants from "./StaffAssistants"
 import StaffInstructors from "./StaffInstructors"
-import Slider from "../../ui/Slider"
 import StaffForm from "./StaffForm"
 import { motion } from "framer-motion"
 
@@ -51,16 +50,12 @@ const Staff = () => {
                 {profile.group === 'manager' && <StaffAdmin />}
             </motion.div>
         ))}
-        <Slider 
-            isOpen={isOpen}
-            setOpen={setOpen}
-        >
             <StaffForm 
+                open={isOpen}
+                setOpen={setOpen}
                 group={selectedGroup}
                 name={selectedName}
-                setOpen={setOpen}
             />
-        </Slider>
     </div>
   )
 }

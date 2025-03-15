@@ -1,6 +1,7 @@
 import useGetInstructors from "../../../hooks/api/instructor/useGetInstructors"
 import useAuthStore from "../../../hooks/store/useAuthStore"
 import useSchoolStore from "../../../hooks/store/useSchoolStore";
+import StaffCard from "./StaffCard";
 
 const StaffInstructors = () => {
     
@@ -17,12 +18,11 @@ const StaffInstructors = () => {
   return (
     <div className="w-full flex flex-col gap-4 justify-center items-center">
         {instructors.map( instructor => (
-            <div 
-                className="bg-gray-800 px-4 py-2 rounded-lg text-white w-[70%]"
+            <StaffCard 
+                profile={instructor}
                 key={instructor.id}
-            >
-                <p className="font-bold">{instructor.first_name} {instructor.last_name}</p>
-            </div>
+                group="assistant"
+            />
         ))}
     </div>
   )

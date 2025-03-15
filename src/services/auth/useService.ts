@@ -5,6 +5,7 @@ export interface User {
     username: string
     email: string
     groups: string[]
+    profile: string
 }
 
 const userService = new AuthClient<User>('users/me/')

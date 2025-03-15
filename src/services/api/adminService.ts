@@ -7,6 +7,8 @@ export interface Admin {
     first_name: string
     last_name: string
     school: number
+    phone_number?: string
+    email?: string
 }
 
 interface Props {

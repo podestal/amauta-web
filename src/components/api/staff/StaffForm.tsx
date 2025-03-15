@@ -9,11 +9,16 @@ import useNotificationsStore from "../../../hooks/store/useNotificationsStore"
 import useGetClassroom from "../../../hooks/api/classroom/useGetClassroom"
 import { motion } from "framer-motion"
 import getClassroomDescription from "../../../utils/getClassroomDescription"
+import Slider from "../../ui/Slider"
+import { Profile } from "../../../services/api/profileService"
+
 
 interface Props {
     group: string
     name: string
+    open: boolean
     setOpen: React.Dispatch<React.SetStateAction<boolean>>
+    profile?: Profile
 }
 
 const generatePassword = () => {
@@ -25,14 +30,21 @@ const generatePassword = () => {
     return result;
   }
 
-const StaffForm = ({ group, name, setOpen }: Props) => {
+const StaffForm = ({ group, name, setOpen, open, profile }: Props) => {
+
+    const classroomsIds = profile && profile.clases_details?.map( classroom => classroom.split('-').pop()) || []
+    console.log('classroomsIds', classroomsIds);
+    const classroomsIdsNumber = classroomsIds && classroomsIds?.map( id => parseInt(id || '0')) || []
+    console.log('classroomsIdsNumber', classroomsIdsNumber);
+    console.log('group', group);
+    
 
     // const [dni, setDni] = useState('')
-    const [firstName, setFirstName] = useState('')
-    const [lastName, setLastName] = useState('')
-    const [email, setEmail] = useState('')
-    const [phone, setPhone] = useState('')
-    const [selectedClassrooms, setSelectedClassrooms] = useState<number[]>([])
+    const [firstName, setFirstName] = useState(profile?.first_name || '')
+    const [lastName, setLastName] = useState(profile?.last_name || '')
+    const [email, setEmail] = useState( profile?.email || '')
+    const [phone, setPhone] = useState(profile?.phone_number || '')
+    const [selectedClassrooms, setSelectedClassrooms] = useState<number[]>(classroomsIdsNumber && classroomsIdsNumber || [])
     
 
     const school = useSchoolStore(s => s.school).id
@@ -55,7 +67,6 @@ const StaffForm = ({ group, name, setOpen }: Props) => {
         setLoading(true)
         const username = email.split('@')[0]
         const password = generatePassword()
-        console.log('selectedClassrooms', selectedClassrooms);
         
 
         signUp.mutate({ user: {
@@ -117,7 +128,12 @@ const StaffForm = ({ group, name, setOpen }: Props) => {
     if (isSuccess)
 
   return (
-    <form onSubmit={handleSubmit} className=" shadow-lg rounded-lg p-6 max-w-lg mx-auto space-y-5">
+    <>{open &&
+        <Slider 
+        isOpen={open}
+        setOpen={setOpen}
+    >
+         <form onSubmit={handleSubmit} className=" shadow-lg rounded-lg p-6 max-w-lg mx-auto space-y-5">
         <h2 className="text-2xl font-bold text-gray-800 text-center dark:text-gray-200 mb-4">Nuevo {name}</h2>
         <div className="space-y-4">
             {/* <Input label="DNI" placeholder="DNI.." value={dni} onChange={e => setDni(e.target.value)} /> */}
@@ -126,7 +142,7 @@ const StaffForm = ({ group, name, setOpen }: Props) => {
             <Input label="Correo Electrónico" placeholder="Correo Electrónico.." value={email} onChange={e => setEmail(e.target.value)} />
             <Input label="Número de Teléfono" placeholder="Número de Teléfono.." value={phone} onChange={e => setPhone(e.target.value)} />
         </div>
-        {group !== 'manager' && <>
+        {<>
         <h2 className="my-8 text-2xl">Clases</h2>
         <motion.div
             className="flex flex-col gap-4 my-8"
@@ -208,6 +224,9 @@ const StaffForm = ({ group, name, setOpen }: Props) => {
             loading={loading}
         />
     </form>
+    </Slider>
+    }</>
+   
   )
 }
 
