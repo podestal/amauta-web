@@ -38,6 +38,8 @@ const StudentAdminCard = ({ student, classrooms, classroomId, studentDni, studen
   const studentMother = student.tutors.find(tutor => tutor.tutor_type === 'M')
   const studentTutor = student.tutors.find(tutor => tutor.tutor_type === 'O')
 
+  const [isExpanded, setIsExpanded] = useState(false)
+
   // MUTATIONS
   const updateStudent = useUpdateStudent({ studentId: student.uid, classroomId, studentDni, studentName })
 
@@ -45,79 +47,95 @@ const StudentAdminCard = ({ student, classrooms, classroomId, studentDni, studen
     <>
         <motion.div 
             variants={itemVariants}
-            className={`w-full grid grid-cols-10 gap-6 items-center hover:bg-slate-700  ${!student.is_active ? 'bg-slate-950 ' : 'bg-slate-900'}  py-4 px-6 rounded-xl shadow-md transition-all`}
+            className={`w-full z-20 lg:grid lg:grid-cols-10 flex-col gap-6 items-center hover:bg-slate-700 ${!student.is_active ? 'bg-slate-950' : 'bg-slate-900'} py-4 px-6 rounded-xl shadow-md transition-all md:flex md:flex-col`}
         >  
-            {/* Student Name & Icon */}
-            <div className="col-span-3 flex items-center gap-4">
+            {/* Header Section */}
+            <div className="col-span-3 flex items-center gap-4 w-full">
                 <RiBookletFill 
                     className="text-blue-700 hover:text-blue-800 cursor-pointer text-2xl"
                     onClick={() =>{
-                        setRenderComponent('studentInfo')
-                        setOpen(true)
+                        setRenderComponent('studentInfo');
+                        setOpen(true);
                     }}
                 />
-                  <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2">
                     {!student.dni && (
                         <AlertTriangle className="text-red-500 w-5 h-5" />
                     )}
-                    <p className={`font-medium text-lg ${!student.is_active && 'line-through text-slate-400'}`}>
+                    <p className={`font-medium text-sm lg:text-lg ${!student.is_active && 'line-through text-slate-400'}`}>
                         {student.first_name} {student.last_name}
                     </p>
                 </div>
-                {/* <p className={`font-medium text-lg ${!student.is_active && 'line-through text-slate-400'}`}>{student.first_name} {student.last_name}</p> */}
+                {/* Toggle Button for Mobile */}
+                <button 
+                    className="md:hidden ml-auto bg-gray-700 px-3 py-1 rounded-lg text-white text-sm"
+                    onClick={() => setIsExpanded(!isExpanded)}
+                >
+                    {isExpanded ? "Ocultar Info" : "Mostrar Info"}
+                </button>
             </div>
 
-            {/* Information Progress Indicators */}
-            <StudentInfoBlock 
-                onClick={() => {
-                    setRenderComponent('studentForm');
-                    setOpen(true);
-                }}
-                filled={true} // Always filled
-            />
-            <StudentInfoBlock 
-                onClick={() => {
-                    setRenderComponent('birthInfo');
-                    setOpen(true);
-                }}
-                filled={!!student.birth_info}
-            />
-            <StudentInfoBlock 
-                onClick={() => {
-                    setRenderComponent('healthInfo');
-                    setOpen(true);
-                }}
-                filled={!!student.health_info}
-            />
-            <StudentInfoBlock 
-                onClick={() => {
-                    setRenderComponent('emergencyContact');
-                    setOpen(true);
-                }}
-                filled={!!student.emergency_contact}
-            />
-            <StudentInfoBlock 
-                onClick={() => {
-                    setRenderComponent('studentFatherForm');
-                    setOpen(true);
-                }}
-                filled={!!studentFather}
-            />
-            <StudentInfoBlock 
-                onClick={() => {
-                    setRenderComponent('studentMotherForm');
-                    setOpen(true);
-                }}
-                filled={!!studentMother}
-            />
-            <StudentInfoBlock 
-                onClick={() => {
-                    setRenderComponent('studentTutorForm');
-                    setOpen(true);
-                }}
-                filled={!!studentTutor}
-            />
+            {/* Information Blocks */}
+            {<div className={`w-full lg:col-span-7 gap-4 ${isExpanded ? 'flex flex-col mt-6' : 'lg:grid lg:grid-cols-7 hidden'}`}>
+                <StudentInfoBlock 
+                    onClick={() => {
+                        setRenderComponent('studentForm');
+                        setOpen(true);
+                    }}
+                    filled={true}
+                    label="Información Personal"
+                />
+                <StudentInfoBlock 
+                    onClick={() => {
+                        setRenderComponent('birthInfo');
+                        setOpen(true);
+                    }}
+                    filled={!!student.birth_info}
+                    label="Información Nacimiento"
+                />
+                <StudentInfoBlock 
+                    onClick={() => {
+                        setRenderComponent('healthInfo');
+                        setOpen(true);
+                    }}
+                    filled={!!student.health_info}
+                    label="Información Salud"
+                />
+                <StudentInfoBlock 
+                    onClick={() => {
+                        setRenderComponent('emergencyContact');
+                        setOpen(true);
+                    }}
+                    filled={!!student.emergency_contact}
+                    label="Contacto Emergencia"
+                />
+                <StudentInfoBlock 
+                    onClick={() => {
+                        setRenderComponent('studentFatherForm');
+                        setOpen(true);
+                    }}
+                    filled={!!studentFather}
+                    label="Información Padre"
+                />
+                <StudentInfoBlock 
+                    onClick={() => {
+                        setRenderComponent('studentMotherForm');
+                        setOpen(true);
+                    }}
+                    filled={!!studentMother}
+                    label="Información Madre"
+                />
+                <StudentInfoBlock 
+                    onClick={() => {
+                        setRenderComponent('studentTutorForm');
+                        setOpen(true);
+                    }}
+                    filled={!!studentTutor}
+                    label="Información Apoderado"
+                />
+            </div>}
         </motion.div>
+
     <Modal 
       isOpen={open}
       onClose={() => setOpen(false)}
@@ -212,9 +230,10 @@ const StudentAdminCard = ({ student, classrooms, classroomId, studentDni, studen
 interface StudentInfoBlockProps {
     onClick: () => void
     filled: boolean
+    label?: string
 }
 
-const StudentInfoBlock = ({ onClick, filled }: StudentInfoBlockProps ) => {
+const StudentInfoBlock = ({ onClick, filled, label }: StudentInfoBlockProps ) => {
   return (
       <div 
           onClick={onClick}
@@ -222,6 +241,7 @@ const StudentInfoBlock = ({ onClick, filled }: StudentInfoBlockProps ) => {
               ${filled ? 'bg-green-600 hover:bg-green-700' : 'dark:bg-neutral-400 bg-neutral-200 dark:hover:bg-neutral-500 hover:bg-neutral-300'}
           `}
       >
+          <p className=" mx-6 font-bold lg:hidden">{label}</p>
           {/* <span className="absolute top-[-1.5rem] text-sm text-center w-full text-gray-600 dark:text-gray-300">{label}</span> */}
       </div>
   );

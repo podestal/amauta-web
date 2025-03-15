@@ -14,9 +14,9 @@ interface Props {
 }
 
 const getAdminService = ({ me }: Props) => {
-    let url = 'admin/'
+    let url = 'manager/'
     if (me) {
-        url = 'admin/me/'
+        url = 'manager/me/'
     }
     return new APIClient<Admin>(url)
 }
