@@ -8,10 +8,16 @@ export type Profile = Tutor | Instructor | Assistant | Admin | null
 
 interface Props {
     profileName: string
+    me?: boolean
 }
 
-const getProfileService = ({ profileName }: Props) => {
-    const url = `${profileName}/me/`
+const getProfileService = ({ profileName, me }: Props) => {
+    let url = `${profileName}/`
+
+    if (me) {
+        url = `${profileName}/me/`
+    }
+
     return new APIClient<Profile>(url)
 }
 

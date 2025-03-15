@@ -7,7 +7,7 @@ interface Props {
 }
 
 const useGetAdmins = ({ access, school }: Props): UseQueryResult<Admin[], Error> => {
-
+    
     const adminService = getAdminService({ })
     const params = { school }
     return useQuery({

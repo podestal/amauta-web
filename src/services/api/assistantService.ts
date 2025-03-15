@@ -10,6 +10,7 @@ export interface Assistant {
     email: string
     clases_details: string[]
     school: number
+    clases?: number[]
 }
 
 interface Props {

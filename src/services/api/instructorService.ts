@@ -7,6 +7,7 @@ export interface Instructor {
     first_name: string
     last_name: string
     school: number
+    clases?: number[]
 }
 
 type CreateUpdateInstructor = Omit<Instructor, 'id' | 'clases_details'>

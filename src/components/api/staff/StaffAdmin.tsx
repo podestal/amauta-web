@@ -7,7 +7,7 @@ const StaffAdmin = () => {
 
     const access = useAuthStore(s => s.access) || ''
     const school = useSchoolStore(s => s.school) || ''
-    const { data: admins, isLoading, isError, error, isSuccess} = useGetAdmins({ access, school: school.id.toString() })
+    const { data: managers, isLoading, isError, error, isSuccess} = useGetAdmins({ access, school: school.id.toString() })
 
     if (isLoading) return <p className="animate-pulse text-sm text-center py-5">Un Momento ...</p>
 
@@ -17,8 +17,8 @@ const StaffAdmin = () => {
 
   return (
     <div className="flex flex-col gap-4 justify-center items-center">
-        {admins.map( admin => (
-            <p key={admin.id}>{admin.first_name}</p>
+        {managers.map( manager => (
+            <p key={manager.id}>{manager.first_name}</p>
         ))}
     </div>
   )
