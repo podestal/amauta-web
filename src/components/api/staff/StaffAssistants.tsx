@@ -15,9 +15,14 @@ const StaffAssistants = () => {
     if (isSuccess)
 
   return (
-    <div className="flex flex-col gap-4 justify-center items-center">
+    <div className="w-full flex flex-col gap-4 justify-center items-center">
         {assistants.map( assistant => (
-            <p key={assistant.id}>{assistant.first_name}</p>
+            <div 
+                className="bg-gray-800 px-4 py-2 rounded-lg text-white w-[70%]"
+                key={assistant.id}
+            >
+                <p className="font-bold">{assistant.first_name} {assistant.last_name}</p>
+            </div>
         ))}
     </div>
   )

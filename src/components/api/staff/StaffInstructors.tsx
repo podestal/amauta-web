@@ -21,7 +21,7 @@ const StaffInstructors = () => {
                 className="bg-gray-800 px-4 py-2 rounded-lg text-white w-[70%]"
                 key={instructor.id}
             >
-                <p className="font-bold">{instructor.first_name}</p>
+                <p className="font-bold">{instructor.first_name} {instructor.last_name}</p>
             </div>
         ))}
     </div>
