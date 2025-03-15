@@ -1,6 +1,7 @@
 import { useState } from "react"
 import Input from "../../ui/Input"
 import Button from "../../ui/Button"
+import useSignUp from "../../../hooks/auth/useSignUp"
 
 interface Props {
     group: string
@@ -15,9 +16,27 @@ const StaffForm = ({ group, name }: Props) => {
     const [email, setEmail] = useState('')
     // const [selectedClassrooms, setSelectedClassrooms] = useState([])
 
+    const signUp = useSignUp()
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault()
+
+        const username = email.split('@')[0]
+        const password = `${firstName.toLowerCase()}${dni}}`
+
+
+        signUp.mutate({ user: {
+            username,
+            email,
+            profile: group,
+            first_name: firstName,
+            last_name: lastName,
+            password
+        }})
+    }
+
   return (
-    <form>
-        <>{console.log(group)}</>
+    <form onSubmit={handleSubmit}>
         <h2>Nuevo {name}</h2>
         <Input 
             label="DNI"

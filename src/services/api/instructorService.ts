@@ -9,6 +9,8 @@ export interface Instructor {
     school: number
 }
 
+type CreateUpdateInstructor = Omit<Instructor, 'id' | 'clases_details'>
+
 interface Props {
     me?: boolean
 }
@@ -18,7 +20,7 @@ const getInstructorService = ({ me }: Props) => {
     if (me) {
         url = 'instructor/me/'
     }
-    return new APIClient<Instructor>(url)
+    return new APIClient<Instructor, CreateUpdateInstructor>(url)
 }
 
 export default getInstructorService
