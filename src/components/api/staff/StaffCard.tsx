@@ -4,6 +4,7 @@ import { Assistant } from "../../../services/api/assistantService"
 import { Instructor } from "../../../services/api/instructorService"
 import { Profile } from "../../../services/api/profileService"
 import StaffForm from "./StaffForm"
+import useUpdateProfile from "../../../hooks/api/profile/useUpdateProfile"
 
 interface Props {
     profile: Profile
@@ -28,6 +29,8 @@ const StaffCard = ({ profile, group }: Props) => {
         name = 'Auxiliar'
     }
 
+    const updateProfile = useUpdateProfile({ profileId: (currentProfile?.id)?.toString() || '', profileName: group })
+
   return (
     <>
         {currentProfile && 
@@ -46,6 +49,7 @@ const StaffCard = ({ profile, group }: Props) => {
             open={open}
             name={name}
             profile={currentProfile}
+            updateProfile={updateProfile}
         />
     </>
   )

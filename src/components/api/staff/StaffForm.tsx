@@ -1,7 +1,7 @@
 import { useState } from "react"
 import Input from "../../ui/Input"
 import Button from "../../ui/Button"
-import useSignUp from "../../../hooks/auth/useSignUp"
+import useSignUp, { SignUpData } from "../../../hooks/auth/useSignUp"
 import useCreateProfile from "../../../hooks/api/profile/useCreateProfile"
 import useSchoolStore from "../../../hooks/store/useSchoolStore"
 import useAuthStore from "../../../hooks/store/useAuthStore"
@@ -11,6 +11,9 @@ import { motion } from "framer-motion"
 import getClassroomDescription from "../../../utils/getClassroomDescription"
 import Slider from "../../ui/Slider"
 import { Profile } from "../../../services/api/profileService"
+import { UseMutationResult } from "@tanstack/react-query"
+import { ProfileData } from "../../../hooks/api/profile/useUpdateProfile"
+import { SignUpUser } from "../../../services/auth/signUpService"
 
 
 interface Props {
@@ -19,6 +22,9 @@ interface Props {
     open: boolean
     setOpen: React.Dispatch<React.SetStateAction<boolean>>
     profile?: Profile
+    signUp?: UseMutationResult<SignUpUser, Error, SignUpData>
+    createProfile?: UseMutationResult<Profile, Error, ProfileData>
+    updateProfile?: UseMutationResult<Profile, Error, ProfileData>
 }
 
 const generatePassword = () => {
@@ -30,13 +36,14 @@ const generatePassword = () => {
     return result;
   }
 
-const StaffForm = ({ group, name, setOpen, open, profile }: Props) => {
+const StaffForm = ({ group, name, setOpen, open, profile, signUp, createProfile, updateProfile }: Props) => {
 
     // console.log('name', name);
-    console.log('group', group);
+    // console.log('group', group);
     
     const classroomsIds = profile && profile.clases_details?.map( classroom => classroom.split('-').pop()) || []
     const classroomsIdsNumber = classroomsIds && classroomsIds?.map( id => parseInt(id || '0')) || []
+
 
     // const [dni, setDni] = useState('')
     const [firstName, setFirstName] = useState(profile?.first_name || '')
@@ -52,9 +59,6 @@ const StaffForm = ({ group, name, setOpen, open, profile }: Props) => {
     const [loading, setLoading] = useState(false)
     // const [selectedClassrooms, setSelectedClassrooms] = useState([])
 
-    const signUp = useSignUp()
-    const createProfile = useCreateProfile({ profileName: group })
-
     const toggleClassroom = (id: number) => {
         setSelectedClassrooms((prev) =>
             prev.includes(id) ? prev.filter((c) => c !== id) : [...prev, id]
@@ -68,7 +72,7 @@ const StaffForm = ({ group, name, setOpen, open, profile }: Props) => {
         const password = generatePassword()
         
 
-        signUp.mutate({ user: {
+        signUp && signUp.mutate({ user: {
             username,
             email,
             profile: group,
@@ -77,7 +81,7 @@ const StaffForm = ({ group, name, setOpen, open, profile }: Props) => {
             password
         }}, {
             onSuccess: (data) => {
-                createProfile.mutate({ access, profile: {
+                createProfile && createProfile.mutate({ access, profile: {
                     first_name: firstName,
                     last_name: lastName,
                     user: data.id,
@@ -116,6 +120,42 @@ const StaffForm = ({ group, name, setOpen, open, profile }: Props) => {
                 setLoading(false)
             }
         })
+        
+
+        updateProfile && updateProfile.mutate({ access, profile: {
+            first_name: firstName,
+            last_name: lastName,
+            user:profile?.user || 0,
+            email,
+            school,
+            clases_details: [],
+            clases: selectedClassrooms,
+            phone_number: phone,
+            id: profile?.id || 0
+        } }, {
+            onSuccess: res => {
+                console.log(res);
+                
+                setOpen(false)
+                setMessage('Usuario modificado correctamente')
+                setType('success')
+                setShow(true)
+                setFirstName('')
+                setLastName('')
+                setEmail('')
+                setPhone('')
+                setSelectedClassrooms([])
+            },
+            onError: err => {
+                console.log(err)
+                setMessage('Error al modificar el perfil')
+                setType('error')
+                setShow(true)
+            },
+            onSettled: () => {
+                setLoading(false)
+            }
+        })
     }
 
     const { data: classrooms, isLoading, isError, error, isSuccess } = useGetClassroom({ access, school: school.toString() })
@@ -136,10 +176,10 @@ const StaffForm = ({ group, name, setOpen, open, profile }: Props) => {
         <h2 className="text-2xl font-bold text-gray-800 text-center dark:text-gray-200 mb-4">{profile ? 'Modificar' : 'Nuevo'} {name}</h2>
         <div className="space-y-4">
             {/* <Input label="DNI" placeholder="DNI.." value={dni} onChange={e => setDni(e.target.value)} /> */}
-            <Input label="Nombres" placeholder="Nombres.." value={firstName} onChange={e => setFirstName(e.target.value)} />
-            <Input label="Apellidos" placeholder="Apellidos.." value={lastName} onChange={e => setLastName(e.target.value)} />
-            <Input label="Correo Electrónico" placeholder="Correo Electrónico.." value={email} onChange={e => setEmail(e.target.value)} />
-            <Input label="Número de Teléfono" placeholder="Número de Teléfono.." value={phone} onChange={e => setPhone(e.target.value)} />
+            <Input disable={!!updateProfile} label="Nombres" placeholder="Nombres.." value={firstName} onChange={e => setFirstName(e.target.value)} />
+            <Input disable={!!updateProfile} label="Apellidos" placeholder="Apellidos.." value={lastName} onChange={e => setLastName(e.target.value)} />
+            <Input disable={!!updateProfile} label="Correo Electrónico" placeholder="Correo Electrónico.." value={email} onChange={e => setEmail(e.target.value)} />
+            <Input disable={!!updateProfile} label="Número de Teléfono" placeholder="Número de Teléfono.." value={phone} onChange={e => setPhone(e.target.value)} />
         </div>
         {group !== 'manager' && <>
         <h2 className="my-8 text-2xl">Clases</h2>

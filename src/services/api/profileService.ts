@@ -6,15 +6,20 @@ import { Tutor } from "./tutorService";
 
 export type Profile = Tutor | Instructor | Assistant | Admin | null
 
+
+
 interface Props {
     profileName: string
     me?: boolean
+    profileId?: string
 }
 
-const getProfileService = ({ profileName, me }: Props) => {
+const getProfileService = ({ profileName, me, profileId }: Props) => {
     let url = `${profileName}/`
 
-    if (me) {
+    if (profileId) {
+        url = `${profileName}/${profileId}/`
+    } else if (me) {
         url = `${profileName}/me/`
     }
 

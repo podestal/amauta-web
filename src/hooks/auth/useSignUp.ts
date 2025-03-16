@@ -1,7 +1,7 @@
 import { UseMutationResult, useMutation } from "@tanstack/react-query"
 import signUpService, {SignUpUser, SignupCreate} from "../../services/auth/signUpService"
 
-interface SignUpData{
+export interface SignUpData{
     user: SignupCreate 
 }
 

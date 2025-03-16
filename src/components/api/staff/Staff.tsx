@@ -5,6 +5,8 @@ import StaffAssistants from "./StaffAssistants"
 import StaffInstructors from "./StaffInstructors"
 import StaffForm from "./StaffForm"
 import { motion } from "framer-motion"
+import useCreateProfile from "../../../hooks/api/profile/useCreateProfile"
+import useSignUp from "../../../hooks/auth/useSignUp"
 
 const profiles = [
     {id: 1, name: 'Administrativo', group: 'manager'},
@@ -22,6 +24,9 @@ const Staff = () => {
     const [isOpen, setOpen] = useState(false)
     const [selectedGroup, setSelectedGroup] = useState('')
     const [selectedName, setSelectedName] = useState('')
+
+    const signUp = useSignUp()
+    const createProfile = useCreateProfile({ profileName: selectedGroup })
 
   return (
     <div
@@ -55,6 +60,8 @@ const Staff = () => {
                 setOpen={setOpen}
                 group={selectedGroup}
                 name={selectedName}
+                signUp={signUp}
+                createProfile={createProfile}
             />
     </div>
   )
