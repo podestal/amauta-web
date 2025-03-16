@@ -11,6 +11,7 @@ import axios from "axios";
 import { getDeviceType } from "../../utils/getDeviceType";
 import useGetSchool from "../../hooks/api/school/useGetSchool";
 import useSchoolStore from "../../hooks/store/useSchoolStore";
+import useRefreshToken from "../../hooks/auth/useRefreshToken";
 
 interface Props {
   children: React.ReactElement;
@@ -19,14 +20,26 @@ interface Props {
 const PrivateRoutes = ({ children }: Props) => {
   
   const access = useAuthStore((s) => s.access) || ''
+  const refresh = useAuthStore((s) => s.refresh) || ''
   const tokenExpired = isTokenExpired(access)
+  const { mutate: refreshToken, isPending } = useRefreshToken()
   const {setUser, setProfile} = useGetProfileStore()
   const setSchool = useSchoolStore(s => s.setSchool)
   const deviceToken = useFirebaseMessaging()
   const {data: user, isLoading: isLoadingUser, isError: isErrorUser, error: errorUser} = useGetUser({ access });
   const {data: profile, isLoading: isLoadingProfile, isError: isErrorProfile, error: errorProfile, isSuccess} = useGetProfile({ access, profileName: user?.groups[0] || '' });
   const { data: school } = useGetSchool({ access, profile })
+
+  console.log('tokenExpired', tokenExpired);
+
+  useLoader(isPending)
   
+  useEffect(() => {
+    if (!tokenExpired) return
+    console.log("Token expired. Refreshing token...");
+    refreshToken({ token: { refresh } });
+  }, [tokenExpired])
+
   useEffect(() => {
     user && setUser(user)
     profile && setProfile(profile)
@@ -35,7 +48,6 @@ const PrivateRoutes = ({ children }: Props) => {
 
   useEffect(() => {
     if (access && !tokenExpired && deviceToken) {
-      console.log('deviceToken', deviceToken);
       const deviceType = getDeviceType()
       const registerDevice = async () => {
         try {
@@ -88,9 +100,9 @@ const PrivateRoutes = ({ children }: Props) => {
 
   useLoader(isLoadingUser || isLoadingProfile)
   
-  if (tokenExpired) {
-    return <Navigate to="/" replace />
-  }
+  // if (tokenExpired) {
+  //   return <Navigate to="/" replace />
+  // }
 
   if (isErrorUser || isErrorProfile) {
     console.log('error', errorUser || errorProfile);
