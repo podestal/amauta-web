@@ -1,8 +1,7 @@
 import { useState } from "react"
 import Input from "../../ui/Input"
 import Button from "../../ui/Button"
-import useSignUp, { SignUpData } from "../../../hooks/auth/useSignUp"
-import useCreateProfile from "../../../hooks/api/profile/useCreateProfile"
+import { SignUpData } from "../../../hooks/auth/useSignUp"
 import useSchoolStore from "../../../hooks/store/useSchoolStore"
 import useAuthStore from "../../../hooks/store/useAuthStore"
 import useNotificationsStore from "../../../hooks/store/useNotificationsStore"
@@ -37,21 +36,16 @@ const generatePassword = () => {
   }
 
 const StaffForm = ({ group, name, setOpen, open, profile, signUp, createProfile, updateProfile }: Props) => {
-
-    // console.log('name', name);
-    // console.log('group', group);
     
     const classroomsIds = profile && profile.clases_details?.map( classroom => classroom.split('-').pop()) || []
     const classroomsIdsNumber = classroomsIds && classroomsIds?.map( id => parseInt(id || '0')) || []
 
-
-    // const [dni, setDni] = useState('')
     const [firstName, setFirstName] = useState(profile?.first_name || '')
     const [lastName, setLastName] = useState(profile?.last_name || '')
     const [email, setEmail] = useState( profile?.email || '')
     const [phone, setPhone] = useState(profile?.phone_number || '')
     const [selectedClassrooms, setSelectedClassrooms] = useState<number[]>(classroomsIdsNumber && classroomsIdsNumber || [])
-    
+
 
     const school = useSchoolStore(s => s.school).id
     const access = useAuthStore(s => s.access) || ''
@@ -144,7 +138,6 @@ const StaffForm = ({ group, name, setOpen, open, profile, signUp, createProfile,
                 setLastName('')
                 setEmail('')
                 setPhone('')
-                setSelectedClassrooms([])
             },
             onError: err => {
                 console.log(err)

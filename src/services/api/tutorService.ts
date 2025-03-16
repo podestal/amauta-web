@@ -36,6 +36,7 @@ export interface Tutor {
     tutor_relationship: string
     school: number
     clases_details: string[]
+    clases?: number[]
     user?: number
 }
 

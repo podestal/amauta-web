@@ -9,6 +9,7 @@ export interface Admin {
     school: number
     phone_number?: string
     email?: string
+    clases?: number[]
 }
 
 interface Props {
