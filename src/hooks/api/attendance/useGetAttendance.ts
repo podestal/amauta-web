@@ -15,22 +15,25 @@ const useGetAttendance = ({ access, classroomId, studentId, month, week, day }: 
 
     const attendanceService = getAttendanceService({ classroomId, studentId })
 
+    // console.log('month', month);
+    
+
     let attendanceCacheKey = ['']
 
     if (classroomId) {
         // console.log(month)
         
         if (week) {
-            console.log('week key', week);
+            // console.log('week key', week);
             attendanceCacheKey = getAttendanceCacheKey({ classroomId, time: week })
         }
         if (month) {
-            console.log('month key', month);
+            // console.log('month key', month);
             
             attendanceCacheKey = getAttendanceCacheKey({ classroomId, time: month })
         }
         if (day) {
-            console.log('day key', day);
+            // console.log('day key', day);
             attendanceCacheKey = getAttendanceCacheKey({ classroomId, time: `${day} ${month}` })
         }
     } else if (studentId) {

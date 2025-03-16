@@ -26,6 +26,7 @@ const AttendanceSummary = ({ selectedClassroom, selectedWeek, selectedDay, curre
     const lan = useLanguageStore(s => s.lan)
     const access = useAuthStore(s => s.access) || ''
     
+
     const {data: attendances, isLoading, isError, error, isSuccess} = useGetAttendance({ access, classroomId:selectedClassroom, day: selectedDay, month: currentMonth, week: selectedWeek })
 
     if (isLoading) return <p className="text-2xl text-center my-10 animate-pulse">{lan === 'EN' ? 'Loading ...' : 'Cargando ...'}</p>

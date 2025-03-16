@@ -13,9 +13,10 @@ const Clasrooms = () => {
     const lan = useLanguageStore(s => s.lan)
     
 
-    const role = user?.groups[0]
+    const role = user?.groups[0] || user?.profile
     const isInstructor = role === 'instructor'
     const isAssistant = role === 'assistant'
+    
 
     const classrooms = isInstructor
         ? (profile as Instructor)?.clases_details
@@ -23,6 +24,10 @@ const Clasrooms = () => {
         ? (profile as Assistant)?.clases_details
         : []
 
+    console.log('profile', profile);
+    
+    console.log('classrooms', classrooms);
+    
     if (!classrooms?.length) return <p>{lan === 'EN' ? 'No classes available' : 'No hay clases disponibles'}</p>;
 
   return (

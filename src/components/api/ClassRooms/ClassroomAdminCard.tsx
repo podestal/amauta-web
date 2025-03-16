@@ -26,7 +26,7 @@ const ClassroomAdminCard = ({ classroom }: Props) => {
         {/* Student & Instructor Info */}
         <div className="flex flex-col gap-1 text-sm">
             <p className="text-gray-400">👩‍🎓 Alumnos: <span className="font-medium text-gray-300">{classroom.total_students}</span></p>
-            <p className="text-gray-400">📚 Instructores: <span className="italic text-gray-500">-</span></p>
+            {/* <p className="text-gray-400">📚 Instructores: <span className="italic text-gray-500">-</span></p> */}
         </div>
 
         {/* Remove Button */}

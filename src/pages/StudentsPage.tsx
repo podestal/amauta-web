@@ -4,7 +4,7 @@ import TutorPage from "./TutorPage"
 
 const StudentsPage = () => {
 
-  const group = useGetProfileStore(s=>s.user?.groups[0])
+  const group = useGetProfileStore(s=>s.user?.groups[0] || s.user?.profile)
 
   return (
     <>

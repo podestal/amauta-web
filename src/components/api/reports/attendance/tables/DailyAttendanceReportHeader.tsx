@@ -39,6 +39,7 @@ const DailyAttendanceReportHeader = ({ selectedDay, setSelectedDay, getDay, curr
 
     const lan = useLanguageStore(s => s.lan)
     let day = getDay(parseInt(selectedDay), parseInt(currentMonth))
+    
 
     const handleNextDay = () => {
 

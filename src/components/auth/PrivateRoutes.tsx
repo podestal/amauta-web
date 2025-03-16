@@ -27,14 +27,13 @@ const PrivateRoutes = ({ children }: Props) => {
   const setSchool = useSchoolStore(s => s.setSchool)
   const deviceToken = useFirebaseMessaging()
   const {data: user, isLoading: isLoadingUser, isError: isErrorUser, error: errorUser} = useGetUser({ access });
-  const {data: profile, isLoading: isLoadingProfile, isError: isErrorProfile, error: errorProfile, isSuccess} = useGetProfile({ access, profileName: user?.groups[0] || '' });
+  const {data: profile, isLoading: isLoadingProfile, isError: isErrorProfile, error: errorProfile, isSuccess} = useGetProfile({ access, profileName: user?.groups[0] || user?.profile || '' });
   const { data: school } = useGetSchool({ access, profile })
 
   useLoader(isPending)
   
   useEffect(() => {
     if (!tokenExpired) return
-    console.log("Token expired. Refreshing token...");
     refreshToken({ token: { refresh } });
   }, [tokenExpired])
 

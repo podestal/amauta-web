@@ -198,7 +198,7 @@ const AttendanceReport = () => {
                         <AttendanceSummary 
                             selectedClassroom={selectedClassroom}
                             selectedDay={selectedDay}
-                            currentMonth={selectedMonth}
+                            currentMonth={currentMonth}
                         />}
                         {selectedType === '1' &&
                         <AttendanceSummary 
