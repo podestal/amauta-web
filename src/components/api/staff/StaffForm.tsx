@@ -32,12 +32,11 @@ const generatePassword = () => {
 
 const StaffForm = ({ group, name, setOpen, open, profile }: Props) => {
 
-    const classroomsIds = profile && profile.clases_details?.map( classroom => classroom.split('-').pop()) || []
-    console.log('classroomsIds', classroomsIds);
-    const classroomsIdsNumber = classroomsIds && classroomsIds?.map( id => parseInt(id || '0')) || []
-    console.log('classroomsIdsNumber', classroomsIdsNumber);
+    // console.log('name', name);
     console.log('group', group);
     
+    const classroomsIds = profile && profile.clases_details?.map( classroom => classroom.split('-').pop()) || []
+    const classroomsIdsNumber = classroomsIds && classroomsIds?.map( id => parseInt(id || '0')) || []
 
     // const [dni, setDni] = useState('')
     const [firstName, setFirstName] = useState(profile?.first_name || '')
@@ -134,7 +133,7 @@ const StaffForm = ({ group, name, setOpen, open, profile }: Props) => {
         setOpen={setOpen}
     >
          <form onSubmit={handleSubmit} className=" shadow-lg rounded-lg p-6 max-w-lg mx-auto space-y-5">
-        <h2 className="text-2xl font-bold text-gray-800 text-center dark:text-gray-200 mb-4">Nuevo {name}</h2>
+        <h2 className="text-2xl font-bold text-gray-800 text-center dark:text-gray-200 mb-4">{profile ? 'Modificar' : 'Nuevo'} {name}</h2>
         <div className="space-y-4">
             {/* <Input label="DNI" placeholder="DNI.." value={dni} onChange={e => setDni(e.target.value)} /> */}
             <Input label="Nombres" placeholder="Nombres.." value={firstName} onChange={e => setFirstName(e.target.value)} />
@@ -142,7 +141,7 @@ const StaffForm = ({ group, name, setOpen, open, profile }: Props) => {
             <Input label="Correo Electrónico" placeholder="Correo Electrónico.." value={email} onChange={e => setEmail(e.target.value)} />
             <Input label="Número de Teléfono" placeholder="Número de Teléfono.." value={phone} onChange={e => setPhone(e.target.value)} />
         </div>
-        {<>
+        {group !== 'manager' && <>
         <h2 className="my-8 text-2xl">Clases</h2>
         <motion.div
             className="flex flex-col gap-4 my-8"

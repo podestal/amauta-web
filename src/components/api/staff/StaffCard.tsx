@@ -14,6 +14,7 @@ const StaffCard = ({ profile, group }: Props) => {
 
     const [open, setOpen] = useState(false)
     let name = ''
+    
 
     let currentProfile
     if (group === 'manager') {
@@ -40,7 +41,7 @@ const StaffCard = ({ profile, group }: Props) => {
         <StaffForm 
             // group: string
             // name: string
-            group='manager'
+            group={group}
             setOpen={setOpen}
             open={open}
             name={name}

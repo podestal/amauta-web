@@ -21,7 +21,7 @@ const StaffInstructors = () => {
             <StaffCard 
                 profile={instructor}
                 key={instructor.id}
-                group="assistant"
+                group="instructor"
             />
         ))}
     </div>
