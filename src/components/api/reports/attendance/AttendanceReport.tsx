@@ -20,6 +20,9 @@ const AttendanceReport = () => {
     const [isLoading, setIsLoading] = useState(false);
     const reportRef = useRef<HTMLDivElement | null>(null);
 
+    const pdfTitleType = selectedType === '1' ? 'Mensual' : selectedType === '2' ? 'Semanal' : 'Diario';
+    const pdfTitle = `Reporte_Asistencia_${pdfTitleType}_${moment().format("DD/MM/YYYY")}.pdf`;
+
     // const generateImage = async () => {
     //     if (!reportRef.current) return;
     //     setIsLoading(true);
@@ -52,35 +55,99 @@ const AttendanceReport = () => {
     //     }
     //   };      
 
+    // const generatePDF = async () => {
+    //   const { jsPDF } = await import("jspdf");
+    //   if (!reportRef.current) return;
+    //   setIsLoading(true);
+
+    //   try {
+    //       const canvas = await html2canvas(reportRef.current, {
+    //           scale: 2, // Higher scale for better resolution
+    //           useCORS: true,
+    //           backgroundColor: "#ffffff",
+    //           allowTaint: true,
+    //           logging: false,
+    //       });
+
+    //       const imgData = canvas.toDataURL("image/png");
+    //       const pdf = new jsPDF({
+    //           orientation: "portrait", // or "landscape"
+    //           unit: "px",
+    //           format: [canvas.width, canvas.height], // Makes it one long page
+    //       });
+
+    //       pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
+    //       pdf.save(`Attendance_Report_${moment().format("YYYYMMDD")}.pdf`);
+    //   } catch (error) {
+    //       console.error("Error generating PDF:", error);
+    //   } finally {
+    //       setIsLoading(false);
+    //   }
+    // }
+    // const generatePDF = async () => {
+    //     const { jsPDF } = await import("jspdf");
+    //     if (!reportRef.current) return;
+    //     setIsLoading(true);
+    
+    //     try {
+    //         const canvas = await html2canvas(reportRef.current, {
+    //             scale: 1.5, // Reduce scale for smaller image size
+    //             useCORS: true,
+    //             backgroundColor: "#ffffff",
+    //             logging: false,
+    //         });
+    
+    //         const imgData = canvas.toDataURL("image/jpeg", 0.7); // Use JPEG & lower quality
+    //         const pdf = new jsPDF({
+    //             orientation: "portrait",
+    //             unit: "px",
+    //             format: "a4", // Use standard format
+    //         });
+    
+    //         const pdfWidth = pdf.internal.pageSize.getWidth();
+    //         const pdfHeight = (canvas.height * pdfWidth) / canvas.width; // Maintain aspect ratio
+    
+    //         pdf.addImage(imgData, "JPEG", 0, 0, pdfWidth, pdfHeight);
+    //         pdf.save(`Attendance_Report_${moment().format("YYYYMMDD")}.pdf`);
+    //     } catch (error) {
+    //         console.error("Error generating PDF:", error);
+    //     } finally {
+    //         setIsLoading(false);
+    //     }
+    // };
     const generatePDF = async () => {
-      const { jsPDF } = await import("jspdf");
-      if (!reportRef.current) return;
-      setIsLoading(true);
-
-      try {
-          const canvas = await html2canvas(reportRef.current, {
-              scale: 2, // Higher scale for better resolution
-              useCORS: true,
-              backgroundColor: "#ffffff",
-              allowTaint: true,
-              logging: false,
-          });
-
-          const imgData = canvas.toDataURL("image/png");
-          const pdf = new jsPDF({
-              orientation: "portrait", // or "landscape"
-              unit: "px",
-              format: [canvas.width, canvas.height], // Makes it one long page
-          });
-
-          pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
-          pdf.save(`Attendance_Report_${moment().format("YYYYMMDD")}.pdf`);
-      } catch (error) {
-          console.error("Error generating PDF:", error);
-      } finally {
-          setIsLoading(false);
-      }
-    }
+        const { jsPDF } = await import("jspdf");
+        if (!reportRef.current) return;
+        setIsLoading(true);
+    
+        try {
+            const canvas = await html2canvas(reportRef.current, {
+                scale: 2, // Improve resolution
+                useCORS: true,
+                backgroundColor: "#ffffff",
+                logging: false,
+            });
+    
+            const imgData = canvas.toDataURL("image/jpeg", 0.8); // JPEG with compression
+            const pdfWidth = 210; // A4 width in mm
+            const pdfHeight = (canvas.height * pdfWidth) / canvas.width; // Maintain aspect ratio
+    
+            const pdf = new jsPDF({
+                orientation: "portrait",
+                unit: "mm",
+                format: [pdfWidth, pdfHeight], // Set custom height dynamically
+            });
+    
+            pdf.addImage(imgData, "JPEG", 0, 0, pdfWidth, pdfHeight);
+            pdf.save(pdfTitle);
+        } catch (error) {
+            console.error("Error generating PDF:", error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+    
+    
       
 
     return (

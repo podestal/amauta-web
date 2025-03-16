@@ -11,6 +11,7 @@ interface Props {
 const AttendanceSummaryCard = ({ attendances, status }: Props) => {
 
     const lan = useLanguageStore(s => s.lan)
+    
     const attendanceCount = attendances.filter((attendance) => attendance.status === status).length
     const label = getAttendanceLabel({ lan, attendance: status })
 

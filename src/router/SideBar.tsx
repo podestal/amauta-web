@@ -17,7 +17,7 @@ const groupToSpanish: Record<string, string> = {
 
 const SideBar = ({ profile }: Props) => {
 
-    const group = useGetProfileStore(s => s.user)?.profile || ''
+    const group = useGetProfileStore(s => s.user)?.groups[0] || useGetProfileStore(s => s.user)?.profile || ''
 
     // let navItems
 

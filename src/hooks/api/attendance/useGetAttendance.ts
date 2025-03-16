@@ -18,16 +18,20 @@ const useGetAttendance = ({ access, classroomId, studentId, month, week, day }: 
     let attendanceCacheKey = ['']
 
     if (classroomId) {
-        console.log(month)
+        // console.log(month)
         
         if (week) {
+            console.log('week key', week);
             attendanceCacheKey = getAttendanceCacheKey({ classroomId, time: week })
         }
-        if (day) {
-            attendanceCacheKey = getAttendanceCacheKey({ classroomId, time: `${day} ${month}` })
-        }
         if (month) {
+            console.log('month key', month);
+            
             attendanceCacheKey = getAttendanceCacheKey({ classroomId, time: month })
+        }
+        if (day) {
+            console.log('day key', day);
+            attendanceCacheKey = getAttendanceCacheKey({ classroomId, time: `${day} ${month}` })
         }
     } else if (studentId) {
         attendanceCacheKey = getAttendanceCacheKey({ studentId, month })
@@ -45,7 +49,7 @@ const useGetAttendance = ({ access, classroomId, studentId, month, week, day }: 
     //     queryFn: () => classroomId ? studentService.get(access, params) : studentService.get(access),
     // })
 
-    console.log('params', params);
+    // console.log('params', params);
     
 
     return useQuery({
