@@ -30,8 +30,6 @@ const PrivateRoutes = ({ children }: Props) => {
   const {data: profile, isLoading: isLoadingProfile, isError: isErrorProfile, error: errorProfile, isSuccess} = useGetProfile({ access, profileName: user?.groups[0] || '' });
   const { data: school } = useGetSchool({ access, profile })
 
-  console.log('tokenExpired', tokenExpired);
-
   useLoader(isPending)
   
   useEffect(() => {

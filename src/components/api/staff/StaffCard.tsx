@@ -34,16 +34,19 @@ const StaffCard = ({ profile, group }: Props) => {
   return (
     <>
         {currentProfile && 
-        <div 
-            className="bg-gray-800 px-4 py-2 rounded-lg text-white w-[70%]"
-            key={currentProfile.id}
-            onClick={() => setOpen(true)}
+        <div
+        className="bg-gray-900 hover:bg-gray-800 transition-colors px-6 py-4 rounded-2xl border-l-8 border-blue-500/70 text-white w-full max-w-sm shadow-lg cursor-pointer flex items-center gap-4"
+        key={currentProfile.id}
+        onClick={() => setOpen(true)}
         >
-            <p className="font-bold">{currentProfile.first_name} {currentProfile.last_name}</p>
+            <div className="flex items-center justify-center w-12 h-12 bg-gray-700 rounded-full text-lg font-semibold">
+            {currentProfile.first_name[0]}{currentProfile.last_name[0]}
+            </div>
+            <div>
+            <p className="text-lg font-semibold">{currentProfile.first_name} {currentProfile.last_name}</p>
+            </div>
         </div>}
         <StaffForm 
-            // group: string
-            // name: string
             group={group}
             setOpen={setOpen}
             open={open}

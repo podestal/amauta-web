@@ -24,14 +24,14 @@ if ("serviceWorker" in navigator) {
       }
 
       // Example: Show a test notification
-      navigator.serviceWorker.ready.then((registration) => {
-        registration.showNotification("Bienvenido!", {
-          body: "Haz activado notificaciones",
-          icon: "/icons/quenteh.png",
-          badge: "/icons/quenteh.png",
-          data: { url: "/" }, // Optional URL to navigate when clicked
-        });
-      });
+      // navigator.serviceWorker.ready.then((registration) => {
+      //   registration.showNotification("Bienvenido!", {
+      //     body: "Haz activado notificaciones",
+      //     icon: "/icons/quenteh.png",
+      //     badge: "/icons/quenteh.png",
+      //     data: { url: "/" }, // Optional URL to navigate when clicked
+      //   });
+      // });
     } catch (error) {
       console.error("Service Worker registration failed:", error);
     }

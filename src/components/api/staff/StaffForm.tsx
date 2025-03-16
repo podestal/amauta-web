@@ -46,6 +46,10 @@ const StaffForm = ({ group, name, setOpen, open, profile, signUp, createProfile,
     const [phone, setPhone] = useState(profile?.phone_number || '')
     const [selectedClassrooms, setSelectedClassrooms] = useState<number[]>(classroomsIdsNumber && classroomsIdsNumber || [])
 
+    const [firstNameError, setFirstNameError] = useState('')
+    const [lastNameError, setLastNameError] = useState('')
+    const [emailError, setEmailError] = useState('')
+
 
     const school = useSchoolStore(s => s.school).id
     const access = useAuthStore(s => s.access) || ''
@@ -64,6 +68,38 @@ const StaffForm = ({ group, name, setOpen, open, profile, signUp, createProfile,
         setLoading(true)
         const username = email.split('@')[0]
         const password = generatePassword()
+
+        if (!firstName) {
+            setFirstNameError('El nombre es requerido')
+            setLoading(false)
+            return
+        }
+
+        if (!lastName) {
+            setLastNameError('El apellido es requerido')
+            setLoading(false)
+            return
+        }
+
+        if (!email) {
+            setEmailError('El correo es requerido')
+            setLoading(false)
+            return
+        }
+
+        if (email && !email.includes('@') || !email.includes('.')) {
+            setEmailError('El correo no es válido')
+            setLoading(false)
+            return
+        }
+
+        if (group !== 'manager' && selectedClassrooms.length === 0) {
+            setMessage('Debe seleccionar al menos una clase')
+            setType('error')
+            setShow(true)
+            setLoading(false)
+            return
+        }
         
 
         signUp && signUp.mutate({ user: {
@@ -109,6 +145,9 @@ const StaffForm = ({ group, name, setOpen, open, profile, signUp, createProfile,
             },
             onError: (err) => {
                 console.log(err)
+                setMessage('Error al crear el usuario')
+                setType('error')
+                setShow(true)
             },
             onSettled: () => {
                 setLoading(false)
@@ -165,13 +204,22 @@ const StaffForm = ({ group, name, setOpen, open, profile, signUp, createProfile,
         isOpen={open}
         setOpen={setOpen}
     >
-         <form onSubmit={handleSubmit} className=" shadow-lg rounded-lg p-6 max-w-lg mx-auto space-y-5">
+        <form onSubmit={handleSubmit} className="shadow-lg rounded-lg p-6 max-w-lg mx-auto space-y-5">
         <h2 className="text-2xl font-bold text-gray-800 text-center dark:text-gray-200 mb-4">{profile ? 'Modificar' : 'Nuevo'} {name}</h2>
         <div className="space-y-4">
             {/* <Input label="DNI" placeholder="DNI.." value={dni} onChange={e => setDni(e.target.value)} /> */}
-            <Input disable={!!updateProfile} label="Nombres" placeholder="Nombres.." value={firstName} onChange={e => setFirstName(e.target.value)} />
-            <Input disable={!!updateProfile} label="Apellidos" placeholder="Apellidos.." value={lastName} onChange={e => setLastName(e.target.value)} />
-            <Input disable={!!updateProfile} label="Correo Electrónico" placeholder="Correo Electrónico.." value={email} onChange={e => setEmail(e.target.value)} />
+            <Input error={firstNameError} setError={setFirstNameError} disable={!!updateProfile} label="Nombres" placeholder="Nombres.." value={firstName}
+                onChange={e => { 
+                    firstName && setFirstNameError('')
+                    setFirstName(e.target.value)}} />
+            <Input error={lastNameError} setError={setLastNameError} disable={!!updateProfile} label="Apellidos" placeholder="Apellidos.." value={lastName} 
+                onChange={e => {
+                    lastName && setLastNameError('')
+                    setLastName(e.target.value)}} />
+            <Input error={emailError} setError={setEmailError} disable={!!updateProfile} label="Correo Electrónico" placeholder="Correo Electrónico.." value={email} 
+                onChange={e => {
+                    email && setEmailError('')
+                    setEmail(e.target.value)}} />
             <Input disable={!!updateProfile} label="Número de Teléfono" placeholder="Número de Teléfono.." value={phone} onChange={e => setPhone(e.target.value)} />
         </div>
         {group !== 'manager' && <>
@@ -251,10 +299,12 @@ const StaffForm = ({ group, name, setOpen, open, profile, signUp, createProfile,
         </div>
         </motion.div>
         </>}
-        <Button 
-            label="Guardar"
-            loading={loading}
-        />
+        <div className="absolute top-0 left-12 p-4">
+            <Button 
+                label="Guardar"
+                loading={loading}
+            />
+        </div>
     </form>
     </Slider>
     }</>
