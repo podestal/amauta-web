@@ -266,7 +266,8 @@ const StudentTutorForm = ({
                 tutor_relationship: tutorRelationship,
                 can_access: true, 
                 tutor_type: tutorType,
-                school: school.id
+                school: school.id,
+                clases_details: []
             },
             access
         }, {
@@ -302,7 +303,8 @@ const StudentTutorForm = ({
                 tutor_relationship: tutorRelationship,
                 can_access: true, 
                 tutor_type: tutorType,
-                school: school.id
+                school: school.id,
+                clases_details: []
             },
             access
         }, {
@@ -341,7 +343,8 @@ const StudentTutorForm = ({
                 tutor_relationship: tutorRelationship,
                 can_access: true, 
                 tutor_type: tutorType,
-                school: school.id
+                school: school.id,
+                clases_details: []
             },
             access
         }, {
