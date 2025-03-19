@@ -55,13 +55,15 @@ interface Props {
     byStudent?: boolean
     byTutor? : boolean
     byDate?: boolean
+    byAdmin?: boolean
 }
 
-const getAnnouncementService = ({ byStudent, byTutor, byDate }: Props) => {
+const getAnnouncementService = ({ byStudent, byTutor, byDate, byAdmin }: Props) => {
     let url = `announcement/`
     if (byStudent) {
         url = `announcement/byStudent/`
-    
+    } else if (byAdmin) {
+        url = `announcement/byAdmin/`
     } else if (byDate) {
         url = `announcement/byDate/`
     }else if (byTutor) {
