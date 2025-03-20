@@ -20,7 +20,7 @@ const AnnouncementsLastTen = ({ announcements, selectedType, selectedLevel }: Pr
     filteredAnnouncements.slice(0, 10)
 
   return (
-    <div>
+    <div className="overflow-y-auto h-screen">
         <h2 className="text-2xl font-bold mb-6">Ultimos 10 anuncios</h2>
         {filteredAnnouncements
         .map((announcement) => 

@@ -19,9 +19,9 @@ const ClassroomsSelector = ({ classrooms, selectedClassrooms, setSelectedClassro
 
     return (
         <>
-            <h2 className="my-8 text-2xl">Clases</h2>
+            <h2 className="my-4 text-2xl">Clases</h2>
             <motion.div
-                className="flex flex-col gap-4 my-8"
+                className="flex flex-col gap-4 my-2"
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}

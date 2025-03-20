@@ -23,9 +23,6 @@ const ClassroomForm = ({ level, createClassroom }: Props) => {
     const [selectedGrade, setSelectedGrade] = useState('0')
     const [selectedSection, setSelectedSection] = useState('0')
     
-    console.log('selectedGrade', selectedGrade)
-    console.log('selectedSection', selectedSection);
-    
 
     const gradeOptions = []
     if (level === 'I') {

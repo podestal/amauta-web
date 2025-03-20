@@ -16,6 +16,10 @@ import { UseMutationResult } from "@tanstack/react-query"
 import { Announcement } from "../../../services/api/announcementService"
 import { CreateAnnouncementData } from "../../../hooks/api/announcement.ts/useCreateAnnouncement"
 import useNotificationsStore from "../../../hooks/store/useNotificationsStore"
+import StudentByDNI from "../Students/StudentByDNI"
+import StudentSelector from "../Students/StudentSelector"
+import Button from "../../ui/Button"
+import { Student } from "../../../services/api/studentsService"
 
 // VISIBILITY_LEVELS = [
 //     ("G", "General"),    
@@ -54,6 +58,11 @@ const AnnouncementAdminForm = ({ classrooms, createAnnouncement }: Props) => {
     const [selectedType, setSelectedType] = useState<'I' | 'A' | 'E' | ''>('')
     const [selectedLevel, setSelectedLevel] = useState<'G' | 'C' | 'A' | 'P' | ''>('')
     const [selectedClassrooms, setSelectedClassrooms] = useState<number[]>([])
+    const [selectedStudents, setSelectedStudents] = useState<Student[]>([])
+
+    // Student selector
+    const [name, setName] = useState('')
+    const [nameError, setNameError] = useState('')
 
     // Error handling
     const [titleError, setTitleError] = useState('')
@@ -96,6 +105,7 @@ const AnnouncementAdminForm = ({ classrooms, createAnnouncement }: Props) => {
                 announcement_type: selectedType,
                 visibility_level: selectedLevel,
                 clases: selectedClassrooms,
+                students: selectedStudents.map(s => parseInt(s.uid))
             }
         }, {
             onSuccess: () => {
@@ -125,7 +135,6 @@ const AnnouncementAdminForm = ({ classrooms, createAnnouncement }: Props) => {
   return (
     <form onSubmit={handleCreateAnnouncement} className="w-full flex flex-col gap-4">
         <h2 className="text-2xl font-bold text-center">Nuevo Anuncio</h2>
-        <>{console.log('selectedClassrooms', selectedClassrooms)}</>
         <Input 
             value={title}
             onChange={(e) => {
@@ -173,6 +182,7 @@ const AnnouncementAdminForm = ({ classrooms, createAnnouncement }: Props) => {
                         } else {
                             setSelectedLevel('')
                             setSelectedClassrooms([])
+                            setSelectedStudents([])
                         }
                     }} 
                     className={`${selectedLevel === 'G' ? 'bg-green-600' : 'bg-gray-500'} py-2 rounded-2xl cursor-pointer hover:bg-green-700 transition-all duration-300`}
@@ -185,6 +195,7 @@ const AnnouncementAdminForm = ({ classrooms, createAnnouncement }: Props) => {
                         } else {
                             setSelectedLevel('')
                             setSelectedClassrooms([])
+                            setSelectedStudents([])
                         }
                     }} 
                     className={`${selectedLevel === 'C' ? 'bg-purple-500' : 'bg-gray-500'} py-2 rounded-2xl cursor-pointer hover:bg-purple-600 transition-all duration-300`}
@@ -196,6 +207,7 @@ const AnnouncementAdminForm = ({ classrooms, createAnnouncement }: Props) => {
                         } else {
                             setSelectedLevel('')
                             setSelectedClassrooms([])
+                            setSelectedStudents([])
                         }
                     }} 
                     className={`${selectedLevel === 'P' ? 'bg-cyan-600' : 'bg-gray-500'} py-2 rounded-2xl cursor-pointer hover:bg-cyan-700 transition-all duration-300`}
@@ -203,6 +215,29 @@ const AnnouncementAdminForm = ({ classrooms, createAnnouncement }: Props) => {
             </div>
         </div>
         {selectedLevel === 'C' && <ClassroomsSelector classrooms={classrooms} selectedClassrooms={selectedClassrooms} setSelectedClassrooms={setSelectedClassrooms} />}
+        {selectedLevel === 'P' && 
+        <>      
+                {selectedStudents.length > 0 && 
+                <>
+                    <h2 className="text-xl font-bold">Alumnos Seleccionados</h2>
+                    {selectedStudents.map(student => (
+                        <p key={student.uid} className="rounded-xl px-4 bg-green-600 transition-all duration-300">{student.first_name} {student.last_name}</p>
+                    ))}
+                </>} 
+                <div 
+                    className="w-full h-full flex justify-center items-center gap-12">
+                    <Input 
+                        placeholder="Buscar por nombre, apellido o DNI ..."
+                        onChange={(e) => {
+                            name && setNameError('')
+                            setName(e.target.value)
+                        }}
+                        error={nameError}
+                    />
+        
+                </div>
+            {name && <StudentSelector name={name} color="bg-blue-700" selectedStudents={selectedStudents} setSelectedStudents={setSelectedStudents} />}
+        </>}
         <button className="bg-blue-500 text-white py-2 rounded-2xl hover:bg-blue-600 transition-all duration-300">Crear Anuncio</button>
     </form>
   )
