@@ -10,7 +10,7 @@ import { Student } from "../../../services/api/studentsService"
 import Button from "../../ui/Button"
 import useNotificationsStore from "../../../hooks/store/useNotificationsStore"
 import { motion } from "framer-motion"
-import useGetProfileStore from "../../../hooks/store/useGetProfileStore"
+import useSchoolStore from "../../../hooks/store/useSchoolStore"
 
 interface Props {
     CreateAnnouncement: UseMutationResult<Announcement, Error, CreateAnnouncementData>
@@ -21,11 +21,13 @@ const AnnouncementForm = ({ CreateAnnouncement, student }: Props) => {
 
     const lan = useLanguageStore(s => s.lan)
     const access = useAuthStore(s => s.access) || ''
+    const user = useAuthStore(s => s.userId)
+    const school = useSchoolStore(s => s.school).id
     const { setType, setShow, setMessage } = useNotificationsStore()
-    const profile = useGetProfileStore(s => s.profile)
 
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
+    const [selectedType, setSelectedType] = useState<'I' | 'A' | 'E' | ''>('')
 
     const [titleError, setTitleError] = useState('')
     const [descriptionError, setDescriptionError] = useState('')
@@ -53,8 +55,11 @@ const AnnouncementForm = ({ CreateAnnouncement, student }: Props) => {
                 announcement: {
                     title,
                     description,
-                    student: student.uid,
-                    created_by: profile?.first_name + ' ' + profile?.last_name
+                    created_by: user,
+                    school,
+                    announcement_type: selectedType,
+                    visibility_level: 'P',
+                    students: [parseInt(student.uid)]
                 }
             },
             {
@@ -99,6 +104,23 @@ const AnnouncementForm = ({ CreateAnnouncement, student }: Props) => {
                     setDescription(e.target.value)}}
                 error={descriptionError}
             />
+            <div className="flex flex-col gap-4 items-center justify-start">
+                <p>Tipo de anuncio</p>
+                <div className="w-full flex flex-col gap-4 text-center">
+                    <p 
+                        onClick={() => selectedType === '' ? setSelectedType('I') : setSelectedType('')} 
+                        className={`${selectedType === 'I' ? 'bg-blue-600' : 'bg-gray-500'} py-2 rounded-2xl cursor-pointer hover:bg-blue-700 transition-all duration-300`}
+                    >Informativo</p>
+                    <p
+                        onClick={() => selectedType === '' ? setSelectedType('A') : setSelectedType('')} 
+                        className={`${selectedType === 'A' ? 'bg-yellow-500' : 'bg-gray-500'} py-2 rounded-2xl cursor-pointer hover:bg-yellow-600 transition-all duration-300`}
+                    >Atención</p>
+                    <p
+                        onClick={() => selectedType === '' ? setSelectedType('E') : setSelectedType('')} 
+                        className={`${selectedType === 'E' ? 'bg-red-600' : 'bg-gray-500'} py-2 rounded-2xl cursor-pointer hover:bg-red-700 transition-all duration-300`}
+                    >Emergencia</p>
+                </div>
+            </div>
             <Button 
                 label={lan === 'EN' ? 'Send' : 'Enviar'}
                 loading={loading}
