@@ -14,10 +14,11 @@ import useSchoolStore from "../../../hooks/store/useSchoolStore"
 
 interface Props {
     CreateAnnouncement: UseMutationResult<Announcement, Error, CreateAnnouncementData>
-    student: Student
+    student?: Student
+    classroom?: number
 }
 
-const AnnouncementForm = ({ CreateAnnouncement, student }: Props) => {
+const AnnouncementForm = ({ CreateAnnouncement, student, classroom }: Props) => {
 
     const lan = useLanguageStore(s => s.lan)
     const access = useAuthStore(s => s.access) || ''
@@ -37,6 +38,8 @@ const AnnouncementForm = ({ CreateAnnouncement, student }: Props) => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
+        
+
         if (!title) {
             setTitleError(lan === 'EN' ? 'Title is required' : 'Título es requerido')
             return
@@ -46,6 +49,8 @@ const AnnouncementForm = ({ CreateAnnouncement, student }: Props) => {
             setDescriptionError(lan === 'EN' ? 'Description is required' : 'Descripción es requerida')
             return
         }
+
+        const studentUid = student?.uid
 
         setLoading(true)
         
@@ -59,7 +64,8 @@ const AnnouncementForm = ({ CreateAnnouncement, student }: Props) => {
                     school,
                     announcement_type: selectedType,
                     visibility_level: 'P',
-                    students: [parseInt(student.uid)]
+                    students: studentUid ? [parseInt(studentUid)] : [],
+                    clases: classroom ? [classroom] : []
                 }
             },
             {
@@ -83,6 +89,7 @@ const AnnouncementForm = ({ CreateAnnouncement, student }: Props) => {
         initial={{ y: "-100%", opacity: 0 }}
         animate={{ y: 0, opacity: 1, transition: { duration: 0.5, ease: "easeOut" } }}
     >
+        <>{console.log('classroom', classroom)}</>
         <form
             onSubmit={handleSubmit}
             className="flex flex-col justify-center item-start gap-6 w-[60%] mx-auto"
