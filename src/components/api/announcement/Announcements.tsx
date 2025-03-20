@@ -40,7 +40,9 @@ const Announcements = ({ student }: Props) => {
                         {
                             label: lan === 'EN' ? 'Create Announcement' : 'Crear Mensaje',
                             content: <CreateAnnouncement 
-                                student={student} />
+                                student={student} 
+                                visibility="P"
+                            />
                         }
                     ]}
                 />

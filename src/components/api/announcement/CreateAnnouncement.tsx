@@ -6,9 +6,10 @@ import AnnouncementForm from "./AnnouncementForm"
 interface Props {
     student?: Student
     classroom?: number
+    visibility: 'C' | 'P'
 }
 
-const CreateAnnouncement = ({ student, classroom }: Props) => {
+const CreateAnnouncement = ({ student, classroom, visibility }: Props) => {
 
     const school = useSchoolStore(s => s.school).id.toString()
     const CreateAnnouncement = useCreateAnnouncement({ school })
@@ -18,6 +19,7 @@ const CreateAnnouncement = ({ student, classroom }: Props) => {
         CreateAnnouncement={CreateAnnouncement}
         student={student}
         classroom={classroom}
+        visibility={visibility}
     />
   )
 }

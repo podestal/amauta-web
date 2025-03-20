@@ -79,6 +79,7 @@ const Students = ({ classroom, level }: Props) => {
         >
             <CreateAnnouncement 
                 classroom={classroomId}
+                visibility="C"
             />
         </Modal>
     </>

@@ -24,7 +24,7 @@ const CreateAnnouncementAdmin = () => {
     <>
         <div className="flex justify-center items-center mb-10">
             <Button 
-                label="Create Announcement"
+                label="Nuevo Anuncio"
                 onClick={() => setOpen(true)}
             />
         </div>

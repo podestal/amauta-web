@@ -1,4 +1,5 @@
 // import { useState } from "react"
+import { RiGroup2Fill, RiSchoolFill, RiUserFill } from "@remixicon/react";
 import { Announcement } from "../../../services/api/announcementService"
 import { motion } from "framer-motion"
 import moment from "moment"
@@ -25,13 +26,19 @@ const AnnouncementCard = ({ announcement }: Props) => {
 
   return (
     <motion.div
-        className={`p-3 my-4 border-l-4 rounded-lg shadow-sm ${messageStyles[announcement.announcement_type as keyof typeof messageStyles]}`}
+        className={`relative p-3 my-4 border-l-4 rounded-lg shadow-sm ${messageStyles[announcement.announcement_type as keyof typeof messageStyles]}`}
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         whileHover={{ scale: 1.02 }}
         >
           <>{console.log('announcement', announcement)}</>
-        <h3 className="text-lg text-slate-950 font-semibold">{announcement.title}</h3>
+        <div className="flex justify-between items-center mb-2">
+          <h3 className="text-lg text-slate-950 font-semibold">{announcement.title}</h3>
+          {announcement.visibility_level === 'G' && <RiSchoolFill className="text-xl text-slate-950" />}
+          {announcement.visibility_level === 'C' &&<RiGroup2Fill className="text-xl text-slate-950" />}
+          {announcement.visibility_level === 'P' &&<RiUserFill className="text-xl text-slate-950" />}
+        </div>
+        
         <p className="text-sm text-gray-800">{announcement.description}</p>
         <div className="text-xs text-gray-500 flex justify-between mt-4">
             <span>Autor: {announcement.author}</span>
