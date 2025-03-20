@@ -12,6 +12,10 @@ import ClassroomsSelector from "../ClassRooms/ClassroomsSelector"
 import { Classroom } from "../../../services/api/classroomService"
 import useAuthStore from "../../../hooks/store/useAuthStore"
 import useSchoolStore from "../../../hooks/store/useSchoolStore"
+import { UseMutationResult } from "@tanstack/react-query"
+import { Announcement } from "../../../services/api/announcementService"
+import { CreateAnnouncementData } from "../../../hooks/api/announcement.ts/useCreateAnnouncement"
+import useNotificationsStore from "../../../hooks/store/useNotificationsStore"
 
 // VISIBILITY_LEVELS = [
 //     ("G", "General"),    
@@ -35,20 +39,82 @@ import useSchoolStore from "../../../hooks/store/useSchoolStore"
 
 interface Props {
     classrooms: Classroom[]
+    createAnnouncement?: UseMutationResult<Announcement, Error, CreateAnnouncementData>
 }
 
-const AnnouncementAdminForm = ({ classrooms }: Props) => {
+const AnnouncementAdminForm = ({ classrooms, createAnnouncement }: Props) => {
 
+    const access = useAuthStore(s => s.access) || ''
     const user = useAuthStore(s => s.userId)
     const school = useSchoolStore(s => s.school).id
+    const { setMessage, setShow, setType } = useNotificationsStore()
+
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
-    const [selectedType, setSelectedType] = useState('')
-    const [selectedLevel, setSelectedLevel] = useState('')
+    const [selectedType, setSelectedType] = useState<'I' | 'A' | 'E' | ''>('')
+    const [selectedLevel, setSelectedLevel] = useState<'G' | 'C' | 'A' | 'P' | ''>('')
     const [selectedClassrooms, setSelectedClassrooms] = useState<number[]>([])
+
+    // Error handling
+    const [titleError, setTitleError] = useState('')
+    const [descriptionError, setDescriptionError] = useState('')
 
     const handleCreateAnnouncement = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+
+        if (title === '') {
+            setTitleError('El título es requerido')
+            return
+        }
+
+        if (description === '') {
+            setDescriptionError('La descripción es requerida')
+            return
+        }
+
+        if (selectedType === '') {
+            setMessage('El tipo de anuncio es requerido')
+            setType('error')
+            setShow(true)
+            return
+        }
+
+        if (selectedLevel === '') {
+            setMessage('El nivel de visibilidad es requerido')
+            setType('error')
+            setShow(true)
+            return
+        }
+
+        createAnnouncement && createAnnouncement.mutate({
+            access,
+            announcement: {
+                title,
+                description,
+                created_by: user,
+                school,
+                announcement_type: selectedType,
+                visibility_level: selectedLevel,
+                clases: selectedClassrooms,
+            }
+        }, {
+            onSuccess: () => {
+                setTitle('')
+                setDescription('')
+                setSelectedType('')
+                setSelectedLevel('')
+                setSelectedClassrooms([])
+                setMessage('Anuncio creado correctamente')
+                setType('success')
+                setShow(true)
+            },
+            onError: (err) => {
+                setMessage(err.message)
+                setType('error')
+                setShow(true)
+            }
+        })
+
     }
     
 
@@ -59,14 +125,26 @@ const AnnouncementAdminForm = ({ classrooms }: Props) => {
   return (
     <form onSubmit={handleCreateAnnouncement} className="w-full flex flex-col gap-4">
         <h2 className="text-2xl font-bold text-center">Nuevo Anuncio</h2>
+        <>{console.log('selectedClassrooms', selectedClassrooms)}</>
         <Input 
             value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="Título" />
+            onChange={(e) => {
+                title && setTitleError('')
+                setTitle(e.target.value)}}
+            placeholder="Título" 
+            error={titleError}
+            setError={setTitleError}
+        />
+            
         <TextArea 
             value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder="Descripción ..." />
+            onChange={(e) => {
+                description && setDescriptionError('')
+                setDescription(e.target.value)}}
+            placeholder="Descripción ..." 
+            error={descriptionError}
+            
+        />
 
         <div className="flex flex-col gap-4 items-center justify-start">
             <p>Tipo de anuncio</p>

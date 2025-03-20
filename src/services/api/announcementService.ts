@@ -35,20 +35,20 @@ export interface Announcement {
     title: string
     description: string
     created_at: string
-    created_by: number
-    announcement_type: 'I' | 'A' | 'E'
-    visibility_level: 'G' | 'C' | 'A' | 'P'
+    author: string
+    announcement_type: 'I' | 'A' | 'E' | ''
+    visibility_level: 'G' | 'C' | 'A' | 'P' | ''
     school: number
-    clase: number
+    clases: number[]
     assignature: number
-    student: number
+    students: number[]
 }
 
-export type AnnouncementCreateUpdate = Omit<Announcement, 'id' | 'created_at' | 'created_by' | 'clase' | 'assignature' | 'student'> & {
-    created_by?: string
-    clase?: number
+export type AnnouncementCreateUpdate = Omit<Announcement, 'id' | 'created_at' | 'author' | 'clases' | 'assignature' | 'students'> & {
+    created_by?: number
+    clases?: number[]
     assignature?: number
-    student?: number
+    students?: number[]
 }
 
 interface Props {
