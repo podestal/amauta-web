@@ -4,6 +4,7 @@ import useAuthStore from "../../../hooks/store/useAuthStore"
 import useSchoolStore from "../../../hooks/store/useSchoolStore"
 import AnnouncementsLastTen from "./AnnouncementsLastTen"
 import AnnouncementsSummary from "./AnnouncementsSummary"
+import CreateAnnouncementAdmin from "./CreateAnnouncementAdmin"
 
 
 const AnnouncementsAdminList = () => {
@@ -20,6 +21,9 @@ const AnnouncementsAdminList = () => {
     if (isSuccess)
 
   return (
+    <div className="flex flex-col gap-6">
+      <>{console.log('announcements', announcements)}</>
+    <CreateAnnouncementAdmin />
     <div className="w-full grid grid-cols-3 gap-6">
         <AnnouncementsLastTen 
             announcements={announcements} 
@@ -33,6 +37,7 @@ const AnnouncementsAdminList = () => {
             selectedLevel={selectedLevel}
             setSelectedLevel={setSelectedLevel}
         />
+    </div>
     </div>
   )
 }
