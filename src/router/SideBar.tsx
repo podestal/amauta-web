@@ -58,6 +58,7 @@ const SideBar = ({ profile }: Props) => {
         { name: "Asistencias", path: "reports" },
         { name: "Alumnos", path: "student-admin" },
         { name: 'Administrativo', path: 'admin' },
+        { name: 'Anuncios', path: 'announcements-admin' },
       ]
     } else if (group === 'instructor') {
       navItems = [
@@ -67,7 +68,7 @@ const SideBar = ({ profile }: Props) => {
         { name: 'Notas', path: 'grades-summary' },
         { name: 'Categorías', path: 'categories' },
         { name: "Alumnos", path: "student-admin" },
-        { name: 'Agenda', path: 'agenda' },
+        // { name: 'Anuncios', path: 'announcements-admin' },
       ]
     } else if (group === 'assistant') {
       navItems = [
