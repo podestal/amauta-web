@@ -31,7 +31,6 @@ const AnnouncementCard = ({ announcement }: Props) => {
         animate={{ opacity: 1, x: 0 }}
         whileHover={{ scale: 1.02 }}
         >
-          <>{console.log('announcement', announcement)}</>
         <div className="flex justify-between items-center mb-2">
           <h3 className="text-lg text-slate-950 font-semibold">{announcement.title}</h3>
           {announcement.visibility_level === 'G' && <RiSchoolFill className="text-xl text-slate-950" />}

@@ -4,7 +4,7 @@ import { Student } from "../../../services/api/studentsService"
 import { getAttendanceStatusCount } from "../../../utils/getAttendanceStatusCount";
 import getClassroomDescription from "../../../utils/getClassroomDescription";
 import Button from "../../ui/Button";
-import { RiArrowDownSFill } from "@remixicon/react";
+import { RiArrowDownSFill, RiBookletFill } from "@remixicon/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AttendanceSummaryChart from "../../ui/AttendanceSummaryChart";
@@ -48,6 +48,13 @@ const TutorStudentCard = ({ student }: Props) => {
                 </div>
 
                 {/* Toggle Button */}
+                <div 
+                    onClick={() => navigate(`/app/announcement`, { state: { studentUid: student.uid } })}
+                    className="flex flex-col items-center justify-center gap-2 hover:opacity-35 cursor-pointer">
+                <p className="text-xs">Agenda</p>
+                    <RiBookletFill size={30} className="text-blue-600" />
+                    
+                </div>
                 <motion.div
                     className="cursor-pointer p-2 rounded-full bg-gray-700 hover:bg-gray-600 transition"
                     onClick={toggleDetails}

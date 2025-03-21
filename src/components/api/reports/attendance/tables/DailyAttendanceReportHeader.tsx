@@ -10,7 +10,7 @@ interface Props {
     setCurrentMonth: React.Dispatch<React.SetStateAction<string>>
 }
 
-const daysInSpanish: Record<string, string> = {
+export const daysInSpanish: Record<string, string> = {
     'Mon': 'Lun',
     'Tue': 'Mar',
     'Wed': 'Mié',
@@ -20,7 +20,7 @@ const daysInSpanish: Record<string, string> = {
     'Sun': 'Dom',
 }
 
-const monthInSpanish: Record<string, string> = {
+export const monthInSpanish: Record<string, string> = {
     '1': 'Enero',
     '2': 'Febrero',
     '3': 'Marzo',

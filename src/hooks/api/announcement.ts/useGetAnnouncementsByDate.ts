@@ -12,7 +12,7 @@ const useGetAnnouncementsByDate = ({ date, student, access, enable }: Props): Us
     const announcementService = getAnnouncementService({ byDate: true })
     const params = { student, date }
     return useQuery({
-        queryKey: [`announcements ${student}`,],
+        queryKey: [`announcements ${student} ${date}`,],
         queryFn: () => announcementService.get(access, params),
         enabled: enable
     })

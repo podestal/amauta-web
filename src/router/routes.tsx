@@ -31,7 +31,6 @@ import StudentsAdminByClassroom from "../pages/StudentsAdminByClassroom";
 import GradesForTutorPage from "../pages/GradesForTutorPage";
 import DownloadPage from "../pages/DownloadPage";
 import AdminPage from "../pages/AdminPage";
-import AgendaPage from "../pages/AgendaPage";
 import AnnouncementsAdminPage from "../pages/AnnouncementsAdminPage";
 
 const routes = createBrowserRouter([

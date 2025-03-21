@@ -1,4 +1,4 @@
-import { RiBookletFill, RiBookShelfFill, RiCalendarScheduleFill, RiEqualizerFill, RiFileUserFill, RiGraduationCapFill, RiUserSearchFill } from '@remixicon/react';
+import { RiBookShelfFill, RiCalendarScheduleFill, RiEqualizerFill, RiFileUserFill, RiGraduationCapFill, RiUserSearchFill } from '@remixicon/react';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import useGetProfileStore from '../hooks/store/useGetProfileStore';
@@ -169,7 +169,7 @@ const Navigator: React.FC = () => {
             <RiGraduationCapFill />
             <span>{lan === 'EN' ? 'Grades' : 'Notas' }</span>
           </NavLink> */}
-          <NavLink
+          {/* <NavLink
             to="announcement"
             className={({ isActive }) =>
               `flex flex-col items-center text-sm ${
@@ -178,8 +178,8 @@ const Navigator: React.FC = () => {
             }
           >
             <RiBookletFill />
-            <span>{lan === 'EN' ? 'Announcements' : 'Mensajes' }</span>
-          </NavLink>
+            <span>{lan === 'EN' ? 'Announcements' : 'Agenda' }</span>
+          </NavLink> */}
           <NavLink
             to="profile"
             className={({ isActive }) =>
