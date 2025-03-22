@@ -93,7 +93,7 @@ const AnnouncementForm = ({ CreateAnnouncement, student, classroom, visibility }
     >
         <form
             onSubmit={handleSubmit}
-            className="flex flex-col justify-center item-start gap-6 w-[60%] mx-auto"
+            className="flex flex-col justify-center item-start gap-6 w-[60%] mx-auto bg-slate-800 px-8 py-6 rounded-xl"
         >
             <h2 className="text-2xl text-center">{lan === 'EN' ? 'New Message' : 'Nuevo Mensaje'}</h2>
             <Input 
@@ -114,25 +114,28 @@ const AnnouncementForm = ({ CreateAnnouncement, student, classroom, visibility }
             />
             <div className="flex flex-col gap-4 items-center justify-start">
                 <p>Tipo de anuncio</p>
-                <div className="w-full flex flex-col gap-4 text-center">
+                <div className="w-[70%] flex flex-col gap-4 text-center">
                     <p 
                         onClick={() => selectedType === '' ? setSelectedType('I') : setSelectedType('')} 
-                        className={`${selectedType === 'I' ? 'bg-blue-600' : 'bg-gray-500'} py-2 rounded-2xl cursor-pointer hover:bg-blue-700 transition-all duration-300`}
+                        className={`${selectedType === 'I' ? 'bg-blue-600' : 'bg-gray-500'} max-lg:text-xs text-sm py-2 rounded-2xl cursor-pointer hover:bg-blue-700 transition-all duration-300`}
                     >Informativo</p>
                     <p
                         onClick={() => selectedType === '' ? setSelectedType('A') : setSelectedType('')} 
-                        className={`${selectedType === 'A' ? 'bg-yellow-500' : 'bg-gray-500'} py-2 rounded-2xl cursor-pointer hover:bg-yellow-600 transition-all duration-300`}
+                        className={`${selectedType === 'A' ? 'bg-yellow-500' : 'bg-gray-500'} max-lg:text-xs text-sm py-2 rounded-2xl cursor-pointer hover:bg-yellow-600 transition-all duration-300`}
                     >Atención</p>
                     <p
                         onClick={() => selectedType === '' ? setSelectedType('E') : setSelectedType('')} 
-                        className={`${selectedType === 'E' ? 'bg-red-600' : 'bg-gray-500'} py-2 rounded-2xl cursor-pointer hover:bg-red-700 transition-all duration-300`}
+                        className={`${selectedType === 'E' ? 'bg-red-600' : 'bg-gray-500'} max-lg:text-xs text-sm py-2 rounded-2xl cursor-pointer hover:bg-red-700 transition-all duration-300`}
                     >Emergencia</p>
                 </div>
             </div>
-            <Button 
-                label={lan === 'EN' ? 'Send' : 'Enviar'}
-                loading={loading}
-            />
+            <div className="w-full flex justify-center">
+                <Button 
+                    label={lan === 'EN' ? 'Send' : 'Enviar'}
+                    loading={loading}
+                    minWidth
+                />
+            </div>
         </form>
     </motion.div>
   )
