@@ -9,16 +9,17 @@ export interface CreateAnnouncementData {
 interface Props {
     studentId?: string
     school: string
+    page?: string
 }
 
-const useCreateAnnouncement = ({ studentId, school }: Props): UseMutationResult<Announcement, Error, CreateAnnouncementData> => {
+const useCreateAnnouncement = ({ studentId, school, page='1' }: Props): UseMutationResult<Announcement, Error, CreateAnnouncementData> => {
     console.log('studentId', studentId);
     const announcementService = getAnnouncementService({})
     const queryClient = useQueryClient()
     return useMutation({
         mutationFn: (data: CreateAnnouncementData) => announcementService.post(data.announcement, data.access),
         onSuccess: res => {
-            queryClient.setQueryData<Announcement[]>([`announcements admin ${school}`,], oldData => {
+            queryClient.setQueryData<Announcement[]>([`announcements admin ${school} ${page}`,], oldData => {
                 if (!oldData) return []
                 const newData = [res, ...oldData]
                 return newData

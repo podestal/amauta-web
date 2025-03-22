@@ -7,11 +7,15 @@ import useSchoolStore from "../../../hooks/store/useSchoolStore"
 import useGetClassroom from "../../../hooks/api/classroom/useGetClassroom"
 import useCreateAnnouncement from "../../../hooks/api/announcement.ts/useCreateAnnouncement"
 
-const CreateAnnouncementAdmin = () => {
+interface Props {
+    selectedPage: number
+}
+
+const CreateAnnouncementAdmin = ({ selectedPage }: Props) => {
     const access = useAuthStore(s => s.access) || ''
     const school = useSchoolStore(s => s.school).id.toString()
     const [open, setOpen] = useState(false)
-    const createAnnouncement = useCreateAnnouncement({ school })
+    const createAnnouncement = useCreateAnnouncement({ school, page: selectedPage.toString() })
     const {data: classrooms, isLoading, isError, isSuccess, error} = useGetClassroom({ access, school })
 
     if (isLoading) return <p className="animate-pulse text-center">Cargando...</p>

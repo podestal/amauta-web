@@ -13,7 +13,8 @@ const AnnouncementsAdminList = () => {
     const access = useAuthStore(s => s.access) || ''
     const [selectedType, setSelectedType] = useState('')
     const [selectedLevel, setSelectedLevel] = useState('')
-    const { data: announcements, isLoading, isError, error, isSuccess } = useGetAnnouncementsAdmin({ school, access })
+    const [selectedPage, setSelectedPage] = useState(1)
+    const { data: announcements, isLoading, isError, error, isSuccess } = useGetAnnouncementsAdmin({ school, access, page:(selectedPage).toString(), pageSize: '10' })
     if (isLoading) return <p>Loading...</p>
 
     if (isError) return <p>{error?.message}</p>
@@ -22,12 +23,16 @@ const AnnouncementsAdminList = () => {
 
   return (
     <div className="flex flex-col gap-6">
-    <CreateAnnouncementAdmin />
+    <CreateAnnouncementAdmin 
+      selectedPage={selectedPage}
+    />
     <div className="w-full grid grid-cols-3 gap-6">
         <AnnouncementsLastTen 
             announcements={announcements} 
             selectedType={selectedType}
             selectedLevel={selectedLevel}
+            selectedPage={selectedPage}
+            setSelectedPage={setSelectedPage}
         />
         <AnnouncementsSummary 
             announcements={announcements} 

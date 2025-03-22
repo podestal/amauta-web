@@ -4,13 +4,15 @@ import getAnnouncementService, {Announcement} from "../../../services/api/announ
 interface Props {
     school: string
     access: string
+    page?: string
+    pageSize: string
 }
 
-const useGetAnnouncementsAdmin = ({ school, access }: Props): UseQueryResult<Announcement[], Error> => {
+const useGetAnnouncementsAdmin = ({ school, access, page='1', pageSize }: Props): UseQueryResult<Announcement[], Error> => {
     const announcementService = getAnnouncementService({ byAdmin: true })
-    const params = { school }
+    const params = { school, page, page_size: pageSize }
     return useQuery({
-        queryKey: [`announcements admin ${school}`,],
+        queryKey: [`announcements admin ${school} ${page}`,],
         queryFn: () => announcementService.get(access, params),
     })
 }
