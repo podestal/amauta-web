@@ -4,14 +4,16 @@ import { StudentByAgendas } from "../../../../services/api/studentsService"
 import useGetAnnouncementsByDate from "../../../../hooks/api/announcement.ts/useGetAnnouncementsByDate"
 import { motion } from "framer-motion"
 import AnnouncementCard from "../../announcement/AnnouncementCard"
-import Button from "../../../ui/Button"
+import StudentMarkContacted from "./StudentMarkContacted"
 
 interface Props {
     student: StudentByAgendas
     open: boolean
+    setOpen: React.Dispatch<React.SetStateAction<boolean>>
+    classroom: string
 }
 
-const StudentAgendaContent = ({ student, open }: Props) => {
+const StudentAgendaContent = ({ student, open, setOpen, classroom }: Props) => {
     // useGetAnnouncementsByDate({ access, student: studentId, enable: true, date: selectedDate })
     const access = useAuthStore(s => s.access) || ''
     const currentDate = moment().format('YYYY-MM-DD')
@@ -33,9 +35,10 @@ const StudentAgendaContent = ({ student, open }: Props) => {
     >
         <h2 className="text-lg font-semibold my-2">Agenda: {student.first_name} {student.last_name}</h2>
         <p className="mb-4">Contacto: {student.tutor_phone}</p>
-        <Button 
-            label="Marcar como contactado"
-            disable={student.filtered_read_agendas}
+        <StudentMarkContacted 
+            student={student} 
+            classroom={classroom}
+            setOpen={setOpen}
         />
         {announcements.map(announcement => (
         <AnnouncementCard 

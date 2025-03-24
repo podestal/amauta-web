@@ -21,11 +21,13 @@ const StudentAgendasList = ({ classroom }: Props) => {
 
   return (
     <div className="w-full flex flex-col justify-center items-center gap-6">
+        <>{console.log('students', students)}</>
         <h2 className="my-6 text-2xl font-bold">Agendas</h2>
         {students.map(student => (
             <StudentAgendaCard 
                 key={student.uid}
                 student={student}
+                classroom={classroom}
             />
         ))}
     </div>
