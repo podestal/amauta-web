@@ -90,9 +90,6 @@ const AttendanceFilters = ({ setSelectedClassroom, selectedType, setSelectedType
             lan="ES"
             label="Grado"
         />
-        <>{console.log('selectedLevel', selectedLevel)}</>
-        <>{console.log('selectedGrade', selectedGrade)}</>
-        <>{console.log('classrooms', classrooms)}</>
         <ClasroomSelector 
             setSelectedClassroom={setSelectedClassroom}
             classrooms={classrooms

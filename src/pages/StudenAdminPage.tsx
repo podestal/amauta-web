@@ -39,10 +39,17 @@ import useLoader from "../hooks/ui/useLoader";
 import useGetClassroom from "../hooks/api/classroom/useGetClassroom";
 import useAuthStore from "../hooks/store/useAuthStore";
 import useSchoolStore from "../hooks/store/useSchoolStore";
+import useGetProfileStore from "../hooks/store/useGetProfileStore";
+import StudentsAgendas from "../components/api/Students/agenda/StudentsAgendas";
 
 const ResponsiveComponent = () => {
   const access =useAuthStore(s => s.access) || ''
   const school = useSchoolStore(s => s.school)
+  const user = useGetProfileStore(s => s.user)
+  const group = user?.groups[0] || user?.profile || ''
+
+  console.log('user', user)
+  
   // useEffect(() => {
   //   const handleResize = () => {
   //     setIsDesktop(window.innerWidth >= 1024); // Desktop is considered 1024px and above
@@ -64,12 +71,19 @@ const ResponsiveComponent = () => {
   return (
     <div className="w-full max-w-[95%] sm:max-w-[600px] md:max-w-[800px] lg:max-w-[1024px] xl:max-w-[1200px] 2xl:max-w-[1380px] mx-auto pt-10">
     
-        <Tabs
+        {group === 'manager'  && <Tabs
           tabs={[
             { label: "Matrículas", content: <StudentsAdmin classrooms={classrooms} /> },
             { label: "Alumnos", content: <ClassroomSummary classrooms={classrooms} /> },
+            { label: "Agendas", content: <StudentsAgendas />}
           ]}
-        />
+        />}
+
+        {group === 'assistant' && <Tabs 
+          tabs={[
+            { label: "Agendas", content:  <StudentsAgendas />}
+          ]}
+        />}
       
         {/* <motion.div
           className="w-full h-full flex flex-col items-center justify-center min-h-[50vh] mt-20 text-center px-6 bg-blue-800 text-white rounded-xl shadow-lg"

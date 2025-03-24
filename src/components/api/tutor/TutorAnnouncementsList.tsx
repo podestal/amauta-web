@@ -14,7 +14,7 @@ const TutorAnnouncementsList = ({ studentId, selectedDate }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
     const {data: announcements, isLoading, isError, error, isSuccess} = useGetAnnouncementsByDate({ access, student: studentId, enable: true, date: selectedDate })
-    const {isSuccess: readAgenda} = useGetTutorReadAgenda({ access, student: studentId, date:selectedDate, annoucements: announcements ? announcements.length > 0 : false })
+    const {isSuccess: readAgenda} = useGetTutorReadAgenda({ access, student: studentId, date:selectedDate, annoucements: announcements ? announcements.length > 0 : false })    
 
     useLoader(isLoading)
 
