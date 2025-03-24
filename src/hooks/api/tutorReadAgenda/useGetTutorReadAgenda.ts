@@ -4,14 +4,18 @@ import tutorReadAgendaService, {TutorReadAgenda} from "../../../services/api/tut
 interface Props {
     access: string
     student: string
+    date: string
+    annoucements: boolean
 }
 
-const useGetTutorReadAgenda = ({ access, student }: Props): UseQueryResult<TutorReadAgenda[]> => {
+const useGetTutorReadAgenda = ({ access, student, date, annoucements }: Props): UseQueryResult<TutorReadAgenda[]> => {
 
-    const params = { student }
+    const params = { student, date }
     return useQuery({
-        queryKey: [`tutor-read-agenda ${student}`],
+        queryKey: [`tutor-read-agenda ${student} ${date}`],
         queryFn: () => tutorReadAgendaService.get(access, params),
+        enabled: annoucements
+
     })
 }
 
