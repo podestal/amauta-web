@@ -1,6 +1,7 @@
 import useGetStudentByAgendas from "../../../../hooks/api/student/useGetStudentByAgendas"
 import useAuthStore from "../../../../hooks/store/useAuthStore"
 import useSchoolStore from "../../../../hooks/store/useSchoolStore"
+import StudentAgendaCard from "./StudentAgendaCard"
 
 interface Props {
     classroom: string
@@ -19,8 +20,14 @@ const StudentAgendasList = ({ classroom }: Props) => {
     if (isSuccess)
 
   return (
-    <div>
-        <>{console.log('students', students)}</>
+    <div className="w-full flex flex-col justify-center items-center gap-6">
+        <h2 className="my-6 text-2xl font-bold">Agendas</h2>
+        {students.map(student => (
+            <StudentAgendaCard 
+                key={student.uid}
+                student={student}
+            />
+        ))}
     </div>
   )
 }

@@ -17,6 +17,7 @@ export interface StudentByAgendas {
     first_name: string
     last_name: string
     tutor_phone: string
+    filtered_read_agendas: boolean
 }
 
 export interface StudentByQuarterGrade {
