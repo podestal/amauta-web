@@ -69,7 +69,9 @@ const GradesSummaryChart = ({ studentId, setAssignatures, quarter }: Props) => {
             tickFormatter={(value) => gradeScale[value] || ''} // Convert numbers to letters
           />
           <YAxis dataKey="subject" type="category" stroke="#fff" width={150} />
-          <Tooltip cursor={{ fill: "#333" }} />
+          <Tooltip 
+            formatter={(value) => typeof value === 'number' ? gradeScale[value] || '' : ''}
+            cursor={{ fill: "#333" }} />
           <Legend />
 
           <Bar dataKey="grade" name="Promedio">
