@@ -36,6 +36,7 @@ const ClassroomsAdmin = () => {
                 <h2 className="text-xl font-bold my-4 text-center">{level.name}</h2>
                 <CreateClassroom 
                     level={level.id}
+                    classrooms={classrooms}
                 />
                 <div className="flex flex-col gap-4">
                     <AnimatePresence>

@@ -1,11 +1,13 @@
 import useCreateClassroom from "../../../hooks/api/classroom/useCreateClassroom"
+import { Classroom } from "../../../services/api/classroomService"
 import ClassroomForm from "./ClassroomForm"
 
 interface Props {
     level: string
+    classrooms: Classroom[]
 }
 
-const CreateClassroom = ({ level }: Props) => {
+const CreateClassroom = ({ level, classrooms }: Props) => {
 
     const createClassroom = useCreateClassroom()
 
@@ -13,6 +15,7 @@ const CreateClassroom = ({ level }: Props) => {
     <ClassroomForm 
         level={level}
         createClassroom={createClassroom}
+        classrooms={classrooms}
     />
   )
 }

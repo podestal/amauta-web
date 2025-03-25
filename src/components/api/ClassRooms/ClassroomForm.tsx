@@ -11,9 +11,10 @@ import { useState } from "react"
 interface Props {
     level: string
     createClassroom: UseMutationResult<Classroom, Error, CreateClassroomData>
+    classrooms: Classroom[]
 }
 
-const ClassroomForm = ({ level, createClassroom }: Props) => {
+const ClassroomForm = ({ level, createClassroom, classrooms }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
     const school = useSchoolStore(s => s.school) || ''
@@ -36,6 +37,16 @@ const ClassroomForm = ({ level, createClassroom }: Props) => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         setIsLoading(true)
+        const duplicateClassroom = classrooms.find(classroom => classroom.grade === selectedGrade && classroom.section === selectedSection)
+        
+        if (duplicateClassroom) {
+            setMessage('Ya existe un aula con el mismo grado y sección')
+            setType('error')
+            setShow(true)
+            setIsLoading(false)
+            return
+        }
+        
         createClassroom.mutate({
             access,
             classroom: {
