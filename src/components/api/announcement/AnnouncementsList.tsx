@@ -17,6 +17,8 @@ const AnnouncementsList = ({ student, open }: Props) => {
     const lan = useLanguageStore(s => s.lan)
     const access = useAuthStore(s => s.access) || ''
     const [selectedDate, setSelectedDate] = useState<string>(moment().format('YYYY-MM-DD'))
+    console.log('setSelectedDate', setSelectedDate);
+    
     const { data: announcements, isLoading, isError, error, isSuccess } = useGetAnnouncementsByDate({ date: selectedDate, student: student.uid, access, enable: open })
     if (isLoading) return <p>Loading...</p>
 

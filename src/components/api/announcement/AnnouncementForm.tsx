@@ -93,7 +93,7 @@ const AnnouncementForm = ({ CreateAnnouncement, student, classroom, visibility }
     >
         <form
             onSubmit={handleSubmit}
-            className="flex flex-col justify-center item-start gap-6 w-[60%] mx-auto bg-slate-800 px-8 py-6 rounded-xl"
+            className="flex flex-col justify-center item-start gap-6 w-[85%] lg:w-[60%] mx-auto bg-slate-800 px-8 py-6 rounded-xl"
         >
             <h2 className="text-2xl text-center">{lan === 'EN' ? 'New Message' : 'Nuevo Mensaje'}</h2>
             <Input 
@@ -114,7 +114,7 @@ const AnnouncementForm = ({ CreateAnnouncement, student, classroom, visibility }
             />
             <div className="flex flex-col gap-4 items-center justify-start">
                 <p>Tipo de anuncio</p>
-                <div className="w-[70%] flex flex-col gap-4 text-center">
+                <div className="lg:w-[70%] w-[80%] flex flex-col gap-4 text-center">
                     <p 
                         onClick={() => selectedType === '' ? setSelectedType('I') : setSelectedType('')} 
                         className={`${selectedType === 'I' ? 'bg-blue-600' : 'bg-gray-500'} max-lg:text-xs text-sm py-2 rounded-2xl cursor-pointer hover:bg-blue-700 transition-all duration-300`}

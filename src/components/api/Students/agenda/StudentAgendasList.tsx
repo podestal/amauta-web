@@ -1,3 +1,4 @@
+import { motion } from "framer-motion"
 import useGetStudentByAgendas from "../../../../hooks/api/student/useGetStudentByAgendas"
 import useAuthStore from "../../../../hooks/store/useAuthStore"
 import useSchoolStore from "../../../../hooks/store/useSchoolStore"
@@ -20,7 +21,11 @@ const StudentAgendasList = ({ classroom }: Props) => {
     if (isSuccess)
 
   return (
-    <div className="w-full flex flex-col justify-center items-center gap-6">
+    <motion.div 
+        initial="hidden"
+        animate="visible"
+        transition={{ staggerChildren: 0.1 }}
+        className="w-full flex flex-col justify-center items-center gap-6">
         <>{console.log('students', students)}</>
         <h2 className="my-6 text-2xl font-bold">Agendas</h2>
         {students.map(student => (
@@ -30,7 +35,7 @@ const StudentAgendasList = ({ classroom }: Props) => {
                 classroom={classroom}
             />
         ))}
-    </div>
+    </motion.div>
   )
 }
 

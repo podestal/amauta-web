@@ -40,12 +40,20 @@ const StudentAgendaContent = ({ student, open, setOpen, classroom }: Props) => {
             classroom={classroom}
             setOpen={setOpen}
         />
+
+        {announcements.length > 0 
+        ? 
+        <>
         {announcements.map(announcement => (
-        <AnnouncementCard 
-            key={announcement.id} 
-            announcement={announcement} 
-        />
+            <AnnouncementCard 
+                key={announcement.id} 
+                announcement={announcement} 
+            />
         ))}
+        </> 
+        : 
+        <h2 className="my-6 font-semibold">No se encontraron anuncios ...</h2>}
+
     </motion.div>
   )
 }
