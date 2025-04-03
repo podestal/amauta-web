@@ -9,8 +9,9 @@ import useAuthStore from "../../../hooks/store/useAuthStore"
 import { Student } from "../../../services/api/studentsService"
 import Button from "../../ui/Button"
 import useNotificationsStore from "../../../hooks/store/useNotificationsStore"
-import { motion } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 import useSchoolStore from "../../../hooks/store/useSchoolStore"
+import Checkbox from "../../ui/Checkbox"
 
 interface Props {
     CreateAnnouncement: UseMutationResult<Announcement, Error, CreateAnnouncementData>
@@ -18,6 +19,32 @@ interface Props {
     classroom?: number
     visibility: 'C' | 'P'
 }
+
+interface CardProps {
+    children: React.ReactNode
+    className?: string
+}
+
+const Card = ({ children, className }: CardProps) => (
+    <div className={`p-4 rounded-xl shadow-lg ${className}`}>
+        {children}
+    </div>
+);
+
+// interface CheckboxProps {
+//     checked: boolean
+//     onCheckedChange: (checked: boolean) => void
+// }
+
+// const Checkbox = ({ checked, onCheckedChange }: CheckboxProps) => (
+//     <input 
+//         type="checkbox" 
+//         checked={checked} 
+//         onChange={(e) => onCheckedChange(e.target.checked)} 
+//         className="w-5 h-5 cursor-pointer"
+//     />
+// );
+
 
 const AnnouncementForm = ({ CreateAnnouncement, student, classroom, visibility }: Props) => {
 
@@ -30,6 +57,7 @@ const AnnouncementForm = ({ CreateAnnouncement, student, classroom, visibility }
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [selectedType, setSelectedType] = useState<'I' | 'A' | 'E' | ''>('')
+    const [sendWhatsApp, setSendWhatsApp] = useState(false);
 
     const [titleError, setTitleError] = useState('')
     const [descriptionError, setDescriptionError] = useState('')
@@ -91,11 +119,34 @@ const AnnouncementForm = ({ CreateAnnouncement, student, classroom, visibility }
         initial={{ y: "-100%", opacity: 0 }}
         animate={{ y: 0, opacity: 1, transition: { duration: 0.5, ease: "easeOut" } }}
     >
+        <AnimatePresence>
+            {sendWhatsApp && (
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    whileHover={{ scale: 1.02 }}
+                    exit={{ opacity: 0, y: 20 }}
+                    transition={{ duration: 0.2 }}
+                    className="mb-4"
+                >
+                    <Card className="w-[85%] mx-auto lg:w-[60%] bg-red-600 text-white text-center mb-4">
+                        <p>{lan === 'EN' ? "Warning: Sending a WhatsApp message has a cost." : "Advertencia: Enviar un mensaje de WhatsApp tiene un costo."}</p>
+                    </Card>
+                </motion.div>
+            )}
+        </AnimatePresence>
         <form
             onSubmit={handleSubmit}
             className="flex flex-col justify-center item-start gap-6 w-[85%] lg:w-[60%] mx-auto bg-slate-800 px-8 py-6 rounded-xl"
         >
             <h2 className="text-2xl text-center">{lan === 'EN' ? 'New Message' : 'Nuevo Mensaje'}</h2>
+            <div className="w-full flex justify-center">
+                <Checkbox 
+                    checked={sendWhatsApp}
+                    onChange={setSendWhatsApp}
+                    label="Enviar por WhatsApp"
+                />
+            </div>
             <Input 
                 placeholder={lan === 'EN' ? 'Title' : 'Título'}
                 value={title}
