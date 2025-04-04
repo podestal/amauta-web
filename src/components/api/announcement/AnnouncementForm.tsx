@@ -53,11 +53,13 @@ const AnnouncementForm = ({ CreateAnnouncement, student, classroom, visibility }
     const user = useAuthStore(s => s.userId)
     const school = useSchoolStore(s => s.school).id
     const { setType, setShow, setMessage } = useNotificationsStore()
+    
 
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [selectedType, setSelectedType] = useState<'I' | 'A' | 'E' | ''>('')
     const [sendWhatsApp, setSendWhatsApp] = useState(false);
+    const [doubleCheck, setDoubleCheck] = useState(false)
 
     const [titleError, setTitleError] = useState('')
     const [descriptionError, setDescriptionError] = useState('')
@@ -137,16 +139,17 @@ const AnnouncementForm = ({ CreateAnnouncement, student, classroom, visibility }
         </AnimatePresence>
         <form
             onSubmit={handleSubmit}
-            className="flex flex-col justify-center item-start gap-6 w-[85%] lg:w-[60%] mx-auto bg-slate-800 px-8 py-6 rounded-xl"
+            className=" relative flex flex-col justify-center item-start gap-6 w-[85%] lg:w-[60%] mx-auto bg-slate-800 px-8 py-6 rounded-xl"
         >
             <h2 className="text-2xl text-center">{lan === 'EN' ? 'New Message' : 'Nuevo Mensaje'}</h2>
+            {visibility === 'P' && 
             <div className="w-full flex justify-center">
                 <Checkbox 
                     checked={sendWhatsApp}
                     onChange={setSendWhatsApp}
                     label="Enviar por WhatsApp"
                 />
-            </div>
+            </div>}
             <Input 
                 placeholder={lan === 'EN' ? 'Title' : 'Título'}
                 value={title}
@@ -180,12 +183,43 @@ const AnnouncementForm = ({ CreateAnnouncement, student, classroom, visibility }
                     >Emergencia</p>
                 </div>
             </div>
+            {doubleCheck && (
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    whileHover={{ scale: 1.02 }}
+                    exit={{ opacity: 0, y: 20 }}
+                    transition={{ duration: 0.2 }}
+                    className="my-4"
+                >
+                    <Card className="w-full mx-auto bg-red-600 text-white text-center mb-4">
+                        <p>Está seguro?</p>
+                        <p>{lan === 'EN' ? "Warning: Sending a WhatsApp message has a cost." : "esta acción es irreversible."}</p>
+                    </Card>
+                </motion.div>
+            )}
             <div className="w-full flex justify-center">
+                {sendWhatsApp ? 
                 <Button 
                     label={lan === 'EN' ? 'Send' : 'Enviar'}
                     loading={loading}
                     minWidth
-                />
+                    type="button"
+                    onClick={() => {
+                        setDoubleCheck(true)
+                        setTimeout(() => {
+                            setSendWhatsApp(false)
+                        }
+                        , 100)
+                    }}
+                /> 
+                : 
+                <Button 
+                    label={lan === 'EN' ? 'Send' : 'Enviar'}
+                    loading={loading}
+                    minWidth
+                    onClick={() => console.log('Send')}
+                />}
             </div>
         </form>
     </motion.div>

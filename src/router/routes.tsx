@@ -32,6 +32,7 @@ import GradesForTutorPage from "../pages/GradesForTutorPage";
 import DownloadPage from "../pages/DownloadPage";
 import AdminPage from "../pages/AdminPage";
 import AnnouncementsAdminPage from "../pages/AnnouncementsAdminPage";
+import WhatsappDashboard from "../pages/WhatsappPage";
 
 const routes = createBrowserRouter([
     {
@@ -229,7 +230,14 @@ const routes = createBrowserRouter([
                 <PrivateRoutes>
                     <AdminPage />
                 </PrivateRoutes>
-            }
+            },
+            {
+                path: 'whatsapp',
+                element:
+                <PrivateRoutes>
+                    <WhatsappDashboard />
+                </PrivateRoutes>
+            },
         ]
     }
 ])
