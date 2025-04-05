@@ -60,6 +60,7 @@ const SideBar = ({ profile }: Props) => {
         { name: 'Administrativo', path: 'admin' },
         { name: 'Anuncios', path: 'announcements-admin' },
         { name: 'Servicios', path: 'whatsapp' },
+        { name: 'Tarjeta de Notas', path: 'grades-report'},
       ]
     } else if (group === 'instructor') {
       navItems = [
