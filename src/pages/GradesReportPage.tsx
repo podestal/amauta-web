@@ -226,6 +226,13 @@ const GradesReportHeader = () => {
 const GradesReportPage = () => {
 
     const currentYear = moment().format('YYYY')
+    const firstSixAreas = areas.slice(0, 6)
+    console.log('firstSixAreas', firstSixAreas);
+    const lastTwoAreas = areas.slice(6, 11)
+    console.log('lastTwoAreas', lastTwoAreas);
+    
+    
+
 
   return (
     <div className="w-full print:text-black print:bg-white">
@@ -277,7 +284,12 @@ const GradesReportPage = () => {
             </div>
         </div>
         <GradesReportHeader />
-        {areas.map((area) => (
+        {firstSixAreas.map((area) => (
+            <GradesReportBody key={area.id} area={area} />
+        ))}
+        <div className="print:break-after-page"></div>
+        <GradesReportHeader />
+        {lastTwoAreas.map((area) => (
             <GradesReportBody key={area.id} area={area} />
         ))}
         <CompetencyDescriptiveConclusionHeader />
