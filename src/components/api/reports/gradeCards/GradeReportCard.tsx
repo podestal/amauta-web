@@ -3,6 +3,7 @@ import { areas, competencies } from "../../../../data/mockdataForGrades"
 import { useRef } from "react"
 import { useReactToPrint } from "react-to-print"
 import Button from "../../../ui/Button"
+import { Printer } from "lucide-react"
 
 const CalificationCriteria = () => {
 
@@ -150,6 +151,10 @@ const DescriptiveConclusionBody = () => {
     )
 }
 
+interface Props {
+    allFinalized: boolean
+}
+
 interface Area {
     id: number
     title: string
@@ -226,7 +231,7 @@ const GradesReportHeader = () => {
     )
 }
 
-const GradeReportCard = () => {
+const GradeReportCard = ({ allFinalized }: Props) => {
 
     const currentYear = moment().format('YYYY')
     const firstSixAreas = areas.slice(0, 6)
@@ -243,10 +248,21 @@ const GradeReportCard = () => {
 
   return (
    <>
-   <Button 
-    label="Imprimir"
-    onClick={() => handlePrint()}
-   />
+    <button
+        onClick={() => {
+        if (!allFinalized) return;
+        handlePrint(); 
+        }}
+        disabled={!allFinalized}
+        className={`flex items-center gap-2 px-4 py-2 rounded-lg text-white text-sm font-medium transition ${
+        allFinalized
+            ? "bg-green-600 hover:bg-green-700"
+            : "bg-slate-300 cursor-not-allowed"
+        }`}
+    >
+        <Printer className="w-4 h-4" />
+        Imprimir Reportes
+    </button>
     <div ref={printRef} className="w-full hidden print:block print:text-black print:bg-white print:w-[95%] print:mx-auto">
         <h2 className="text-3xl font-bold mb-6 text-center print:mt-10">Informe de Progreso de Aprendizaje del Estudiante {currentYear}</h2>
         <div className="grid grid-cols-2 text-center mx-auto w-[60%] text-xs mb-8">

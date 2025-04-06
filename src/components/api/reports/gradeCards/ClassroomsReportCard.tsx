@@ -2,6 +2,7 @@ import { areas } from "../../../../data/mockdataForGrades"
 import getClassroomDescription from "../../../../utils/getClassroomDescription"
 import { motion } from "framer-motion";
 import { CheckCircle, XCircle, Printer } from "lucide-react";
+import GradeReportCard from "./GradeReportCard";
 
 const classrooms = [
     {
@@ -122,21 +123,7 @@ const ClassroomsReportCard = () => {
               <p className="text-sm text-slate-200">Total Estudiantes: {classroom.total_students}</p>
             </div>
 
-            <button
-              onClick={() => {
-                if (!allFinalized) return;
-                window.print(); 
-              }}
-              disabled={!allFinalized}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-white text-sm font-medium transition ${
-                allFinalized
-                  ? "bg-green-600 hover:bg-green-700"
-                  : "bg-slate-300 cursor-not-allowed"
-              }`}
-            >
-              <Printer className="w-4 h-4" />
-              Imprimir Reportes
-            </button>
+            <GradeReportCard allFinalized={true} />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
