@@ -1,7 +1,7 @@
 import { areas } from "../../../../data/mockdataForGrades"
 import getClassroomDescription from "../../../../utils/getClassroomDescription"
 import { motion } from "framer-motion";
-import { CheckCircle, XCircle, Printer } from "lucide-react";
+import { CheckCircle, XCircle } from "lucide-react";
 import GradeReportCard from "./GradeReportCard";
 
 const classrooms = [
@@ -123,7 +123,11 @@ const ClassroomsReportCard = () => {
               <p className="text-sm text-slate-200">Total Estudiantes: {classroom.total_students}</p>
             </div>
 
-            <GradeReportCard allFinalized={true} />
+            <GradeReportCard 
+                grade={classroom.grade}
+                section={classroom.section}
+                level={classroom.level}
+                allFinalized={true} />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">

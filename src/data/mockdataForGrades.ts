@@ -22,6 +22,36 @@ export interface StudentsTable {
     finalGrade: string;
 }
 
+interface MockStudent {
+    id: number
+    first_name: string
+    last_name: string
+    dni: number
+}
+
+export const mockStudentsGradeCard: MockStudent[] = [
+    { id: 1001, first_name: "Juan Carlos", last_name: "Pérez Ramírez", dni: 47563344 },
+    { id: 1002, first_name: "María Fernanda", last_name: "González Torres", dni: 48392012 },
+    { id: 1003, first_name: "Luis Alberto", last_name: "Ramírez Soto", dni: 49281234 },
+    { id: 1004, first_name: "Ana Lucía", last_name: "Torres Mendoza", dni: 50123845 },
+    { id: 1005, first_name: "Carlos Eduardo", last_name: "Vega Díaz", dni: 51234820 },
+    { id: 1006, first_name: "Lucía Beatriz", last_name: "Fernández Ruiz", dni: 52438912 },
+    { id: 1007, first_name: "Pedro José", last_name: "Soto Castro", dni: 53480234 },
+    { id: 1008, first_name: "Elena Sofía", last_name: "Díaz Morales", dni: 54590213 },
+    { id: 1009, first_name: "Diego Armando", last_name: "Ruiz Navarro", dni: 55671329 },
+    { id: 1010, first_name: "Carmen Teresa", last_name: "Castro Flores", dni: 56712349 },
+    { id: 1011, first_name: "Miguel Ángel", last_name: "Mendoza Ríos", dni: 57834021 },
+    { id: 1012, first_name: "Laura Isabel", last_name: "Ortega Herrera", dni: 58902130 },
+    { id: 1013, first_name: "Andrés Felipe", last_name: "Ríos Cruz", dni: 59031248 },
+    { id: 1014, first_name: "Sofía Elena", last_name: "Navarro Reyes", dni: 60123849 },
+    { id: 1015, first_name: "Javier Ignacio", last_name: "Morales Campos", dni: 61293487 },
+    { id: 1016, first_name: "Isabel Antonia", last_name: "Flores Delgado", dni: 62348129 },
+    { id: 1017, first_name: "Emilio Javier", last_name: "Herrera Cordero", dni: 63481923 },
+    { id: 1018, first_name: "Natalia Andrea", last_name: "Cruz Aguirre", dni: 64501239 },
+    { id: 1019, first_name: "Hugo Manuel", last_name: "Reyes Bravo", dni: 65690123 },
+    { id: 1020, first_name: "Valentina Rosa", last_name: "Campos Paredes", dni: 66748120 },
+  ];
+
 export const mockStudents = [
     {
       uid: "12345",

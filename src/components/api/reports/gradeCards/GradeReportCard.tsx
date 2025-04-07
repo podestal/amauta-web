@@ -1,9 +1,9 @@
 import moment from "moment"
-import { areas, competencies } from "../../../../data/mockdataForGrades"
-import { useRef } from "react"
+import { areas, competencies, mockStudentsGradeCard } from "../../../../data/mockdataForGrades"
+import { useEffect, useRef, useState } from "react"
 import { useReactToPrint } from "react-to-print"
-import Button from "../../../ui/Button"
 import { Printer } from "lucide-react"
+import useSchoolStore from "../../../../hooks/store/useSchoolStore"
 
 const CalificationCriteria = () => {
 
@@ -151,10 +151,6 @@ const DescriptiveConclusionBody = () => {
     )
 }
 
-interface Props {
-    allFinalized: boolean
-}
-
 interface Area {
     id: number
     title: string
@@ -168,6 +164,7 @@ const GradesReportBody = ({area}: GradesReportBodyProps) => {
 
     const filteredCompetencies = competencies.filter((competency) => competency.area === area.id)
     const grades = ['AD', 'A', 'B', 'C']
+    
 
     return (
 <div className="w-full grid grid-cols-12 text-xs border-collapse border-black">
@@ -187,12 +184,12 @@ const GradesReportBody = ({area}: GradesReportBodyProps) => {
               key={grade}
               className="border border-neutral-950 flex justify-center items-center p-1"
             >
-              {grade}
+              {grades[Math.floor(Math.random() * 4)]}
             </p>
           ))}
         </div>
         <div className="flex justify-center items-center border border-neutral-950">
-          <p>AD</p>
+          <p>{grades[Math.floor(Math.random() * 4)]}</p>
         </div>
 
       </div>
@@ -201,7 +198,7 @@ const GradesReportBody = ({area}: GradesReportBodyProps) => {
     
   </div>
   <div className="flex justify-center items-center border border-neutral-950">
-            <p>AD</p>
+            <p>{grades[Math.floor(Math.random() * 4)]}</p>
         </div>
         <div className="col-span-2 flex justify-center items-center border border-neutral-950 overflow-x-auto text-center px-1">
             <p>Aasdas dafad sdf sd sdf sd</p>
@@ -231,19 +228,34 @@ const GradesReportHeader = () => {
     )
 }
 
-const GradeReportCard = ({ allFinalized }: Props) => {
+interface Props {
+    allFinalized: boolean
+    level: string
+    grade: string
+    section: string
+}
 
+const GradeReportCard = ({ allFinalized, grade, section, level }: Props) => {
+
+    const school = useSchoolStore((state) => state.school)
     const currentYear = moment().format('YYYY')
     const firstSixAreas = areas.slice(0, 6)
-    console.log('firstSixAreas', firstSixAreas);
     const lastTwoAreas = areas.slice(6, 11)
-    console.log('lastTwoAreas', lastTwoAreas);
     const printRef = useRef<HTMLDivElement>(null)
+    const [schoolImage, setSchoolImg] = useState('')
     const handlePrint = useReactToPrint({ 
         contentRef: printRef,
         documentTitle: `Grade-Cards`,
         onAfterPrint: () => console.log("Impresión completada.")
     })
+
+      useEffect(() => {
+        import(`../../../../assets/imgs/schoolLogos/${school.picture_name}.png`)
+          .then((img) => setSchoolImg(img.default))
+          .catch((err) => {
+            setSchoolImg('')
+            console.error("Error loading school image: ", err)})
+      }, [school.picture_name])
 
 
   return (
@@ -263,94 +275,108 @@ const GradeReportCard = ({ allFinalized }: Props) => {
         <Printer className="w-4 h-4" />
         Imprimir Reportes
     </button>
-    <div ref={printRef} className="w-full hidden print:block print:text-black print:bg-white print:w-[95%] print:mx-auto">
-        <h2 className="text-3xl font-bold mb-6 text-center print:mt-10">Informe de Progreso de Aprendizaje del Estudiante {currentYear}</h2>
-        <div className="grid grid-cols-2 text-center mx-auto w-[60%] text-xs mb-8">
-            <div className="text-left">
-                <div className="grid grid-cols-3">
-                    <p className="border-[1px] border-neutral-950 px-2 py-1">DRE:</p>
-                    <p className="border-[1px] border-neutral-950 px-2 py-1 col-span-2">dsfsdf</p>
+    <div className="w-full hidden print:block" ref={printRef} >
+    {mockStudentsGradeCard.map((student) => (
+            <div key={student.id} className=" print:text-black print:bg-white print:w-[95%] print:mx-auto">
+            <h2 className="text-3xl font-bold mb-6 text-center print:mt-10">Informe de Progreso de Aprendizaje del Estudiante {currentYear}</h2>
+    
+            <div className="w-full flex justify-center items-start">
+                <div className="w-[20%] justify-center items-start flex">
+                    <img src={schoolImage} alt="lOGO" width={80}/>
                 </div>
-                <div className="grid grid-cols-3">
-                    <p className="border-[1px] border-neutral-950 px-2 py-1">Nivel:</p>
-                    <p className="border-[1px] border-neutral-950 px-2 py-1 col-span-2">sdfsdf</p>
+                <div className="grid grid-cols-2 text-center mx-auto w-[60%] text-xs mb-8">
+                    <div className="text-left">
+                        <div className="grid grid-cols-3">
+                            <p className="border-[1px] border-neutral-950 px-2 py-1">DRE:</p>
+                            <p className="border-[1px] border-neutral-950 px-2 py-1 col-span-2">Puno</p>
+                        </div>
+                        <div className="grid grid-cols-3">
+                            <p className="border-[1px] border-neutral-950 px-2 py-1">Nivel:</p>
+                            <p className="border-[1px] border-neutral-950 px-2 py-1 col-span-2">{level === 'P' ? 'Primaria' : `${level === 'S' ? 'Secundaria' : 'Inicial'}`}</p>
+                        </div>
+                        <div className="grid grid-cols-3">
+                            <p className="border-[1px] border-neutral-950 px-2 py-1">Institución Educativa:</p>
+                            <p className="border-[1px] border-neutral-950 px-2 py-1 col-span-2">{school.name}</p>
+                        </div>
+                        <div className="grid grid-cols-3">
+                            <p className="border-[1px] border-neutral-950 px-2 py-1">Grado:</p>
+                            <p className="border-[1px] border-neutral-950 px-2 py-1 col-span-2">{grade}</p>
+                        </div>
+                        <div className="grid grid-cols-3">
+                            <p className="border-[1px] border-neutral-950 px-2 py-1">Nombre y Apellidos:</p>
+                            <p className="border-[1px] border-neutral-950 px-2 py-1 col-span-2">{student.first_name} {student.last_name}</p>
+                        </div>
+                        <div className="grid grid-cols-3">
+                            <p className="border-[1px] border-neutral-950 px-2 py-1">Código del Estudiante:</p>
+                            <p className="border-[1px] border-neutral-950 px-2 py-1 col-span-2">{student.id}</p>
+                        </div>
+                    </div>
+                    <div className="text-left">
+                        <div className="grid grid-cols-3">
+                            <p className="border-[1px] border-neutral-950 px-2 py-1">UGEL:</p>
+                            <p className="border-[1px] border-neutral-950 px-2 py-1 col-span-2">San Román</p>
+                        </div>
+                        <div className="grid grid-cols-3">
+                            <p className="border-[1px] border-neutral-950 px-2 py-1">Código Modular:</p>
+                            <p className="border-[1px] border-neutral-950 px-2 py-1 col-span-2">345345</p>
+                        </div>
+                        <div className="grid grid-cols-3">
+                            <p className="border-[1px] border-neutral-950 px-2 py-1">Sección:</p>
+                            <p className="border-[1px] border-neutral-950 px-2 py-1 col-span-2">{section === 'U' ? 'Unica' : section}</p>
+                        </div>
+                        <div className="grid grid-cols-3">
+                            <p className="border-[1px] border-neutral-950 px-2 py-1">DNI:</p>
+                            <p className="border-[1px] border-neutral-950 px-2 py-1 col-span-2">{student.dni}</p>
+                        </div>
+                    </div>
                 </div>
-                <div className="grid grid-cols-3">
-                    <p className="border-[1px] border-neutral-950 px-2 py-1">Institución Educativa:</p>
-                    <p className="border-[1px] border-neutral-950 px-2 py-1 col-span-2">aaaa</p>
-                </div>
-                <div className="grid grid-cols-3">
-                    <p className="border-[1px] border-neutral-950 px-2 py-1">Grado:</p>
-                    <p className="border-[1px] border-neutral-950 px-2 py-1 col-span-2">sdfsdf</p>
-                </div>
-                <div className="grid grid-cols-3">
-                    <p className="border-[1px] border-neutral-950 px-2 py-1">Nombre y Apellidos:</p>
-                    <p className="border-[1px] border-neutral-950 px-2 py-1 col-span-2">sdsadfageawfafsdf</p>
-                </div>
-                <div className="grid grid-cols-3">
-                    <p className="border-[1px] border-neutral-950 px-2 py-1">Código del Estudiante:</p>
-                    <p className="border-[1px] border-neutral-950 px-2 py-1 col-span-2">sdfsdf</p>
+                <div className="w-[20%] justify-center items-start flex">
+                    <img src={schoolImage} alt="lOGO" width={80}/>
                 </div>
             </div>
-            <div className="text-left">
-                <div className="grid grid-cols-3">
-                    <p className="border-[1px] border-neutral-950 px-2 py-1">UGEL:</p>
-                    <p className="border-[1px] border-neutral-950 px-2 py-1 col-span-2">asdasd</p>
+            <GradesReportHeader />
+            {firstSixAreas.map((area) => (
+                <GradesReportBody key={area.id} area={area} />
+            ))}
+            <div className="print:break-after-page"></div>
+            <div className="print:mt-10"></div>
+            <GradesReportHeader />
+            {lastTwoAreas.map((area) => (
+                <GradesReportBody key={area.id} area={area} />
+            ))}
+            <CompetencyDescriptiveConclusionHeader />
+            <CompetencyDescriptiveConclusionBody />
+            <div className="print:break-after-page"></div>
+            <div className="print:mt-10"></div>
+            <DescriptiveConclusionHeader />
+            <DescriptiveConclusionBody />
+            <div className="w-full mt-10 flex justify-center gap-6">
+                <div className="w-[50%]">
+                    <h2 className="mb-2 text-center">Resumen de Asistencias</h2>
+                    <AttendanceSummaryHeader />
+                    <AttendanceSummaryBody />
                 </div>
-                <div className="grid grid-cols-3">
-                    <p className="border-[1px] border-neutral-950 px-2 py-1">Código Modular:</p>
-                    <p className="border-[1px] border-neutral-950 px-2 py-1 col-span-2">asdasd</p>
+                <div className="w-[50%]">
+                    <h2 className="mb-2 text-center">Escala de calificación del CNEB</h2>
+                    <CalificationCriteria />
                 </div>
-                <div className="grid grid-cols-3">
-                    <p className="border-[1px] border-neutral-950 px-2 py-1">Sección:</p>
-                    <p className="border-[1px] border-neutral-950 px-2 py-1 col-span-2">asdaasdfesd</p>
+            </div>
+            <div className="w-full mt-96 flex justify-evenly gap-6">
+                <div className="w-[35%]">
+                    <p className="border-t-2 border-slate-950 text-sm text-center">
+                        Firma y sello del Docente o Tutor(a)
+                    </p>
                 </div>
-                <div className="grid grid-cols-3">
-                    <p className="border-[1px] border-neutral-950 px-2 py-1">DNI:</p>
-                    <p className="border-[1px] border-neutral-950 px-2 py-1 col-span-2">34234</p>
+                <div className="w-[35%]">
+                    <p className="border-t-2 border-slate-950 text-sm text-center">
+                    Firma y sello del Director(a)
+                    </p>
                 </div>
             </div>
         </div>
-        <GradesReportHeader />
-        {firstSixAreas.map((area) => (
-            <GradesReportBody key={area.id} area={area} />
-        ))}
-        <div className="print:break-after-page"></div>
-        <div className="print:mt-10"></div>
-        <GradesReportHeader />
-        {lastTwoAreas.map((area) => (
-            <GradesReportBody key={area.id} area={area} />
-        ))}
-        <CompetencyDescriptiveConclusionHeader />
-        <CompetencyDescriptiveConclusionBody />
-        <div className="print:break-after-page"></div>
-        <div className="print:mt-10"></div>
-        <DescriptiveConclusionHeader />
-        <DescriptiveConclusionBody />
-        <div className="w-full mt-10 flex justify-center gap-6">
-            <div className="w-[50%]">
-                <h2 className="mb-2 text-center">Resumen de Asistencias</h2>
-                <AttendanceSummaryHeader />
-                <AttendanceSummaryBody />
-            </div>
-            <div className="w-[50%]">
-                <h2 className="mb-2 text-center">Escala de calificación del CNEB</h2>
-                <CalificationCriteria />
-            </div>
-        </div>
-        <div className="w-full mt-36 flex justify-evenly gap-6">
-            <div className="w-[35%]">
-                <p className="border-t-2 border-slate-950 text-sm text-center">
-                    Firma y sello del Docente o Tutor(a)
-                </p>
-            </div>
-            <div className="w-[35%]">
-                <p className="border-t-2 border-slate-950 text-sm text-center">
-                Firma y sello del Director(a)
-                </p>
-            </div>
-        </div>
+    ))}
     </div>
+    
    </>
   )
 }
