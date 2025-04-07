@@ -45,11 +45,6 @@ export const mockStudentsGradeCard: MockStudent[] = [
     { id: 1013, first_name: "Andrés Felipe", last_name: "Ríos Cruz", dni: 59031248 },
     { id: 1014, first_name: "Sofía Elena", last_name: "Navarro Reyes", dni: 60123849 },
     { id: 1015, first_name: "Javier Ignacio", last_name: "Morales Campos", dni: 61293487 },
-    { id: 1016, first_name: "Isabel Antonia", last_name: "Flores Delgado", dni: 62348129 },
-    { id: 1017, first_name: "Emilio Javier", last_name: "Herrera Cordero", dni: 63481923 },
-    { id: 1018, first_name: "Natalia Andrea", last_name: "Cruz Aguirre", dni: 64501239 },
-    { id: 1019, first_name: "Hugo Manuel", last_name: "Reyes Bravo", dni: 65690123 },
-    { id: 1020, first_name: "Valentina Rosa", last_name: "Campos Paredes", dni: 66748120 },
   ];
 
 export const mockStudents = [

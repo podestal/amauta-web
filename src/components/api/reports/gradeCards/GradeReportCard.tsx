@@ -278,7 +278,7 @@ const GradeReportCard = ({ allFinalized, grade, section, level }: Props) => {
     <div className="w-full hidden print:block" ref={printRef} >
     {mockStudentsGradeCard.map((student) => (
             <div key={student.id} className=" print:text-black print:bg-white print:w-[95%] print:mx-auto">
-            <h2 className="text-3xl font-bold mb-6 text-center print:mt-10">Informe de Progreso de Aprendizaje del Estudiante {currentYear}</h2>
+            <h2 className="text-3xl font-bold my-6` text-center print:mt-10">Informe de Progreso de Aprendizaje del Estudiante {currentYear}</h2>
     
             <div className="w-full flex justify-center items-start">
                 <div className="w-[20%] justify-center items-start flex">
@@ -361,7 +361,7 @@ const GradeReportCard = ({ allFinalized, grade, section, level }: Props) => {
                     <CalificationCriteria />
                 </div>
             </div>
-            <div className="w-full mt-96 flex justify-evenly gap-6">
+            <div className="w-full mt-80 flex justify-evenly gap-6">
                 <div className="w-[35%]">
                     <p className="border-t-2 border-slate-950 text-sm text-center">
                         Firma y sello del Docente o Tutor(a)
