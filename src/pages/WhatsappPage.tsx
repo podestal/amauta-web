@@ -73,6 +73,12 @@ export default function WhatsappDashboard() {
   const [manualSent, setManualSent] = useState(102);
   const [autoSent, setAutoSent] = useState(78);
 
+  console.log(setBalance);
+  console.log(setManualSent);
+  console.log(setAutoSent);
+  
+  
+
   return (
     <motion.div
       initial={{ opacity: 0 }}

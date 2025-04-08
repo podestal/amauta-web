@@ -41,12 +41,18 @@ import useAuthStore from "../hooks/store/useAuthStore";
 import useSchoolStore from "../hooks/store/useSchoolStore";
 import useGetProfileStore from "../hooks/store/useGetProfileStore";
 import StudentsAgendas from "../components/api/Students/agenda/StudentsAgendas";
+import { useState } from "react";
+import StudentByDNI from "../components/api/Students/StudentByDNI";
+import StudentByDniInfo from "../components/api/Students/StudentByDniInfo";
+import StudentsByNameInfo from "../components/api/Students/StudentsByNameInfo";
 
 const ResponsiveComponent = () => {
   const access =useAuthStore(s => s.access) || ''
   const school = useSchoolStore(s => s.school)
   const user = useGetProfileStore(s => s.user)
   const group = user?.groups[0] || user?.profile || ''
+  const [studentDni, setStudentDni] = useState('')
+  const [studentName, setStudentName] = useState('')
 
   console.log('user', user)
   
@@ -81,6 +87,23 @@ const ResponsiveComponent = () => {
 
         {group === 'assistant' && <Tabs 
           tabs={[
+            { label: "Matrículas", content: <>
+            <StudentByDNI studentDni={studentDni} setStudentDni={setStudentDni} studentName={studentName} setStudentName={setStudentName} />
+            {studentDni && 
+            <StudentByDniInfo 
+            studentDni={studentDni} 
+                classrooms={classrooms}
+                classroomId={'1'}
+            />}
+        {studentName && 
+            <StudentsByNameInfo 
+                name={studentName}
+                school={school.id}
+                classrooms={classrooms}
+                classroomId={'1'}
+            />
+        }
+            </> },
             { label: "Agendas", content:  <StudentsAgendas />}
           ]}
         />}
