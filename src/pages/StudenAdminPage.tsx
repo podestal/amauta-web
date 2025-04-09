@@ -87,7 +87,7 @@ const ResponsiveComponent = () => {
 
         {group === 'assistant' && <Tabs 
           tabs={[
-            { label: "Matrículas", content: <>
+            { label: "Alumnos", content: <>
             <StudentByDNI studentDni={studentDni} setStudentDni={setStudentDni} studentName={studentName} setStudentName={setStudentName} />
             {studentDni && 
             <StudentByDniInfo 
