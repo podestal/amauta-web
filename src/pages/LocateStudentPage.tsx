@@ -126,17 +126,20 @@ const LocateStudentPage = () => {
                                 <StudentByDNI studentDni={studentDni} setStudentDni={setStudentDni} studentName={studentName} setStudentName={setStudentName} />
                                 <div className="mt-10" />
                                 {studentDni && 
-                                <StudentByDniInfo 
-                                studentDni={studentDni} 
-                                    classrooms={[]}
-                                    classroomId={'1'}
-                                />}
+                                    <StudentByDniInfo 
+                                        studentDni={studentDni} 
+                                        classrooms={[]}
+                                        classroomId={'1'}
+                                        showIcons={true}
+                                    />
+                                }
                                 {studentName && 
                                     <StudentsByNameInfo 
                                         name={studentName}
                                         school={school.id}
                                         classrooms={[]}
                                         classroomId={'1'}
+                                        showIcons={true}
                                     />
                                 }
             </>

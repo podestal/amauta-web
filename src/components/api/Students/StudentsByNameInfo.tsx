@@ -8,9 +8,10 @@ interface Props {
     school: number
     classrooms: Classroom[]
     classroomId: string
+    showIcons?: boolean
 }
 
-const StudentsByNameInfo = ({ name, school, classrooms, classroomId }: Props) => {
+const StudentsByNameInfo = ({ name, school, classrooms, classroomId, showIcons=false }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
 
@@ -40,6 +41,7 @@ const StudentsByNameInfo = ({ name, school, classrooms, classroomId }: Props) =>
                     classrooms={classrooms}
                     classroomId={classroomId}
                     studentName={name}
+                    showIcons={showIcons}
                 />
             ))}
     </>

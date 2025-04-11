@@ -7,9 +7,10 @@ interface Props {
     studentDni: string
     classrooms: Classroom[]
     classroomId: string
+    showIcons?: boolean
 }
 
-const StudentByDniInfo = ({ studentDni, classrooms, classroomId }: Props) => {
+const StudentByDniInfo = ({ studentDni, classrooms, classroomId, showIcons=false }: Props) => {
 
     const access = useAuthStore (s => s.access) || ''
     const { data: student, isLoading, isError, error, isSuccess } = useGetStudentByDni({ dni: studentDni, access })
@@ -22,7 +23,7 @@ const StudentByDniInfo = ({ studentDni, classrooms, classroomId }: Props) => {
 
   return (
     <>
-        <div className="w-full grid grid-cols-10 text-lg font-bold gap-6 px-6 py-3 bg-gray-900 rounded-t-xl">
+        <div className="w-full grid grid-cols-10 text-lg font-bold gap-6 px-6 py-3 bg-gray-900 rounded-t-xl max-lg:hidden">
           <p className="col-span-3">Nombres y Apellidos</p>
           <p>Información Personal</p>
           <p>Información Nacimiento</p>
@@ -37,6 +38,7 @@ const StudentByDniInfo = ({ studentDni, classrooms, classroomId }: Props) => {
             classrooms={classrooms}
             classroomId={classroomId}
             studentDni={studentDni}
+            showIcons={showIcons}
         />
     </>
   )

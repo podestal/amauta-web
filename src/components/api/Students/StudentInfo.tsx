@@ -93,7 +93,7 @@ const StudentInfo = ({ student, showIcons = true, picture=false }: Props) => {
 
   return (
     
-    <div className="w-full max-w-5xl mx-auto bg-white dark:bg-gray-900 p-8 rounded-lg shadow-lg mb-10">
+    <div className="w-full max-w-5xl mx-auto bg-white dark:bg-gray-900 p-2 lg:p-8 rounded-lg shadow-lg mb-10">
       {/* Header */}
       <div className="w-full flex justify-center items-center my-6">
         {/* <button
@@ -143,7 +143,7 @@ const StudentInfo = ({ student, showIcons = true, picture=false }: Props) => {
 
       {/* Datos Personales */}
       <h2 className="text-xl font-bold my-4">{showIcons && "📌"} Datos Personales</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4  dark:bg-gray-800 p-4 rounded-lg lg:shadow-md max-lg:border-b-2 border-slate-200">
+      <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4  dark:bg-gray-800 p-4 rounded-lg lg:shadow-md max-lg:border-b-2 border-slate-200">
         <p>{showIcons && "👨‍👩‍👦"} Número de Hermanos: {student.number_of_siblings || "3"}</p>
         <p>{showIcons && "📍"} Lugar que Ocupa: {student.place_in_family || "-"}</p>
         <p>{showIcons && "🏫"} Escuela Anterior: {student.prev_school || "-"}</p>
@@ -159,7 +159,7 @@ const StudentInfo = ({ student, showIcons = true, picture=false }: Props) => {
       {/* Información de Nacimiento */}
       <h2 className="text-xl font-bold my-4">{showIcons && "🎂"} Información de Nacimiento</h2>
       {student.birth_info ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 dark:bg-gray-800 p-4 rounded-lg lg:shadow-md max-lg:border-b-2 border-slate-200">
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 dark:bg-gray-800 p-4 rounded-lg lg:shadow-md max-lg:border-b-2 border-slate-200">
           <p>{showIcons && "📅"} Fecha de Nacimiento: {moment(student.birth_info.date_of_birth).format("DD-MM-YYYY") || "-"}</p>
           <p>{showIcons && "🏛️"} Departamento: {getDepartment(parseInt(student.birth_info.state))?.name || "-"}</p>
           <p>{showIcons && "🏙️"} Provincia: {getProvince(parseInt(student.birth_info.county))?.name || "-"}</p>
@@ -173,7 +173,7 @@ const StudentInfo = ({ student, showIcons = true, picture=false }: Props) => {
       {/* Información de Salud */}
       <h2 className="text-xl font-bold my-4">{showIcons && "🚨"} Información de Salud</h2>
       {student.health_info ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 dark:bg-gray-800 p-4 rounded-lg lg:shadow-md max-lg:border-b-2 border-slate-200">
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 dark:bg-gray-800 p-4 rounded-lg lg:shadow-md max-lg:border-b-2 border-slate-200">
           <p>{showIcons && "🩸"} Peso: {student.health_info.weight || "-"} kg</p>
           <p>{showIcons && "📏"} Talla: {student.health_info.height || "-"} m</p>
           <p>{showIcons && "💉"} Enfermedades: {student.health_info.illness || "-"}</p>
@@ -188,7 +188,7 @@ const StudentInfo = ({ student, showIcons = true, picture=false }: Props) => {
       {/* Contacto de Emergencia */}
       <h2 className="text-xl font-bold my-4">{showIcons && "🚨"} Contacto de Emergencia</h2>
       {student.emergency_contact ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 dark:bg-gray-800 p-4 rounded-lg lg:shadow-md max-lg:border-b-2 border-slate-200">
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 dark:bg-gray-800 p-4 rounded-lg lg:shadow-md max-lg:border-b-2 border-slate-200">
           <p>{showIcons && "👤"} Nombre: {student.emergency_contact.name || "-"}</p>
           <p>{showIcons && "📞"} Teléfono: {student.emergency_contact.phone_number || "-"}</p>
           <p>{showIcons && "🏡"} Dirección: {student.emergency_contact.address || "-"}</p>
@@ -203,7 +203,7 @@ const StudentInfo = ({ student, showIcons = true, picture=false }: Props) => {
             <h2 className="text-xl font-bold my-4">
               {showIcons && "👨‍👩‍👦"} Información {tutor.tutor_type === "M" ? "de la" : "del"} {tutorTypes[tutor.tutor_type]}
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4  dark:bg-gray-800 p-4 rounded-lg lg:shadow-md max-lg:border-b-2 border-slate-200">
+            <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4  dark:bg-gray-800 p-4 rounded-lg lg:shadow-md max-lg:border-b-2 border-slate-200">
               <p>{showIcons && "📜"} DNI: {tutor.dni || "-"}</p>
               <p>{showIcons && "👤"} Nombres: {tutor.first_name || "-"}</p>
               <p>{showIcons && "👥"} Apellidos: {tutor.last_name || "-"}</p>

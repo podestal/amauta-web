@@ -20,9 +20,10 @@ interface Props {
     classroomId: string
     studentDni?: string
     studentName?: string
+    showIcons?: boolean
 }
 
-const StudentAdminCard = ({ student, classrooms, classroomId, studentDni, studentName }: Props) => {
+const StudentAdminCard = ({ student, classrooms, classroomId, studentDni, studentName, showIcons=false }: Props) => {
 
   const itemVariants = {
     hidden: { opacity: 0, x: 50 }, 
@@ -148,7 +149,7 @@ const StudentAdminCard = ({ student, classrooms, classroomId, studentDni, studen
       {renderComponent === 'studentInfo' && 
       <StudentInfo 
         student={student}
-        showIcons={false}
+        showIcons={showIcons}
         picture={true}
       />}
       {renderComponent === 'birthInfo' && 
