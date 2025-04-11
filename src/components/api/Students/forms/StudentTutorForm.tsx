@@ -58,8 +58,8 @@ const StudentTutorForm = ({
     const [civilStatus, setCivilStatus] = useState(tutor ? tutor.civil_status : '')
     const [livesWithStudent, setLivesWithStudent] = useState(tutor ? `${tutor.lives_with_student ? 'Si' : 'No'}` : 'Si')
     const [firstName, setFirstName] = useState(tutor ? tutor.first_name : '')
-    const [fatherLastName, setFatherLastName] = useState(tutor ? tutor.last_name.split(' ')[0] : '')
-    const [motherLastName, setMotherLastName] = useState(tutor ? tutor.last_name.split(' ')[1] : '')
+    const [fatherLastName, setFatherLastName] = useState(tutor ? tutor?.last_name?.split(' ')[0] : '')
+    const [motherLastName, setMotherLastName] = useState(tutor ? tutor?.last_name?.split(' ')[1] : '')
     const [phoneNumber, setPhoneNumber] = useState(tutor ? tutor.phone_number : '')
     const [address, setAddress] = useState(tutor ? tutor.address : '')
     const [email, setEmail] = useState(tutor ? tutor.email : '')
@@ -165,7 +165,7 @@ const StudentTutorForm = ({
             return;
         }
 
-        const [day, month, year] = dateOfBirth.split('/')
+        const [day, month, year] = dateOfBirth?.split('/')
 
         if (!selectedDepartment) {
             setStateError('Este campo es requerido')
