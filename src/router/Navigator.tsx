@@ -53,7 +53,7 @@ const Navigator: React.FC = () => {
       to: 'assignatures',
       label: lan === 'EN' ? 'Assignatures' : 'Cursos',
       icon: <RiBookShelfFill />,
-      show: group === 'assistant',
+      show: group === 'instructor',
     },
     {
       to: 'categories',
