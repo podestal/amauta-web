@@ -24,7 +24,7 @@ const StudentsByNameInfo = ({ name, school, classrooms, classroomId }: Props) =>
 
   return (
     <>
-        <div className="w-full grid grid-cols-10 text-lg font-bold gap-6 px-6 py-3 bg-gray-900 rounded-t-xl">
+            <div className="w-full grid grid-cols-10 text-lg font-bold gap-6 px-6 py-3 lg:bg-gray-900 rounded-t-xl max-lg:hidden">
                 <p className="col-span-3">Nombres y Apellidos</p>
                 <p>Información Personal</p>
                 <p>Información Nacimiento</p>

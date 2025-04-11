@@ -12,6 +12,7 @@ import { Classroom } from "../../../services/api/classroomService"
 import useUpdateStudent from "../../../hooks/api/student/useUpdateStudent"
 import StudentTutorForm from "./forms/StudentTutorForm"
 import { motion } from "framer-motion"
+import useGetProfileStore from "../../../hooks/store/useGetProfileStore"
 
 interface Props {
     student: Student
@@ -31,6 +32,8 @@ const StudentAdminCard = ({ student, classrooms, classroomId, studentDni, studen
   const [open, setOpen] = useState(false)
   const [renderComponent, setRenderComponent] = useState('')
 
+  const group = useGetProfileStore(s => s.user)?.groups[0]
+
   const birthInfo = student.birth_info ? student.birth_info : undefined
   const healthInfo = student.health_info ? student.health_info : undefined
   const emergencyContact = student.emergency_contact ? student.emergency_contact : undefined
@@ -47,7 +50,7 @@ const StudentAdminCard = ({ student, classrooms, classroomId, studentDni, studen
     <>
         <motion.div 
             variants={itemVariants}
-            className={`w-full z-20 lg:grid lg:grid-cols-10 flex-col gap-6 items-center hover:bg-slate-700 ${!student.is_active ? 'bg-slate-950' : 'bg-slate-900'} py-4 px-6 rounded-xl shadow-md transition-all md:flex md:flex-col`}
+            className={`w-full z-20 lg:grid lg:grid-cols-10 flex-col gap-6 max-lg:mb-4 items-center hover:bg-slate-700 ${!student.is_active ? 'bg-slate-950' : 'bg-slate-900'} py-4 px-6 rounded-xl shadow-md transition-all md:flex md:flex-col`}
         >  
             {/* Header Section */}
             <div className="col-span-3 flex items-center gap-4 w-full">
@@ -67,12 +70,13 @@ const StudentAdminCard = ({ student, classrooms, classroomId, studentDni, studen
                     </p>
                 </div>
                 {/* Toggle Button for Mobile */}
+                {group === 'manager' && 
                 <button 
                     className="md:hidden ml-auto bg-gray-700 px-3 py-1 rounded-lg text-white text-sm"
                     onClick={() => setIsExpanded(!isExpanded)}
                 >
                     {isExpanded ? "Ocultar Info" : "Mostrar Info"}
-                </button>
+                </button>}
             </div>
 
             {/* Information Blocks */}

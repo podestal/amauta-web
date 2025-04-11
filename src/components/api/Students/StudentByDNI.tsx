@@ -42,7 +42,7 @@ const StudentByDNI = ({ setStudentDni, setStudentName, studentName, studentDni }
   return (
     <form 
         onSubmit={handleSubmit}
-        className="w-full h-full flex justify-center items-center gap-12">
+        className="w-full h-full flex max-lg:flex-col justify-center items-center gap-12">
         <Input 
             placeholder="Buscar por nombre, apellido o DNI ..."
             onChange={(e) => {

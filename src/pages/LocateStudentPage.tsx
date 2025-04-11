@@ -49,11 +49,17 @@ import QRScanner from "../components/ui/QRScanner"
 import StudentScannedInfo from "../components/api/Students/StudentScannedInfo"
 import { motion } from "framer-motion"
 import { ScanLine, Search } from "lucide-react"
-import Input from "../components/ui/Input"
+import StudentByDNI from "../components/api/Students/StudentByDNI"
+import StudentByDniInfo from "../components/api/Students/StudentByDniInfo"
+import StudentsByNameInfo from "../components/api/Students/StudentsByNameInfo"
+import useSchoolStore from "../hooks/store/useSchoolStore"
 
 const LocateStudentPage = () => {
     const [studentId, setStudentId] = useState('')
     const [searchMode, setSearchMode] = useState<'qr' | 'name'>('qr')
+    const [studentDni, setStudentDni] = useState('')
+    const [studentName, setStudentName] = useState('')
+    const school = useSchoolStore(s => s.school)
 
     const onScanSuccess = (decodedText: string, pauseScanner: any, resumeScanner: any, stopScanner: any) => {
         const studentId = decodedText.split('-')[0]
@@ -116,7 +122,24 @@ const LocateStudentPage = () => {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.4 }}
                             >
-                                <Input />
+                                <>
+                                <StudentByDNI studentDni={studentDni} setStudentDni={setStudentDni} studentName={studentName} setStudentName={setStudentName} />
+                                <div className="mt-10" />
+                                {studentDni && 
+                                <StudentByDniInfo 
+                                studentDni={studentDni} 
+                                    classrooms={[]}
+                                    classroomId={'1'}
+                                />}
+                                {studentName && 
+                                    <StudentsByNameInfo 
+                                        name={studentName}
+                                        school={school.id}
+                                        classrooms={[]}
+                                        classroomId={'1'}
+                                    />
+                                }
+            </>
                             </motion.div>
                         )}
                     </div>
