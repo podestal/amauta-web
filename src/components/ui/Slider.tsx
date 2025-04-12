@@ -1,6 +1,6 @@
 import { RiCloseCircleFill } from "@remixicon/react"
 import { AnimatePresence, motion } from "framer-motion"
-import { ReactNode } from "react"
+import { ReactNode, useEffect } from "react"
 
 interface Props {
     isOpen: boolean
@@ -9,6 +9,19 @@ interface Props {
 }
 
 const Slider = ({ isOpen, setOpen, children }: Props) => {
+
+    useEffect(() => {
+      if (isOpen) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
+    
+      return () => {
+        document.body.style.overflow = '';
+      };
+    }, [isOpen]);
+
   return (
     <>
       {/* Background overlay */}
