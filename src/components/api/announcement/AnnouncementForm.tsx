@@ -139,7 +139,7 @@ const AnnouncementForm = ({ CreateAnnouncement, student, classroom, visibility }
         </AnimatePresence>
         <form
             onSubmit={handleSubmit}
-            className=" relative flex flex-col justify-center item-start gap-6 w-[85%] lg:w-[60%] mx-auto bg-slate-800 px-8 py-6 rounded-xl"
+            className=" relative flex flex-col justify-center item-start gap-6 w-[85%] mx-auto bg-slate-800 px-8 py-6 rounded-xl"
         >
             <h2 className="text-2xl text-center">{lan === 'EN' ? 'New Message' : 'Nuevo Mensaje'}</h2>
             {visibility === 'P' && 
