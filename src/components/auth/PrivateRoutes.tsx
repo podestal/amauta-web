@@ -38,6 +38,8 @@ const PrivateRoutes = ({ children }: Props) => {
   }, [tokenExpired])
 
   useEffect(() => {
+    console.log('profile', profile);
+    console.log('user', user);
     user && setUser(user)
     profile && setProfile(profile)
     school && setSchool(school)

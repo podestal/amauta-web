@@ -6,7 +6,7 @@ interface Props {
 
 const Avatar = ({ firstName, lastName, size = 50 }: Props) => {
 
-  const initials = `${firstName[0].toUpperCase()}${lastName[0].toUpperCase()}`;
+  const initials = `${firstName ? firstName[0].toUpperCase() : ''}${lastName ? lastName[0].toUpperCase(): ''}`;
 
   const randomGradient = () => {
     const colors = [

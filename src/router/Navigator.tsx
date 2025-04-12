@@ -11,14 +11,10 @@ const MotionNavLink = motion(NavLink);
 
 const Navigator: React.FC = () => {
 
-  const group = useGetProfileStore(s=>s.user?.groups[0])
+  const group = useGetProfileStore(s => s.user)?.groups[0] || useGetProfileStore(s => s.user)?.profile || ''
   const profile = useGetProfileStore(s=>s.profile)
   const instructor = group === 'instructor' && profile as Instructor
 
-  // console.log('location', location.pathname);
-  // console.log('location split', location.pathname.split('/')[location.pathname.split('/').length - 1]);
-  
-  
 
   const createUpdateAttendance = instructor && canCreateUpdateAttendance(instructor.clases_details)
   

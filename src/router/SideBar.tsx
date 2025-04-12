@@ -92,7 +92,7 @@ const SideBar = ({ profile }: Props) => {
             <div className="flex items-center space-x-4 mb-8">
                 <div className="w-12 h-12 flex items-center justify-center bg-gradient-to-r from-blue-800 to-slate-900 rounded-full dark:text-slate-50 font-bold text-md overflow-hidden">
                     <span>
-                        {profile.first_name[0]}{profile.last_name[0]}
+                        {profile.first_name ? profile?.first_name[0] : ''}{profile?.last_name ? profile?.last_name[0] : ''}
                     </span>
                 </div>
                 <div className="flex flex-col gap-2">
