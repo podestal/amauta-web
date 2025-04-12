@@ -43,7 +43,8 @@ const TutorStudentCard = ({ student }: Props) => {
             {/* Header Section */}
             <div className="flex justify-between items-center">
                 <div>
-                    <h2 className="text-xl font-bold mb-2">{student.first_name} {student.last_name}</h2>
+                    <h2 className="text-xl font-bold mb-2">{student.first_name}</h2>
+                    <h2 className="text-xl font-bold mb-2">{student.last_name}</h2>
                     <p className="text-gray-400 text-sm">{classroomDescription}</p>
                 </div>
 
