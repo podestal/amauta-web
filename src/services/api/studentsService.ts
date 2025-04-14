@@ -48,6 +48,7 @@ export interface StudentByGrade {
 export interface SimpleAttendance {
     id: number
     status: 'N' | 'E' | 'L' | 'T' | 'O'
+    kind: 'I' | 'O'
     observations: string
     created_at: Date
 }
