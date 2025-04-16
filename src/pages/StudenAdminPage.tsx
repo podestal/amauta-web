@@ -87,22 +87,23 @@ const ResponsiveComponent = () => {
 
         {group === 'assistant' && <Tabs 
           tabs={[
-            { label: "Alumnos", content: <>
-            <StudentByDNI studentDni={studentDni} setStudentDni={setStudentDni} studentName={studentName} setStudentName={setStudentName} />
-            {studentDni && 
-            <StudentByDniInfo 
-            studentDni={studentDni} 
-                classrooms={classrooms}
-                classroomId={'1'}
-            />}
-        {studentName && 
-            <StudentsByNameInfo 
-                name={studentName}
-                school={school.id}
-                classrooms={classrooms}
-                classroomId={'1'}
-            />
-        }
+            { label: "Alumnos", content: 
+            <>
+              <StudentByDNI studentDni={studentDni} setStudentDni={setStudentDni} studentName={studentName} setStudentName={setStudentName} />
+              {studentDni && 
+              <StudentByDniInfo 
+              studentDni={studentDni} 
+                  classrooms={classrooms}
+                  classroomId={'1'}
+              />}
+              {studentName && 
+                  <StudentsByNameInfo 
+                      name={studentName}
+                      school={school.id}
+                      classrooms={classrooms}
+                      classroomId={'1'}
+                  />
+              }
             </> },
             { label: "Agendas", content:  <StudentsAgendas />}
           ]}

@@ -2,7 +2,7 @@ import { useState } from "react"
 import { Student } from "../../../services/api/studentsService"
 import Modal from "../../ui/Modal"
 import StudentInfo from "./StudentInfo"
-import { RiBookletFill } from "@remixicon/react"
+import { RiBookletFill, RiHistoryFill } from "@remixicon/react"
 import { AlertTriangle } from "lucide-react";
 import StudentEmergency from "./forms/StudentEmergency"
 import StudentBirthForm from "./forms/StudentBirthForm"
@@ -13,6 +13,46 @@ import useUpdateStudent from "../../../hooks/api/student/useUpdateStudent"
 import StudentTutorForm from "./forms/StudentTutorForm"
 import { motion } from "framer-motion"
 import useGetProfileStore from "../../../hooks/store/useGetProfileStore"
+import AttendanceCalendar, { AttendanceStatus } from "../reports/attendance/studentAdmin/AttendanceCalendar"
+
+export const aprilAttendanceMock: DailyAttendance[] = [
+    { date: "2025-04-01", entry: "onTime", exit: "onTime" },
+    { date: "2025-04-02", entry: "late", exit: "onTime" },
+    { date: "2025-04-03", entry: "onTime", exit: "excused" },
+    { date: "2025-04-04", entry: "noShow", exit: "noShow" },
+    { date: "2025-04-05", entry: "onTime", exit: "onTime" },
+    { date: "2025-04-06", entry: "absent", exit: "absent" },
+    { date: "2025-04-07", entry: "onTime", exit: "late" },
+    { date: "2025-04-08", entry: "late", exit: "late" },
+    { date: "2025-04-09", entry: "onTime", exit: "onTime" },
+    { date: "2025-04-10", entry: "onTime", exit: "excused" },
+    { date: "2025-04-11", entry: "onTime", exit: "onTime" },
+    { date: "2025-04-12", entry: "late", exit: "onTime" },
+    { date: "2025-04-13", entry: "noShow", exit: "noShow" },
+    { date: "2025-04-14", entry: "onTime", exit: "late" },
+    { date: "2025-04-15", entry: "excused", exit: "excused" },
+    { date: "2025-04-16", entry: "onTime", exit: "onTime" },
+    { date: "2025-04-17", entry: "onTime", exit: "late" },
+    { date: "2025-04-18", entry: "absent", exit: "absent" },
+    { date: "2025-04-19", entry: "late", exit: "onTime" },
+    { date: "2025-04-20", entry: "onTime", exit: "onTime" },
+    { date: "2025-04-21", entry: "late", exit: "late" },
+    { date: "2025-04-22", entry: "onTime", exit: "onTime" },
+    { date: "2025-04-23", entry: "onTime", exit: "excused" },
+    { date: "2025-04-24", entry: "onTime", exit: "onTime" },
+    { date: "2025-04-25", entry: "onTime", exit: "onTime" },
+    { date: "2025-04-26", entry: "absent", exit: "absent" },
+    { date: "2025-04-27", entry: "excused", exit: "excused" },
+    { date: "2025-04-28", entry: "late", exit: "onTime" },
+    { date: "2025-04-29", entry: "onTime", exit: "onTime" },
+    { date: "2025-04-30", entry: "onTime", exit: "late" },
+  ];
+
+interface DailyAttendance {
+  date: string; // e.g. "2025-04-01"
+  entry: AttendanceStatus;
+  exit: AttendanceStatus;
+}
 
 interface Props {
     student: Student
@@ -55,11 +95,19 @@ const StudentAdminCard = ({ student, classrooms, classroomId, studentDni, studen
         >  
             {/* Header Section */}
             <div className="col-span-3 flex items-center gap-4 w-full">
+                <RiHistoryFill 
+                    className="text-green-600 hover:text-green-800 cursor-pointer text-2xl"
+                    onClick={() =>{
+                        setRenderComponent('studentCalendar');
+                        setOpen(true);
+                    }}
+                />
                 <RiBookletFill 
                     className="text-blue-700 hover:text-blue-800 cursor-pointer text-2xl"
                     onClick={() =>{
-                        setRenderComponent('studentInfo');
+                        setRenderComponent('studentInfo')
                         setOpen(true);
+                        
                     }}
                 />
                 <div className="flex items-center gap-2">
@@ -146,6 +194,10 @@ const StudentAdminCard = ({ student, classrooms, classroomId, studentDni, studen
       onClose={() => setOpen(false)}
       whole
     >
+      {renderComponent === 'studentCalendar' && 
+      <AttendanceCalendar 
+        allAttendanceData={aprilAttendanceMock}
+      />}
       {renderComponent === 'studentInfo' && 
       <StudentInfo 
         student={student}
