@@ -19,9 +19,6 @@ const TutorAttedences = ({ studentId, selectedMonth }: Props) => {
         hidden: { opacity: 0, x: 50 }, 
         visible: { opacity: 1, x: 0 }, 
       };
-
-    console.log('selectedMonth', selectedMonth);
-    
     
     const {data: attendances, isLoading, isError, error, isSuccess} = useGetAttendance({ access, studentId, month: selectedMonth })
     

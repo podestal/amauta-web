@@ -39,7 +39,6 @@ const StudentAdminTableLastTen = ({ school, classrooms }: Props) => {
             <p>Información Madre</p>
             <p>Información Apoderado</p>
         </div>
-        <>{console.log('last ten', students)}</>
         {students.map(student => (
             <StudentAdminCard 
                 key={student.uid}

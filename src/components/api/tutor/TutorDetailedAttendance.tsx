@@ -10,8 +10,8 @@ const TutorDetailedAttendance = () => {
     const params = useParams()
     const lan = useLanguageStore(s=>s.lan)
     const studentId = params.studentId || ''
-    const mcurrentMnth = new Date().getMonth() + 1
-    const [selectedMonth, setSelectedMonth] = useState(mcurrentMnth.toString())
+    const currentMonth = new Date().getMonth() + 1
+    const [selectedMonth, setSelectedMonth] = useState(currentMonth.toString())
 
     return (
       <motion.div 
