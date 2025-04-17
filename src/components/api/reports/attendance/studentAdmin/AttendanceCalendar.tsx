@@ -7,6 +7,7 @@ import {
 import useGetAttendance from "../../../../../hooks/api/attendance/useGetAttendance";
 import useAuthStore from "../../../../../hooks/store/useAuthStore";
 import AttendanceCalendarCard from "./AttendanceCalendarCard";
+import { Student } from "../../../../../services/api/studentsService";
 
 export type AttendanceStatus =
   | "onTime"
@@ -39,13 +40,13 @@ const months = [
 
 
 interface AttendanceCalendarProps {
-  studentId: string
+  student: Student
 }
 
 const weekdays = ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"];
 
 const AttendanceCalendar: React.FC<AttendanceCalendarProps> = ({
-    studentId
+    student
 }) => {
 
     const access = useAuthStore((s) => s.access) || "";
@@ -76,7 +77,7 @@ const AttendanceCalendar: React.FC<AttendanceCalendarProps> = ({
 
     const monthLabel = months.find((m) => m.id === (currentMonth + 1).toString())?.name || '';
 
-    const {data: attendances, isLoading, isError, error, isSuccess} = useGetAttendance({ access, studentId, month: (currentMonth + 1).toString() })
+    const {data: attendances, isLoading, isError, error, isSuccess} = useGetAttendance({ access, studentId: student.uid, month: (currentMonth + 1).toString() })
         
     if (isLoading) return <h2 className="text-2xl animate-pulse text-center my-10">{'Cargando ...'}</h2>
 
@@ -89,45 +90,55 @@ const AttendanceCalendar: React.FC<AttendanceCalendarProps> = ({
 
 
   return (
-    <motion.div
+    <div>
+        <div className="w-full flex justify-between items-center px-4 py-2">
+            <div className="flex flex-col gap-2 mb-2">
+                <h2 className="text-2xl font-bold">Reporte de Asistencias</h2>
+                <p className="text-sm">{student.first_name} {student.last_name}</p>
+            </div>
+            <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-200 print:hidden text-sm font-bold">
+            🖨️ Imprimir
+            </button>
+        </div>
+        <motion.div
             className="w-full dark:bg-gray-900 dark:text-white py-6"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
         >
-        {/* Header */}
-        <div className="flex justify-between items-center mb-4 px-2">
+            {/* Header */}
+            <div className="flex justify-between items-center mb-4 px-2">
 
-            <button
-            onClick={handlePrevMonth}
-            className="p-1 hover:bg-gray-700 rounded-full"
-            >
-            <ChevronLeft />
-            </button>
-            <h2 className="text-lg font-semibold">{monthLabel}</h2>
-            <button
-            onClick={handleNextMonth}
-            className="p-1 hover:bg-gray-700 rounded-full"
-            >
-            <ChevronRight />
-            </button>
-        </div>
+                <button
+                onClick={handlePrevMonth}
+                className="p-1 hover:bg-gray-700 rounded-full"
+                >
+                <ChevronLeft />
+                </button>
+                <h2 className="text-lg font-semibold">{monthLabel}</h2>
+                <button
+                onClick={handleNextMonth}
+                className="p-1 hover:bg-gray-700 rounded-full"
+                >
+                <ChevronRight />
+                </button>
+            </div>
 
-        {/* Weekdays */}
-        <div className="grid grid-cols-7 text-center text-sm text-gray-300 mb-2">
-            {weekdays.map((day) => (
-            <div key={day}>{day}</div>
-            ))}
-        </div>
+            {/* Weekdays */}
+            <div className="grid grid-cols-7 text-center text-sm text-gray-300 mb-2">
+                {weekdays.map((day) => (
+                <div key={day}>{day}</div>
+                ))}
+            </div>
 
-        {/* Calendar */}
-        <AttendanceCalendarCard 
-            currentMonth={currentMonth}
-            currentYear={currentYear}
-            attendances={attendances}
-        />
+            {/* Calendar */}
+            <AttendanceCalendarCard 
+                currentMonth={currentMonth}
+                currentYear={currentYear}
+                attendances={attendances}
+            />
         </motion.div>
-
+    </div>
   );
 };
 

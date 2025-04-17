@@ -14,7 +14,6 @@ import StudentTutorForm from "./forms/StudentTutorForm"
 import { motion } from "framer-motion"
 import useGetProfileStore from "../../../hooks/store/useGetProfileStore"
 import AttendanceCalendar, { AttendanceStatus } from "../reports/attendance/studentAdmin/AttendanceCalendar"
-import moment from "moment"
 
 export const aprilAttendanceMock: DailyAttendance[] = [
     { date: "2025-04-01", entry: "onTime", exit: "onTime" },
@@ -197,7 +196,7 @@ const StudentAdminCard = ({ student, classrooms, classroomId, studentDni, studen
     >
       {renderComponent === 'studentCalendar' && 
       <AttendanceCalendar 
-        studentId={student.uid}
+        student={student}
       />}
       {renderComponent === 'studentInfo' && 
       <StudentInfo 

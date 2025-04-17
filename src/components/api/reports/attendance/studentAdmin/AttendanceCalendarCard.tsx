@@ -56,31 +56,6 @@ const AttendanceCalendarCard = ({ currentYear, currentMonth, attendances }: Prop
     const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
     const blanks = Array.from({ length: firstDay });
 
-    // const transformAttendance = (attendances: Attendance[]) => {
-    //     const grouped: Record<string, { entry?: string; exit?: string }> = {};
-      
-    //     attendances.forEach((item) => {
-    //       const dateKey = moment(item.created_at).format("YYYY-MM-DD");
-      
-    //       if (!grouped[dateKey]) {
-    //         grouped[dateKey] = {};
-    //       }
-          
-    //       const statusLabel = mapStatus[item.status];
-      
-    //       if (item.kind === "I") {
-    //         grouped[dateKey].entry = statusLabel;
-    //       } else if (item.kind === "O") {
-    //         grouped[dateKey].exit = statusLabel;
-    //       }
-    //     });
-      
-    //     // convert to array
-    //     return Object.entries(grouped).map(([date, value]) => ({
-    //       date,
-    //       ...value,
-    //     }));
-    //   };
     const transformAttendance = (attendances: Attendance[]) => {
         const grouped: Record<
           string,
@@ -161,14 +136,14 @@ const AttendanceCalendarCard = ({ currentYear, currentMonth, attendances }: Prop
         ))}
         </div>
             {/* Legend */}
-            <div className="my-6 mx-10 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 text-sm text-gray-300">
-            {Object.entries(statusInfo).map(([key, { label, icon }]) => (
-            <div key={key} className="flex items-center space-x-2">
-                {icon}
-                <span>{label}</span>
+            <div className="mt-8 pb-2 w-full flex items-center justify-evenly text-sm text-gray-300">
+                {Object.entries(statusInfo).map(([key, { label, icon }]) => (
+                <div key={key} className="flex items-center space-x-2">
+                    {icon}
+                    <span>{label}</span>
+                </div>
+                ))}
             </div>
-            ))}
-        </div>
 </>
   )
 }
