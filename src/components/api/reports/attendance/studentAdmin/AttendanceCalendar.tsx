@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import {
   ChevronLeft,
@@ -8,6 +8,7 @@ import useGetAttendance from "../../../../../hooks/api/attendance/useGetAttendan
 import useAuthStore from "../../../../../hooks/store/useAuthStore";
 import AttendanceCalendarCard from "./AttendanceCalendarCard";
 import { Student } from "../../../../../services/api/studentsService";
+import { useReactToPrint } from "react-to-print";
 
 export type AttendanceStatus =
   | "onTime"
@@ -77,6 +78,14 @@ const AttendanceCalendar: React.FC<AttendanceCalendarProps> = ({
 
     const monthLabel = months.find((m) => m.id === (currentMonth + 1).toString())?.name || '';
 
+    const printRef = useRef<HTMLDivElement>(null)
+      
+    const handlePrint = useReactToPrint({ 
+      contentRef: printRef,
+      documentTitle: `Reporte_asistencias_${monthLabel}_${student.first_name}_${student.last_name}`,
+      onAfterPrint: () => console.log("Impresión completada.")
+    })
+
     const {data: attendances, isLoading, isError, error, isSuccess} = useGetAttendance({ access, studentId: student.uid, month: (currentMonth + 1).toString() })
         
     if (isLoading) return <h2 className="text-2xl animate-pulse text-center my-10">{'Cargando ...'}</h2>
@@ -90,24 +99,28 @@ const AttendanceCalendar: React.FC<AttendanceCalendarProps> = ({
 
 
   return (
-    <div>
+    <div
+        ref={printRef}
+    >
         <div className="w-full flex justify-between items-center px-4 py-2">
             <div className="flex flex-col gap-2 mb-2">
                 <h2 className="text-2xl font-bold">Reporte de Asistencias</h2>
                 <p className="text-sm">{student.first_name} {student.last_name}</p>
             </div>
-            <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-200 print:hidden text-sm font-bold">
+            <button 
+                onClick={() => handlePrint()}
+                className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-200 print:hidden text-sm font-bold">
             🖨️ Imprimir
             </button>
         </div>
         <motion.div
-            className="w-full dark:bg-gray-900 dark:text-white py-6"
+            className="w-full dark:bg-gray-900 dark:text-white print:bg-white print:text-slate-950 py-6"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
         >
             {/* Header */}
-            <div className="flex justify-between items-center mb-4 px-2">
+            <div className="flex justify-between print:justify-center items-center mb-4 px-2">
 
                 <button
                 onClick={handlePrevMonth}
@@ -115,7 +128,7 @@ const AttendanceCalendar: React.FC<AttendanceCalendarProps> = ({
                 >
                 <ChevronLeft />
                 </button>
-                <h2 className="text-lg font-semibold">{monthLabel}</h2>
+                <h2 className="text-lg font-semibold print:text-center print:text-xl">{monthLabel}</h2>
                 <button
                 onClick={handleNextMonth}
                 className="p-1 hover:bg-gray-700 rounded-full"
@@ -125,7 +138,7 @@ const AttendanceCalendar: React.FC<AttendanceCalendarProps> = ({
             </div>
 
             {/* Weekdays */}
-            <div className="grid grid-cols-7 text-center text-sm text-gray-300 mb-2">
+            <div className="grid grid-cols-7 text-center text-sm text-gray-300 print:text-slate-950 mb-2">
                 {weekdays.map((day) => (
                 <div key={day}>{day}</div>
                 ))}
