@@ -90,7 +90,6 @@ const StudentAdminCard = ({ student, classrooms, classroomId, studentDni, studen
 
   return (
     <>
-        <>{console.log('date', moment(student.attendances_in[0].created_at).format('YYYY-MM-DD'))}</>
         <motion.div 
             variants={itemVariants}
             className={`w-full z-20 lg:grid lg:grid-cols-10 flex-col gap-6 max-lg:mb-4 items-center hover:bg-slate-700 ${!student.is_active ? 'bg-slate-950' : 'bg-slate-900'} py-4 px-6 rounded-xl shadow-md transition-all md:flex md:flex-col`}
@@ -198,7 +197,6 @@ const StudentAdminCard = ({ student, classrooms, classroomId, studentDni, studen
     >
       {renderComponent === 'studentCalendar' && 
       <AttendanceCalendar 
-        allAttendanceData={aprilAttendanceMock}
         studentId={student.uid}
       />}
       {renderComponent === 'studentInfo' && 

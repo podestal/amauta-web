@@ -39,14 +39,12 @@ const months = [
 
 
 interface AttendanceCalendarProps {
-  allAttendanceData: DailyAttendance[];
   studentId: string
 }
 
 const weekdays = ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"];
 
 const AttendanceCalendar: React.FC<AttendanceCalendarProps> = ({
-    allAttendanceData,
     studentId
 }) => {
 
@@ -100,8 +98,6 @@ const AttendanceCalendar: React.FC<AttendanceCalendarProps> = ({
         {/* Header */}
         <div className="flex justify-between items-center mb-4 px-2">
 
-            <>{console.log('currentMonth', currentMonth)}</>
-            <>{console.log('attendances', attendances)}</>
             <button
             onClick={handlePrevMonth}
             className="p-1 hover:bg-gray-700 rounded-full"
@@ -128,7 +124,6 @@ const AttendanceCalendar: React.FC<AttendanceCalendarProps> = ({
         <AttendanceCalendarCard 
             currentMonth={currentMonth}
             currentYear={currentYear}
-            allAttendanceData={allAttendanceData}
             attendances={attendances}
         />
         </motion.div>

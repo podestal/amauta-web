@@ -1,5 +1,5 @@
 import moment from "moment";
-import { AttendanceStatus, DailyAttendance } from "./AttendanceCalendar";
+import { AttendanceStatus } from "./AttendanceCalendar";
 import { AlertTriangle, CalendarDays, CheckCircle, Clock, XCircle } from "lucide-react";
 import { Attendance } from "../../../../../services/api/attendanceService";
 
@@ -46,7 +46,6 @@ const statusInfo: Record<
 interface Props {
     currentYear: number
     currentMonth: number
-    allAttendanceData: DailyAttendance[];
     attendances:Attendance[]
 
 }
@@ -125,7 +124,7 @@ const AttendanceCalendarCard = ({ currentYear, currentMonth, attendances }: Prop
   return (
 <>
     <div className="grid grid-cols-7 gap-2 bg-gray-800 p-4 rounded-2xl shadow">
-        <>{console.log('transformAttendance', transformAttendance(attendances))}</>
+        {/* <>{console.log('transformAttendance', transformAttendance(attendances))}</> */}
         {blanks.map((_, i) => (
         <div key={`blank-${i}`} />
         ))}
@@ -140,14 +139,14 @@ const AttendanceCalendarCard = ({ currentYear, currentMonth, attendances }: Prop
             {day.entry || day.exit ? (
             <div className="mt-2 space-y-1 text-center">
                 <div className="flex items-center space-x-1">
-                {statusInfo[day.entry?.status as AttendanceStatus].icon}
+                {statusInfo[day.entry?.status as AttendanceStatus]?.icon}
                     <div className="w-full flex justify-between">
                         <span className="text-[10px] text-gray-400">Entrada</span>
                         <span className="text-[10px] text-gray-400">{day.entry?.time}</span>
                     </div>
                 </div>
                 <div className="flex items-center space-x-1">
-                {day.exit && statusInfo[day.exit.status as AttendanceStatus].icon}
+                {day.exit && statusInfo[day.exit.status as AttendanceStatus]?.icon}
                 {day.exit && <div className="w-full flex justify-between">
                     <span className="text-[10px] text-gray-400">Salida</span>
                     <span className="text-[10px] text-gray-400">{day.exit?.time}</span>
