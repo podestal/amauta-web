@@ -132,13 +132,13 @@ const AttendanceCalendarCard = ({ currentYear, currentMonth, attendances }: Prop
                 </div>
             </div>
             ) : (
-            <span className="text-[10px] text-gray-500 mt-2">No data</span>
+            <span className="text-[10px] text-gray-500 mt-2">Sin Datos</span>
             )}
         </div>
         ))}
         </div>
             {/* Legend */}
-            <div className="mt-8 pb-2 w-full flex items-center justify-evenly text-sm text-gray-300 print:text-slate-950">
+            <div className="mt-8 pb-2 print:my-2 print:pb-0 w-full flex items-center justify-evenly text-sm text-gray-300 print:text-slate-950">
                 {Object.entries(statusInfo).map(([key, { label, icon }]) => (
                 <div key={key} className="flex items-center space-x-2">
                     {icon}

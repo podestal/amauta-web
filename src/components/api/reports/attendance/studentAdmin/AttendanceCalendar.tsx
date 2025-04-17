@@ -103,7 +103,7 @@ const AttendanceCalendar: React.FC<AttendanceCalendarProps> = ({
         ref={printRef}
     >
         <div className="w-full flex justify-between items-center px-4 py-2">
-            <div className="flex flex-col gap-2 mb-2">
+            <div className="flex flex-col print:flex-row print:w-full print:justify-between print:items-center gap-2 mb-2">
                 <h2 className="text-2xl font-bold">Reporte de Asistencias</h2>
                 <p className="text-sm">{student.first_name} {student.last_name}</p>
             </div>
