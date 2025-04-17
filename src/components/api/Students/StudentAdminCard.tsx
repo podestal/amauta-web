@@ -96,7 +96,7 @@ const StudentAdminCard = ({ student, classrooms, classroomId, studentDni, studen
             {/* Header Section */}
             <div className="col-span-3 flex items-center gap-4 w-full">
                 <RiHistoryFill 
-                    className="text-green-600 hover:text-green-800 cursor-pointer text-2xl"
+                    className="text-green-600 hover:text-green-800 cursor-pointer text-2xl max-lg:hidden"
                     onClick={() =>{
                         setRenderComponent('studentCalendar');
                         setOpen(true);
