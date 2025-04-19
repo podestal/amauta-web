@@ -2,6 +2,7 @@ import Logout from "../components/auth/Logout";
 import Avatar from "../components/ui/Avatar";
 import { RiMailFill, RiPhoneFill } from "@remixicon/react";
 import useGetProfileStore from "../hooks/store/useGetProfileStore";
+import ThemeSelector from "../components/ui/ThemeSelector";
 
 const ProfilePage = () => {
   const profile = useGetProfileStore((s) => s.profile);
@@ -33,6 +34,7 @@ const ProfilePage = () => {
 
         {/* Action Buttons */}
         <div className="w-[70%] mx-auto mt-8 flex flex-col gap-4">
+          <ThemeSelector />
           {/* <button className="flex items-center justify-center gap-3 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg shadow-md transition">
             <RiEdit2Fill className="text-lg" /> Editar Perfil
           </button>
