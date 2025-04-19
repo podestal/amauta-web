@@ -11,9 +11,9 @@ const ProfilePage = () => {
   return (
     <div className="w-full max-w-md mx-auto overflow-hidden pt-10">
       {/* Profile Card */}
-      <div className="p-6 bg-white dark:bg-slate-900 shadow-xl text-center relative rounded-3xl">
+      <div className="p-6 bg-slate-200 dark:bg-slate-900 shadow-xl text-center relative rounded-3xl">
         {/* Avatar & Name */}
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center text-gray-700 dark:text-gray-300">
           {profile && <Avatar firstName={profile?.first_name} lastName={profile?.last_name} />}
           <h1 className="text-xl font-bold mt-3">{profile?.first_name}</h1>
           <h1 className="text-xl font-bold mt-3">{profile?.last_name}</h1>
