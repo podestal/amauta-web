@@ -91,7 +91,7 @@ const StudentAdminCard = ({ student, classrooms, classroomId, studentDni, studen
     <>
         <motion.div 
             variants={itemVariants}
-            className={`w-full z-20 lg:grid lg:grid-cols-10 flex-col gap-6 max-lg:mb-4 items-center hover:bg-slate-700 ${!student.is_active ? 'bg-slate-950' : 'bg-slate-900'} py-4 px-6 rounded-xl shadow-md transition-all md:flex md:flex-col`}
+            className={`w-full z-20 lg:grid lg:grid-cols-10 flex-col gap-6 max-lg:mb-4 items-center hover:bg-slate-100 dark:hover:bg-slate-700 ${!student.is_active ? 'dark:bg-slate-950 bg-slate-100' : 'dark:bg-slate-900 bg-slate-200'} py-4 px-6 rounded-xl shadow-md transition-all md:flex md:flex-col`}
         >  
             {/* Header Section */}
             <div className="col-span-3 flex items-center gap-4 w-full">
