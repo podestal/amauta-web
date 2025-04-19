@@ -21,7 +21,7 @@ const CreateAttendance = ({ studentId, classroomId, kind, label, canModifyAttend
     <div className="flex justify-start items-center gap-4">
     <p
         onClick={() => canModifyAttendance && setOpen(true)}
-        className={`w-full cursor-pointer py-4 px-6 text-center font-semibold text-sm rounded-xl bg-gradient-to-r text-white shadow-lg transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-xl from-gray-700 via-gray-800 to-gray-900`}
+        className={`w-full cursor-pointer py-4 px-6 text-center font-semibold text-sm rounded-xl bg-gradient-to-r dark:text-slate-50 shadow-lg transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-xl dark:from-gray-700 dark:via-gray-800 dark:to-gray-900 from-gray-100 via-gray-200 to-gray-300`}
     >
         <span className="flex items-center justify-center gap-2">
             <svg

@@ -47,7 +47,7 @@ const Students = ({ classroom, level }: Props) => {
                 <h2 className="text-5xl font-bold text-center">Alumnos</h2>
                 <RiDiscussFill 
                     size={40} 
-                    className="text-5xl text-gray-300 cursor-pointer hover:text-blue-600 transition-all duration-300" 
+                    className="text-5xl dark:text-gray-300 text-blue-600 cursor-pointer hover:text-blue-700 transition-all duration-300" 
                     onClick={() => setOpen(true)}
                 />
             </div>
