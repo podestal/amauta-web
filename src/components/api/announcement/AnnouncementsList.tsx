@@ -36,7 +36,7 @@ const AnnouncementsList = ({ student, open }: Props) => {
         <h2 className="text-center text-2xl my-6">{lan === 'EN' ? 'No Announcements ...' : 'Sin Mensajes ...'}</h2> 
         : 
         <motion.div
-            className="bg-slate-800 shadow-lg rounded-2xl p-4"
+            className="dark:bg-slate-800 bg-slate-200 shadow-lg rounded-2xl p-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             whileHover={{ scale: 1.02 }}
