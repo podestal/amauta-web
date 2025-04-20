@@ -32,7 +32,7 @@ const Categories = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="bg-gray-900 p-4 rounded-lg shadow-md">
+            className="dark:bg-gray-900 bg-slate-200 p-4 rounded-lg shadow-md">
             {categories.map((category) => (
                 <CategoryCard 
                     key={category.id} 

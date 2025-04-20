@@ -15,7 +15,7 @@ const CategoryCard = ({ category }: Props) => {
     <>
         <motion.div
             key={category.id}
-            className="flex justify-between items-center bg-gray-800 p-3 rounded-lg shadow mb-4 hover:bg-gray-700 cursor-pointer"
+            className="flex justify-between items-center dark:bg-gray-800 bg-slate-300 p-3 rounded-lg shadow mb-4 hover:bg-slate-400 dark:hover:bg-gray-700 cursor-pointer"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
         >
