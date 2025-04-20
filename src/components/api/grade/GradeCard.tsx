@@ -36,7 +36,7 @@ const GradeCard = ({ grade, index, activityId }: Props) => {
   return (
     <motion.div
         key={grade.student.uid}
-        className="border-bborder-gray-700 hover:bg-gray-800 transition-colors lg:grid lg:grid-cols-8 flex flex-col"
+        className="border-bborder-gray-700 dark:hover:bg-gray-800 hover:bg-gray-200 transition-colors lg:grid lg:grid-cols-8 flex flex-col rounded-xl"
         initial={{ opacity: 0, y: 10 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
