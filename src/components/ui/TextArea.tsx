@@ -37,6 +37,7 @@ interface Props extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
     value?: string | number
     setValue?: Dispatch<SetStateAction<string>>
     tall?: boolean
+    label?: string
 }
 
 const TextArea = forwardRef<HTMLTextAreaElement, Props>(({
@@ -45,6 +46,7 @@ const TextArea = forwardRef<HTMLTextAreaElement, Props>(({
     value,
     setValue,
     tall,
+    label,
     ...props 
 }, ref) => {
 
@@ -68,6 +70,7 @@ const TextArea = forwardRef<HTMLTextAreaElement, Props>(({
         <div className="w-full flex flex-col justify-center items-center gap-4 relative my-2">
             <div className="w-full">
                 <style dangerouslySetInnerHTML={{ __html: styles.animation }} />
+                {label && <p className="text-lg lg:text-xl dark:text-slate-50 text-center mb-4">{label}</p>}
                 <textarea
                     ref={ref} 
                     className={`${tall ? 'h-72' : 'h-[100px]'} bg-slate-100 dark:bg-gray-950  border-2  rounded-lg w-full dark:text-slate-50 text-gray-900 px-2 py-2 focus:border-blue-700 focus:outline-none text-base

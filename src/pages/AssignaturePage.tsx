@@ -8,6 +8,7 @@ import remarkGfm from 'remark-gfm'
 import Modal from '../components/ui/Modal'
 import MDEditor from "@uiw/react-md-editor";
 import Button from '../components/ui/Button'
+import CreateLesson from '../components/api/lesson/createLesson'
 
 interface LessonContentProps {
   markdown: string
@@ -148,7 +149,7 @@ const AssignaturePage = () => {
 
   return (
     <div className="w-full max-w-[95%] sm:max-w-[600px] md:max-w-[800px] lg:max-w-[1024px] xl:max-w-[1200px] 2xl:max-w-[1380px] mx-auto overflow-hidden">
-      <form 
+      {/* <form 
         onSubmit={handleSubmit}>
         <Input 
           value={topic}
@@ -173,7 +174,10 @@ const AssignaturePage = () => {
         open={open}
         setOpen={setOpen}
       />
-      }
+      } */}
+      <CreateLesson 
+        
+      />
         {/* <Activities /> */}
     </div>
   )

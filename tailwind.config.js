@@ -15,6 +15,15 @@ export default {
       gridTemplateColumns: {
         31: "repeat(31, minmax(0, 1fr))",
       },
+      // animation: {
+      //   'spin-slow': 'spin 8s linear infinite',
+      // },
+      // animation: {
+      //   'spin-slow': 'spin 4s linear infinite',
+      // },
+      // animation: {
+      //   'spin-slow': 'spin 6s linear infinite',
+      // },
     },
   },
   plugins: [],
