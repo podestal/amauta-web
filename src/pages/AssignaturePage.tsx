@@ -1,4 +1,4 @@
-// import Activities from '../components/api/activity/Activities'
+import Activities from '../components/api/activity/Activities'
 import { GoogleGenAI } from '@google/genai'
 import { useEffect, useState } from 'react'
 import Input from '../components/ui/Input'
@@ -9,6 +9,9 @@ import Modal from '../components/ui/Modal'
 import MDEditor from "@uiw/react-md-editor";
 import Button from '../components/ui/Button'
 import CreateLesson from '../components/api/lesson/createLesson'
+import { useLocation } from 'react-router-dom'
+import useGetProfileStore from '../hooks/store/useGetProfileStore'
+import getAgeFromClassroom from '../utils/getAgeFromClassroom'
 
 interface LessonContentProps {
   markdown: string
@@ -72,6 +75,12 @@ const LessonContent = ({ markdown, setMarkdown, open, setOpen }: LessonContentPr
 }
 
 const AssignaturePage = () => {
+
+  const state = useLocation().state
+  const profile = useGetProfileStore(s => s.profile)
+  const classroom = profile?.clases_details?.find( classroom => classroom.split('-')[classroom.split('-').length - 1] === (state.classroom)?.toString()) || ''
+
+  
 
   const [topic, setTopic] = useState('')
   const [topicError, setTopicError] = useState('')
@@ -175,9 +184,11 @@ const AssignaturePage = () => {
         setOpen={setOpen}
       />
       } */}
+      <div className='w-full h-screen flex justify-center items-center'>
       <CreateLesson 
-        
+        classroom={classroom}
       />
+      </div>
         {/* <Activities /> */}
     </div>
   )

@@ -1,10 +1,69 @@
 import { useState } from "react"
 import Modal from "../../ui/Modal"
 import LessonForm from "./LessonForm"
+import { GoogleGenAI } from "@google/genai"
 
-const CreateLesson = () => {
+interface Props {
+    classroom: string
+}
+
+const CreateLesson = ({ classroom }: Props) => {
 
     const [open, setOpen] = useState(false)
+
+    const apiKey = import.meta.env.VITE_GEMINI_KEY
+      const googleGenAI = new GoogleGenAI({
+        apiKey: apiKey,})
+        
+      const getAIResponse = async (
+        topic: string, 
+        age: number,
+        methodology: string,
+        setLoading: React.Dispatch<React.SetStateAction<boolean>>,
+        setMarkdown: React.Dispatch<React.SetStateAction<string>>  ) => {
+        setLoading(true)
+        const response = await googleGenAI.models.generateContent({
+          model: 'gemini-2.0-flash',
+          contents: `Eres un experto en pedagogía y planificación de clases. Genera una lección completa y bien estructurada pensada para docentes. La lección debe estar escrita en español, tener formato claro y estar adaptada a:
+    
+                      Edad de los alumnos: ${age} años
+    
+                      Metodología deseada: ${methodology}
+    
+                      Contexto adicional del docente: []
+    
+                      Tema de la lección: ${topic}
+    
+                      La estructura debe seguir este formato:
+    
+                      Objetivos de la Lección
+    
+                      Lista de 3 a 5 objetivos claros y medibles.
+    
+                      Introducción (10 - 15 minutos)
+                      Actividades como: revisión de conocimientos previos, situaciones problema, contextualización, introducción al tema.
+    
+                      Desarrollo (25 - 30 minutos)
+    
+                          Teoría sobre el tema (1.1, 1.2...)
+    
+                          Actividad práctica (si aplica la metodología)
+    
+                      Discusión y Conclusión (5 - 10 minutos)
+                      Actividades de reflexión, socialización, cierre.
+    
+                      Retorno (10 - 15 minutos)
+                      Ronda de preguntas, evaluación, retroalimentación del profesor.
+    
+                      Conclusión Final (5 - 10 minutos)
+                      Resumen, conexión teoría-práctica, materiales extra, relevancia del tema.
+                      
+                      Also this is quite important do not say here you go, do not interact with me in any way shape of form, just send what I asked for, also include bibliography at the end of the lesson, and do not include any other information, just the lesson, and do not say anything else, just the lesson.`,
+        })
+        setMarkdown(response.candidates?.[0]?.content?.parts?.[0]?.text || '')
+        console.log('AI response', response.candidates?.[0]?.content?.parts?.[0]?.text || 'No content available');
+      }
+
 
   return (
     <>
@@ -21,7 +80,10 @@ const CreateLesson = () => {
             onClose={() => setOpen(false)}
             whole
         >
-            <LessonForm />
+            <LessonForm 
+                classroom={classroom}
+                getAIResponse={getAIResponse}
+            />
         </Modal>
     </>
   )
