@@ -34,6 +34,7 @@ import AdminPage from "../pages/AdminPage";
 import AnnouncementsAdminPage from "../pages/AnnouncementsAdminPage";
 import WhatsappDashboard from "../pages/WhatsappPage";
 import GradesReportPage from "../pages/GradesReportPage";
+import LessonPage from "../pages/LessonPage";
 
 const routes = createBrowserRouter([
     {
@@ -174,6 +175,13 @@ const routes = createBrowserRouter([
                 element: 
                 <PrivateRoutes>
                     <AssignaturePage />
+                </PrivateRoutes>
+            },
+            {
+                path: 'assignatures/:assignatureId/lesson/:lessonId',
+                element: 
+                <PrivateRoutes>
+                    <LessonPage />
                 </PrivateRoutes>
             },
             {
