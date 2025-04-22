@@ -1,6 +1,7 @@
 import { Loader } from "lucide-react"
 import useGetLessons from "../../../hooks/api/lesson/useGetLessons"
 import useAuthStore from "../../../hooks/store/useAuthStore"
+import LessonCard from "./LessonCard"
 
 const LessonList = () => {
 
@@ -14,14 +15,9 @@ const LessonList = () => {
     if (isSuccess)
 
   return (
-    <div>
-        <>{console.log('lessons', lessons)}</>
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 p-4">
         {lessons.map( lesson => (
-            <div key={lesson.id} className="flex flex-col gap-2">
-                <h2 className="text-2xl font-bold">{lesson.subject}</h2>
-                {/* <p>{lesson.subject}</p>
-                <p>{lesson.content}</p> */}
-            </div>
+            <LessonCard key={lesson.id} lesson={lesson} />
         ))}
     </div>
   )
