@@ -1,17 +1,12 @@
-import Activities from '../components/api/activity/Activities'
+// import Activities from '../components/api/activity/Activities'
 import { GoogleGenAI } from '@google/genai'
 import { useEffect, useState } from 'react'
-import Input from '../components/ui/Input'
-import ReactMarkdown from 'react-markdown'
-import { BookOpenText } from 'lucide-react'
-import remarkGfm from 'remark-gfm'
 import Modal from '../components/ui/Modal'
 import MDEditor from "@uiw/react-md-editor";
 import Button from '../components/ui/Button'
-import CreateLesson from '../components/api/lesson/createLesson'
 import { useLocation } from 'react-router-dom'
 import useGetProfileStore from '../hooks/store/useGetProfileStore'
-import getAgeFromClassroom from '../utils/getAgeFromClassroom'
+import Lessons from '../components/api/lesson/Lessons'
 
 interface LessonContentProps {
   markdown: string
@@ -185,7 +180,7 @@ const AssignaturePage = () => {
       />
       } */}
       <div className='w-full h-screen flex justify-center items-center'>
-      <CreateLesson 
+      <Lessons 
         classroom={classroom}
       />
       </div>
