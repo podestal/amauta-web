@@ -73,8 +73,9 @@ const AssignaturePage = () => {
 
   const state = useLocation().state
   const profile = useGetProfileStore(s => s.profile)
+  const assignature = state.assignatureId
   const classroom = profile?.clases_details?.find( classroom => classroom.split('-')[classroom.split('-').length - 1] === (state.classroom)?.toString()) || ''
-
+  
   
 
   const [topic, setTopic] = useState('')
@@ -182,6 +183,7 @@ const AssignaturePage = () => {
       <div className='w-full h-screen flex justify-center items-center'>
       <Lessons 
         classroom={classroom}
+        assignature={assignature}
       />
       </div>
         {/* <Activities /> */}

@@ -4,6 +4,9 @@ import Selector from "../../ui/Selector"
 import TextArea from "../../ui/TextArea"
 import getAgeFromClassroom from "../../../utils/getAgeFromClassroom"
 import LessonContent from "./LessonContent"
+import { UseMutationResult } from "@tanstack/react-query"
+import { Lesson } from "../../../services/api/lessonService"
+import { CreateLessonData } from "../../../hooks/api/lesson/useCreateLesson"
 
 const methodologies = [
     { id: 'Clase magistral', name: 'Clase magistral' },
@@ -14,11 +17,13 @@ const methodologies = [
 
 interface Props {
     classroom: string
-    getAIResponse?: (topic: string, age:number, methodology:string, setLoading: React.Dispatch<React.SetStateAction<boolean>>, setMarkdown: React.Dispatch<React.SetStateAction<string>>) => Promise<void>
+    assignature: string
+    getAIResponse?: (topic: string, age:number, methodology:string, setMarkdown: React.Dispatch<React.SetStateAction<string>>) => Promise<void>
+    createLesson?:  UseMutationResult<Lesson, Error, CreateLessonData>
 }
 
-const LessonForm = ({ classroom, getAIResponse }: Props) => {
-
+const LessonForm = ({ classroom, assignature, getAIResponse }: Props) => {
+    
     const [topic, setTopic] = useState('')
     const [loading, setLoading] = useState(false)
     const [markdown, setMarkdown] = useState('')
@@ -29,8 +34,14 @@ const LessonForm = ({ classroom, getAIResponse }: Props) => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         setStartAIRequest(true)
-        if (getAIResponse) {
-            await getAIResponse(topic, age, methodology, setLoading, setMarkdown)
+        setLoading(true)
+        if (!getAIResponse) return 
+        try {
+            await getAIResponse(topic, age, methodology, setMarkdown)
+        } catch (error) {
+            console.error('Error al crear la lección', error)
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -43,6 +54,9 @@ const LessonForm = ({ classroom, getAIResponse }: Props) => {
             setMarkdown={setMarkdown}
             loading={loading}
             setLoading={setLoading}
+            assignature={assignature}
+            classroom={classroom}
+            topic={topic}
         /> 
         : 
         <form

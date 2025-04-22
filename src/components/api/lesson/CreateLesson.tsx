@@ -2,14 +2,17 @@ import { useState } from "react"
 import Modal from "../../ui/Modal"
 import LessonForm from "./LessonForm"
 import { GoogleGenAI } from "@google/genai"
+import useCreateLesson from "../../../hooks/api/lesson/useCreateLesson"
 
 interface Props {
     classroom: string
+    assignature: string
 }
 
-const CreateLesson = ({ classroom }: Props) => {
+const CreateLesson = ({ classroom, assignature }: Props) => {
 
     const [open, setOpen] = useState(false)
+    const createLesson = useCreateLesson()
 
     const apiKey = import.meta.env.VITE_GEMINI_KEY
       const googleGenAI = new GoogleGenAI({
@@ -19,9 +22,7 @@ const CreateLesson = ({ classroom }: Props) => {
         topic: string, 
         age: number,
         methodology: string,
-        setLoading: React.Dispatch<React.SetStateAction<boolean>>,
-        setMarkdown: React.Dispatch<React.SetStateAction<string>>  ) => {
-        setLoading(true)
+        setMarkdown: React.Dispatch<React.SetStateAction<string>> ) => {
         const response = await googleGenAI.models.generateContent({
           model: 'gemini-2.0-flash',
           contents: `Eres un experto en pedagogía y planificación de clases. Genera una lección completa y bien estructurada pensada para docentes. La lección debe estar escrita en español, tener formato claro y estar adaptada a:
@@ -60,8 +61,8 @@ const CreateLesson = ({ classroom }: Props) => {
                       
                       Also this is quite important do not say here you go, do not interact with me in any way shape of form, just send what I asked for, also include bibliography at the end of the lesson, and do not include any other information, just the lesson, and do not say anything else, just the lesson.`,
         })
-        setMarkdown(response.candidates?.[0]?.content?.parts?.[0]?.text || '')
         console.log('AI response', response.candidates?.[0]?.content?.parts?.[0]?.text || 'No content available');
+        setMarkdown(response.candidates?.[0]?.content?.parts?.[0]?.text || '')
       }
 
 
@@ -83,6 +84,8 @@ const CreateLesson = ({ classroom }: Props) => {
             <LessonForm 
                 classroom={classroom}
                 getAIResponse={getAIResponse}
+                createLesson={createLesson}
+                assignature={assignature}
             />
         </Modal>
     </>

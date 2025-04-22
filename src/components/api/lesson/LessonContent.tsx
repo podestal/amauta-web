@@ -5,23 +5,56 @@ import { useEffect, useState } from "react"
 import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
 import { BookOpenText } from "lucide-react"
+import useCreateLesson from "../../../hooks/api/lesson/useCreateLesson"
+import useAuthStore from "../../../hooks/store/useAuthStore"
+import useGetProfileStore from "../../../hooks/store/useGetProfileStore"
 
 interface LessonContentProps {
     markdown: string
     setMarkdown: React.Dispatch<React.SetStateAction<string>>
     loading: boolean
     setLoading: React.Dispatch<React.SetStateAction<boolean>>
+    assignature: string
+    classroom: string
+    topic: string
   }
   
-  const LessonContent = ({ markdown, setMarkdown, loading, setLoading }: LessonContentProps) => {
+  const LessonContent = ({ markdown, setMarkdown, loading, setLoading, assignature, classroom, topic }: LessonContentProps) => {
 
+    const access = useAuthStore(s => s.access) || ''
+    const profile = useGetProfileStore(s => s.profile)
     const [update, setUpdate] = useState(true)
+    const createLesson = useCreateLesson()
 
     useEffect(() => {
         if (markdown) {
           setLoading(false)
         }
       }, [markdown])
+
+      const handleCreateLesson = () => {
+ 
+        if (!profile) return
+
+        createLesson.mutate({
+            access,
+            lesson: {
+                instructor: profile.id,
+                assignature: parseInt(assignature),
+                classroom: parseInt(classroom),
+                subject: topic,
+                content: markdown
+            }
+        }, {
+            onSuccess: (res) => {
+                console.log('Lección creada', res)
+                setUpdate(false)
+            },
+            onError: (err) => {
+                console.error('Error al crear la lección', err)
+            }
+        })
+      }
 
     return ( 
         <>
@@ -34,7 +67,7 @@ interface LessonContentProps {
             <div className='flex justify-center items-center mb-4'>
                 <Button 
                     label='Guardar'
-                    onClick={() => setUpdate(false)}
+                    onClick={handleCreateLesson}
                 />
             </div> : 
             <div className='flex justify-center items-center mb-4'>

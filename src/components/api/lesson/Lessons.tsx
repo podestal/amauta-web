@@ -4,9 +4,10 @@ import LessonList from "./LessonList"
 
 interface Props {
     classroom: string
+    assignature: string
 }
 
-const Lessons = ({ classroom }: Props) => {
+const Lessons = ({ classroom, assignature }: Props) => {
   return (
     <motion.div
         className="flex flex-col gap-4 w-full h-full p-4 justify-start items-center pt-10 "
@@ -18,6 +19,7 @@ const Lessons = ({ classroom }: Props) => {
         <div>
         <CreateLesson 
             classroom={classroom}
+            assignature={assignature}
         />
         </div>
         <LessonList 
