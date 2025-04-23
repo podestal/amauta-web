@@ -6,7 +6,7 @@ import GoBack from "../components/ui/GoBack";
 import { useEffect, useState } from "react";
 import getTitleCase from "../utils/getTitleCase";
 import Modal from "../components/ui/Modal";
-import getAIResponse from "../utils/getAiResponse";
+// import getAIResponse from "../utils/getAiResponse";
 import ActivityAIResponse from "../components/api/activity/ActivityAIResponse";
 import ActivityAIFormHomework from "../components/api/activity/forms/ActivityAIFormHomework";
   
@@ -22,6 +22,8 @@ const LessonPage = () => {
 
     const lesson = useLocation().state.lesson
     const [category, setCategory] = useState('')
+    console.log('category', category)
+    
     const [open, setOpen] = useState(false)
     const [markdown, setMarkdown] = useState('')
     const [loading, setLoading] = useState(true)
@@ -36,21 +38,21 @@ const LessonPage = () => {
     }, [markdown])
 
 
-    const handleAIResponse = async () => {
+    // const handleAIResponse = async () => {
 
-            // category, 
-            // topic, 
-            // age, 
-            // lesson, 
-            // setMarkdown
-            await getAIResponse({
-                category,
-                topic: lesson.topic,
-                age: lesson.age,
-                lesson: lesson.content,
-                setMarkdown,
-            })
-        }
+    //         // category, 
+    //         // topic, 
+    //         // age, 
+    //         // lesson, 
+    //         // setMarkdown
+    //         await getAIResponse({
+    //             category,
+    //             topic: lesson.topic,
+    //             age: lesson.age,
+    //             lesson: lesson.content,
+    //             setMarkdown,
+    //         })
+    //     }
 
 
   return (
