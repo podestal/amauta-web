@@ -23,10 +23,6 @@ const Clasrooms = () => {
         : isAssistant
         ? (profile as Assistant)?.clases_details
         : []
-
-    console.log('profile', profile);
-    
-    console.log('classrooms', classrooms);
     
     if (!classrooms?.length) return <p>{lan === 'EN' ? 'No classes available' : 'No hay clases disponibles'}</p>;
 

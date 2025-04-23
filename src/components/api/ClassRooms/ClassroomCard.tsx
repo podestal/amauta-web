@@ -20,7 +20,7 @@ const ClassroomCard = ({ classroom }: Props) => {
   };
 
   const handleNavigate = () => {
-    navigate(`/app/students?classroom=${id}`, { state: { level, classroom: id } });
+    navigate(`/app/students-main/${id}`, { state: { level, classroom: id } });
   };
 
   const colorThemes = [

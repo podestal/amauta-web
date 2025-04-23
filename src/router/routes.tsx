@@ -128,13 +128,21 @@ const routes = createBrowserRouter([
                 </PrivateRoutes>
 
             },
+            // {
+            //     path: 'students',
+            //     element:
+            //     <PrivateRoutes>
+            //         <StudentsByClassroom />
+            //     </PrivateRoutes>
+            // },
             {
-                path: 'students',
+                path: 'students-main/:classroom',
                 element:
                 <PrivateRoutes>
                     <StudentsByClassroom />
                 </PrivateRoutes>
             },
+
             {
                 path: 'attendance/:studentId',
                 element: 
