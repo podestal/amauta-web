@@ -55,9 +55,9 @@ const SideBar = ({ profile }: Props) => {
         { name: "Cursos", path: "assignatures", icon: <LibraryBig /> },
         { name: 'Notas', path: 'grades-summary', icon: <ChartNoAxesCombined /> },
         { name: 'Categorías', path: 'categories', icon: <ChartColumnStacked /> },
-        { name: "Servicios", path: "whatsapp", icon: <Boxes /> },
-        { name: 'Tarjeta de Notas', path: 'grades-report', icon: <IdCard />},
-        { name: "Alumnos", path: "student-admin", icon: <BookUser /> },
+        // { name: "Servicios", path: "whatsapp", icon: <Boxes /> },
+        // { name: 'Tarjeta de Notas', path: 'grades-report', icon: <IdCard />},
+        // { name: "Alumnos", path: "student-admin", icon: <BookUser /> },
         // { name: 'Anuncios', path: 'announcements-admin' },
       ]
     } else if (group === 'assistant') {

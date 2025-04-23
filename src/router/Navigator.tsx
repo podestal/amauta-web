@@ -242,7 +242,7 @@ const Navigator: React.FC = () => {
     //       </NavLink>
     //   </>}
     // </nav>
-    <nav className=" bg-gradient-to-r from-slate-100 via-slate-200 to-slate-300 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800 fixed bottom-0 w-full flex justify-around py-2 shadow-md z-50 md:hidden">
+    <nav className=" bg-gradient-to-r from-slate-200 via-slate-300 to-slate-400 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800 fixed bottom-0 w-full flex justify-around py-2 shadow-md z-50 md:hidden">
       {navItems.map(
         ({ to, label, icon, show }) =>
           show && (

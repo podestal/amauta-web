@@ -1,4 +1,4 @@
-import moment from "moment";
+import moment from "moment-timezone";
 import { AttendanceStatus } from "./AttendanceCalendar";
 import { AlertTriangle, CalendarDays, CheckCircle, Clock, XCircle } from "lucide-react";
 import { Attendance } from "../../../../../services/api/attendanceService";
@@ -56,6 +56,9 @@ const AttendanceCalendarCard = ({ currentYear, currentMonth, attendances }: Prop
     const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
     const blanks = Array.from({ length: firstDay });
 
+    console.log('attendances', attendances);
+    
+
     const transformAttendance = (attendances: Attendance[]) => {
         const grouped: Record<
           string,
@@ -67,7 +70,7 @@ const AttendanceCalendarCard = ({ currentYear, currentMonth, attendances }: Prop
       
         attendances.forEach((item) => {
           const dateKey = moment(item.created_at).format("YYYY-MM-DD");
-          const timeStr = moment(item.created_at).format("HH:mm");
+          const timeStr = moment.tz(item.created_at, 'America/Lima').format("HH:mm");
           const statusLabel = mapStatus[item.status] || "unknown";
       
           if (!grouped[dateKey]) {
@@ -90,7 +93,7 @@ const AttendanceCalendarCard = ({ currentYear, currentMonth, attendances }: Prop
       };
 
       const calendarDays = Array.from({ length: daysInMonth }, (_, i) => {
-        const dateStr = moment({ year: currentYear, month: currentMonth, day: i + 1 }).format("YYYY-MM-DD");
+        const dateStr = moment({ year: currentYear, month: currentMonth, day: i + 1 }).format("YYYY-MM-DD")
         const match = transformAttendance(attendances).find((d) => d.date === dateStr);
         return { date: dateStr, ...match };
     });
@@ -125,8 +128,9 @@ const AttendanceCalendarCard = ({ currentYear, currentMonth, attendances }: Prop
                 <div className="flex items-center space-x-1">
                 {day.exit && statusInfo[day.exit.status as AttendanceStatus]?.icon}
                 {day.exit && <div className="w-full flex justify-between">
+                  <>{console.log('day.entry?.status', day.entry?.status)}</>
                     <span className="text-[10px] text-gray-400 print:text-slate-950">Salida</span>
-                    <span className="text-[10px] text-gray-400 print:text-slate-950">{day.exit?.time}</span>
+                    <span className="text-[10px] text-gray-400 print:text-slate-950">{day.exit?.status === 'onTime' ? 'Normal' : day.exit?.time}</span>
                 </div>}
 
                 </div>
