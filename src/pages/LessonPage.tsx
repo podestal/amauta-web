@@ -3,6 +3,11 @@ import { BookOpen, ClipboardList, FilePenLine, FileText, FlaskConical } from "lu
 import Markdown from "react-markdown";
 import { useLocation } from "react-router-dom"
 import GoBack from "../components/ui/GoBack";
+import { useEffect, useState } from "react";
+import getTitleCase from "../utils/getTitleCase";
+import Modal from "../components/ui/Modal";
+import getAIResponse from "../utils/getAiResponse";
+import ActivityAIResponse from "../components/api/activity/ActivityAIResponse";
   
   const iconMap = [
     { name: 'Tarea', icon: FileText, color: 'blue-500' },
@@ -15,9 +20,43 @@ import GoBack from "../components/ui/GoBack";
 const LessonPage = () => {
 
     const lesson = useLocation().state.lesson
+    const [category, setCategory] = useState('')
+    const [open, setOpen] = useState(false)
+    const [markdown, setMarkdown] = useState('')
+    const [loading, setLoading] = useState(true)
+
+    console.log(loading);
+    
+
+    useEffect(() => {
+        if (markdown) {
+            setLoading(false)
+        }
+    }, [markdown])
+
+
+    const handleAIResponse = async () => {
+
+            // category, 
+            // topic, 
+            // age, 
+            // lesson, 
+            // setMarkdown
+            await getAIResponse({
+                category,
+                topic: lesson.topic,
+                age: lesson.age,
+                lesson: lesson.content,
+                setMarkdown,
+            })
+        }
+
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-6">
+    <>
+        <div className="max-w-5xl mx-auto px-4 py-6">
+        <>{console.log('markdown', markdown)}</>
+        {/* <>{console.log('markdown', lesson.content)}</> */}
         <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -31,9 +70,7 @@ const LessonPage = () => {
             <h1 
                 className="text-3xl font-bold mb-4 text-slate-800 dark:text-white"
             >
-                {lesson.subject.toLowerCase().split(' ').map(function(word: string) {
-                    return word.charAt(0).toUpperCase() + word.slice(1);
-                }).join(' ')}
+                {getTitleCase(lesson.subject)}
             </h1>
         </motion.div>
 
@@ -66,6 +103,10 @@ const LessonPage = () => {
                     className={`flex flex-col items-center justify-center p-4 rounded-xl shadow-md bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition text-${color} shadow-xl shadow-slate-500`}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
+                    onClick={() => {
+                        setOpen(true);
+                        setCategory(name.toLocaleLowerCase());
+                    }}
                 >
                     <Icon className="w-6 h-6 mb-2" />
                     <span className="text-slate-50 text-sm font-medium">{name}</span>
@@ -75,6 +116,21 @@ const LessonPage = () => {
 
         </motion.div>
     </div>
+    <Modal
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        whole
+    >
+        {markdown 
+        ? 
+        <ActivityAIResponse 
+            markdown={markdown}
+            setMarkdown={setMarkdown}
+        /> 
+        : 
+        <button onClick={handleAIResponse}>Get info</button>}
+    </Modal>
+    </>
   )
 }
 
