@@ -8,10 +8,11 @@ import getTitleCase from "../utils/getTitleCase";
 import Modal from "../components/ui/Modal";
 import getAIResponse from "../utils/getAiResponse";
 import ActivityAIResponse from "../components/api/activity/ActivityAIResponse";
+import ActivityAIFormHomework from "../components/api/activity/forms/ActivityAIFormHomework";
   
   const iconMap = [
     { name: 'Tarea', icon: FileText, color: 'blue-500' },
-    { name: 'Ejercicios', icon: ClipboardList, color: 'green-500' },
+    { name: 'Trabajo en clase', icon: ClipboardList, color: 'green-500' },
     { name: 'Evaluación', icon: FilePenLine, color: 'red-500' },
     { name: 'Examen', icon: BookOpen, color: 'yellow-500' },
     { name: 'Proyecto', icon: FlaskConical, color: 'purple-500' },
@@ -128,7 +129,7 @@ const LessonPage = () => {
             setMarkdown={setMarkdown}
         /> 
         : 
-        <button onClick={handleAIResponse}>Get info</button>}
+        <ActivityAIFormHomework />}
     </Modal>
     </>
   )

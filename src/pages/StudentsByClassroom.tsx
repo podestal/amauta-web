@@ -5,8 +5,6 @@ const StudentsByClassroom = () => {
 
   const [searchParams] = useSearchParams();
   const classroom = searchParams.get('classroom') || '';
-
-  console.log('state');
   
 
   return (
