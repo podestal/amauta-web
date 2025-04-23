@@ -122,7 +122,7 @@ const AttendanceCalendarCard = ({ currentYear, currentMonth, attendances }: Prop
                 {statusInfo[day.entry?.status as AttendanceStatus]?.icon}
                     <div className="w-full flex justify-between">
                         <span className="text-[10px] text-gray-400 print:text-slate-950">Entrada</span>
-                        <span className="text-[10px] text-gray-400 print:text-slate-950">{day.entry?.time}</span>
+                        <span className="text-[10px] text-gray-400 print:text-slate-950">{day.entry?.status === 'noShow' ? '-' : day.entry?.time}</span>
                     </div>
                 </div>
                 <div className="flex items-center space-x-1">
