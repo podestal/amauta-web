@@ -50,7 +50,7 @@ const ActivityAIFormHomework = () => {
             />
         </div>
         <AIButton 
-            label="Gnerar Tarea"
+            label="Generar Tarea"
             onClick={() => console.log('Generar Tarea')}
         />
     </form>

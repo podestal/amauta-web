@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { BookOpen, ClipboardList, FilePenLine, FileText, FlaskConical } from "lucide-react";
+import { ClipboardList, FilePenLine, FileText, FlaskConical } from "lucide-react";
 import Markdown from "react-markdown";
 import { useLocation } from "react-router-dom"
 import GoBack from "../components/ui/GoBack";
@@ -9,26 +9,29 @@ import Modal from "../components/ui/Modal";
 // import getAIResponse from "../utils/getAiResponse";
 import ActivityAIResponse from "../components/api/activity/ActivityAIResponse";
 import ActivityAIFormHomework from "../components/api/activity/forms/ActivityAIFormHomework";
+import ActivityAIFormClassActivity from "../components/api/activity/forms/ActivityAIFormClassActivity";
+import ActivityAIFormTest from "../components/api/activity/forms/ActivityAIFormTest";
+import ActivityAIFormProject from "../components/api/activity/forms/ActivityAIFormProject";
   
   const iconMap = [
     { name: 'Tarea', icon: FileText, color: 'blue-500' },
     { name: 'Trabajo en clase', icon: ClipboardList, color: 'green-500' },
     { name: 'Evaluación', icon: FilePenLine, color: 'red-500' },
-    { name: 'Examen', icon: BookOpen, color: 'yellow-500' },
-    { name: 'Proyecto', icon: FlaskConical, color: 'purple-500' },
+    // { name: 'Examen', icon: BookOpen, color: 'yellow-500' },
+    { name: 'Proyecto', icon: FlaskConical, color: 'yellow-500' },
   ];
 
 const LessonPage = () => {
 
     const lesson = useLocation().state.lesson
     const [category, setCategory] = useState('')
-    console.log('category', category)
     
     const [open, setOpen] = useState(false)
     const [markdown, setMarkdown] = useState('')
     const [loading, setLoading] = useState(true)
 
-    console.log(loading);
+    console.log('loading', loading);
+    
     
 
     useEffect(() => {
@@ -58,7 +61,7 @@ const LessonPage = () => {
   return (
     <>
         <div className="max-w-5xl mx-auto px-4 py-6">
-        <>{console.log('markdown', markdown)}</>
+        <>{console.log('category', category)}</>
         {/* <>{console.log('markdown', lesson.content)}</> */}
         <motion.div
             initial={{ opacity: 0, y: -10 }}
@@ -99,7 +102,7 @@ const LessonPage = () => {
             }}
         >
             <h2 className="text-2xl mb-6 text-center font-semibold">Actividades</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                 {iconMap.map(({ name, icon: Icon, color }) => (
                 <motion.button
                     key={name}
@@ -131,7 +134,13 @@ const LessonPage = () => {
             setMarkdown={setMarkdown}
         /> 
         : 
-        <ActivityAIFormHomework />}
+        <>
+        {category === 'tarea' && <ActivityAIFormHomework />}
+        {category === 'trabajo en clase' && <ActivityAIFormClassActivity />}
+        {category === 'evaluación' && <ActivityAIFormTest />}
+        {category === 'proyecto' && <ActivityAIFormProject />}
+
+        </>}
     </Modal>
     </>
   )
