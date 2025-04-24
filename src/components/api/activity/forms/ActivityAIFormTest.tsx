@@ -30,34 +30,23 @@ const ActivityAIFormTest = () => {
 
   return (
     <form>
-        <h2 className="text-center mb-8 text-2xl font-bold">Nuevo Trabajo en Clase</h2>
+        <h2 className="text-center mb-8 text-2xl font-bold">Nueva Evaluación</h2>
         <>{console.log("typeOfActivity", typeOfActivity)}</>
         <div className="w-full flex gap-10 justify-between items-start">
-        <MultiSelectorNew 
-            value={typeOfActivity}
-            setValue={setTypeOfActivity}
-            options={typeOfQuestions}
-            label="Tipo de Preguntas"
-        />  
-        <div className="flex flex-col gap-4">
-        <MultiSelectorNew 
-            value={skillsToEvaluate}
-            setValue={setSkillsToEvaluate}
-            options={skillsToEvaluateOptions}
-            label="Habilidades a evaluar"
-        /> 
-            {/* <NumberSelector 
-                value={numberOfQuestions}
-                setValue={setNumberOfQuestions}
-                label="Número de Preguntas"
-            /> */}
-            {/* <DifficultySelector 
-                value={levelOfInteraction}
-                setValue={setLevelOfInteraction}
-                options={['Bajo', 'Medio', 'Alto']}
-                label="Nivel de Interacción"
-            /> */}
-        </div>
+            <MultiSelectorNew 
+                value={typeOfActivity}
+                setValue={setTypeOfActivity}
+                options={typeOfQuestions}
+                label="Tipo de Preguntas"
+            />  
+            <div className="flex flex-col gap-4">
+                <MultiSelectorNew 
+                    value={skillsToEvaluate}
+                    setValue={setSkillsToEvaluate}
+                    options={skillsToEvaluateOptions}
+                    label="Habilidades a evaluar"
+                /> 
+            </div>
         </div>
         <div className="w-full flex gap-10 mt-6">
             <NumberSelector 

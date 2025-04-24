@@ -51,6 +51,8 @@ const ActivityAIFormHomework = () => {
             <ContextInput 
                 value={context}
                 setValue={setContext}
+                label='Contexto de la lección'
+                placeholder="Escribe aquí el contexto de la lección, incluyendo objetivos, introducción, etc..."
             />
         </div>
         <AIButton 
