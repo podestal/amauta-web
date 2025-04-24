@@ -1,8 +1,19 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import SelectorNew from "../../../ui/AIForms/SelectorNew"
 import AIButton from "../../../ui/AIForms/AIButton"
 import NumberSelector from "../../../ui/AIForms/NumberSelector"
 import DifficultySelector from "../../../ui/AIForms/DifficultySelector"
+import { Lesson } from "../../../../services/api/lessonService"
+import getAIResponse from "../../../../utils/getAiResponse"
+import LoaderAI from "../../../ui/LoaderAI"
+
+interface Props {
+    lesson: Lesson
+    age: number
+    markdown: string
+    setMarkdown: React.Dispatch<React.SetStateAction<string>>
+}
+
 
 const typeOfActivityOptions = [
     'Individual',
@@ -12,14 +23,44 @@ const typeOfActivityOptions = [
     'Debate/Discusión',
 ]
 
-const ActivityAIFormClassActivity = () => {
+const ActivityAIFormClassActivity = ({ lesson, age, markdown, setMarkdown }: Props) => {
 
     const [typeOfActivity, setTypeOfActivity] = useState('Individual')
     const [durationOfActivity, setDurationOfActivity] = useState(15)
     const [levelOfInteraction, setLevelOfInteraction] = useState('Medio')
+    const [loading, setLoading] = useState(false)
+
+    useEffect(() => {
+        if (markdown) {
+            setLoading(false)
+        }
+    })
+
+    const handleSubmit =  async (e: React.FormEvent) => {
+        e.preventDefault()
+        setLoading(true)
+        await getAIResponse({
+            category: 'trabajo en clase',
+            topic: lesson.subject,
+            age: age,
+            lesson: lesson.content,
+            setMarkdown,
+            typeOfActivity,
+            durationOfActivity,
+            levelOfInteraction,
+        })
+    }
 
   return (
-    <form>
+    <>
+    {loading 
+    ? 
+    <LoaderAI /> 
+    : 
+    <form
+        onSubmit={handleSubmit}
+        className="w-full flex flex-col gap-6 p-6 "
+    >
         <h2 className="text-center mb-8 text-2xl font-bold">Nuevo Trabajo en Clase</h2>
         <div className="w-full flex gap-10 justify-between items-start">
         <SelectorNew 
@@ -48,6 +89,8 @@ const ActivityAIFormClassActivity = () => {
             onClick={() => console.log('Generar Tarea')}
         />
     </form>
+    }
+    </>
   )
 }
 

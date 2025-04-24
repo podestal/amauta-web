@@ -9,8 +9,6 @@ interface Props {
 }
 
 const Lessons = ({ classroom, assignature }: Props) => {
-
-    console.log('assignature', assignature);
     
   return (
     <motion.div
@@ -33,7 +31,7 @@ const Lessons = ({ classroom, assignature }: Props) => {
         <div/>
         </div>
         <LessonList 
-
+            classroom={classroom}
         />
     </motion.div>
   )

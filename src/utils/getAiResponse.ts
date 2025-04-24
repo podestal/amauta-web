@@ -4,54 +4,61 @@ const apiKey = import.meta.env.VITE_GEMINI_KEY
 const googleGenAI = new GoogleGenAI({
     apiKey: apiKey,})
 
-interface GetPrompotsProps {
-    category: string 
+interface GetPromptHomeworkProps {
     topic: string 
     age: number 
     lesson: string
+    homeworkType: string
+    numberOfQuestions: number
+    difficulty: string
+    context: string
 }
     
-const getPrompt = ({ category, topic, age, lesson }: GetPrompotsProps) => {
-    const prompts: Record<string, string> = {
-        'tarea': `Basado en la siguiente lección, ${topic} genera una tarea para estudiantes de ${age} años que incluya entre 4 y 6 ejercicios prácticos. La tarea debe enfocarse en reforzar los conceptos clave de la lección como identificar partes de una expresión algebraica, traducir expresiones verbales, simplificar expresiones y evaluar expresiones algebraicas.
+const getPromptHomework = ({ topic, age, lesson, homeworkType, numberOfQuestions, difficulty, context }: GetPromptHomeworkProps) => {
+    return `Genera una tarea a partir de la siguiente lección, el tema es ${topic} dirigida a estudiantes de ${age} años. La tarea debe tener entre ${numberOfQuestions} ejercicios prácticos, con un nivel de dificultad ${difficulty}.
 
-                Requisitos:
+                Tipo de tarea: ${homeworkType}  
+                Contexto de la lección: ${context}  
 
-                    La tarea debe tener un breve enunciado inicial que explique el propósito del ejercicio.
+                🔹 Requisitos:
+                - La tarea debe comenzar con un enunciado breve que explique el propósito general del ejercicio.
+                - Cada ejercicio debe ser claro, breve y estar alineado con el contenido de la lección.
+                - Enfocada en reforzar conceptos clave como identificar partes de una expresión algebraica, traducir expresiones verbales, simplificar y evaluar expresiones algebraicas.
+                - Evita actividades largas, explicaciones extensas o proyectos.
+                - No usar lenguaje técnico complejo ni instrucciones innecesarias.
+                - No incluir saludos ni ningún tipo de interacción con el usuario.
 
-                    Cada ejercicio debe ser claro y breve.
+                📚 Lección:
+            ${lesson}`
+}
 
-                    No incluir actividades largas ni proyectos.
+interface GetPromptClassWorkProps {
+    topic: string
+    age: number
+    lesson: string
+    typeOfActivity: string
+    durationOfActivity: number
+    levelOfInteraction: string
+}
 
-                    Evita lenguaje técnico complejo.
+const getPromptClassWork = ({ topic, age, lesson, typeOfActivity, durationOfActivity, levelOfInteraction}: GetPromptClassWorkProps ) => {
+    return `
+    Genera una actividad de clase sobre el tema "${topic}", basada en la siguiente lección, dirigida a estudiantes de ${age} años.
 
-                    Asegúrate de que los ejercicios estén alineados con el contenido de la lección y adecuados al nivel de un estudiante de secundaria.
+    🔸 Tipo de actividad: ${typeOfActivity}  
+    🔸 Duración estimada: ${durationOfActivity} minutos  
+    🔸 Nivel de interacción esperado: ${levelOfInteraction}  
 
-                Lección:
-                ${lesson}`,
-        'ejercicios': `Basado en la siguiente lección, ${topic} genera una actividad con entre 5 y 7 ejercicios breves que los alumnos puedan resolver durante la clase, tipo cuestionario.
+    📋 Requisitos:
+    - La actividad debe tener entre 5 y 7 ejercicios que se puedan realizar durante el tiempo asignado.
+    - Cada ejercicio debe ser claro, breve y diseñado para aplicar conceptos clave de la lección.
+    - Puede incluir diferentes formatos como opción múltiple, verdadero/falso, completar o ejercicios breves de resolución.
+    - El nivel de dificultad debe ser apropiado para la edad indicada.
+    - Evitar explicaciones largas, instrucciones extensas o contenido que no sea parte de la actividad.
+    - No incluir saludos, mensajes introductorios ni interacción con el usuario. Solo entregar el contenido solicitado.
 
-                    Requisitos:
-
-                        Enfocados en aplicar lo aprendido.
-
-                        Cada ejercicio debe ser claro, breve y directo.
-
-                        Usar variedad de formatos: opción múltiple, completar, resolver.
-
-                        Nivel: estudiantes de ${age} años.
-
-                        No incluir explicaciones ni interacciones.
-
-                        No saludar ni dar instrucciones adicionales.
-
-                    Lección:
-                    ${lesson}`
-    }
-
-    console.log(prompts[category]);
-    return prompts[category]
-    
+    📚 Lección:
+    ${lesson}`
 }
 
 interface AIResponseProps {
@@ -60,6 +67,13 @@ interface AIResponseProps {
     age: number, 
     lesson: string,
     setMarkdown: React.Dispatch<React.SetStateAction<string>> 
+    homeworkType?: string
+    numberOfQuestions?: number
+    difficulty?: string
+    context?: string
+    typeOfActivity?: string
+    durationOfActivity?: number
+    levelOfInteraction?: string
 }
 
 const getAIResponse = async ({ 
@@ -67,10 +81,23 @@ const getAIResponse = async ({
     topic, 
     age, 
     lesson, 
-    setMarkdown
+    setMarkdown,
+    homeworkType,
+    numberOfQuestions,
+    difficulty,
+    context='',
+    typeOfActivity,
+    durationOfActivity,
+    levelOfInteraction,
  }: AIResponseProps ) => {
 
-        const prompt = getPrompt({ category, topic, age, lesson })
+        // let prompt = getPrompt({ category, topic, age, lesson, homeworkType, numberOfQuestions, difficulty, context })
+        let prompt = ''
+        if (category === 'tarea') {
+            prompt = (homeworkType && numberOfQuestions && difficulty) ? getPromptHomework({ topic, age, lesson, homeworkType, numberOfQuestions, difficulty, context }) : ''
+        } else if (category === 'trabajo en clase') {
+            prompt = (typeOfActivity && durationOfActivity && levelOfInteraction) ? getPromptClassWork({ topic, age, lesson, typeOfActivity, durationOfActivity, levelOfInteraction }) : ''
+        }
         const response = await googleGenAI.models.generateContent({
         model: 'gemini-2.0-flash',
         contents: prompt,

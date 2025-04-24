@@ -6,12 +6,14 @@ import GoBack from "../components/ui/GoBack";
 import { useEffect, useState } from "react";
 import getTitleCase from "../utils/getTitleCase";
 import Modal from "../components/ui/Modal";
+import { Lesson } from "../services/api/lessonService";
 // import getAIResponse from "../utils/getAiResponse";
 import ActivityAIResponse from "../components/api/activity/ActivityAIResponse";
 import ActivityAIFormHomework from "../components/api/activity/forms/ActivityAIFormHomework";
 import ActivityAIFormClassActivity from "../components/api/activity/forms/ActivityAIFormClassActivity";
 import ActivityAIFormTest from "../components/api/activity/forms/ActivityAIFormTest";
 import ActivityAIFormProject from "../components/api/activity/forms/ActivityAIFormProject";
+import getAgeFromClassroom from "../utils/getAgeFromClassroom";
   
   const iconMap = [
     { name: 'Tarea', icon: FileText, color: 'blue-500' },
@@ -23,12 +25,14 @@ import ActivityAIFormProject from "../components/api/activity/forms/ActivityAIFo
 
 const LessonPage = () => {
 
-    const lesson = useLocation().state.lesson
+    const lesson: Lesson = useLocation().state.lesson
+    const classroom: string = useLocation().state.classroom
     const [category, setCategory] = useState('')
     
     const [open, setOpen] = useState(false)
     const [markdown, setMarkdown] = useState('')
     const [loading, setLoading] = useState(true)
+    const age = getAgeFromClassroom(classroom)
 
     console.log('loading', loading);
     
@@ -39,24 +43,6 @@ const LessonPage = () => {
             setLoading(false)
         }
     }, [markdown])
-
-
-    // const handleAIResponse = async () => {
-
-    //         // category, 
-    //         // topic, 
-    //         // age, 
-    //         // lesson, 
-    //         // setMarkdown
-    //         await getAIResponse({
-    //             category,
-    //             topic: lesson.topic,
-    //             age: lesson.age,
-    //             lesson: lesson.content,
-    //             setMarkdown,
-    //         })
-    //     }
-
 
   return (
     <>
@@ -71,7 +57,7 @@ const LessonPage = () => {
         >
             <GoBack 
                 path={`/app/assignatures/${lesson.assignature}`}
-                state={{ area: lesson.area, assignatureId: lesson.assignature, classroom: lesson.clase }}
+                state={{ }}
             />
             <h1 
                 className="text-3xl font-bold mb-4 text-slate-800 dark:text-white"
@@ -135,8 +121,8 @@ const LessonPage = () => {
         /> 
         : 
         <>
-        {category === 'tarea' && <ActivityAIFormHomework />}
-        {category === 'trabajo en clase' && <ActivityAIFormClassActivity />}
+        {category === 'tarea' && <ActivityAIFormHomework lesson={lesson} age={age} markdown={markdown} setMarkdown={setMarkdown}/>}
+        {category === 'trabajo en clase' && <ActivityAIFormClassActivity lesson={lesson} age={age} markdown={markdown} setMarkdown={setMarkdown} />}
         {category === 'evaluación' && <ActivityAIFormTest />}
         {category === 'proyecto' && <ActivityAIFormProject />}
 
