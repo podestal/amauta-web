@@ -2,8 +2,7 @@ import { NavLink } from "react-router-dom";
 import useGetProfileStore from "../hooks/store/useGetProfileStore";
 import { Profile } from "../services/api/profileService";
 import Logout from "../components/auth/Logout";
-import { ArrowBigLeftDash, ArrowBigRightDash, BookUser, Boxes, ChartColumnStacked, ChartNoAxesCombined, ChevronLeft, ChevronRight, HomeIcon, IdCard, LibraryBig, MessagesSquare, PanelRightClose, PanelRightOpen, SquareTerminal, Sunrise } from "lucide-react";
-import { useState } from "react";
+import { BookUser, Boxes, ChartColumnStacked, ChartNoAxesCombined, HomeIcon, IdCard, LibraryBig, MessagesSquare, PanelRightClose, PanelRightOpen, SquareTerminal, Sunrise } from "lucide-react";
 import logo from '../assets/icons/amautapp.png'
 import { motion } from "framer-motion";
 

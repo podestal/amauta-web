@@ -16,7 +16,7 @@ const MainPage = () => {
     const isLoading = useLoadingStore(s => s.isLoading)
     const access = useAuthStore(s => s.access)
     const profile = useGetProfileStore(s => s.profile)
-    const [isOpen, setIsOpen] = useState(false)
+    const [isOpen, setIsOpen] = useState(true)
 
     useEffect(() => {
       document.querySelector('html')?.classList.add('dark')
@@ -32,7 +32,7 @@ const MainPage = () => {
         // w-full flex justify-center z-50 lg:pb-[100px]
         <WebNavigator />
        }
-        <div className={`flex-1 ml-0 ${isOpen && 'lg:ml-64'}`}>
+        <div className={`flex-1 ml-0 ${isOpen ? 'lg:ml-64' : 'lg:ml-28'}`}>
           {show && 
           <NotificationCard 
               type={type}
