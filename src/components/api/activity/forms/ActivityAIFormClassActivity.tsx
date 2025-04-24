@@ -42,23 +42,6 @@ const ActivityAIFormClassActivity = () => {
                 label="Nivel de Interacción"
             />
         </div>
-        {/* <div className="flex flex-col gap-4">
-        <NumberSelector 
-            value={numberOfQuestions}
-            setValue={setNumberOfQuestions}
-        />
-        <DifficultySelector 
-            value={selectedDifficulty}
-            setValue={setSelectedDifficulty}
-        />
-        </div>
-
-        </div>
-        <div className="w-full flex gap-10 mt-6">
-            <ContextInput 
-                value={context}
-                setValue={setContext}
-            /> */}
         </div>
         <AIButton 
             label="Generar Trabajo en Clase"
