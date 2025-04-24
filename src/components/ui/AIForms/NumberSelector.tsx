@@ -1,27 +1,35 @@
 type NumberSelectorProps = {
   value: number;
   setValue: (val: number) => void;
+  label: string;
   min?: number;
   max?: number;
+  time?: boolean;
 };
 
 const NumberSelector = ({
   value,
   setValue,
+  label,
   min = 1,
   max = 100,
+  time = false,
 }: NumberSelectorProps) => {
   const handleDecrease = () => {
-    if (value > min) setValue(value - 1);
+    if (value > min) {
+      time ? setValue(value - 5) : setValue(value - 1)
+    };
   };
 
   const handleIncrease = () => {
-    if (value < max) setValue(value + 1);
+    if (value < max) {
+      time ? setValue(value + 5) : setValue(value + 1)
+    };
   };
 
   return (
     <div className="flex items-center gap-3 p-4 bg-white dark:bg-gray-900 rounded-2xl shadow-md w-fit border dark:border-gray-700">
-      <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Número de preguntas:</span>
+      <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{label}:</span>
       <button
         onClick={handleDecrease}
         type="button"
@@ -30,7 +38,7 @@ const NumberSelector = ({
         −
       </button>
       <span className="text-lg font-semibold text-gray-800 dark:text-white min-w-[2ch] text-center">
-        {value}
+        {value} {time ? 'min' : ''}
       </span>
       <button
         onClick={handleIncrease}

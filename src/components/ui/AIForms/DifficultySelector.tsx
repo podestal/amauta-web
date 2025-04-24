@@ -1,19 +1,28 @@
 interface DifficultySelectorProps {
   value: string;
   setValue: (val: string) => void;
+  options: string[];
+  label: string;
 }
 
-const difficultyLevels: { label: string; color: string }[] = [
-  { label: "Fácil", color: "bg-green-500" },
-  { label: "Media", color: "bg-yellow-500" },
-  { label: "Difícil", color: "bg-red-500" },
-];
+const colors = [
+  "bg-green-500",
+  "bg-yellow-500",
+  "bg-red-500",
+]
 
-const DifficultySelector = ({ value, setValue }: DifficultySelectorProps) => {
+const DifficultySelector = ({ value, setValue, options, label }: DifficultySelectorProps) => {
+
+  const difficultyLevels: { label: string; color: string }[] = options.map((option, idx) => {
+    return {
+      label: option,
+      color: colors[idx],}
+  })
+
   return (
     <div className="p-4 bg-white dark:bg-gray-900 rounded-2xl shadow-md w-full border dark:border-gray-700">
       <label className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
-        Dificultad:
+        {label}:
       </label>
       <div className="flex gap-3 w-full justify-center">
         {difficultyLevels.map(({ label, color }) => {

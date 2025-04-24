@@ -29,15 +29,19 @@ const ActivityAIFormHomework = () => {
             value={selectedHomeworkType}
             setValue={setSelectedHomeworkType}
             options={options}
+            label="Tipo de Tarea"
         />  
         <div className="flex flex-col gap-4">
         <NumberSelector 
             value={numberOfQuestions}
             setValue={setNumberOfQuestions}
+            label="Número de Preguntas"
         />
         <DifficultySelector 
             value={selectedDifficulty}
             setValue={setSelectedDifficulty}
+            options={['Fácil', 'Media', 'Díficil']}
+            label="Dificultad"
         />
         {/* observations context */}
         </div>

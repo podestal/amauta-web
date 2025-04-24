@@ -1,12 +1,19 @@
-interface HomeworkTypeSelectorProps {
-  value: string;
-  setValue: (val: string) => void;
+interface MultiSelectorProps {
+  value: string[];
+  setValue: (val: string[]) => void;
   options: string[];
   label: string;
 }
 
+const MultiSelectorNew = ({ value, setValue, options, label }: MultiSelectorProps) => {
+  const toggleOption = (option: string) => {
+    if (value.includes(option)) {
+      setValue(value.filter((item) => item !== option));
+    } else {
+      setValue([...value, option]);
+    }
+  };
 
-const SelectorNew = ({ value, setValue, options, label }: HomeworkTypeSelectorProps) => {
   return (
     <div className="p-4 flex-1 bg-white dark:bg-gray-900 rounded-2xl shadow-md w-fit border dark:border-gray-700">
       <label className="block mb-6 text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -16,11 +23,11 @@ const SelectorNew = ({ value, setValue, options, label }: HomeworkTypeSelectorPr
         {options.map((option) => (
           <button
             key={option}
-            onClick={() => setValue(option)}
+            onClick={() => toggleOption(option)}
             type="button"
             className={`px-4 py-2 rounded-full text-sm font-medium transition
               ${
-                value === option
+                value.includes(option)
                   ? "bg-blue-600 text-white"
                   : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
               }`}
@@ -33,4 +40,4 @@ const SelectorNew = ({ value, setValue, options, label }: HomeworkTypeSelectorPr
   );
 };
 
-export default SelectorNew;
+export default MultiSelectorNew;
