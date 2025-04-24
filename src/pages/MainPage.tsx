@@ -5,7 +5,7 @@ import Navigator from "../router/Navigator"
 import useAuthStore from "../hooks/store/useAuthStore"
 import useLoadingStore from "../hooks/store/useLoadingStore"
 import Loader from "../components/ui/Loader"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import useGetProfileStore from "../hooks/store/useGetProfileStore"
 import SideBar from "../router/SideBar"
 import WebNavigator from "../router/WebNavigator"
@@ -16,6 +16,7 @@ const MainPage = () => {
     const isLoading = useLoadingStore(s => s.isLoading)
     const access = useAuthStore(s => s.access)
     const profile = useGetProfileStore(s => s.profile)
+    const [isOpen, setIsOpen] = useState(false)
 
     useEffect(() => {
       document.querySelector('html')?.classList.add('dark')
@@ -23,11 +24,15 @@ const MainPage = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-950 dark:bg-gray-950 dark:text-slate-50 mx-auto relative">
-        {profile && access ? <SideBar profile={profile}/> : 
+        {profile && access ? 
+          <SideBar 
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            profile={profile}/> : 
         // w-full flex justify-center z-50 lg:pb-[100px]
         <WebNavigator />
        }
-        <div className="flex-1 ml-0 lg:ml-64">
+        <div className={`flex-1 ml-0 ${isOpen && 'lg:ml-64'}`}>
           {show && 
           <NotificationCard 
               type={type}

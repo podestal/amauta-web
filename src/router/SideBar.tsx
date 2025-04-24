@@ -2,10 +2,15 @@ import { NavLink } from "react-router-dom";
 import useGetProfileStore from "../hooks/store/useGetProfileStore";
 import { Profile } from "../services/api/profileService";
 import Logout from "../components/auth/Logout";
-import { BookUser, Boxes, ChartColumnStacked, ChartNoAxesCombined, HomeIcon, IdCard, LibraryBig, MessagesSquare, SquareTerminal, Sunrise } from "lucide-react";
+import { ArrowBigLeftDash, ArrowBigRightDash, BookUser, Boxes, ChartColumnStacked, ChartNoAxesCombined, ChevronLeft, ChevronRight, HomeIcon, IdCard, LibraryBig, MessagesSquare, PanelRightClose, PanelRightOpen, SquareTerminal, Sunrise } from "lucide-react";
+import { useState } from "react";
+import logo from '../assets/icons/amautapp.png'
+import { motion } from "framer-motion";
 
 interface Props {
     profile: Profile
+    isOpen: boolean
+    setIsOpen: (isOpen: boolean) => void
 }
 
 const groupToSpanish: Record<string, string> = {
@@ -16,7 +21,7 @@ const groupToSpanish: Record<string, string> = {
     manager: 'Administrativo'
 }
 
-const SideBar = ({ profile }: Props) => {
+const SideBar = ({ profile, isOpen, setIsOpen }: Props) => {
 
     const group = useGetProfileStore(s => s.user)?.groups[0] || useGetProfileStore(s => s.user)?.profile || ''
 
@@ -74,20 +79,14 @@ const SideBar = ({ profile }: Props) => {
     }
 
   return (
-    <div className="hidden lg:flex flex-col w-64 h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-800 text-white shadow-xl p-6 fixed z-50">
-    {profile && (
-        <div className="flex items-start space-x-4 mb-10">
-            <div className="w-12 h-12 bg-blue-700 rounded-full flex items-center justify-center text-white text-lg font-bold">
-                {profile.first_name?.[0]}{profile.last_name?.[0]}
-            </div>
-            <div>
-                <p className="font-semibold text-md">{profile.first_name}</p>
-                <p className="font-semibold text-md">{profile.last_name}</p>
-                <p className="text-sm text-gray-400 mt-2">{groupToSpanish[group]}</p>
-            </div>
-            
-        </div>
-    )}
+    <motion.div 
+    animate={{ width: isOpen ? 256 : 112 }}
+    transition={{ duration: 0.3, ease: "easeInOut" }}
+    className={`hidden lg:flex flex-col h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-800 text-white shadow-xl p-6 fixed z-50`}>
+    <div className="flex items-center gap-2 mb-6">
+      <img src={logo} width={50} alt="Amautapp" />
+      {isOpen && <p className="text-lg font-bold font-poppins">Amautapp</p>}
+    </div>
 
     <nav className="flex flex-col space-y-2 mb-auto">
         {navItems.map(item => (
@@ -103,15 +102,41 @@ const SideBar = ({ profile }: Props) => {
                 }
             >
                 {item.icon && item.icon}
-                <span>{item.name}</span>
+                {isOpen && <span>{item.name}</span>}
             </NavLink>
         ))}
+
     </nav>
 
+    <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="text-gray-300 hover:text-white transition px-4 py-2 flex gap-2 items-center"
+            >
+              {isOpen ? <PanelRightOpen /> : <PanelRightClose />}
+              {isOpen && <span>Colapsar Menu</span>}
+            </button>
+            {profile && (
+        <div className={`flex items-start space-x-4 my-10 ${isOpen && 'px-4 py-2'}`}>
+          {isOpen ? 
+          <div>
+            <p className="font-semibold text-md">{profile.first_name}</p>
+            <p className="font-semibold text-md">{profile.last_name}</p>
+            <p className="text-sm text-gray-400 mt-2">{groupToSpanish[group]}</p>
+          </div> 
+           : 
+           
+          <div className="w-12 h-12 bg-gradient-to-r from-slate-800 via-slate-900 to-slate-900 rounded-full flex items-center justify-center text-white text-lg font-bold">
+              {profile.first_name?.[0]}{profile.last_name?.[0]}
+          </div>
+            }
+            
+            
+        </div>
+    )}
     <div className="mt-8 w-full flex justify-center items-center">
         <Logout />
     </div>
-</div>
+</motion.div>
     // <div className="hidden lg:block w-64 h-full bg-slate-950 px-4 py-8 fixed mr-64 z-50">
     //   <nav className="space-y-4 mb-10">
     //     {profile &&
