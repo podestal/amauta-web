@@ -1,10 +1,20 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import MultiSelectorNew from "../../../ui/AIForms/MultiSelectorNew"
 import AIButton from "../../../ui/AIForms/AIButton"
 import NumberSelector from "../../../ui/AIForms/NumberSelector"
 import DifficultySelector from "../../../ui/AIForms/DifficultySelector"
+import getAIResponse from "../../../../utils/getAiResponse"
+import { Lesson } from "../../../../services/api/lessonService"
+import LoaderAI from "../../../ui/LoaderAI"
 
-const typeOfQuestions = [
+interface Props {
+    lesson: Lesson
+    age: number
+    markdown: string
+    setMarkdown: React.Dispatch<React.SetStateAction<string>>
+}
+
+const typeOfQuestionsOptions = [
     'Opción Múltiple',
     'Verdadero o Falso',
     'Respuesta Corta',
@@ -21,22 +31,52 @@ const skillsToEvaluateOptions = [
     'Evaluación',
 ]
 
-const ActivityAIFormTest = () => {
+const ActivityAIFormTest = ({ lesson, age, markdown, setMarkdown }: Props) => {
 
-    const [typeOfActivity, setTypeOfActivity] = useState(['Opción Múltiple'])
+    const [typeOfQuestions, setTypeOfQuestions] = useState(['Opción Múltiple'])
     const [numberOfQuestions, setNumberOfQuestions] = useState(10)
     const [skillsToEvaluate, setSkillsToEvaluate] = useState(['Aplicación'])
     const [selectedDifficulty, setSelectedDifficulty] = useState('Media')
+    const [loading, setLoading] = useState(false)
+
+    useEffect(() => {
+        if (markdown) {
+            setLoading(false)
+        }
+    })
+
+    const handleSubmit =  async (e: React.FormEvent) => {
+        e.preventDefault()
+        setLoading(true)
+        await getAIResponse({
+            category: 'evaluación',
+            topic: lesson.subject,
+            age: age,
+            lesson: lesson.content,
+            setMarkdown,
+            typeOfQuestions,
+            numberOfQuestions,
+            skillsToEvaluate,
+            difficulty: selectedDifficulty,
+        })
+    }
 
   return (
-    <form>
+    <>
+    {loading 
+    ? 
+    <LoaderAI /> 
+    : 
+    <form
+        onSubmit={handleSubmit}
+        className="w-full flex flex-col gap-6 p-6 "
+    >
         <h2 className="text-center mb-8 text-2xl font-bold">Nueva Evaluación</h2>
-        <>{console.log("typeOfActivity", typeOfActivity)}</>
         <div className="w-full flex gap-10 justify-between items-start">
             <MultiSelectorNew 
-                value={typeOfActivity}
-                setValue={setTypeOfActivity}
-                options={typeOfQuestions}
+                value={typeOfQuestions}
+                setValue={setTypeOfQuestions}
+                options={typeOfQuestionsOptions}
                 label="Tipo de Preguntas"
             />  
             <div className="flex flex-col gap-4">
@@ -61,12 +101,14 @@ const ActivityAIFormTest = () => {
                 label="Dificultad"
             />
         </div>
- 
+
         <AIButton 
             label="Generar Evaluación"
             onClick={() => console.log('Generar Tarea')}
         />
     </form>
+    }
+    </>
   )
 }
 

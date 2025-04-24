@@ -123,7 +123,7 @@ const LessonPage = () => {
         <>
         {category === 'tarea' && <ActivityAIFormHomework lesson={lesson} age={age} markdown={markdown} setMarkdown={setMarkdown}/>}
         {category === 'trabajo en clase' && <ActivityAIFormClassActivity lesson={lesson} age={age} markdown={markdown} setMarkdown={setMarkdown} />}
-        {category === 'evaluación' && <ActivityAIFormTest />}
+        {category === 'evaluación' && <ActivityAIFormTest lesson={lesson} age={age} markdown={markdown} setMarkdown={setMarkdown} />}
         {category === 'proyecto' && <ActivityAIFormProject />}
 
         </>}

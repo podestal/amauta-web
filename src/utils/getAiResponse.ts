@@ -61,6 +61,67 @@ const getPromptClassWork = ({ topic, age, lesson, typeOfActivity, durationOfActi
     ${lesson}`
 }
 
+interface GetPromptTestProps {
+    topic: string
+    age: number
+    lesson: string
+    typeOfQuestions: string[]
+    numberOfQuestions: number
+    skillsToEvaluate: string[]
+    difficulty: string
+}
+
+const getPromptTest = ({ topic, age, lesson, typeOfQuestions, numberOfQuestions, skillsToEvaluate, difficulty }: GetPromptTestProps) => {
+    return `
+    Genera una prueba sobre el tema "${topic}", basada en la siguiente lección, dirigida a estudiantes de ${age} años.
+
+    📝 Especificaciones:
+    - Tipo de preguntas: ${typeOfQuestions}
+    - Número de preguntas: ${numberOfQuestions}
+    - Habilidades a evaluar: ${skillsToEvaluate}
+    - Dificultad: ${difficulty}
+
+    📋 Requisitos:
+    - La prueba debe consistir únicamente en las preguntas, sin introducciones ni saludos.
+    - Cada pregunta debe ser clara, precisa y alineada con los contenidos y objetivos de la lección.
+    - Utiliza el tipo de preguntas especificado, manteniendo coherencia y variedad si corresponde.
+    - Asegúrate de que el nivel de dificultad corresponda al indicado y a la edad del estudiante.
+    - No incluir instrucciones adicionales, explicaciones ni comentarios. Solo mostrar las preguntas generadas.
+
+    📚 Lección:
+    ${lesson}`
+}
+
+interface GetPromptProjectProps {
+    topic: string
+    age: number
+    lesson: string
+    projectType: string
+    difficulty: string
+    skillsToEvaluate: string[]
+    toolsAndResources: string
+}
+
+const getPromptProject = ({ topic, age, lesson, projectType, difficulty, skillsToEvaluate, toolsAndResources }: GetPromptProjectProps) => {
+    return `
+    Diseña un proyecto escolar sobre el tema "${topic}" para estudiantes de ${age} años, basado en la siguiente lección.
+
+    🛠️ Especificaciones:
+    - Tipo de proyecto: ${projectType}
+    - Dificultad: ${difficulty}
+    - Habilidades a evaluar o integrar: ${skillsToEvaluate}
+    - Herramientas o recursos que pueden ser utilizados: ${toolsAndResources}
+
+    📋 Requisitos:
+    - El proyecto debe estar enfocado en el aprendizaje profundo, la creatividad y el trabajo colaborativo si es posible.
+    - Incluir una descripción breve del proyecto, las fases sugeridas (planeación, desarrollo, presentación) y una entrega esperada (informe, prototipo, etc.).
+    - Asegúrate de que el proyecto esté alineado con los contenidos de la lección y que los recursos mencionados sean apropiados.
+    - No incluir saludos, instrucciones adicionales ni interacción. Solo describir el proyecto con claridad.
+
+    📚 Lección:
+${lesson}`
+}
+
 interface AIResponseProps {
     category: string,
     topic: string, 
@@ -74,6 +135,10 @@ interface AIResponseProps {
     typeOfActivity?: string
     durationOfActivity?: number
     levelOfInteraction?: string
+    typeOfQuestions?: string[]
+    skillsToEvaluate?: string[]
+    projectType?: string
+    toolsAndResources?: string
 }
 
 const getAIResponse = async ({ 
@@ -89,6 +154,11 @@ const getAIResponse = async ({
     typeOfActivity,
     durationOfActivity,
     levelOfInteraction,
+    typeOfQuestions,
+    skillsToEvaluate,
+    projectType,
+    toolsAndResources
+
  }: AIResponseProps ) => {
 
         // let prompt = getPrompt({ category, topic, age, lesson, homeworkType, numberOfQuestions, difficulty, context })
@@ -97,6 +167,10 @@ const getAIResponse = async ({
             prompt = (homeworkType && numberOfQuestions && difficulty) ? getPromptHomework({ topic, age, lesson, homeworkType, numberOfQuestions, difficulty, context }) : ''
         } else if (category === 'trabajo en clase') {
             prompt = (typeOfActivity && durationOfActivity && levelOfInteraction) ? getPromptClassWork({ topic, age, lesson, typeOfActivity, durationOfActivity, levelOfInteraction }) : ''
+        } else if (category === 'evaluación') {
+            prompt = (numberOfQuestions && difficulty && typeOfQuestions && skillsToEvaluate) ? getPromptTest({ topic, age, lesson, typeOfQuestions, numberOfQuestions, skillsToEvaluate, difficulty }) : ''
+        } else if (category === 'proyecto') {
+            prompt = (projectType && difficulty && skillsToEvaluate && toolsAndResources) ? getPromptProject({ topic, age, lesson, projectType, difficulty, skillsToEvaluate, toolsAndResources }) : ''
         }
         const response = await googleGenAI.models.generateContent({
         model: 'gemini-2.0-flash',

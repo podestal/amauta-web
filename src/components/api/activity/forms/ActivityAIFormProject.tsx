@@ -25,6 +25,7 @@ const ActivityAIFormProject = () => {
     const [selectedDifficulty, setSelectedDifficulty] = useState('Media')
     const [selectedProjectType, setSelectedProjectType] = useState('Individual')
     const [selectedSkillsToEvaluate, setSelectedSkillsToEvaluate] = useState(['Creatividad'])
+    const [toolsAndResources, setToolsAndResources] = useState('')
 
   return (
     <form>
@@ -55,8 +56,8 @@ const ActivityAIFormProject = () => {
             </div>
             <div className="col-span-2">
                 <ContextInput 
-                    value={''}
-                    setValue={() => {}}
+                    value={toolsAndResources}
+                    setValue={setToolsAndResources}
                     label='Herramientas y recursos'
                     placeholder='Escribe aquí las herramientas y recursos que se pueden utilizar para el proyecto ...'
                 />
