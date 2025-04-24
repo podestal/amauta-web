@@ -1,9 +1,19 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import AIButton from "../../../ui/AIForms/AIButton"
 import DifficultySelector from "../../../ui/AIForms/DifficultySelector"
 import SelectorNew from "../../../ui/AIForms/SelectorNew"
 import MultiSelectorNew from "../../../ui/AIForms/MultiSelectorNew"
 import ContextInput from "../../../ui/AIForms/ContextInput"
+import { Lesson } from "../../../../services/api/lessonService"
+import getAIResponse from "../../../../utils/getAiResponse"
+import LoaderAI from "../../../ui/LoaderAI"
+
+interface Props {
+    lesson: Lesson
+    age: number
+    markdown: string
+    setMarkdown: React.Dispatch<React.SetStateAction<string>>
+}
 
 const projectTypeOptions = [
     'Individual',
@@ -20,15 +30,46 @@ const skillsToEvaluateOptions = [
     'Liderazgo',
 ]
 
-const ActivityAIFormProject = () => {
+const ActivityAIFormProject = ({ lesson, age, markdown, setMarkdown }: Props) => {
 
     const [selectedDifficulty, setSelectedDifficulty] = useState('Media')
     const [selectedProjectType, setSelectedProjectType] = useState('Individual')
     const [selectedSkillsToEvaluate, setSelectedSkillsToEvaluate] = useState(['Creatividad'])
     const [toolsAndResources, setToolsAndResources] = useState('')
+    const [loading, setLoading] = useState(false)
+
+    useEffect(() => {
+        if (markdown) {
+            setLoading(false)
+        }
+    })
+
+    const handleSubmit =  async (e: React.FormEvent) => {
+        e.preventDefault()
+        setLoading(true)
+        await getAIResponse({
+            category: 'proyecto',
+            topic: lesson.subject,
+            age: age,
+            lesson: lesson.content,
+            setMarkdown,
+            difficulty: selectedDifficulty,
+            projectType: selectedProjectType,
+            skillsToEvaluate: selectedSkillsToEvaluate,
+            toolsAndResources,
+        })
+    }
 
   return (
-    <form>
+    <>
+    {loading 
+    ? 
+    <LoaderAI />
+    : 
+    <form
+        onSubmit={handleSubmit}
+        className="w-full flex flex-col gap-6 p-6 "
+    >
         <h2 className="text-center mb-8 text-2xl font-bold">Nuevo Projecto</h2>
         <div className="flex justify-center items-start gap-4 mb-6">
             <SelectorNew 
@@ -68,6 +109,8 @@ const ActivityAIFormProject = () => {
             onClick={() => console.log('Generar Tarea')}
         />
     </form>
+    }
+    </>
   )
 }
 

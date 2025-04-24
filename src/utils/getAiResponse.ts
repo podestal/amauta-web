@@ -157,10 +157,11 @@ const getAIResponse = async ({
     typeOfQuestions,
     skillsToEvaluate,
     projectType,
-    toolsAndResources
+    toolsAndResources=''
 
  }: AIResponseProps ) => {
-
+        console.log('category', category);
+        
         // let prompt = getPrompt({ category, topic, age, lesson, homeworkType, numberOfQuestions, difficulty, context })
         let prompt = ''
         if (category === 'tarea') {
@@ -170,8 +171,12 @@ const getAIResponse = async ({
         } else if (category === 'evaluación') {
             prompt = (numberOfQuestions && difficulty && typeOfQuestions && skillsToEvaluate) ? getPromptTest({ topic, age, lesson, typeOfQuestions, numberOfQuestions, skillsToEvaluate, difficulty }) : ''
         } else if (category === 'proyecto') {
-            prompt = (projectType && difficulty && skillsToEvaluate && toolsAndResources) ? getPromptProject({ topic, age, lesson, projectType, difficulty, skillsToEvaluate, toolsAndResources }) : ''
+            console.log('getting proyecto prompt');
+            
+            prompt = (projectType && difficulty && skillsToEvaluate) ? getPromptProject({ topic, age, lesson, projectType, difficulty, skillsToEvaluate, toolsAndResources }) : ''
         }
+        console.log('Prompt', prompt);
+        
         const response = await googleGenAI.models.generateContent({
         model: 'gemini-2.0-flash',
         contents: prompt,
