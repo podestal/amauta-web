@@ -5,6 +5,7 @@ import Logout from "../components/auth/Logout";
 import { BookUser, Boxes, ChartColumnStacked, ChartNoAxesCombined, HomeIcon, IdCard, LibraryBig, MessagesSquare, PanelRightClose, PanelRightOpen, SquareTerminal, Sunrise } from "lucide-react";
 import logo from '../assets/icons/amautapp.png'
 import { motion } from "framer-motion";
+import getTitleCase from "../utils/getTitleCase";
 
 interface Props {
     profile: Profile
@@ -118,8 +119,8 @@ const SideBar = ({ profile, isOpen, setIsOpen }: Props) => {
         <div className={`flex items-start space-x-4 my-10 ${isOpen && 'px-4 py-2'}`}>
           {isOpen ? 
           <div>
-            <p className="font-semibold text-md">{profile.first_name}</p>
-            <p className="font-semibold text-md">{profile.last_name}</p>
+            <p className="font-semibold text-md">{profile.first_name && getTitleCase(profile.first_name.toLocaleLowerCase())}</p>
+            <p className="font-semibold text-md">{profile.last_name && getTitleCase(profile.last_name.toLocaleLowerCase())}</p>
             <p className="text-sm text-gray-400 mt-2">{groupToSpanish[group]}</p>
           </div> 
            : 
