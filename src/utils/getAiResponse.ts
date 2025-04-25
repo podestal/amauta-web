@@ -1,4 +1,5 @@
 import { GoogleGenAI } from "@google/genai";
+import getTitleCase from "./getTitleCase";
 
 const apiKey = import.meta.env.VITE_GEMINI_KEY
 const googleGenAI = new GoogleGenAI({
@@ -27,6 +28,7 @@ const getPromptHomework = ({ topic, age, lesson, homeworkType, numberOfQuestions
                 - Evita actividades largas, explicaciones extensas o proyectos.
                 - No usar lenguaje técnico complejo ni instrucciones innecesarias.
                 - No incluir saludos ni ningún tipo de interacción con el usuario.
+                - El título de la tarea debe ser breve y claro, debe de estar ubicado en la parte superior, y no agregues nada más como título del proyecto, o título de la tarea, el título y ya.
 
                 📚 Lección:
             ${lesson}`
@@ -56,6 +58,7 @@ const getPromptClassWork = ({ topic, age, lesson, typeOfActivity, durationOfActi
     - El nivel de dificultad debe ser apropiado para la edad indicada.
     - Evitar explicaciones largas, instrucciones extensas o contenido que no sea parte de la actividad.
     - No incluir saludos, mensajes introductorios ni interacción con el usuario. Solo entregar el contenido solicitado.
+    - El título de la tarea debe ser breve y claro, debe de estar ubicado en la parte superior, y no agregues nada más como título del proyecto, o título de la tarea, el título y ya.
 
     📚 Lección:
     ${lesson}`
@@ -87,7 +90,7 @@ const getPromptTest = ({ topic, age, lesson, typeOfQuestions, numberOfQuestions,
     - Utiliza el tipo de preguntas especificado, manteniendo coherencia y variedad si corresponde.
     - Asegúrate de que el nivel de dificultad corresponda al indicado y a la edad del estudiante.
     - No incluir instrucciones adicionales, explicaciones ni comentarios. Solo mostrar las preguntas generadas.
-
+    - El título de la tarea debe ser breve y claro, debe de estar ubicado en la parte superior, y no agregues nada más como título del proyecto, o título de la tarea, el título y ya.   
     📚 Lección:
     ${lesson}`
 }
@@ -117,6 +120,7 @@ const getPromptProject = ({ topic, age, lesson, projectType, difficulty, skillsT
     - Incluir una descripción breve del proyecto, las fases sugeridas (planeación, desarrollo, presentación) y una entrega esperada (informe, prototipo, etc.).
     - Asegúrate de que el proyecto esté alineado con los contenidos de la lección y que los recursos mencionados sean apropiados.
     - No incluir saludos, instrucciones adicionales ni interacción. Solo describir el proyecto con claridad.
+    - El título de la tarea debe ser breve y claro, debe de estar ubicado en la parte superior, y no agregues nada más como título del proyecto, o título de la tarea, el título y ya.
 
     📚 Lección:
 ${lesson}`
@@ -139,6 +143,7 @@ interface AIResponseProps {
     skillsToEvaluate?: string[]
     projectType?: string
     toolsAndResources?: string
+    setAITitle: React.Dispatch<React.SetStateAction<string>>
 }
 
 const getAIResponse = async ({ 
@@ -157,12 +162,11 @@ const getAIResponse = async ({
     typeOfQuestions,
     skillsToEvaluate,
     projectType,
-    toolsAndResources=''
+    toolsAndResources='',
+    setAITitle
 
  }: AIResponseProps ) => {
-        console.log('category', category);
         
-        // let prompt = getPrompt({ category, topic, age, lesson, homeworkType, numberOfQuestions, difficulty, context })
         let prompt = ''
         if (category === 'tarea') {
             prompt = (homeworkType && numberOfQuestions && difficulty) ? getPromptHomework({ topic, age, lesson, homeworkType, numberOfQuestions, difficulty, context }) : ''
@@ -170,18 +174,23 @@ const getAIResponse = async ({
             prompt = (typeOfActivity && durationOfActivity && levelOfInteraction) ? getPromptClassWork({ topic, age, lesson, typeOfActivity, durationOfActivity, levelOfInteraction }) : ''
         } else if (category === 'evaluación') {
             prompt = (numberOfQuestions && difficulty && typeOfQuestions && skillsToEvaluate) ? getPromptTest({ topic, age, lesson, typeOfQuestions, numberOfQuestions, skillsToEvaluate, difficulty }) : ''
-        } else if (category === 'proyecto') {
-            console.log('getting proyecto prompt');
-            
+        } else if (category === 'proyecto') {            
             prompt = (projectType && difficulty && skillsToEvaluate) ? getPromptProject({ topic, age, lesson, projectType, difficulty, skillsToEvaluate, toolsAndResources }) : ''
         }
-        console.log('Prompt', prompt);
         
         const response = await googleGenAI.models.generateContent({
         model: 'gemini-2.0-flash',
         contents: prompt,
         })
         console.log('AI response', response.candidates?.[0]?.content?.parts?.[0]?.text || 'No content available');
+        const match = response.candidates?.[0]?.content?.parts?.[0]?.text ? response.candidates?.[0]?.content?.parts?.[0]?.text.match(/^(.{5,80})\n/) : '';
+        const title = match ? match[1].trim() : "";
+        const cleanTitle = title
+        .replace(/\*\*/g, "")      
+        .replace(/[¡:]/g, "")        
+        .trim()                       
+        .toLowerCase();    
+        setAITitle(getTitleCase(cleanTitle))
         setMarkdown(response.candidates?.[0]?.content?.parts?.[0]?.text || '')
   }
 

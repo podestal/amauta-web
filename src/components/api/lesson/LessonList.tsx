@@ -5,9 +5,11 @@ import LessonCard from "./LessonCard"
 
 interface Props {
   classroom: string
+  assignature: string
+  area: string
 }
 
-const LessonList = ({ classroom }: Props) => {
+const LessonList = ({ classroom, assignature, area }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
     const { data: lessons, isLoading, isError, error, isSuccess } = useGetLessons({ access })
@@ -21,7 +23,7 @@ const LessonList = ({ classroom }: Props) => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 p-4">
         {lessons.map( lesson => (
-            <LessonCard key={lesson.id} lesson={lesson} classroom={classroom} />
+            <LessonCard key={lesson.id} lesson={lesson} classroom={classroom} assignature={assignature} area={area} />
         ))}
     </div>
   )

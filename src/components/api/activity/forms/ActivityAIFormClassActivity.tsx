@@ -12,6 +12,7 @@ interface Props {
     age: number
     markdown: string
     setMarkdown: React.Dispatch<React.SetStateAction<string>>
+    setAITitle: React.Dispatch<React.SetStateAction<string>>
 }
 
 
@@ -23,7 +24,7 @@ const typeOfActivityOptions = [
     'Debate/Discusión',
 ]
 
-const ActivityAIFormClassActivity = ({ lesson, age, markdown, setMarkdown }: Props) => {
+const ActivityAIFormClassActivity = ({ lesson, age, markdown, setMarkdown, setAITitle }: Props) => {
 
     const [typeOfActivity, setTypeOfActivity] = useState('Individual')
     const [durationOfActivity, setDurationOfActivity] = useState(15)
@@ -48,6 +49,7 @@ const ActivityAIFormClassActivity = ({ lesson, age, markdown, setMarkdown }: Pro
             typeOfActivity,
             durationOfActivity,
             levelOfInteraction,
+            setAITitle
         })
     }
 

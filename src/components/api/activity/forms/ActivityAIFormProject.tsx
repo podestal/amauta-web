@@ -13,6 +13,7 @@ interface Props {
     age: number
     markdown: string
     setMarkdown: React.Dispatch<React.SetStateAction<string>>
+    setAITitle: React.Dispatch<React.SetStateAction<string>>
 }
 
 const projectTypeOptions = [
@@ -30,7 +31,7 @@ const skillsToEvaluateOptions = [
     'Liderazgo',
 ]
 
-const ActivityAIFormProject = ({ lesson, age, markdown, setMarkdown }: Props) => {
+const ActivityAIFormProject = ({ lesson, age, markdown, setMarkdown, setAITitle }: Props) => {
 
     const [selectedDifficulty, setSelectedDifficulty] = useState('Media')
     const [selectedProjectType, setSelectedProjectType] = useState('Individual')
@@ -57,6 +58,7 @@ const ActivityAIFormProject = ({ lesson, age, markdown, setMarkdown }: Props) =>
             projectType: selectedProjectType,
             skillsToEvaluate: selectedSkillsToEvaluate,
             toolsAndResources,
+            setAITitle
         })
     }
 

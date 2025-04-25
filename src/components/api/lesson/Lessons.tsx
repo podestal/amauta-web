@@ -6,9 +6,11 @@ import GoBack from "../../ui/GoBack"
 interface Props {
     classroom: string
     assignature: string
+    area: string
 }
 
-const Lessons = ({ classroom, assignature }: Props) => {
+const Lessons = ({ classroom, assignature, area }: Props) => {
+    
     
   return (
     <motion.div
@@ -32,6 +34,8 @@ const Lessons = ({ classroom, assignature }: Props) => {
         </div>
         <LessonList 
             classroom={classroom}
+            assignature={assignature}
+            area={area}
         />
     </motion.div>
   )

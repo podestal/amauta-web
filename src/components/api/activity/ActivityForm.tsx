@@ -16,6 +16,7 @@ import moment from "moment";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { BookOpenText } from "lucide-react";
+import getTitleCase from "../../../utils/getTitleCase";
 
 interface Props {
     area: number;
@@ -25,13 +26,15 @@ interface Props {
     updateActivity?: UseMutationResult<Activity, Error, CreateActivityData>
     setOpen?: React.Dispatch<React.SetStateAction<boolean>>
     descriptionAI?: string
+    categoryAI?: string
+    titleAI?: string
 }
 
-const ActivityForm = ({ area, assignatureId, activity, createActivity, updateActivity, setOpen, descriptionAI }: Props) => {
+const ActivityForm = ({ area, assignatureId, activity, createActivity, updateActivity, setOpen, descriptionAI, categoryAI, titleAI }: Props) => {
 
     const { setMessage, setShow, setType } = useNotificationsStore();
     const access =useAuthStore(state => state.access) || '';
-    const [title, setTitle] = useState(activity ? activity.title : "");
+    const [title, setTitle] = useState(activity ? activity.title : titleAI ? getTitleCase(titleAI) : "");
     const [description, setDescription] = useState(activity ? activity.description : "");
     const [selectedCategory, setSelectedCategory] = useState( activity ? activity.category.toString() : "0");
     const [removedCompetency, setRemovedCompetency] = useState(0);
@@ -46,7 +49,7 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, updateAct
     const [descriptionError, setDescriptionError] = useState("");
     const [categoryError, setCategoryError] = useState("");
 
-    console.log('activity', activity)    
+    console.log('createActivity', createActivity)    
 
     // REFS
     const titleRef = useRef<HTMLInputElement>(null);
@@ -72,23 +75,11 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, updateAct
       }
     }, [selectedCompetencies])
 
-    // useEffect(() => {
-    //   if (selectedCompetencies.length === 0) {
-    //     setSelectedCapacities([]);
-    //   } else {
-    //     if (selectedCompetencies.includes(removedCompetency)) {
-    //     // const capacitiesToExclude = capacities.filter( capacity => (capacity.competence === removedCompetency))
-    //     // console.log('capacitiesToExclude', capacitiesToExclude);
-        
-
-    //   }
-      
-    // }, [selectedCompetencies])
-
     const handleCreateActivity = (e: React.FormEvent<HTMLFormElement>) => {
 
         e.preventDefault()
         let firstErrorField: React.RefObject<HTMLElement> | null = null
+        
 
         if (!title) {
             setTitleError("El título es requerido");
@@ -96,12 +87,17 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, updateAct
             scrollToField(firstErrorField);
             return;
         }
+
+        console.log('selectedCategory', selectedCategory);
+        
         if (selectedCategory === '0') {
             setCategoryError("La categoría es requerida");
             if (!firstErrorField) firstErrorField = categoryRef;
             scrollToField(firstErrorField);
             return;
         }
+
+        
 
         // if (!dueDate) {
         //     setDueDateError("La fecha de entrega es requerida");
@@ -121,7 +117,6 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, updateAct
             setShow(true);
             return;
         }
-
         setLoading(true);
 
         createActivity && createActivity.mutate({
@@ -205,7 +200,7 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, updateAct
             onSubmit={handleCreateActivity}
             className="flex flex-col justify-start items-center gap-6 pb-20 w-full lg:w-[65%] mx-auto py-10">
             <Input
-                placeholder="Título"
+                placeholder='Título'
                 value={title}
                 onChange={(e) => {
                   setTitleError("");
@@ -222,6 +217,7 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, updateAct
                 setCategoryError={setCategoryError}
                 categoryRef={categoryRef}
                 selectedCategory={selectedCategory}
+                categoryAi={categoryAI}
             />
 
             {/* Due Date */}
@@ -310,7 +306,7 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, updateAct
             {descriptionAI 
             ? 
             <div className="p-6 bg-slate-800 rounded-3xl">
-              <h2 className="text-xl text-center mb-4">Descripción</h2>
+              <h2 className="text-xl text-center mb-4">{descriptionAI ? 'Contenido' : 'Descripción'}</h2>
               <ReactMarkdown
                   remarkPlugins={[remarkGfm]}
                   components={{

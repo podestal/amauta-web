@@ -12,6 +12,7 @@ interface Props {
     age: number
     markdown: string
     setMarkdown: React.Dispatch<React.SetStateAction<string>>
+    setAITitle: React.Dispatch<React.SetStateAction<string>>
 }
 
 const typeOfQuestionsOptions = [
@@ -31,7 +32,7 @@ const skillsToEvaluateOptions = [
     'Evaluación',
 ]
 
-const ActivityAIFormTest = ({ lesson, age, markdown, setMarkdown }: Props) => {
+const ActivityAIFormTest = ({ lesson, age, markdown, setMarkdown, setAITitle }: Props) => {
 
     const [typeOfQuestions, setTypeOfQuestions] = useState(['Opción Múltiple'])
     const [numberOfQuestions, setNumberOfQuestions] = useState(10)
@@ -58,6 +59,7 @@ const ActivityAIFormTest = ({ lesson, age, markdown, setMarkdown }: Props) => {
             numberOfQuestions,
             skillsToEvaluate,
             difficulty: selectedDifficulty,
+            setAITitle
         })
     }
 

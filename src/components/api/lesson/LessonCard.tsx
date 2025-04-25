@@ -7,14 +7,16 @@ import getTitleCase from '../../../utils/getTitleCase'
 interface Props {
     lesson: Lesson
     classroom: string
+    assignature: string
+    area: string
 }
 
-const LessonCard = ({ lesson, classroom }: Props) => {
+const LessonCard = ({ lesson, classroom, assignature, area }: Props) => {
 
     const navigate = useNavigate()
 
     const handleNavigate = () => {
-        navigate(`/app/assignatures/${lesson.assignature}/lesson/${lesson.id}`, { state: { lesson, classroom } });
+        navigate(`/app/assignatures/${lesson.assignature}/lesson/${lesson.id}`, { state: { lesson, classroom, assignature, area } });
     }
 
     return (

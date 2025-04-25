@@ -13,6 +13,7 @@ interface Props {
     age: number
     markdown: string
     setMarkdown: React.Dispatch<React.SetStateAction<string>>
+    setAITitle: React.Dispatch<React.SetStateAction<string>>
 }
 
 const options = [
@@ -23,7 +24,7 @@ const options = [
     'Lectura y Resumen',
 ]
 
-const ActivityAIFormHomework = ({ lesson, age, markdown, setMarkdown }: Props) => {
+const ActivityAIFormHomework = ({ lesson, age, markdown, setMarkdown, setAITitle }: Props) => {
 
     const [selectedHomeworkType, setSelectedHomeworkType] = useState('Ejercicios')
     const [numberOfQuestions, setNumberOfQuestions] = useState(5)
@@ -50,6 +51,7 @@ const ActivityAIFormHomework = ({ lesson, age, markdown, setMarkdown }: Props) =
             numberOfQuestions,
             difficulty: selectedDifficulty,
             context,
+            setAITitle
         })
     }
 

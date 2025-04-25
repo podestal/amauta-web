@@ -17,6 +17,8 @@ import getAgeFromClassroom from "../utils/getAgeFromClassroom";
 import Button from "../components/ui/Button";
 import useNotificationsStore from "../hooks/store/useNotificationsStore";
 import ActivityForm from "../components/api/activity/ActivityForm";
+import useCreateActivity from "../hooks/api/activity/useCreateActivity";
+import getCurrentQuarter from "../utils/getCurrentCuarter";
   
   const iconMap = [
     { name: 'Tarea', icon: FileText, color: 'blue-500' },
@@ -30,16 +32,25 @@ const LessonPage = () => {
 
     const lesson: Lesson = useLocation().state.lesson
     const classroom: string = useLocation().state.classroom
+    const assignature: string = useLocation().state.assignature
+    const area: string = useLocation().state.area
     const [category, setCategory] = useState('')
     
     const [open, setOpen] = useState(false)
     const [markdown, setMarkdown] = useState('')
     const [loading, setLoading] = useState(true)
     const [activityForm, setActivityForm] = useState(false)
+    const [titleAI, setTitleAI] = useState('')
     const { setMessage, setShow, setType } = useNotificationsStore()
     const age = getAgeFromClassroom(classroom)
 
     console.log('loading', loading);
+
+    // assignatureId: string
+    // quarter: string
+    // classroom: string
+    const quarter = getCurrentQuarter()
+    const createActivity = useCreateActivity({ assignatureId: assignature, quarter, classroom: classroom.split('-')[classroom.split('-').length - 1] })
     
     
 
@@ -52,7 +63,6 @@ const LessonPage = () => {
   return (
     <>
         <div className="max-w-5xl mx-auto px-4 py-6">
-        <>{console.log('category', category)}</>
         {/* <>{console.log('markdown', lesson.content)}</> */}
         <motion.div
             initial={{ opacity: 0, y: -10 }}
@@ -126,12 +136,6 @@ const LessonPage = () => {
     </div>
     {activityForm 
     ? 
-    // area: number;
-    // assignatureId: string;
-    // activity?: Activity;
-    // createActivity?: UseMutationResult<Activity, Error, CreateActivityData>
-    // updateActivity?: UseMutationResult<Activity, Error, CreateActivityData>
-    // setOpen?: React.Dispatch<React.SetStateAction<boolean>>
     <Modal
         isOpen={activityForm}
         onClose={() => {
@@ -143,9 +147,12 @@ const LessonPage = () => {
         whole
     >
         <ActivityForm 
-            area={1}
-            assignatureId={'1'}
+            area={parseInt(area)}
+            assignatureId={assignature}
             descriptionAI={markdown}
+            categoryAI={category}
+            titleAI={titleAI ? titleAI : `${getTitleCase(lesson.subject)} de ${getTitleCase(category)}`}
+            createActivity={createActivity}
         />
     </Modal>
     : 
@@ -183,10 +190,10 @@ const LessonPage = () => {
         </> 
         : 
         <>
-        {category === 'tarea' && <ActivityAIFormHomework lesson={lesson} age={age} markdown={markdown} setMarkdown={setMarkdown}/>}
-        {category === 'trabajo en clase' && <ActivityAIFormClassActivity lesson={lesson} age={age} markdown={markdown} setMarkdown={setMarkdown} />}
-        {category === 'evaluación' && <ActivityAIFormTest lesson={lesson} age={age} markdown={markdown} setMarkdown={setMarkdown} />}
-        {category === 'proyecto' && <ActivityAIFormProject lesson={lesson} age={age} markdown={markdown} setMarkdown={setMarkdown} />}
+        {category === 'tarea' && <ActivityAIFormHomework lesson={lesson} age={age} markdown={markdown} setMarkdown={setMarkdown} setAITitle={setTitleAI}/>}
+        {category === 'trabajo en clase' && <ActivityAIFormClassActivity lesson={lesson} age={age} markdown={markdown} setMarkdown={setMarkdown} setAITitle={setTitleAI}/>}
+        {category === 'evaluación' && <ActivityAIFormTest lesson={lesson} age={age} markdown={markdown} setMarkdown={setMarkdown} setAITitle={setTitleAI}/>}
+        {category === 'proyecto' && <ActivityAIFormProject lesson={lesson} age={age} markdown={markdown} setMarkdown={setMarkdown} setAITitle={setTitleAI}/>}
 
         </>}
     </Modal>}

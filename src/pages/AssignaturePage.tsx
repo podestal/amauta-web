@@ -10,8 +10,6 @@ const AssignaturePage = () => {
   const profile = useGetProfileStore(s => s.profile)
   const assignature = state.assignatureId
   const classroom = profile?.clases_details?.find( classroom => classroom.split('-')[classroom.split('-').length - 1] === (state.classroom)?.toString()) || ''
-    
-
    
 
   return (
@@ -50,6 +48,7 @@ const AssignaturePage = () => {
       <Lessons 
         classroom={classroom}
         assignature={assignature}
+        area={state.area}
       />
       </div>
 
