@@ -21,6 +21,9 @@ const useCreateActivity = ({ assignatureId, quarter, classroom, lessonId }: Prop
     return useMutation({
         mutationFn: (data: CreateActivityData) => activityService.post(data.activity, data.access, params),
         onSuccess: res => {
+            console.log('new activity',res);
+            console.log([`activities ${lessonId}`]);
+            
             if (lessonId) {
                 queryClient.setQueryData<Activity[]>([`activities ${lessonId}`] , (oldData) => {
                     if (!oldData) return [res]

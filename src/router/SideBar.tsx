@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import useGetProfileStore from "../hooks/store/useGetProfileStore";
 import { Profile } from "../services/api/profileService";
 import Logout from "../components/auth/Logout";
-import { BookUser, Boxes, ChartColumnStacked, ChartNoAxesCombined, HomeIcon, IdCard, LibraryBig, MessagesSquare, PanelRightClose, PanelRightOpen, SquareTerminal, Sunrise } from "lucide-react";
+import { BookUser, Boxes, ChartColumnStacked, ChartNoAxesCombined, HomeIcon, IdCard, LibraryBig, LogOut, MessagesSquare, PanelRightClose, PanelRightOpen, SquareTerminal, Sunrise } from "lucide-react";
 import logo from '../assets/icons/amautapp.png'
 import { motion } from "framer-motion";
 import getTitleCase from "../utils/getTitleCase";
@@ -109,12 +109,17 @@ const SideBar = ({ profile, isOpen, setIsOpen }: Props) => {
     </nav>
 
     <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="text-gray-300 hover:text-white transition px-4 py-2 flex gap-2 items-center"
-            >
-              {isOpen ? <PanelRightOpen /> : <PanelRightClose />}
-              {isOpen && <span>Colapsar Menu</span>}
-            </button>
+          onClick={() => setIsOpen(!isOpen)}
+          className="text-gray-300 hover:text-white transition px-4 py-2 flex gap-2 items-center"
+        >
+          {isOpen ? <PanelRightOpen /> : <PanelRightClose />}
+          {isOpen && <span>Colapsar Menu</span>}
+        </button>
+        <Logout 
+          icon
+          isOpen={isOpen}
+        />
+
             {profile && (
         <div className={`flex items-start space-x-4 my-10 ${isOpen && 'px-4 py-2'}`}>
           {isOpen ? 
@@ -133,9 +138,9 @@ const SideBar = ({ profile, isOpen, setIsOpen }: Props) => {
             
         </div>
     )}
-    <div className="mt-8 w-full flex justify-center items-center">
+    {/* <div className="mt-8 w-full flex justify-center items-center">
         <Logout />
-    </div>
+    </div> */}
 </motion.div>
     // <div className="hidden lg:block w-64 h-full bg-slate-950 px-4 py-8 fixed mr-64 z-50">
     //   <nav className="space-y-4 mb-10">

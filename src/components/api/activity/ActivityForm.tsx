@@ -30,9 +30,10 @@ interface Props {
     categoryAI?: string
     titleAI?: string
     lesson?: number
+    setAIPromptOpen?: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const ActivityForm = ({ area, assignatureId, activity, createActivity, updateActivity, setOpen, descriptionAI, categoryAI, titleAI, lesson }: Props) => {
+const ActivityForm = ({ area, assignatureId, activity, createActivity, updateActivity, setOpen, descriptionAI, categoryAI, titleAI, lesson, setAIPromptOpen }: Props) => {
 
     const { setMessage, setShow, setType } = useNotificationsStore();
     const access =useAuthStore(state => state.access) || '';
@@ -140,6 +141,7 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, updateAct
                 setType("success");
                 setShow(true);
                 setOpen && setOpen(false);
+                setAIPromptOpen && setAIPromptOpen(false);
             },
             onError: () => {
                 setMessage("Error al crear la tarea");

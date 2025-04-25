@@ -51,7 +51,7 @@ const LessonPage = () => {
     // quarter: string
     // classroom: string
     const quarter = getCurrentQuarter()
-    const createActivity = useCreateActivity({ assignatureId: assignature, quarter, classroom: classroom.split('-')[classroom.split('-').length - 1] })
+    const createActivity = useCreateActivity({ assignatureId: assignature, quarter, classroom: classroom.split('-')[classroom.split('-').length - 1], lessonId: lesson.id })
     
     
 
@@ -155,6 +155,8 @@ const LessonPage = () => {
             titleAI={titleAI ? titleAI : `${getTitleCase(lesson.subject)} de ${getTitleCase(category)}`}
             createActivity={createActivity}
             lesson={lesson.id}
+            setOpen={setActivityForm}
+            setAIPromptOpen={setOpen}
         />
     </Modal>
     : 
@@ -199,8 +201,16 @@ const LessonPage = () => {
 
         </>}
     </Modal>}
-    <ActivitiesList assignatureId={assignature} quarter={getCurrentQuarter()} area={area} classroom={classroom.split('-')[classroom.split('-').length - 1]} lessonId={lesson.id}   
-    />
+    <div className="w-full max-w-3xl mx-auto px-6 py-8">
+        <ActivitiesList 
+            assignatureId={assignature} 
+            quarter={getCurrentQuarter()} 
+            area={area} 
+            classroom={classroom.split('-')[classroom.split('-').length - 1]} 
+            lessonId={lesson.id}   
+        />
+    </div>
+
     </>
   )
 }

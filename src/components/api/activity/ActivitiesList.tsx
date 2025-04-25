@@ -19,7 +19,9 @@ const ActivitiesList = ({ assignatureId, quarter, area, classroom, lessonId }: P
     const access = useAuthStore(s => s.access) || ''
     const { data: activities, isLoading, isError, error, isSuccess } = lessonId ? useGetActivitiesByLesson({access, lessonId: lessonId.toString()}) : useGetActivitiesByAssignature({ access, assignatureId, quarter })
 
-    useLoader(isLoading)
+    !lessonId && useLoader(isLoading)
+
+    if (isLoading) return <p className="animate-pulse text-center">Cargando...</p>
 
     if (isError) return <p>Error: {error.message}</p>
 
