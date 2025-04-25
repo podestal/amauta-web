@@ -4,18 +4,20 @@ import { motion } from "framer-motion";
 import useAuthStore from "../../../hooks/store/useAuthStore";
 import useLoader from "../../../hooks/ui/useLoader";
 import useGetActivitiesByAssignature from "../../../hooks/api/activity/useGetActivitiesByAssignature";
+import useGetActivitiesByLesson from "../../../hooks/api/activity/useGetActivitiesByLesson";
 
 interface Props {
     assignatureId: string
     quarter: string
     area: string
     classroom: string
+    lessonId?: number
 }
 
-const ActivitiesList = ({ assignatureId, quarter, area, classroom }: Props) => {
+const ActivitiesList = ({ assignatureId, quarter, area, classroom, lessonId }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
-    const { data: activities, isLoading, isError, error, isSuccess } = useGetActivitiesByAssignature({ access, assignatureId, quarter })
+    const { data: activities, isLoading, isError, error, isSuccess } = lessonId ? useGetActivitiesByLesson({access, lessonId: lessonId.toString()}) : useGetActivitiesByAssignature({ access, assignatureId, quarter })
 
     useLoader(isLoading)
 

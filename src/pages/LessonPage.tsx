@@ -19,6 +19,7 @@ import useNotificationsStore from "../hooks/store/useNotificationsStore";
 import ActivityForm from "../components/api/activity/ActivityForm";
 import useCreateActivity from "../hooks/api/activity/useCreateActivity";
 import getCurrentQuarter from "../utils/getCurrentCuarter";
+import ActivitiesList from "../components/api/activity/ActivitiesList";
   
   const iconMap = [
     { name: 'Tarea', icon: FileText, color: 'blue-500' },
@@ -153,6 +154,7 @@ const LessonPage = () => {
             categoryAI={category}
             titleAI={titleAI ? titleAI : `${getTitleCase(lesson.subject)} de ${getTitleCase(category)}`}
             createActivity={createActivity}
+            lesson={lesson.id}
         />
     </Modal>
     : 
@@ -197,6 +199,8 @@ const LessonPage = () => {
 
         </>}
     </Modal>}
+    <ActivitiesList assignatureId={assignature} quarter={getCurrentQuarter()} area={area} classroom={classroom.split('-')[classroom.split('-').length - 1]} lessonId={lesson.id}   
+    />
     </>
   )
 }

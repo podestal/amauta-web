@@ -12,6 +12,7 @@ export interface Activity {
     category_name: string
     competences: number[]
     capacities: number[]
+    lesson: number
 }
 
 export interface ActivityByTutor {
@@ -23,19 +24,23 @@ export interface ActivityByTutor {
     observations: string
 }
 
-export type UpdateCreateActivity = Omit<Activity, 'id' | 'created_at' | 'category_name'>
+export type UpdateCreateActivity = Omit<Activity, 'id' | 'created_at' | 'category_name' | 'lesson'> & {
+    lesson?: number | null
+}
 
 interface Props {
     activityId?: string
     byAssignature?: boolean
     byTutor?: boolean
+    byLesson?: boolean
 }
 
-const getActivityService = ({ activityId, byAssignature=false, byTutor=false }: Props) => {
+const getActivityService = ({ activityId, byAssignature=false, byTutor=false, byLesson=false }: Props) => {
     let url = 'activity/'
     if (activityId) url = `activity/${activityId}/`
     if (byAssignature) url = 'activity/byAssignature/'
     if (byTutor) url = 'activity/byTutor/'
+    if (byLesson) url = 'activity/byLesson/'
     return new APIClient<Activity, UpdateCreateActivity>(url)
 }
 

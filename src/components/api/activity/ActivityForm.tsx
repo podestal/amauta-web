@@ -17,6 +17,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { BookOpenText } from "lucide-react";
 import getTitleCase from "../../../utils/getTitleCase";
+import getCurrentQuarter from "../../../utils/getCurrentCuarter";
 
 interface Props {
     area: number;
@@ -28,9 +29,10 @@ interface Props {
     descriptionAI?: string
     categoryAI?: string
     titleAI?: string
+    lesson?: number
 }
 
-const ActivityForm = ({ area, assignatureId, activity, createActivity, updateActivity, setOpen, descriptionAI, categoryAI, titleAI }: Props) => {
+const ActivityForm = ({ area, assignatureId, activity, createActivity, updateActivity, setOpen, descriptionAI, categoryAI, titleAI, lesson }: Props) => {
 
     const { setMessage, setShow, setType } = useNotificationsStore();
     const access =useAuthStore(state => state.access) || '';
@@ -128,8 +130,9 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, updateAct
                 competences: selectedCompetencies,
                 capacities: selectedCapacities,
                 due_date: moment(dueDate).format('YYYY-MM-DD'),
-                quarter: "Q1",
+                quarter: getCurrentQuarter(),
                 assignature: parseInt(assignatureId),
+                lesson: lesson ? lesson : null,
             },
         }, {
             onSuccess: () => {
@@ -158,7 +161,7 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, updateAct
                 competences: selectedCompetencies,
                 capacities: selectedCapacities,
                 due_date: moment(dueDate).format('YYYY-MM-DD'),
-                quarter: "Q1",
+                quarter: getCurrentQuarter(),
                 assignature: parseInt(assignatureId),
             },
         }, {
