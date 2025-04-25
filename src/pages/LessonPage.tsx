@@ -14,6 +14,8 @@ import ActivityAIFormClassActivity from "../components/api/activity/forms/Activi
 import ActivityAIFormTest from "../components/api/activity/forms/ActivityAIFormTest";
 import ActivityAIFormProject from "../components/api/activity/forms/ActivityAIFormProject";
 import getAgeFromClassroom from "../utils/getAgeFromClassroom";
+import Button from "../components/ui/Button";
+import useNotificationsStore from "../hooks/store/useNotificationsStore";
   
   const iconMap = [
     { name: 'Tarea', icon: FileText, color: 'blue-500' },
@@ -32,6 +34,8 @@ const LessonPage = () => {
     const [open, setOpen] = useState(false)
     const [markdown, setMarkdown] = useState('')
     const [loading, setLoading] = useState(true)
+    const [currentActivity, setCurrentActivity] = useState('')
+    const { setMessage, setShow, setType } = useNotificationsStore()
     const age = getAgeFromClassroom(classroom)
 
     console.log('loading', loading);
@@ -96,8 +100,19 @@ const LessonPage = () => {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => {
-                        setOpen(true);
-                        setCategory(name.toLocaleLowerCase());
+                        if (markdown) {
+                            if (name.toLocaleLowerCase() === category ) {
+                                setOpen(true)
+                            } else {
+                                setMessage(`Por favor, completa la actividad ${category} antes de continuar`)
+                                setShow(true)
+                                setType('error')
+                            }
+                            // setCategory(name.toLocaleLowerCase())
+                        } else {
+                            setCategory(name.toLocaleLowerCase());
+                            setOpen(true);
+                        };
                     }}
                 >
                     <Icon className="w-6 h-6 mb-2" />
@@ -115,10 +130,22 @@ const LessonPage = () => {
     >
         {markdown 
         ? 
+        
+        <>
+        <div className="flex justify-center items-center my-8 gap-12">
+            <Button 
+                label="Guardar"
+            />
+            <Button 
+                label="Descartar"
+                color="red"
+            />
+        </div>
         <ActivityAIResponse 
             markdown={markdown}
             setMarkdown={setMarkdown}
-        /> 
+        />
+        </> 
         : 
         <>
         {category === 'tarea' && <ActivityAIFormHomework lesson={lesson} age={age} markdown={markdown} setMarkdown={setMarkdown}/>}
