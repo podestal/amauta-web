@@ -2,6 +2,7 @@ import useGetStudents from "../../../../../hooks/api/student/useGetStudents"
 import useAuthStore from "../../../../../hooks/store/useAuthStore"
 import useLanguageStore from "../../../../../hooks/store/useLanguageStore"
 import getAttendanceLabel from "../../../../../utils/getAttendanceLabel"
+import getTitleCase from "../../../../../utils/getTitleCase"
 import AttendanceStatus from "../../../attendance/AttendanceStatus"
 
 interface Props {
@@ -37,10 +38,10 @@ const DailyAttendanceReportBody = ({ selectedClassroom, selectedDay, currentMont
                     <p>{student.uid}</p>
                 </div>
                 <div className="flex justify-start items-start col-span-2">
-                    <p>{student.last_name}</p>
+                    <p>{student.last_name && getTitleCase(student.last_name.toLocaleLowerCase())}</p>
                 </div>
                 <div className="flex justify-start items-start col-span-2">
-                    <p>{student.first_name}</p>
+                    <p>{student.first_name && getTitleCase(student.first_name.toLocaleLowerCase())}</p>
                 </div>
                 <div className="col-span-2 mr-6">
                     {student.attendances_in.length > 0 

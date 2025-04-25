@@ -3,6 +3,7 @@ import useGetStudents from "../../../../../hooks/api/student/useGetStudents"
 import useAuthStore from "../../../../../hooks/store/useAuthStore"
 import useLanguageStore from "../../../../../hooks/store/useLanguageStore"
 import { statusStyles } from "../../../attendance/AttendanceStatus"
+import getTitleCase from "../../../../../utils/getTitleCase"
 
 interface Props {
     weekDays: moment.Moment[]
@@ -54,10 +55,10 @@ const WeeklyAttendanceReportBody = ({ weekDays, selectedClassroom, selectedWeek 
                 <p>{student.dni}</p>
             </div>
             <div className="flex justify-start items-center col-span-2">
-                <p>{student.last_name}</p>
+                <p>{student.last_name && getTitleCase(student.last_name.toLocaleLowerCase())}</p>
             </div>
             <div className="flex justify-start items-center col-span-2">
-                <p>{student.first_name}</p>
+                <p>{student.first_name && getTitleCase(student.first_name.toLocaleLowerCase())}</p>
             </div>
             <div>
                 

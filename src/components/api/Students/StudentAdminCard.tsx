@@ -14,6 +14,7 @@ import StudentTutorForm from "./forms/StudentTutorForm"
 import { motion } from "framer-motion"
 import useGetProfileStore from "../../../hooks/store/useGetProfileStore"
 import AttendanceCalendar, { AttendanceStatus } from "../reports/attendance/studentAdmin/AttendanceCalendar"
+import getTitleCase from "../../../utils/getTitleCase"
 
 export const aprilAttendanceMock: DailyAttendance[] = [
     { date: "2025-04-01", entry: "onTime", exit: "onTime" },
@@ -115,7 +116,7 @@ const StudentAdminCard = ({ student, classrooms, classroomId, studentDni, studen
                         <AlertTriangle className="text-red-500 w-5 h-5" />
                     )}
                     <p className={`font-medium text-sm lg:text-lg ${!student.is_active && 'line-through text-slate-400'}`}>
-                        {student.first_name} {student.last_name}
+                        {student.first_name && getTitleCase(student.first_name.toLocaleLowerCase())} {student.last_name && getTitleCase(student.last_name.toLocaleLowerCase())}
                     </p>
                 </div>
                 {/* Toggle Button for Mobile */}
