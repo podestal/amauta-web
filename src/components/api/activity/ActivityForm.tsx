@@ -13,6 +13,9 @@ import { Activity } from "../../../services/api/activityService";
 import useAuthStore from "../../../hooks/store/useAuthStore";
 import useNotificationsStore from "../../../hooks/store/useNotificationsStore";
 import moment from "moment";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { BookOpenText } from "lucide-react";
 
 interface Props {
     area: number;
@@ -21,9 +24,10 @@ interface Props {
     createActivity?: UseMutationResult<Activity, Error, CreateActivityData>
     updateActivity?: UseMutationResult<Activity, Error, CreateActivityData>
     setOpen?: React.Dispatch<React.SetStateAction<boolean>>
+    descriptionAI?: string
 }
 
-const ActivityForm = ({ area, assignatureId, activity, createActivity, updateActivity, setOpen }: Props) => {
+const ActivityForm = ({ area, assignatureId, activity, createActivity, updateActivity, setOpen, descriptionAI }: Props) => {
 
     const { setMessage, setShow, setType } = useNotificationsStore();
     const access =useAuthStore(state => state.access) || '';
@@ -124,7 +128,7 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, updateAct
             access,
             activity: {
                 title: title,
-                description: description,
+                description: descriptionAI ? descriptionAI : description,
                 category: parseInt(selectedCategory),
                 competences: selectedCompetencies,
                 capacities: selectedCapacities,
@@ -303,6 +307,43 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, updateAct
                 ))}
             </AnimatePresence>
             
+            {descriptionAI 
+            ? 
+            <div className="p-6 bg-slate-800 rounded-3xl">
+              <h2 className="text-xl text-center mb-4">Descripción</h2>
+              <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
+                  components={{
+                  h2: ({ node, ...props }) => (
+                      <h2 className="mt-10 mb-4 text-2xl font-bold flex items-center gap-2 text-indigo-600 dark:text-indigo-300">
+                      <BookOpenText className="w-5 h-5 text-indigo-400" />
+                      <span {...props} />
+                      </h2>
+                  ),
+                  h3: ({ node, ...props }) => (
+                      <h3 className="mt-6 mb-2 text-xl font-semibold text-gray-800 dark:text-slate-100" {...props} />
+                  ),
+                  ul: ({ node, ...props }) => (
+                      <ul className="list-disc list-inside space-y-2 ml-4 text-gray-700 dark:text-slate-100" {...props} />
+                  ),
+                  ol: ({ node, ...props }) => (
+                      <ol className="list-decimal list-inside space-y-2 ml-4 text-gray-700 dark:text-slate-100" {...props} />
+                  ),
+                  li: ({ node, ...props }) => (
+                      <li className="text-base leading-relaxed" {...props} />
+                  ),
+                  p: ({ node, ...props }) => (
+                      <p className="text-base text-gray-800 dark:text-slate-100 leading-relaxed mb-4" {...props} />
+                  ),
+                  strong: ({ node, ...props }) => (
+                      <strong className="font-semibold text-indigo-700 dark:text-indigo-300" {...props} />
+                  ),
+                  }}
+              >
+                  {descriptionAI}
+              </ReactMarkdown>
+            </div>
+            : 
             <TextArea
               placeholder="Descripción"
               value={description}
@@ -312,7 +353,7 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, updateAct
               }}
               error={descriptionError}
               tall
-            />
+            />}
 
             {/* Submit Button */}
             <div className="sm:col-span-2 flex justify-center">

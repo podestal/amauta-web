@@ -16,6 +16,7 @@ import ActivityAIFormProject from "../components/api/activity/forms/ActivityAIFo
 import getAgeFromClassroom from "../utils/getAgeFromClassroom";
 import Button from "../components/ui/Button";
 import useNotificationsStore from "../hooks/store/useNotificationsStore";
+import ActivityForm from "../components/api/activity/ActivityForm";
   
   const iconMap = [
     { name: 'Tarea', icon: FileText, color: 'blue-500' },
@@ -34,7 +35,7 @@ const LessonPage = () => {
     const [open, setOpen] = useState(false)
     const [markdown, setMarkdown] = useState('')
     const [loading, setLoading] = useState(true)
-    const [currentActivity, setCurrentActivity] = useState('')
+    const [activityForm, setActivityForm] = useState(false)
     const { setMessage, setShow, setType } = useNotificationsStore()
     const age = getAgeFromClassroom(classroom)
 
@@ -123,6 +124,31 @@ const LessonPage = () => {
 
         </motion.div>
     </div>
+    {activityForm 
+    ? 
+    // area: number;
+    // assignatureId: string;
+    // activity?: Activity;
+    // createActivity?: UseMutationResult<Activity, Error, CreateActivityData>
+    // updateActivity?: UseMutationResult<Activity, Error, CreateActivityData>
+    // setOpen?: React.Dispatch<React.SetStateAction<boolean>>
+    <Modal
+        isOpen={activityForm}
+        onClose={() => {
+            setActivityForm(false)
+            setMarkdown('')
+            setCategory('')
+            setOpen(false)
+        }}
+        whole
+    >
+        <ActivityForm 
+            area={1}
+            assignatureId={'1'}
+            descriptionAI={markdown}
+        />
+    </Modal>
+    : 
     <Modal
         isOpen={open}
         onClose={() => setOpen(false)}
@@ -135,10 +161,19 @@ const LessonPage = () => {
         <div className="flex justify-center items-center my-8 gap-12">
             <Button 
                 label="Guardar"
+                onClick={() => {
+                    setActivityForm(true)
+                }}
             />
             <Button 
                 label="Descartar"
                 color="red"
+                onClick={() => {
+                    setMarkdown('')
+                    setCategory('')
+                    setOpen(false)
+                    // localStorage.removeItem(`markdown-${lesson.id}-${category}`)
+                }}
             />
         </div>
         <ActivityAIResponse 
@@ -154,7 +189,7 @@ const LessonPage = () => {
         {category === 'proyecto' && <ActivityAIFormProject lesson={lesson} age={age} markdown={markdown} setMarkdown={setMarkdown} />}
 
         </>}
-    </Modal>
+    </Modal>}
     </>
   )
 }
