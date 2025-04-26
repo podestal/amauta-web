@@ -11,10 +11,10 @@ interface Props {
     classroom: string
 }
 
-const CreateActivity = ({ area, assignatureId, selectedQuarter, classroom }: Props) => {
+const CreateActivity = ({ area, assignatureId, selectedQuarter }: Props) => {
 
     const [open, setOpen] = useState(false)
-    const createActivity = useCreateActivity({ assignatureId, quarter:selectedQuarter, classroom })
+    const createActivity = useCreateActivity({ assignatureId, quarter:selectedQuarter })
 
   return (
     <>

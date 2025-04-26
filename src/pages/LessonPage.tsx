@@ -47,11 +47,8 @@ const LessonPage = () => {
 
     console.log('loading', loading);
 
-    // assignatureId: string
-    // quarter: string
-    // classroom: string
     const quarter = getCurrentQuarter()
-    const createActivity = useCreateActivity({ assignatureId: assignature, quarter, classroom: classroom.split('-')[classroom.split('-').length - 1], lessonId: lesson.id })
+    const createActivity = useCreateActivity({ assignatureId: assignature, quarter, lessonId: lesson.id })
     
     
 

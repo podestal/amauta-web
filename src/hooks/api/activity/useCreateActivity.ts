@@ -9,17 +9,15 @@ export interface CreateActivityData {
 interface Props {
     assignatureId: string
     quarter: string
-    classroom: string
     lessonId?: number
 }
 
-const useCreateActivity = ({ assignatureId, quarter, classroom, lessonId }: Props): UseMutationResult<Activity, Error, CreateActivityData> => {
+const useCreateActivity = ({ assignatureId, quarter, lessonId }: Props): UseMutationResult<Activity, Error, CreateActivityData> => {
     const activityService = getActivityService({ })
     const queryClient = useQueryClient()
-    const params = { classroom }
 
     return useMutation({
-        mutationFn: (data: CreateActivityData) => activityService.post(data.activity, data.access, params),
+        mutationFn: (data: CreateActivityData) => activityService.post(data.activity, data.access),
         onSuccess: res => {
             console.log('new activity',res);
             console.log([`activities ${lessonId}`]);
