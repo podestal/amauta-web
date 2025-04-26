@@ -6,6 +6,7 @@ import { BookUser, Boxes, ChartColumnStacked, ChartNoAxesCombined, HomeIcon, IdC
 import logo from '../assets/icons/amautapp.png'
 import { motion } from "framer-motion";
 import getTitleCase from "../utils/getTitleCase";
+import ThemeSelector from "../components/ui/ThemeSelector";
 
 interface Props {
     profile: Profile
@@ -80,53 +81,54 @@ const SideBar = ({ profile, isOpen, setIsOpen }: Props) => {
 
   return (
     <motion.div 
-    animate={{ width: isOpen ? 256 : 112 }}
-    transition={{ duration: 0.3, ease: "easeInOut" }}
-    className={`hidden lg:flex flex-col h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-800 text-white shadow-xl p-6 fixed z-50`}>
-    <div className="flex items-center gap-2 mb-6">
-      <img src={logo} width={50} alt="Amautapp" />
-      {isOpen && <p className="text-lg font-bold font-poppins">Amautapp</p>}
-    </div>
+      animate={{ width: isOpen ? 256 : 112 }}
+      transition={{ duration: 0.3, ease: "easeInOut" }}
+      className={`hidden lg:flex flex-col h-screen bg-gradient-to-b from-white via-gray-100 to-gray-200 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800 dark:text-white shadow-xl p-6 fixed z-50`}>
+      <div className="flex items-center gap-2 mb-6">
+        <img src={logo} width={50} alt="Amautapp" />
+        {isOpen && <p className="text-lg font-bold font-poppins">Amautapp</p>}
+      </div>
+      <nav className="flex flex-col space-y-2 mb-auto">
+          {navItems.map(item => (
+              <NavLink
+                  key={item.path}
+                  to={item.path}
+                  className={({ isActive }) =>
+                      `px-4 py-2 rounded-lg transition-colors duration-200 font-medium text-sm flex items-center gap-2 ${
+                          isActive
+                              ? "bg-blue-600 text-white shadow"
+                              : "dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-slate-700 dark:hover:text-white"
+                      }`
+                  }
+              >
+                  {item.icon && item.icon}
+                  {isOpen && <span>{item.name}</span>}
+              </NavLink>
+          ))}
 
-    <nav className="flex flex-col space-y-2 mb-auto">
-        {navItems.map(item => (
-            <NavLink
-                key={item.path}
-                to={item.path}
-                className={({ isActive }) =>
-                    `px-4 py-2 rounded-lg transition-colors duration-200 font-medium text-sm flex items-center gap-2 ${
-                        isActive
-                            ? "bg-blue-600 text-white shadow"
-                            : "text-gray-300 hover:bg-slate-700 hover:text-white"
-                    }`
-                }
-            >
-                {item.icon && item.icon}
-                {isOpen && <span>{item.name}</span>}
-            </NavLink>
-        ))}
+      </nav>
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="dark:text-gray-300 hover:text-slate-500 dark:hover:text-white transition px-4 py-2 flex gap-2 items-center"
+      >
+        {isOpen ? <PanelRightOpen /> : <PanelRightClose />}
+        {isOpen && <span>Colapsar Menu</span>}
+      </button>
+      <Logout 
+        icon
+        isOpen={isOpen}
+      />
+      <ThemeSelector 
+        sidebar
+      />
 
-    </nav>
-
-    <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="text-gray-300 hover:text-white transition px-4 py-2 flex gap-2 items-center"
-        >
-          {isOpen ? <PanelRightOpen /> : <PanelRightClose />}
-          {isOpen && <span>Colapsar Menu</span>}
-        </button>
-        <Logout 
-          icon
-          isOpen={isOpen}
-        />
-
-            {profile && (
+      {profile && (
         <div className={`flex items-start space-x-4 my-10 ${isOpen && 'px-4 py-2'}`}>
           {isOpen ? 
           <div>
             <p className="font-semibold text-md">{profile.first_name && getTitleCase(profile.first_name.toLocaleLowerCase())}</p>
             <p className="font-semibold text-md">{profile.last_name && getTitleCase(profile.last_name.toLocaleLowerCase())}</p>
-            <p className="text-sm text-gray-400 mt-2">{groupToSpanish[group]}</p>
+            <p className="text-sm dark:text-gray-400 text-gray-800 mt-2">{groupToSpanish[group]}</p>
           </div> 
            : 
            
@@ -134,11 +136,9 @@ const SideBar = ({ profile, isOpen, setIsOpen }: Props) => {
               {profile.first_name?.[0]}{profile.last_name?.[0]}
           </div>
             }
-            
-            
         </div>
     )}
-</motion.div>
+    </motion.div>
   );
 };
 

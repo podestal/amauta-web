@@ -2,7 +2,11 @@ import { useEffect } from 'react'
 import useThemeStore from '../../hooks/store/useThemeStore'
 import { RiMoonFill, RiSunFill } from '@remixicon/react'
 
-const ThemeSelector = () => {
+interface Props {
+  sidebar?:boolean
+}
+
+const ThemeSelector = ({ sidebar }: Props) => {
 
     const {theme, switchTheme} = useThemeStore()
 
@@ -20,7 +24,8 @@ const ThemeSelector = () => {
     }
 
   return (
-    <div className="flex max-lg:flex-col justify-center items-center gap-6 lg:gap-2">
+    <div className={`flex max-lg:flex-col items-center gap-6 lg:gap-2 ${sidebar ? 'mx-4 justify-start' : 'justify-center'} `}>
+     
         {/* <p>{theme === 'dark' ? '🌜' : '🌞'}</p> */}
         {theme === 'dark' ? <RiMoonFill className='text-blue-600'/> : <RiSunFill className='text-blue-600' />}
         <div 
@@ -43,6 +48,15 @@ const ThemeSelector = () => {
             ></div>
             
         </div>
+        {/* <div className='flex w-full mx-auto justify-start items-center'>
+          <div className='px-6 py-2 bg-black'>
+            <RiMoonFill className={`${theme === 'dark' ? 'text-blue-600' : 'text-slate-200'}`}/>
+          </div>
+          <div className='px-6 py-2 bg-black'>
+            <RiSunFill className={`${theme !== 'dark' ? 'text-blue-600' : 'text-slate-200'}`} />
+          </div>
+          
+        </div> */}
     </div>
   )
 }

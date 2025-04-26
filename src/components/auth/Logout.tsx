@@ -29,7 +29,7 @@ const Logout = ({ icon, isOpen }: Props) => {
       ? 
       <div 
         onClick={handleLogout}
-        className="text-slate-300 transition m-4 flex gap-2 items-center cursor-pointer hover:text-red-500">
+        className="dark:text-slate-300 transition m-4 flex gap-2 items-center cursor-pointer hover:text-red-500">
         <LogOut />
         {isOpen && <p>Salir</p>}
       </div>

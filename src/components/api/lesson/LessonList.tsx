@@ -14,7 +14,6 @@ const LessonList = ({ classroom, assignature, area }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
     const assignatureId = assignature || useParams().assignatureId || ''
-    console.log('assignatureId', assignatureId)
     
     const { data: lessons, isLoading, isError, error, isSuccess } = useGetLessonsByAssignature({ access, assignatureId })
 
