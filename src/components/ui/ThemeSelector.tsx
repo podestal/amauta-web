@@ -4,9 +4,10 @@ import { RiMoonFill, RiSunFill } from '@remixicon/react'
 
 interface Props {
   sidebar?:boolean
+  isOpen?: boolean
 }
 
-const ThemeSelector = ({ sidebar }: Props) => {
+const ThemeSelector = ({ sidebar, isOpen }: Props) => {
 
     const {theme, switchTheme} = useThemeStore()
 
@@ -25,10 +26,19 @@ const ThemeSelector = ({ sidebar }: Props) => {
 
   return (
     <div className={`flex max-lg:flex-col items-center gap-6 lg:gap-2 ${sidebar ? 'mx-4 justify-start' : 'justify-center'} `}>
-     
-        {/* <p>{theme === 'dark' ? '🌜' : '🌞'}</p> */}
-        {theme === 'dark' ? <RiMoonFill className='text-blue-600'/> : <RiSunFill className='text-blue-600' />}
-        <div 
+        <div
+          className={`${!isOpen && 'cursor-pointer'}`}
+          onClick={() => {
+            if (!isOpen) {
+              switchTheme(theme)
+            }
+          }}
+        >
+          {theme === 'dark' ? 
+            <RiMoonFill className={`text-blue-600`}/> : 
+            <RiSunFill className='text-blue-600' />}
+        </div>
+        {isOpen && <div 
             className={`relative inline-block w-8 h-4 transition duration-200 ease-in 
                         ${theme !== 'dark' ? 'bg-blue-600' : 'bg-gray-300'} 
                         rounded-full cursor-pointer`}
@@ -47,7 +57,7 @@ const ThemeSelector = ({ sidebar }: Props) => {
                             ${theme !== 'dark' ? 'translate-x-4' : 'translate-x-0'}`}
             ></div>
             
-        </div>
+        </div>}
         {/* <div className='flex w-full mx-auto justify-start items-center'>
           <div className='px-6 py-2 bg-black'>
             <RiMoonFill className={`${theme === 'dark' ? 'text-blue-600' : 'text-slate-200'}`}/>
