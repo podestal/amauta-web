@@ -36,7 +36,7 @@ const GradesTableBody = ({ classroomId, competencies, selectedQuarter, filterByN
             .map( (student, index) => (
             <motion.div
                 key={student.uid}
-                className="w-full flex border-b border-gray-700 hover:bg-gray-800 transition-colors"
+                className="w-full flex border-b dark:border-gray-700 border-gray-400 dark:hover:bg-gray-800 hover:bg-gray-300 transition-colors"
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}

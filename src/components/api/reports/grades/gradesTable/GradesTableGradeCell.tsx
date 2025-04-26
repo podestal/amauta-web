@@ -22,7 +22,7 @@ const gradeStyles: Record<string, string> = {
     "B": "bg-yellow-500 text-white",
     "C": "bg-red-500 text-white",
     "AD": "bg-green-500 text-white",
-    "NA": "bg-gray-300 text-gray-700", 
+    "NA": "dark:bg-gray-300 bg-gray-200 text-gray-700", 
   };
 
 const GradesTableGradeCell = ({ grade, classroomId, competence, setGradeChanged, quarter, studentUid }: Props) => {
