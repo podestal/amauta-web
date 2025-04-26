@@ -9,7 +9,7 @@ const useGetLessons = ({ access }: Props): UseQueryResult<Lesson[], Error> => {
     const lessonService = getLessonService({})
     return useQuery({
         queryKey: ['lessons'],
-        queryFn: () => lessonService.get(access),
+        queryFn: () => lessonService.get(access)
     })
 }
 

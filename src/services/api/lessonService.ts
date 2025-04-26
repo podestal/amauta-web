@@ -15,10 +15,15 @@ export type CreateUpdateLesson = Omit<Lesson, 'id' | 'created_at' | 'updated_at'
 
 interface Props {
     id?: string
+    byAssignature?: boolean
 }
 
-const getLessonService = ({ id }: Props) => {
-    const url = id ? `lessons/${id}/` : 'lessons/'
+const getLessonService = ({ id, byAssignature }: Props) => {
+    // const url = id ? `lessons/${id}/` : 'lessons/'
+    let url = 'lessons/'
+
+    if (id) url = `lessons/${id}/`
+    if (byAssignature) url = 'lessons/byAssignature/'
     return new APIClient<Lesson, CreateUpdateLesson>(url)
 }
 export default getLessonService

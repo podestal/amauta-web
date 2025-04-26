@@ -24,7 +24,7 @@ interface LessonContentProps {
     const access = useAuthStore(s => s.access) || ''
     const profile = useGetProfileStore(s => s.profile)
     const [update, setUpdate] = useState(true)
-    const createLesson = useCreateLesson()
+    const createLesson = useCreateLesson({ assignatureId: assignature})
 
     useEffect(() => {
         if (markdown) {

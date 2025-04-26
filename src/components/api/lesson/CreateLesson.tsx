@@ -12,7 +12,7 @@ interface Props {
 const CreateLesson = ({ classroom, assignature }: Props) => {
 
     const [open, setOpen] = useState(false)
-    const createLesson = useCreateLesson()
+    const createLesson = useCreateLesson({ assignatureId: assignature })
 
     const apiKey = import.meta.env.VITE_GEMINI_KEY
       const googleGenAI = new GoogleGenAI({

@@ -73,7 +73,7 @@ const LessonPage = () => {
         >
             <GoBack 
                 path={`/app/assignatures/${lesson.assignature}`}
-                state={{ }}
+                state={{ assignature, classroom, area }}
             />
             <h1 
                 className="text-3xl font-bold mb-4 text-slate-800 dark:text-white"
