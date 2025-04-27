@@ -46,7 +46,7 @@ const Slider = ({ isOpen, setOpen, children }: Props) => {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", stiffness: 200, damping: 30 }}
-            className="fixed right-0 top-0 w-[600px] h-full bg-slate-950 z-30 shadow-xl shadow-slate-400 dark:shadow-slate-700 flex flex-col"
+            className="fixed right-0 top-0 w-[600px] h-full dark:bg-slate-950 bg-slate-200 z-30 shadow-xl shadow-slate-400 dark:shadow-slate-700 flex flex-col"
           >
             {/* Close Button */}
             <button

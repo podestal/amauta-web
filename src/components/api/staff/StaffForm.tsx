@@ -243,7 +243,7 @@ const StaffForm = ({ group, name, setOpen, open, profile, signUp, createProfile,
                 className={`px-3 py-1 text-sm rounded-full transition-all duration-300 m-2 ${
                 selectedClassrooms.includes(classroom.id)
                     ? "bg-amber-500 text-white"
-                    : "bg-gray-700 text-gray-300 hover:bg-amber-400 hover:text-white"
+                    : "dark:bg-gray-700 bg-slate-300 dark:text-gray-300 hover:bg-amber-400 hover:text-white"
                 }`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -265,7 +265,7 @@ const StaffForm = ({ group, name, setOpen, open, profile, signUp, createProfile,
                 className={`px-3 py-1 text-sm rounded-full transition-all duration-300 m-2 ${
                 selectedClassrooms.includes(classroom.id)
                     ? "bg-blue-700 text-white"
-                    : "bg-gray-700 text-gray-300 hover:bg-blue-600 hover:text-white"
+                    : "dark:bg-gray-700 bg-slate-300 dark:text-gray-300 hover:bg-blue-600 hover:text-white"
                 }`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -287,7 +287,7 @@ const StaffForm = ({ group, name, setOpen, open, profile, signUp, createProfile,
                 className={`px-3 py-1 text-sm rounded-full transition-all duration-300 m-2 ${
                 selectedClassrooms.includes(classroom.id)
                     ? "bg-green-500 text-white"
-                    : "bg-gray-700 text-gray-300 hover:bg-green-400 hover:text-white"
+                    : "dark:bg-gray-700 bg-slate-300 dark:text-gray-300 hover:bg-green-400 hover:text-white"
                 }`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}

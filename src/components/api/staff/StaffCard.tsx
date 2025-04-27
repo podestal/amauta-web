@@ -35,11 +35,11 @@ const StaffCard = ({ profile, group }: Props) => {
     <>
         {currentProfile && 
         <div
-        className="bg-gray-900 hover:bg-gray-800 transition-colors px-6 py-4 rounded-2xl border-l-8 border-blue-500/70 text-white w-full max-w-sm shadow-lg cursor-pointer flex items-center gap-4"
+        className="dark:bg-gray-900 dark:hover:bg-gray-800 bg-slate-50 hover:bg-slate-100 transition-colors px-6 py-4 rounded-2xl border-l-8 border-blue-500/70 dark:text-white w-full max-w-sm shadow-lg cursor-pointer flex items-center gap-4"
         key={currentProfile.id}
         onClick={() => setOpen(true)}
         >
-            <div className="flex items-center justify-center w-12 h-12 bg-gray-700 rounded-full text-lg font-semibold">
+            <div className="flex items-center justify-center w-12 h-12 dark:bg-gray-700 bg-gray-200 rounded-full text-lg font-semibold">
             {currentProfile.first_name[0]}{currentProfile.last_name[0]}
             </div>
             <div>
