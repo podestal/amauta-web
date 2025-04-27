@@ -125,7 +125,7 @@ const LessonPage = () => {
                     }}
                 >
                     <Icon className="w-6 h-6 mb-2" />
-                    <span className="text-slate-50 text-sm font-medium">{name}</span>
+                    <span className="dark:text-slate-50 text-black text-sm font-medium">{name}</span>
                 </motion.button>
                 ))}
             </div>

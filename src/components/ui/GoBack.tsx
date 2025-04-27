@@ -22,8 +22,8 @@ const GoBack = ({ path, state }: Props) => {
     // </div>
         <div 
             onClick={() => navigate(path, { state })}
-            className="bg-blue-600 rounded-full p-1 hover:bg-opacity-70 cursor-pointer transition-opacity">
-            <ArrowBigLeft />
+            className="bg-blue-600 text-white rounded-full p-1 hover:bg-opacity-70 cursor-pointer transition-opacity">
+            <ArrowBigLeft/>
         </div>
   )
 }
