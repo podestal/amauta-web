@@ -24,7 +24,7 @@ const StudentAgendaCard = ({ student, classroom }: Props) => {
     <>
         <motion.div 
             variants={itemVariants}
-            className={`w-full border-l-8 border-t-2 ${student.filtered_read_agendas || student.filtered_tutor_contact ? 'border-green-500' : 'border-amber-700'} flex justify-between items-center bg-gray-800 text-white p-4 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 `}>
+            className={`w-full border-l-8 border-t-2 ${student.filtered_read_agendas || student.filtered_tutor_contact ? 'border-green-500' : 'border-amber-700'} flex justify-between items-center dark:bg-gray-800 bg-slate-200 dark:text-white p-4 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 `}>
             <div className='flex justify-start items-center gap-6'>
                 <RiBook3Fill 
                     onClick={() => setOpen(true)}

@@ -31,7 +31,7 @@ const StudentAgendaContent = ({ student, open, setOpen, classroom }: Props) => {
         initial="hidden"
         animate="visible"
         transition={{ staggerChildren: 0.1 }}
-        className="w-[90%] mx-auto p-6 h-[600px] bg-slate-800 rounded-lg shadow-2xl overflow-scroll"
+        className="w-[90%] mx-auto p-6 h-[600px] dark:bg-slate-800 bg-slate-200 rounded-lg shadow-2xl overflow-scroll"
     >
         <h2 className="text-lg font-semibold my-2">Agenda: {student.first_name} {student.last_name}</h2>
         <p className="mb-4">Contacto: {student.tutor_phone}</p>

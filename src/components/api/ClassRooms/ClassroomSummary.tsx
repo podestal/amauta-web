@@ -32,7 +32,7 @@ const ClassroomSummary = ({ classrooms }: Props) => {
               animate={{ opacity: 1, y: 0 }}
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.3 }}
-              className={`cursor-pointer relative bg-gray-800 hover:bg-gray-600 shadow-lg rounded-xl p-6 flex flex-col items-center justify-center border ${classroom.missing_dni ? 'border-red-500' : 'border-gray-700'}`}
+              className={`cursor-pointer relative bg-slate-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-600 shadow-lg rounded-xl p-6 flex flex-col items-center justify-center border ${classroom.missing_dni ? 'border-red-500' : 'border-gray-700'}`}
             >
 
               <School className="text-blue-500 dark:text-blue-400 w-12 h-12 mb-4" />
@@ -56,7 +56,7 @@ const ClassroomSummary = ({ classrooms }: Props) => {
               animate={{ opacity: 1, y: 0 }}
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.3 }}
-              className={`cursor-pointer relative bg-gray-800 hover:bg-gray-600 shadow-lg rounded-xl p-6 flex flex-col items-center justify-center border ${classroom.missing_dni ? 'border-red-500' : 'border-gray-700'}`}
+              className={`cursor-pointer relative bg-slate-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-600 shadow-lg rounded-xl p-6 flex flex-col items-center justify-center border ${classroom.missing_dni ? 'border-red-500' : 'border-gray-700'}`}
             >
 
               <School className="text-blue-500 dark:text-blue-400 w-12 h-12 mb-4" />
@@ -80,7 +80,7 @@ const ClassroomSummary = ({ classrooms }: Props) => {
               animate={{ opacity: 1, y: 0 }}
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.3 }}
-              className={`cursor-pointer relative bg-gray-800 hover:bg-gray-600 shadow-lg rounded-xl p-6 flex flex-col items-center justify-center border ${classroom.missing_dni ? 'border-red-500' : 'border-gray-700'}`}
+              className={`cursor-pointer relative bg-slate-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-600 shadow-lg rounded-xl p-6 flex flex-col items-center justify-center border ${classroom.missing_dni ? 'border-red-500' : 'border-gray-700'}`}
             >
 
               <School className="text-blue-500 dark:text-blue-400 w-12 h-12 mb-4" />

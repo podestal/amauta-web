@@ -29,7 +29,7 @@ const StudentAdminTableLastTen = ({ school, classrooms }: Props) => {
         transition={{ staggerChildren: 0.1 }}
         className="w-full flex flex-col gap-2"
     >
-        <div className="hidden md:grid grid-cols-10 text-lg font-bold gap-6 px-6 py-3 bg-gray-900 rounded-t-xl">
+        <div className="hidden md:grid grid-cols-10 text-lg font-bold gap-6 px-6 py-3 dark:bg-gray-900 bg-slate-200 rounded-t-xl">
             <p className="col-span-3">Nombres y Apellidos</p>
             <p>Información Personal</p>
             <p>Información Nacimiento</p>
