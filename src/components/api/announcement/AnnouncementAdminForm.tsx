@@ -158,15 +158,15 @@ const AnnouncementAdminForm = ({ classrooms, createAnnouncement }: Props) => {
             <div className="w-full grid grid-cols-3 gap-4 text-center">
                 <p 
                     onClick={() => selectedType === '' ? setSelectedType('I') : setSelectedType('')} 
-                    className={`${selectedType === 'I' ? 'bg-blue-600' : 'bg-gray-500'} py-2 rounded-2xl cursor-pointer hover:bg-blue-700 transition-all duration-300`}
+                    className={`${selectedType === 'I' ? 'bg-blue-600 text-slate-50' : 'dark:bg-gray-500 bg-gray-300'} py-2 rounded-2xl cursor-pointer hover:bg-blue-700 hover:text-slate-50 transition-all duration-300`}
                 >Informativo</p>
                 <p
                     onClick={() => selectedType === '' ? setSelectedType('A') : setSelectedType('')} 
-                    className={`${selectedType === 'A' ? 'bg-yellow-500' : 'bg-gray-500'} py-2 rounded-2xl cursor-pointer hover:bg-yellow-600 transition-all duration-300`}
+                    className={`${selectedType === 'A' ? 'bg-yellow-500 text-slate-50' : 'dark:bg-gray-500 bg-gray-300'} py-2 rounded-2xl cursor-pointer hover:bg-yellow-600 hover:text-slate-50 transition-all duration-300`}
                 >Atención</p>
                 <p
                     onClick={() => selectedType === '' ? setSelectedType('E') : setSelectedType('')} 
-                    className={`${selectedType === 'E' ? 'bg-red-600' : 'bg-gray-500'} py-2 rounded-2xl cursor-pointer hover:bg-red-700 transition-all duration-300`}
+                    className={`${selectedType === 'E' ? 'bg-red-600 text-slate-50' : 'dark:bg-gray-500 bg-gray-300'} py-2 rounded-2xl cursor-pointer hover:bg-red-700 hover:text-slate-50 transition-all duration-300`}
                 >Emergencia</p>
             </div>
         </div>
@@ -183,7 +183,7 @@ const AnnouncementAdminForm = ({ classrooms, createAnnouncement }: Props) => {
                             setSelectedStudents([])
                         }
                     }} 
-                    className={`${selectedLevel === 'G' ? 'bg-green-600' : 'bg-gray-500'} py-2 rounded-2xl cursor-pointer hover:bg-green-700 transition-all duration-300`}
+                    className={`${selectedLevel === 'G' ? 'bg-green-600 text-slate-50' : 'dark:bg-gray-500 bg-gray-300'} py-2 rounded-2xl cursor-pointer hover:bg-green-700 hover:text-slate-50 transition-all duration-300`}
                 >Todos</p>
                 <p
                     onClick={() => {
@@ -196,7 +196,7 @@ const AnnouncementAdminForm = ({ classrooms, createAnnouncement }: Props) => {
                             setSelectedStudents([])
                         }
                     }} 
-                    className={`${selectedLevel === 'C' ? 'bg-purple-500' : 'bg-gray-500'} py-2 rounded-2xl cursor-pointer hover:bg-purple-600 transition-all duration-300`}
+                    className={`${selectedLevel === 'C' ? 'bg-purple-500 text-slate-50' : 'dark:bg-gray-500 bg-gray-300'} py-2 rounded-2xl cursor-pointer hover:bg-purple-600 hover:text-slate-50 transition-all duration-300`}
                 >Clase</p>
                 <p
                     onClick={() => {
@@ -208,7 +208,7 @@ const AnnouncementAdminForm = ({ classrooms, createAnnouncement }: Props) => {
                             setSelectedStudents([])
                         }
                     }} 
-                    className={`${selectedLevel === 'P' ? 'bg-cyan-600' : 'bg-gray-500'} py-2 rounded-2xl cursor-pointer hover:bg-cyan-700 transition-all duration-300`}
+                    className={`${selectedLevel === 'P' ? 'bg-cyan-600 text-slate-50' : 'dark:bg-gray-500 bg-gray-300'} py-2 rounded-2xl cursor-pointer hover:bg-cyan-700 hover:text-slate-50 transition-all duration-300`}
                 >Estudiantes</p>
             </div>
         </div>
@@ -219,7 +219,7 @@ const AnnouncementAdminForm = ({ classrooms, createAnnouncement }: Props) => {
                 <>
                     <h2 className="text-xl font-bold">Alumnos Seleccionados</h2>
                     {selectedStudents.map(student => (
-                        <p key={student.uid} className="rounded-xl px-4 bg-green-600 transition-all duration-300">{student.first_name} {student.last_name}</p>
+                        <p key={student.uid} className="rounded-xl px-4 bg-green-600 text-slate-50 transition-all duration-300">{student.first_name} {student.last_name}</p>
                     ))}
                 </>} 
                 <div 

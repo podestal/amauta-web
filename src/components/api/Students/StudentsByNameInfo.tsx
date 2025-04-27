@@ -25,7 +25,7 @@ const StudentsByNameInfo = ({ name, school, classrooms, classroomId, showIcons=f
 
   return (
     <>
-            <div className="w-full grid grid-cols-10 text-lg font-bold gap-6 px-6 py-3 lg:bg-gray-900 rounded-t-xl max-lg:hidden">
+            <div className="w-full grid grid-cols-10 text-lg font-bold gap-6 px-6 py-3 dark:bg-gray-900 bg-slate-200 rounded-t-xl max-lg:hidden mb-4">
                 <p className="col-span-3">Nombres y Apellidos</p>
                 <p>Información Personal</p>
                 <p>Información Nacimiento</p>
@@ -35,6 +35,7 @@ const StudentsByNameInfo = ({ name, school, classrooms, classroomId, showIcons=f
                 <p>Información Madre</p>
                 <p>Información Apoderado</p>
             </div>
+            <div className="w-full flex flex-col gap-4">
             {students.map(student => (
                 <StudentAdminCard 
                     student={student}
@@ -44,6 +45,7 @@ const StudentsByNameInfo = ({ name, school, classrooms, classroomId, showIcons=f
                     showIcons={showIcons}
                 />
             ))}
+            </div>
     </>
   )
 }

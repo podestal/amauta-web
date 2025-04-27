@@ -43,7 +43,7 @@ const StudentSelector = ({ name, setSelectedStudents, selectedStudents, color }:
                     className={`px-3 py-1 text-sm rounded-full transition-all duration-300 m-2 ${
                         !selectedStudents.some(student => student.uid === student.uid)
                             ? `${color} text-white`
-                            : "bg-gray-700 text-gray-300 hover:" + color.replace("bg-", "hover:bg-") + " hover:text-white"
+                            : "dark:bg-gray-700 bg-gray-300 dark:text-gray-300 hover:" + color.replace("bg-", "hover:bg-") + " hover:text-white"
                     }`}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}

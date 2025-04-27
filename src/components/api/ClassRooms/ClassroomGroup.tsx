@@ -25,7 +25,7 @@ const ClassroomGroup = ({ level, title, color, classrooms, selectedClassrooms, t
                         className={`px-3 py-1 text-sm rounded-full transition-all duration-300 m-2 ${
                             selectedClassrooms.includes(classroom.id)
                                 ? `${color} text-white`
-                                : "bg-gray-700 text-gray-300 hover:" + color.replace("bg-", "hover:bg-") + " hover:text-white"
+                                : "dark:bg-gray-700 bg-gray-300  dark:text-gray-300 hover:" + color.replace("bg-", "hover:bg-") + " hover:text-white"
                         }`}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}

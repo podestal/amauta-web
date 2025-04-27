@@ -56,7 +56,7 @@ const MonthlyAttendanceReportHeader = ({ selectedMonth, setSelectedMonth }: Prop
             </div>
             <div className="grid grid-cols-31">
                 {days.map(day => (
-                    <div key={day} className="flex justify-center items-center w-8 h-8 bg-slate-800">
+                    <div key={day} className="flex justify-center items-center w-8 h-8 dark:bg-slate-800">
                         <p className="text-xs text-center">{day}</p>
                     </div>
                 ))}
