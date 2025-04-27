@@ -32,7 +32,7 @@ const DailyAttendanceReportBody = ({ selectedClassroom, selectedDay, currentMont
             .map( student => (
             <div
                 key={student.uid}
-                className="w-full grid grid-cols-12 px-2 py-6 font-palanquin text-left hover:bg-slate-900"
+                className="w-full grid grid-cols-12 px-2 py-6 font-palanquin text-left hover:bg-slate-200 dark:hover:bg-slate-900"
             >
                 <div className="flex justify-start items-start">
                     <p>{student.uid}</p>

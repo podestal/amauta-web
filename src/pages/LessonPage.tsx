@@ -205,6 +205,7 @@ const LessonPage = () => {
             area={area} 
             classroom={classroom.split('-')[classroom.split('-').length - 1]} 
             lessonId={lesson.id}   
+            descriptionAi
         />
     </div>
 

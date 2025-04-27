@@ -11,9 +11,10 @@ interface Props {
     assignatureId: string
     area: string
     classroom: string
+    descriptionAi?: boolean
 }
 
-const ActivityCard = ({ activity, isPastDue, assignatureId, area, classroom }: Props) => {
+const ActivityCard = ({ activity, isPastDue, assignatureId, area, classroom, descriptionAi }: Props) => {
 
     const navigate = useNavigate()
 
@@ -35,7 +36,7 @@ const ActivityCard = ({ activity, isPastDue, assignatureId, area, classroom }: P
             ${isPastDue ? "border-gray-500" : "border-blue-500"}`}
         >
         <h3 className="text-lg font-semibold">{activity.title}</h3>
-        <p className="text-gray-600 dark:text-gray-300">Descripción: {activity.description}</p>
+        {!descriptionAi && <p className="text-gray-600 dark:text-gray-300">Descripción: {activity.description}</p>}
         <div className='my-2'>
             <span className='bg-blue-600 text-slate-50 text-sm font-medium px-3 py-1 rounded-full'>{activity.category_name}</span>
         </div>

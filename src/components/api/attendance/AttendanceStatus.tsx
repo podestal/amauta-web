@@ -28,7 +28,7 @@ interface AttendanceStatusProps {
             onClick={canModify ? onClick : undefined}
             className={`py-4 shadow-xl px-4 text-center font-bold rounded-2xl text-xs cursor-pointer flex items-center justify-center space-x-2 ${
                 canModify ? 'hover:opacity-80' : 'cursor-default'
-            } ${statusStyles[status] || 'bg-gray-500'}`}
+            } ${statusStyles[status] || 'dark:bg-gray-500 bg-gray-300'}`}
         >
             <span>{statusIcons[status] || ''}</span>
             <span>{label}</span>

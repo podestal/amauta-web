@@ -12,6 +12,7 @@ interface Props {
     area: string
     classroom: string
     lessonId?: number
+    descriptionAi?: boolean
 }
 
 const ActivitiesList = ({ assignatureId, quarter, area, classroom, lessonId }: Props) => {
@@ -55,6 +56,7 @@ const ActivitiesList = ({ assignatureId, quarter, area, classroom, lessonId }: P
                     assignatureId={assignatureId}
                     area={area}
                     classroom={classroom}
+                    descriptionAi
                 />
         ))}
         </ul>
