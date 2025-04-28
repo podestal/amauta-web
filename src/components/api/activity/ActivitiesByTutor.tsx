@@ -30,7 +30,7 @@ const ActivitiesByTutor = ({ assignatureId, studentUid, show, quarter }: Props) 
             animate={{ height: "auto", opacity: 1 }}
             transition={{ duration: 0.4 }}
             exit={{ height: 0, opacity: 0 }}
-            className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md cursor-pointer transition-transform transform hover:scale-105 hover:shadow-lg border-l-4 my-6"
+            className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md cursor-pointer transition-transform transform hover:shadow-lg border-l-4 my-6"
         >
             <ul>
                 {activities.map(activity => (

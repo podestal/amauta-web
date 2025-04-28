@@ -39,7 +39,6 @@ const AssignatureCardByTutor = ({ assignature, studentUid, index, quarter }: Pro
         <motion.div 
             key={assignature.id}
             className={`p-5 rounded-lg shadow-lg mb-4 transition-all ${assignatureStyles[index % assignatureStyles.length].styles}`}
-            whileHover={{ scale: 1.02 }}
         >
             <div className="flex justify-between items-center cursor-pointer" onClick={() => setShow(!show)}>
                 <div className="flex items-center gap-4">
@@ -47,7 +46,7 @@ const AssignatureCardByTutor = ({ assignature, studentUid, index, quarter }: Pro
                 <div>
                     <h2 className="text-lg font-semibold">{assignature.title}</h2>
                     <p className="text-sm text-gray-200">Promedio: 
-                    <span className={`font-bold ml-2 `}>{assignature.average}</span>
+                        <span className={`font-bold ml-2 `}>{assignature.average}</span>
                     </p>
                 </div>
                 </div>
