@@ -109,15 +109,11 @@ const SideBar = ({ profile, isOpen, setIsOpen }: Props) => {
       </nav>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="dark:text-gray-300 hover:text-slate-500 dark:hover:text-white transition px-4 py-2 flex gap-2 items-center"
+        className="dark:text-gray-300 hover:text-slate-500 dark:hover:text-white transition px-4 py-2 mb-4 flex gap-2 items-center"
       >
         {isOpen ? <PanelRightOpen /> : <PanelRightClose />}
         {isOpen && <span>Colapsar Menu</span>}
       </button>
-      <Logout 
-        icon
-        isOpen={isOpen}
-      />
       <ThemeSelector 
         sidebar
         isOpen={isOpen}
@@ -138,7 +134,12 @@ const SideBar = ({ profile, isOpen, setIsOpen }: Props) => {
           </div>
             }
         </div>
+        
     )}
+      <Logout 
+        icon
+        isOpen={isOpen}
+      />
     </motion.div>
   );
 };
