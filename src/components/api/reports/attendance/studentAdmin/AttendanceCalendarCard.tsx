@@ -103,7 +103,7 @@ const AttendanceCalendarCard = ({ currentYear, currentMonth, attendances }: Prop
 
   return (
 <>
-    <div className="grid grid-cols-7 gap-2 bg-gray-800 print:bg-white print:text-slate-950 p-4 rounded-2xl shadow">
+    <div className="grid grid-cols-7 gap-2 bg-slate-100 dark:bg-gray-800 print:bg-white print:text-slate-950 p-4 rounded-2xl shadow">
         {/* <>{console.log('transformAttendance', transformAttendance(attendances))}</> */}
         {blanks.map((_, i) => (
         <div key={`blank-${i}`} />
@@ -111,9 +111,9 @@ const AttendanceCalendarCard = ({ currentYear, currentMonth, attendances }: Prop
         {calendarDays.map((day, i) => (
         <div
             key={day.date}
-            className="border border-gray-700 rounded-xl p-2 flex flex-col items-center bg-gray-900 hover:bg-gray-700 print:bg-transparent transition"
+            className="border border-gray-700 rounded-xl p-2 flex flex-col items-center bg-slate-200 dark:bg-gray-900 hover:bg-slate-300 dark:hover:bg-gray-700 print:bg-transparent transition"
         >
-            <span className="text-xs font-bold text-gray-300 print:text-slate-950">
+            <span className="text-xs font-bold dark:text-gray-300 print:text-slate-950">
             {moment({ year: currentYear, month: currentMonth, day: i + 1 }).format("DD")}
             </span>
             {day.entry || day.exit ? (
@@ -121,16 +121,16 @@ const AttendanceCalendarCard = ({ currentYear, currentMonth, attendances }: Prop
                 <div className="flex items-center space-x-1">
                 {statusInfo[day.entry?.status as AttendanceStatus]?.icon}
                     <div className="w-full flex justify-between">
-                        <span className="text-[10px] text-gray-400 print:text-slate-950">Entrada</span>
-                        <span className="text-[10px] text-gray-400 print:text-slate-950">{(day.entry?.status === 'noShow' || day.entry?.status === 'excused') ? '-' : day.entry?.time}</span>
+                        <span className="text-[10px] text-gray-700 dark:text-gray-400 print:text-slate-950">Entrada</span>
+                        <span className="text-[10px] text-gray-700 dark:text-gray-400 print:text-slate-950">{(day.entry?.status === 'noShow' || day.entry?.status === 'excused') ? '-' : day.entry?.time}</span>
                     </div>
                 </div>
                 <div className="flex items-center space-x-1">
                 {day.exit && statusInfo[day.exit.status as AttendanceStatus]?.icon}
                 {day.exit && <div className="w-full flex justify-between">
                   <>{console.log('day.entry?.status', day.entry?.status)}</>
-                    <span className="text-[10px] text-gray-400 print:text-slate-950">Salida</span>
-                    <span className="text-[10px] text-gray-400 print:text-slate-950">{day.exit?.status === 'onTime' ? 'Normal' : day.exit?.time}</span>
+                    <span className="text-[10px] text-gray-700 dark:text-gray-400 print:text-slate-950">Salida</span>
+                    <span className="text-[10px] text-gray-700 dark:text-gray-400 print:text-slate-950">{day.exit?.status === 'onTime' ? 'Normal' : day.exit?.time}</span>
                 </div>}
 
                 </div>
@@ -142,7 +142,7 @@ const AttendanceCalendarCard = ({ currentYear, currentMonth, attendances }: Prop
         ))}
         </div>
             {/* Legend */}
-            <div className="mt-8 pb-2 print:my-2 print:pb-0 w-full flex items-center justify-evenly text-sm text-gray-300 print:text-slate-950">
+            <div className="mt-8 pb-2 print:my-2 print:pb-0 w-full flex items-center justify-evenly text-sm text-gray-700 dark:text-gray-300 print:text-slate-950">
                 {Object.entries(statusInfo).map(([key, { label, icon }]) => (
                 <div key={key} className="flex items-center space-x-2">
                     {icon}

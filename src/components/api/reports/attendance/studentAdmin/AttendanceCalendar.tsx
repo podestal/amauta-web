@@ -138,7 +138,7 @@ const AttendanceCalendar: React.FC<AttendanceCalendarProps> = ({
             </div>
 
             {/* Weekdays */}
-            <div className="grid grid-cols-7 text-center text-sm text-gray-300 print:text-slate-950 mb-2">
+            <div className="grid grid-cols-7 text-center text-sm dark:text-gray-300 print:text-slate-950 mb-2">
                 {weekdays.map((day) => (
                 <div key={day}>{day}</div>
                 ))}
