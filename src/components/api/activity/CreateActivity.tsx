@@ -4,6 +4,9 @@ import Modal from "../../ui/Modal"
 import ActivityForm from "./ActivityForm"
 import useCreateActivity from "../../../hooks/api/activity/useCreateActivity"
 import MultiOptionSwitch from "../../ui/MultiOptionSwitch"
+import useGetLessonsByAssignature from "../../../hooks/api/lesson/useGetLessonByAssignature"
+import useAuthStore from "../../../hooks/store/useAuthStore"
+import ActivityFormAI from "./forms/ActivityFormAI"
 
 interface Props {
     area: number
@@ -15,8 +18,16 @@ interface Props {
 const CreateActivity = ({ area, assignatureId, selectedQuarter }: Props) => {
 
     const [open, setOpen] = useState(false)
+    const access = useAuthStore(s => s.access) || ''
     const createActivity = useCreateActivity({ assignatureId, quarter:selectedQuarter })
     const [selected, setSelected] = useState(0)
+    const { data: lessons, isLoading, isError, error, isSuccess } = useGetLessonsByAssignature({ access, assignatureId })
+
+    if (isLoading) return <p className="text-center animate-pulse">Cargando...</p>
+
+    if (isError) return <p className="text-center text-red-500">Error: {error.message}</p>
+
+    if (isSuccess)
 
   return (
     <>
@@ -45,7 +56,10 @@ const CreateActivity = ({ area, assignatureId, selectedQuarter }: Props) => {
                 assignatureId={assignatureId}
                 setOpen={setOpen}
             />}
-            {selected === 1 && <p>Con ai</p>}
+            {selected === 1 && <ActivityFormAI 
+                lessons={lessons}
+
+            />}
         </Modal>
     </>
   )

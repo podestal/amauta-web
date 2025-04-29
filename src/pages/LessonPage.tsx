@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { ClipboardList, FilePenLine, FileText, FlaskConical } from "lucide-react";
 import Markdown from "react-markdown";
 import { useLocation } from "react-router-dom"
 import GoBack from "../components/ui/GoBack";
@@ -15,13 +14,14 @@ import ActivityAIFormTest from "../components/api/activity/forms/ActivityAIFormT
 import ActivityAIFormProject from "../components/api/activity/forms/ActivityAIFormProject";
 import getAgeFromClassroom from "../utils/getAgeFromClassroom";
 import Button from "../components/ui/Button";
-import useNotificationsStore from "../hooks/store/useNotificationsStore";
 import ActivityForm from "../components/api/activity/ActivityForm";
 import useCreateActivity from "../hooks/api/activity/useCreateActivity";
 import getCurrentQuarter from "../utils/getCurrentCuarter";
 import ActivitiesList from "../components/api/activity/ActivitiesList";
-  
-  const iconMap = [
+import CategoryAISelector from "../components/api/category/CategoryAISelector";
+import { ClipboardList, FilePenLine, FileText, FlaskConical } from "lucide-react";
+
+const iconMap = [
     { name: 'Tarea', icon: FileText, color: 'blue-500' },
     { name: 'Trabajo en clase', icon: ClipboardList, color: 'green-500' },
     { name: 'Evaluación', icon: FilePenLine, color: 'red-500' },
@@ -42,7 +42,6 @@ const LessonPage = () => {
     const [loading, setLoading] = useState(true)
     const [activityForm, setActivityForm] = useState(false)
     const [titleAI, setTitleAI] = useState('')
-    const { setMessage, setShow, setType } = useNotificationsStore()
     const age = getAgeFromClassroom(classroom)
 
     console.log('loading', loading);
@@ -89,49 +88,15 @@ const LessonPage = () => {
 
         </motion.div>
 
-        <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={{
-            visible: {
-                transition: {
-                staggerChildren: 0.1,
-                },
-            },
-            }}
-        >
-            <h2 className="text-2xl mb-6 text-center font-semibold">Actividades</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                {iconMap.map(({ name, icon: Icon, color }) => (
-                <motion.button
-                    key={name}
-                    className={`flex flex-col items-center justify-center p-4 rounded-xl shadow-md bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition text-${color} shadow-xl shadow-slate-500`}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => {
-                        if (markdown) {
-                            if (name.toLocaleLowerCase() === category ) {
-                                setOpen(true)
-                            } else {
-                                setMessage(`Por favor, completa la actividad ${category} antes de continuar`)
-                                setShow(true)
-                                setType('error')
-                            }
-                            // setCategory(name.toLocaleLowerCase())
-                        } else {
-                            setCategory(name.toLocaleLowerCase());
-                            setOpen(true);
-                        };
-                    }}
-                >
-                    <Icon className="w-6 h-6 mb-2" />
-                    <span className="dark:text-slate-50 text-black text-sm font-medium">{name}</span>
-                </motion.button>
-                ))}
-            </div>
-
-        </motion.div>
+        <CategoryAISelector 
+            markdown={markdown}
+            category={category}
+            setCategory={setCategory}
+            setOpen={setOpen}
+            iconMap={iconMap}
+        />
     </div>
+    <h2 className="text-2xl my-6 text-center font-semibold">Actividades</h2>
     {activityForm 
     ? 
     <Modal
