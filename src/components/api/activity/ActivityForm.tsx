@@ -199,7 +199,7 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, updateAct
         transition={{ duration: 0.3 }}
     >
         <h1 className="text-3xl font-bold text-center text-gray-100 mb-6">
-        📝 {activity ? 'Modificar Tarea' : 'Crear Nueva Tarea'}
+        📝 {activity ? 'Modificar Actividad' : 'Crear Nueva Actividad'}
         </h1>
         <form 
             onSubmit={handleCreateActivity}
