@@ -105,6 +105,7 @@ const WebNavigator = () => {
           <motion.li className="hover:text-gray-400 cursor-pointer" variants={navVariants}><Link to='about'>Nosotros</Link></motion.li>
           <motion.li className="hover:text-gray-400 cursor-pointer" variants={navVariants}><Link to='careers'>Carreras</Link></motion.li>
           <motion.li className="hover:text-gray-400 cursor-pointer" variants={navVariants}><Link to='contact'>Contacto</Link></motion.li>
+          <motion.li className="hover:text-gray-400 cursor-pointer" variants={navVariants}><Link to='prices'>Precio</Link></motion.li>
           <motion.li className="hover:text-gray-400 cursor-pointer" variants={navVariants}><Link to='download'>Descargar</Link></motion.li>
         </motion.ul>
 

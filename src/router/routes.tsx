@@ -35,6 +35,7 @@ import AnnouncementsAdminPage from "../pages/AnnouncementsAdminPage";
 import WhatsappDashboard from "../pages/WhatsappPage";
 import GradesReportPage from "../pages/GradesReportPage";
 import LessonPage from "../pages/LessonPage";
+import PricesPage from "../pages/PricesPage";
 
 const routes = createBrowserRouter([
     {
@@ -84,6 +85,10 @@ const routes = createBrowserRouter([
             {
                 path: 'reset-success',
                 element: <PasswordResetSuccess />
+            },
+            {
+                path: 'prices',
+                element: <PricesPage />
             }
         ]
     },
