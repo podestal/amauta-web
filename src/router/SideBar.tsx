@@ -85,7 +85,7 @@ const SideBar = ({ profile, isOpen, setIsOpen }: Props) => {
       transition={{ duration: 0.3, ease: "easeInOut" }}
       className={`hidden lg:flex flex-col h-screen bg-gradient-to-b from-slate-50 via-slate-200 to-slate-300 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800 dark:text-white shadow-xl p-6 fixed z-50`}>
       <div className="flex items-center gap-2 mb-6">
-        <img src={logo} width={50} alt="Amautapp" />
+        <img className="mx-1" src={logo} width={50} alt="Amautapp" />
         {isOpen && <p className="text-lg font-bold font-poppins">Amautapp</p>}
       </div>
       <nav className="flex flex-col space-y-2 mb-auto">
@@ -129,7 +129,7 @@ const SideBar = ({ profile, isOpen, setIsOpen }: Props) => {
           </div> 
            : 
            
-          <div className="w-12 h-12 bg-gradient-to-r from-blue-900 via-blue-950  to-slate-950  rounded-full flex items-center justify-center text-white text-lg font-bold">
+          <div className="mx-1 w-12 h-12 bg-gradient-to-r from-blue-900 via-blue-950  to-slate-950  rounded-full flex items-center justify-center text-white text-lg font-bold">
               {profile.first_name?.[0]}{profile.last_name?.[0]}
           </div>
             }
