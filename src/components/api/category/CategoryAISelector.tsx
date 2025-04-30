@@ -65,8 +65,10 @@ const CategoryAISelector = ({ markdown, category, setCategory, setOpen, iconMap,
                     onClick={() => {
                         if (active === name) {
                             setActive('')
+                            setCategory('')
                         } else {
                             setActive(name)
+                            setCategory(name.toLocaleLowerCase());
                         }
                         
                     }}

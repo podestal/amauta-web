@@ -1,6 +1,11 @@
 import { BookOpen, ClipboardList, FilePenLine, FileText, FlaskConical } from "lucide-react";
 import { Lesson } from "../../../../services/api/lessonService"
 import CategoryAISelector from "../../category/CategoryAISelector"
+import { useState } from "react";
+import ActivityAIFormProject from "./ActivityAIFormProject";
+import ActivityAIFormTest from "./ActivityAIFormTest";
+import ActivityAIFormClassActivity from "./ActivityAIFormClassActivity";
+import ActivityAIFormHomework from "./ActivityAIFormHomework";
 
 const iconMap = [
     { name: 'Tarea', icon: FileText, color: 'blue-500' },
@@ -15,6 +20,13 @@ interface Props {
 }
 
 const ActivityFormAI = ({ lessons }: Props) => {
+
+    const [markdown, setMarkdown] = useState('')
+    const [category, setCategory] = useState('')
+
+    console.log('category',category);
+    
+
   return (
     <div>
         {lessons.map( lesson => (
@@ -26,11 +38,40 @@ const ActivityFormAI = ({ lessons }: Props) => {
         ))}
         <CategoryAISelector 
             markdown={''}
-            category={''}
-            setCategory={() => {}}
+            category={category}
+            setCategory={setCategory}
             setOpen={() => {}}
             iconMap={iconMap}
         />
+        {category === 'tarea' && <ActivityAIFormHomework 
+            lesson={lessons[0]}
+            age={10}
+            markdown={markdown}
+            setMarkdown={setMarkdown}
+            setAITitle={() => {}}
+        />}
+        {category === 'trabajo en clase' && <ActivityAIFormClassActivity 
+            lesson={lessons[0]}
+            age={10}
+            markdown={markdown}
+            setMarkdown={setMarkdown}
+            setAITitle={() => {}}
+        />}
+        {category === 'evaluación' && <ActivityAIFormTest 
+            lesson={lessons[0]}
+            age={10}
+            markdown={markdown}
+            setMarkdown={setMarkdown}
+            setAITitle={() => {}}
+        />}
+        {category === 'examen' && <p>Examen form</p>}
+        {category === 'proyecto' && <ActivityAIFormProject 
+            lesson={lessons[0]}
+            age={10}
+            markdown={markdown}
+            setMarkdown={setMarkdown}
+            setAITitle={() => {}}
+        />}
     </div>
   )
 }
