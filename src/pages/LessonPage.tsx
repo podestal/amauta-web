@@ -94,6 +94,7 @@ const LessonPage = () => {
             setCategory={setCategory}
             setOpen={setOpen}
             iconMap={iconMap}
+            lesson={true}
         />
     </div>
     <h2 className="text-2xl my-6 text-center font-semibold">Actividades</h2>

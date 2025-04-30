@@ -3,13 +3,13 @@ import getActivityService, {Activity} from "../../../services/api/activityServic
 
 interface Props {
     access: string
-    lessonId: string
+    lessonId: string 
 }
 
 const useGetActivitiesByLesson = ({ access, lessonId }: Props): UseQueryResult<Activity[]> => {
     const activityService = getActivityService({ byLesson: true })
     const ACTIVITY_QUERY_KEY = [`activities ${lessonId}`] 
-    let params: { lesson: string } = { lesson: lessonId }
+    let params: { lessons: string } = { lessons: lessonId }
     
     return useQuery({
         queryKey: ACTIVITY_QUERY_KEY,

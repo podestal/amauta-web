@@ -12,7 +12,7 @@ export interface Activity {
     category_name: string
     competences: number[]
     capacities: number[]
-    lesson: number
+    lesson: number[]
 }
 
 export interface ActivityByTutor {
@@ -25,7 +25,7 @@ export interface ActivityByTutor {
 }
 
 export type UpdateCreateActivity = Omit<Activity, 'id' | 'created_at' | 'category_name' | 'lesson'> & {
-    lesson?: number | null
+    lesson?: number[] | null
 }
 
 interface Props {

@@ -133,7 +133,7 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, updateAct
                 due_date: moment(dueDate).format('YYYY-MM-DD'),
                 quarter: getCurrentQuarter(),
                 assignature: parseInt(assignatureId),
-                lesson: lesson ? lesson : null,
+                lesson: lesson ? [lesson] : null,
             },
         }, {
             onSuccess: () => {

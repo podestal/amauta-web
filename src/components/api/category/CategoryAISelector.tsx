@@ -11,7 +11,7 @@ interface Props {
     lesson?: boolean
 }
 
-const CategoryAISelector = ({ markdown, category, setCategory, setOpen, iconMap, lesson }: Props) => {
+const CategoryAISelector = ({ markdown, category, setCategory, setOpen, iconMap, lesson=false }: Props) => {
 
     const { setMessage, setShow, setType } = useNotificationsStore()
     const [active, setActive] = useState('')
