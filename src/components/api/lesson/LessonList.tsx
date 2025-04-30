@@ -8,14 +8,17 @@ interface Props {
   classroom: string
   assignature: string
   area: string
+  quarter: string
 }
 
-const LessonList = ({ classroom, assignature, area }: Props) => {
+const LessonList = ({ classroom, assignature, area, quarter }: Props) => {
 
+    console.log('quarter', quarter);
+    
     const access = useAuthStore(s => s.access) || ''
     const assignatureId = assignature || useParams().assignatureId || ''
     
-    const { data: lessons, isLoading, isError, error, isSuccess } = useGetLessonsByAssignature({ access, assignatureId })
+    const { data: lessons, isLoading, isError, error, isSuccess } = useGetLessonsByAssignature({ access, assignatureId, quarter })
 
     if (isLoading) return <Loader />
 

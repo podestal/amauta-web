@@ -4,14 +4,15 @@ import getLessonService, { Lesson } from "../../../services/api/lessonService"
 interface Props {
     access: string
     assignatureId: string
+    quarter: string
 }
 
-const useGetLessonsByAssignature = ({ access, assignatureId }: Props): UseQueryResult<Lesson[], Error> => {
+const useGetLessonsByAssignature = ({ access, assignatureId, quarter }: Props): UseQueryResult<Lesson[], Error> => {
     const lessonService = getLessonService({byAssignature: true})
-    const params = { assignature: assignatureId }
+    const params = { assignature: assignatureId, quarter }
     return useQuery({
-        queryKey: [`lessons ${assignatureId}`],
-        queryFn: () => lessonService.get(access, params)
+        queryKey: [`lessons ${assignatureId} ${quarter}`],
+        queryFn: () => lessonService.get(access, params),
     })
 }
 
