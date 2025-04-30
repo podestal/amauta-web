@@ -7,12 +7,13 @@ import useCreateLesson from "../../../hooks/api/lesson/useCreateLesson"
 interface Props {
     classroom: string
     assignature: string
+    quarter: string
 }
 
-const CreateLesson = ({ classroom, assignature }: Props) => {
+const CreateLesson = ({ classroom, assignature, quarter }: Props) => {
 
     const [open, setOpen] = useState(false)
-    const createLesson = useCreateLesson({ assignatureId: assignature })
+    const createLesson = useCreateLesson({ assignatureId: assignature, quarter })
 
     const apiKey = import.meta.env.VITE_GEMINI_KEY
       const googleGenAI = new GoogleGenAI({

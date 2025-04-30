@@ -8,17 +8,17 @@ export interface CreateLessonData {
 
 interface Props {
     assignatureId: string
+    quarter: string
 }
 
-const useCreateLesson = ({ assignatureId }: Props): UseMutationResult<Lesson, Error, CreateLessonData> => {
-    console.log('assignatureId', assignatureId);
+const useCreateLesson = ({ assignatureId, quarter }: Props): UseMutationResult<Lesson, Error, CreateLessonData> => {
     
     const lessonService = getLessonService({})
     const queryClient = useQueryClient()
     return useMutation({
         mutationFn: (data: CreateLessonData) => lessonService.post(data.lesson, data.access),
         onSuccess: res => {
-            queryClient.setQueryData<Lesson[]>([`lessons ${assignatureId}`], (oldData) => {
+            queryClient.setQueryData<Lesson[]>([`lessons ${assignatureId} ${quarter}`], (oldData) => {
                 if (!oldData) return [res]
                 return [...oldData, res]
             })
