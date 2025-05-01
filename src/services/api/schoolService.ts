@@ -5,6 +5,7 @@ export interface School {
     name: string,
     type_of_institution: string,
     picture_name: string,
+    payment_status: string,
 }
 
 interface Props {

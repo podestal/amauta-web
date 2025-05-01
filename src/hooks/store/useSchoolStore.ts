@@ -11,7 +11,8 @@ const useSchoolStore = create<SchoolState>(set => ({
         id: 0,
         name: '',
         type_of_institution: '',
-        picture_name: ''
+        picture_name: '',
+        payment_status: '',
     },
     setSchool: (school) => {
         set({ school })

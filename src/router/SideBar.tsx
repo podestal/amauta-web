@@ -83,7 +83,7 @@ const SideBar = ({ profile, isOpen, setIsOpen }: Props) => {
     <motion.div 
       animate={{ width: isOpen ? 256 : 112 }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
-      className={`hidden lg:flex flex-col h-screen bg-gradient-to-b from-slate-50 via-slate-200 to-slate-300 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800 dark:text-white shadow-xl p-6 fixed z-50`}>
+      className={`hidden lg:flex flex-col h-screen bg-gradient-to-b from-slate-50 via-slate-200 to-slate-300 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800 dark:text-white shadow-xl px-6 pb-12 pt-6 fixed z-40`}>
       <div className="flex items-center gap-2 mb-6">
         <img className="mx-1" src={logo} width={50} alt="Amautapp" />
         {isOpen && <p className="text-lg font-bold font-poppins">Amautapp</p>}

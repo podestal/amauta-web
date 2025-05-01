@@ -9,6 +9,8 @@ import { useEffect, useState } from "react"
 import useGetProfileStore from "../hooks/store/useGetProfileStore"
 import SideBar from "../router/SideBar"
 import WebNavigator from "../router/WebNavigator"
+import useSchoolStore from "../hooks/store/useSchoolStore"
+import getUnpaidInfo from "../utils/getUnpaidInfo"
 
 const MainPage = () => {
 
@@ -17,6 +19,8 @@ const MainPage = () => {
     const access = useAuthStore(s => s.access)
     const profile = useGetProfileStore(s => s.profile)
     const [isOpen, setIsOpen] = useState(true)
+    const school = useSchoolStore(s => s.school)
+    getUnpaidInfo()
 
     useEffect(() => {
       document.querySelector('html')?.classList.add('dark')
@@ -24,6 +28,16 @@ const MainPage = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-950 dark:bg-gray-950 dark:text-slate-50 mx-auto relative">
+      <>{console.log('school', school)}</>
+      {school.payment_status === 'N' && 
+      <>
+      <div className="w-full bg-red-600 text-white px-4 h-8 text-sm flex items-center justify-center z-50 fixed top-0">
+        <span className="font-semibold text-center">
+          ⚠️ Tu suscripción ha expirado. Por favor, realiza el pago para continuar usando la plataforma.
+        </span>
+      </div>
+      <div className="pt-8"></div>
+      </>}
         {profile && access ? 
           <SideBar 
             isOpen={isOpen}
