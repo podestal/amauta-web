@@ -20,7 +20,7 @@ const MainPage = () => {
     const profile = useGetProfileStore(s => s.profile)
     const [isOpen, setIsOpen] = useState(true)
     const school = useSchoolStore(s => s.school)
-    getUnpaidInfo()
+    const {active, unpaidMessage} = getUnpaidInfo({ paymentStatus: school.payment_status })
 
     useEffect(() => {
       document.querySelector('html')?.classList.add('dark')
@@ -28,12 +28,11 @@ const MainPage = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-950 dark:bg-gray-950 dark:text-slate-50 mx-auto relative">
-      <>{console.log('school', school)}</>
       {school.payment_status === 'N' && 
       <>
-      <div className="w-full bg-red-600 text-white px-4 h-8 text-sm flex items-center justify-center z-50 fixed top-0">
+      <div className={`w-full ${active ? 'bg-amber-500' : 'bg-red-600'} text-white px-4 h-8 text-sm flex items-center justify-center z-50 fixed top-0`}>
         <span className="font-semibold text-center">
-          ⚠️ Tu suscripción ha expirado. Por favor, realiza el pago para continuar usando la plataforma.
+          ⚠️ {unpaidMessage}
         </span>
       </div>
       <div className="pt-8"></div>
@@ -56,7 +55,7 @@ const MainPage = () => {
           {isLoading && 
             <div className="w-full relative"><Loader /></div>
           }
-          <Outlet />
+          {active &&  <Outlet />}
         </div>
         
         {profile && access && <Navigator />}
