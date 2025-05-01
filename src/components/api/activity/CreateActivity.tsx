@@ -7,6 +7,7 @@ import MultiOptionSwitch from "../../ui/MultiOptionSwitch"
 import useGetLessonsByAssignature from "../../../hooks/api/lesson/useGetLessonByAssignature"
 import useAuthStore from "../../../hooks/store/useAuthStore"
 import ActivityFormAI from "./forms/ActivityFormAI"
+import getCurrentQuarter from "../../../utils/getCurrentCuarter"
 
 interface Props {
     area: number
@@ -21,7 +22,7 @@ const CreateActivity = ({ area, assignatureId, selectedQuarter }: Props) => {
     const access = useAuthStore(s => s.access) || ''
     const createActivity = useCreateActivity({ assignatureId, quarter:selectedQuarter })
     const [selected, setSelected] = useState(0)
-    const { data: lessons, isLoading, isError, error, isSuccess } = useGetLessonsByAssignature({ access, assignatureId })
+    const { data: lessons, isLoading, isError, error, isSuccess } = useGetLessonsByAssignature({ access, assignatureId, quarter: getCurrentQuarter() })
 
     if (isLoading) return <p className="text-center animate-pulse">Cargando...</p>
 

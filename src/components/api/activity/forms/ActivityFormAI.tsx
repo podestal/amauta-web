@@ -23,8 +23,7 @@ const ActivityFormAI = ({ lessons }: Props) => {
 
     const [markdown, setMarkdown] = useState('')
     const [category, setCategory] = useState('')
-
-    console.log('category',category);
+    
     
 
   return (
