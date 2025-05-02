@@ -5,7 +5,11 @@ import { useState } from "react"
 import getCurrentQuarter from "../../../utils/getCurrentCuarter"
 import ActivitiesHeader from "./ActivitiesHeader"
 
-const Activities = () => {
+interface Props {
+  classroom: string
+}
+
+const Activities = ({ classroom }: Props) => {
 
     const [selectedQuarter, setSelectedQuarter] = useState(getCurrentQuarter());
     const state = useLocation().state
@@ -25,7 +29,7 @@ const Activities = () => {
             area={state.area}
             selectedQuarter={selectedQuarter}
             setSelectedQuarter={setSelectedQuarter}
-            classroom={state.classroom}
+            classroom={classroom}
         />
 
         <ActivitiesList 

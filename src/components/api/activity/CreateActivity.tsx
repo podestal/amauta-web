@@ -16,7 +16,7 @@ interface Props {
     classroom: string
 }
 
-const CreateActivity = ({ area, assignatureId, selectedQuarter }: Props) => {
+const CreateActivity = ({ area, assignatureId, selectedQuarter, classroom }: Props) => {
 
     const [open, setOpen] = useState(false)
     const access = useAuthStore(s => s.access) || ''
@@ -62,6 +62,7 @@ const CreateActivity = ({ area, assignatureId, selectedQuarter }: Props) => {
                 area={area}
                 assignatureId={assignatureId}
                 setOpen={setOpen}
+                classroom={classroom}
             />}
         </Modal>
     </>

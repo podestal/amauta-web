@@ -32,7 +32,10 @@ const AssignaturePage = () => {
                 area={state.area}
               />
             </div> },
-          { label: 'Actividades', content: <Activities />}
+          { label: 'Actividades', content: 
+              <Activities 
+                classroom={classroom}
+              />}
         ]}
       />
 

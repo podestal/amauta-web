@@ -12,6 +12,7 @@ import Button from "../../../ui/Button";
 import ActivityForm from "../ActivityForm";
 import useCreateActivity from "../../../../hooks/api/activity/useCreateActivity";
 import getCurrentQuarter from "../../../../utils/getCurrentCuarter";
+import getAgeFromClassroom from "../../../../utils/getAgeFromClassroom";
 
 const iconMap = [
     { name: 'Tarea', icon: FileText, color: 'blue-500' },
@@ -26,9 +27,10 @@ interface Props {
     area: number
     assignatureId: string
     setOpen: React.Dispatch<React.SetStateAction<boolean>>
+    classroom: string
 }
 
-const ActivityFormAI = ({ lessons, area, assignatureId, setOpen }: Props) => {
+const ActivityFormAI = ({ lessons, area, assignatureId, setOpen, classroom }: Props) => {
 
     const [markdown, setMarkdown] = useState('')
     const [category, setCategory] = useState('')
@@ -37,6 +39,7 @@ const ActivityFormAI = ({ lessons, area, assignatureId, setOpen }: Props) => {
     const lessonIds = lessons.map(lesson => lesson.id)
     const color = 'bg-blue-700'
     const quarter = getCurrentQuarter()
+    const age = getAgeFromClassroom(classroom)
 
     const createActivity = useCreateActivity({assignatureId: '1', quarter})
 
@@ -45,6 +48,7 @@ const ActivityFormAI = ({ lessons, area, assignatureId, setOpen }: Props) => {
             prev.includes(id) ? prev.filter((c) => c !== id) : [...prev, id]
         );
     }
+    
 
   return (
     <>
@@ -121,21 +125,21 @@ const ActivityFormAI = ({ lessons, area, assignatureId, setOpen }: Props) => {
         />
         {category === 'tarea' && <ActivityAIFormHomework 
             lessons={lessons.filter(lesson => selectedLessons.includes(lesson.id))}
-            age={10}
+            age={age}
             markdown={markdown}
             setMarkdown={setMarkdown}
             setAITitle={() => {}}
         />}
         {category === 'trabajo en clase' && <ActivityAIFormClassActivity 
             lesson={lessons[0]}
-            age={10}
+            age={age}
             markdown={markdown}
             setMarkdown={setMarkdown}
             setAITitle={() => {}}
         />}
         {category === 'evaluación' && <ActivityAIFormTest 
             lesson={lessons[0]}
-            age={10}
+            age={age}
             markdown={markdown}
             setMarkdown={setMarkdown}
             setAITitle={() => {}}
@@ -143,7 +147,7 @@ const ActivityFormAI = ({ lessons, area, assignatureId, setOpen }: Props) => {
         {category === 'examen' && <p>Examen form</p>}
         {category === 'proyecto' && <ActivityAIFormProject 
             lesson={lessons[0]}
-            age={10}
+            age={age}
             markdown={markdown}
             setMarkdown={setMarkdown}
             setAITitle={() => {}}
