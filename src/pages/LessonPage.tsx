@@ -117,7 +117,7 @@ const LessonPage = () => {
             categoryAI={category}
             titleAI={titleAI ? titleAI : `${getTitleCase(lesson.subject)} de ${getTitleCase(category)}`}
             createActivity={createActivity}
-            lesson={lesson.id}
+            lesson={[lesson.id]}
             setOpen={setActivityForm}
             setAIPromptOpen={setOpen}
         />

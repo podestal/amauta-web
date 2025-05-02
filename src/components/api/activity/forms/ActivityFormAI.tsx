@@ -7,6 +7,7 @@ import ActivityAIFormTest from "./ActivityAIFormTest";
 import ActivityAIFormClassActivity from "./ActivityAIFormClassActivity";
 import ActivityAIFormHomework from "./ActivityAIFormHomework";
 import { motion } from "framer-motion";
+import ActivityAIResponse from "../ActivityAIResponse";
 
 const iconMap = [
     { name: 'Tarea', icon: FileText, color: 'blue-500' },
@@ -34,9 +35,16 @@ const ActivityFormAI = ({ lessons }: Props) => {
     }
 
   return (
+    <>
+    {markdown 
+    ? 
+    <ActivityAIResponse 
+        markdown={markdown}
+        setMarkdown={setMarkdown}
+    /> 
+    : 
     <div>
         <div className="my-4">
-            <>{console.log('lessons', lessons)}</>
             <h2 className="font-bold px-3 text-xl my-4">Selecciona las lecciones</h2>
             {lessons
             .map((lesson) => (
@@ -93,7 +101,8 @@ const ActivityFormAI = ({ lessons }: Props) => {
             setMarkdown={setMarkdown}
             setAITitle={() => {}}
         />}
-    </div>
+    </div>}
+    </>
   )
 }
 

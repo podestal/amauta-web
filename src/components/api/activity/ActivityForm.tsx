@@ -29,7 +29,7 @@ interface Props {
     descriptionAI?: string
     categoryAI?: string
     titleAI?: string
-    lesson?: number
+    lesson?: number[]
     setAIPromptOpen?: React.Dispatch<React.SetStateAction<boolean>>
 }
 
@@ -90,8 +90,6 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, updateAct
             scrollToField(firstErrorField);
             return;
         }
-
-        console.log('selectedCategory', selectedCategory);
         
         if (selectedCategory === '0') {
             setCategoryError("La categoría es requerida");
@@ -120,7 +118,16 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, updateAct
             setShow(true);
             return;
         }
+
+        if (!lesson) {
+            setMessage("Selecciona al menos una lección");
+            setType("error");
+            setShow(true);
+            return;
+        }
+
         setLoading(true);
+        
 
         createActivity && createActivity.mutate({
             access,
@@ -133,7 +140,7 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, updateAct
                 due_date: moment(dueDate).format('YYYY-MM-DD'),
                 quarter: getCurrentQuarter(),
                 assignature: parseInt(assignatureId),
-                lesson: lesson ? [lesson] : null,
+                lessons: lesson  
             },
         }, {
             onSuccess: () => {
@@ -150,10 +157,7 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, updateAct
             },
             onSettled: () => setLoading(false),
         });
-
-        console.log('due_date', moment(dueDate).format('YYYY-MM-DD'));
         
-
         updateActivity && updateActivity.mutate({
             access,
             activity: {
