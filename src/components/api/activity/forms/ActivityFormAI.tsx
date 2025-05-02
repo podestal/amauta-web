@@ -8,6 +8,9 @@ import ActivityAIFormClassActivity from "./ActivityAIFormClassActivity";
 import ActivityAIFormHomework from "./ActivityAIFormHomework";
 import { motion } from "framer-motion";
 import ActivityAIResponse from "../ActivityAIResponse";
+import Button from "../../../ui/Button";
+import ActivityForm from "../ActivityForm";
+import getTitleCase from "../../../../utils/getTitleCase";
 
 const iconMap = [
     { name: 'Tarea', icon: FileText, color: 'blue-500' },
@@ -26,6 +29,8 @@ const ActivityFormAI = ({ lessons }: Props) => {
     const [markdown, setMarkdown] = useState('')
     const [category, setCategory] = useState('')
     const [selectedLessons, setSelectedLessons] = useState<number[]>([])
+    const [activityForm, setActivityForm] = useState(false)
+    const lessonIds = lessons.map(lesson => lesson.id)
     const color = 'bg-blue-700'
 
     const toggleClassroom = (id: number) => {
@@ -36,12 +41,47 @@ const ActivityFormAI = ({ lessons }: Props) => {
 
   return (
     <>
+    <>{console.log('activityForm', activityForm)}</>
     {markdown 
     ? 
-    <ActivityAIResponse 
-        markdown={markdown}
-        setMarkdown={setMarkdown}
+    <>
+    {activityForm 
+    ? 
+    <ActivityForm 
+        area={1}
+        assignatureId={'1'}
+        descriptionAI={markdown}
+        categoryAI={category}
+        titleAI={''}
+        // createActivity={createActivity}
+        lesson={lessonIds}
+        setOpen={setActivityForm}
+        setAIPromptOpen={() => {}}
     /> 
+    : 
+    <>  
+        <div className="my-6 w-full flex justify-center items-center gap-10">
+            
+            <Button 
+                label="Guardar"
+                onClick={() => {
+                    setActivityForm(true)
+                }}
+            />
+            <Button 
+                label='Descartar'
+                onClick={() => {
+                    setMarkdown('')
+                    setActivityForm(false)
+                }}
+            />
+        </div>
+        <ActivityAIResponse 
+            markdown={markdown}
+            setMarkdown={setMarkdown}
+        />
+    </>}
+    </> 
     : 
     <div>
         <div className="my-4">
