@@ -22,8 +22,6 @@ const quarterToIndex: Record<string, number> = {
 const Lessons = ({ classroom, assignature, area }: Props) => {
 
     const currentQuarter = getCurrentQuarter()
-    console.log('currentQuarter', currentQuarter);
-    
     const [quarter, setQuarter] = useState(quarterToIndex[currentQuarter])
     
     
@@ -47,6 +45,7 @@ const Lessons = ({ classroom, assignature, area }: Props) => {
         <CreateLesson 
             classroom={classroom}
             assignature={assignature}
+            quarter={quarter === 0 ? 'Q1' : quarter === 1 ? 'Q2' : quarter === 2 ? 'Q3' : 'Q4'}
         />
         </div>
         <MultiOptionSwitch 

@@ -33,6 +33,8 @@ const LessonForm = ({ classroom, assignature, getAIResponse }: Props) => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
+        console.log('age', age);
+        
         setStartAIRequest(true)
         setLoading(true)
         if (!getAIResponse) return 

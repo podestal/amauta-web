@@ -6,6 +6,7 @@ import ActivityAIFormProject from "./ActivityAIFormProject";
 import ActivityAIFormTest from "./ActivityAIFormTest";
 import ActivityAIFormClassActivity from "./ActivityAIFormClassActivity";
 import ActivityAIFormHomework from "./ActivityAIFormHomework";
+import { motion } from "framer-motion";
 
 const iconMap = [
     { name: 'Tarea', icon: FileText, color: 'blue-500' },
@@ -23,18 +24,39 @@ const ActivityFormAI = ({ lessons }: Props) => {
 
     const [markdown, setMarkdown] = useState('')
     const [category, setCategory] = useState('')
-    
-    
+    const [selectedLessons, setSelectedLessons] = useState<number[]>([])
+    const color = 'bg-blue-700'
+
+    const toggleClassroom = (id: number) => {
+        setSelectedLessons((prev) =>
+            prev.includes(id) ? prev.filter((c) => c !== id) : [...prev, id]
+        );
+    }
 
   return (
     <div>
-        {lessons.map( lesson => (
-            <div
-                key={lesson.id}
-            >
-                <p>{lesson.subject}</p>
-            </div>
-        ))}
+        <div className="my-4">
+            <>{console.log('lessons', lessons)}</>
+            <h2 className="font-bold px-3 text-xl my-4">Selecciona las lecciones</h2>
+            {lessons
+            .map((lesson) => (
+                <motion.button
+                    key={lesson.id}
+                    type="button"
+                    onClick={() => toggleClassroom(lesson.id)}
+                    className={`px-3 py-1 text-sm rounded-full transition-all duration-300 m-2 ${
+                        selectedLessons.includes(lesson.id)
+                            ? `${color} text-white`
+                            : "dark:bg-gray-700 bg-gray-300  dark:text-gray-300 hover:" + color.replace("bg-", "hover:bg-") + " hover:text-white"
+                    }`}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                >
+                    {lesson.subject}
+                </motion.button>
+            ))}
+        </div>
         <CategoryAISelector 
             markdown={''}
             category={category}
@@ -43,7 +65,7 @@ const ActivityFormAI = ({ lessons }: Props) => {
             iconMap={iconMap}
         />
         {category === 'tarea' && <ActivityAIFormHomework 
-            lesson={lessons[0]}
+            lessons={lessons.filter(lesson => selectedLessons.includes(lesson.id))}
             age={10}
             markdown={markdown}
             setMarkdown={setMarkdown}

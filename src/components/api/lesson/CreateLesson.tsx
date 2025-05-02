@@ -26,41 +26,74 @@ const CreateLesson = ({ classroom, assignature, quarter }: Props) => {
         setMarkdown: React.Dispatch<React.SetStateAction<string>> ) => {
         const response = await googleGenAI.models.generateContent({
           model: 'gemini-2.0-flash',
-          contents: `Eres un experto en pedagogía y planificación de clases. Genera una lección completa y bien estructurada pensada para docentes. La lección debe estar escrita en español, tener formato claro y estar adaptada a:
+          // contents: `Eres un experto en pedagogía y planificación de clases. Genera una lección completa y bien estructurada pensada para docentes. La lección debe estar escrita en español, tener formato claro y estar adaptada a:
     
-                      Edad de los alumnos: ${age} años
+          //             Edad de los alumnos: ${age} años
     
-                      Metodología deseada: ${methodology}
+          //             Metodología deseada: ${methodology}
     
-                      Contexto adicional del docente: []
+          //             Contexto adicional del docente: []
     
-                      Tema de la lección: ${topic}
+          //             Tema de la lección: ${topic}
     
-                      La estructura debe seguir este formato:
+          //             La estructura debe seguir este formato:
     
-                      Objetivos de la Lección
+          //             Objetivos de la Lección
     
-                      Lista de 3 a 5 objetivos claros y medibles.
+          //             Lista de 3 a 5 objetivos claros y medibles.
     
-                      Introducción (10 - 15 minutos)
-                      Actividades como: revisión de conocimientos previos, situaciones problema, contextualización, introducción al tema.
+          //             Introducción (10 - 15 minutos)
+          //             Actividades como: revisión de conocimientos previos, situaciones problema, contextualización, introducción al tema.
     
-                      Desarrollo (25 - 30 minutos)
+          //             Desarrollo (25 - 30 minutos)
     
-                          Teoría sobre el tema (1.1, 1.2...)
+          //                 Teoría sobre el tema (1.1, 1.2...)
     
-                          Actividad práctica (si aplica la metodología)
+          //                 Actividad práctica (si aplica la metodología)
     
-                      Discusión y Conclusión (5 - 10 minutos)
-                      Actividades de reflexión, socialización, cierre.
+          //             Discusión y Conclusión (5 - 10 minutos)
+          //             Actividades de reflexión, socialización, cierre.
     
-                      Retorno (10 - 15 minutos)
-                      Ronda de preguntas, evaluación, retroalimentación del profesor.
+          //             Retorno (10 - 15 minutos)
+          //             Ronda de preguntas, evaluación, retroalimentación del profesor.
     
-                      Conclusión Final (5 - 10 minutos)
-                      Resumen, conexión teoría-práctica, materiales extra, relevancia del tema.
+          //             Conclusión Final (5 - 10 minutos)
+          //             Resumen, conexión teoría-práctica, materiales extra, relevancia del tema.
                       
-                      Also this is quite important do not say here you go, do not interact with me in any way shape of form, just send what I asked for, also include bibliography at the end of the lesson, and do not include any other information, just the lesson, and do not say anything else, just the lesson.`,
+          //             Also this is quite important do not say here you go, do not interact with me in any way shape of form, just send what I asked for, also include bibliography at the end of the lesson, and do not include any other information, just the lesson, and do not say anything else, just the lesson.`,
+          contents: `Eres un experto en pedagogía y planificación de clases. Genera una lección completa y bien estructurada pensada para docentes de nivel escolar. La lección debe estar escrita en español, tener formato claro, profundidad académica y estar adaptada a:
+
+                      Edad de los alumnos: ${age} años  
+                      Metodología deseada: ${methodology}  
+                      Tema de la lección: ${topic}  
+                      ---
+
+                      La estructura de la lección debe seguir este formato:
+
+                      **Objetivos de la Lección**  
+                      - Lista de 3 a 5 objetivos claros, específicos y medibles.
+
+                      **Introducción (10 - 15 minutos)**  
+                      - Actividades como revisión de conocimientos previos, situaciones problema, contextualización, introducción al tema.
+
+                      **Desarrollo (25 - 30 minutos)**  
+                      1. Teoría bien explicada, organizada por subtemas numerados (1.1, 1.2, etc.).  
+                      2. Actividades prácticas significativas y alineadas con la metodología y contenido.
+
+                      **Discusión y Conclusión (5 - 10 minutos)**  
+                      - Actividades de reflexión, socialización de ideas, y cierre del contenido visto.
+
+                      **Retorno (10 - 15 minutos)**  
+                      - Preguntas dirigidas, evaluación formativa y retroalimentación del docente.
+
+                      **Conclusión Final (5 - 10 minutos)**  
+                      - Resumen de aprendizajes, conexión teoría-práctica, sugerencias de materiales extra, y reflexión sobre la relevancia del tema.
+
+                      **Bibliografía**  
+                      - Lista de al menos 3 referencias académicas o libros educativos válidos.
+
+                      ⚠️ No respondas con saludos, explicaciones, ni introducciones. Solo proporciona el contenido de la lección con el formato especificado.
+`
         })
         console.log('AI response', response.candidates?.[0]?.content?.parts?.[0]?.text || 'No content available');
         setMarkdown(response.candidates?.[0]?.content?.parts?.[0]?.text || '')
