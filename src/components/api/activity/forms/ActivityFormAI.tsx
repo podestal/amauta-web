@@ -10,7 +10,8 @@ import { motion } from "framer-motion";
 import ActivityAIResponse from "../ActivityAIResponse";
 import Button from "../../../ui/Button";
 import ActivityForm from "../ActivityForm";
-import getTitleCase from "../../../../utils/getTitleCase";
+import useCreateActivity from "../../../../hooks/api/activity/useCreateActivity";
+import getCurrentQuarter from "../../../../utils/getCurrentCuarter";
 
 const iconMap = [
     { name: 'Tarea', icon: FileText, color: 'blue-500' },
@@ -22,9 +23,12 @@ const iconMap = [
 
 interface Props {
     lessons: Lesson[]
+    area: number
+    assignatureId: string
+    setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const ActivityFormAI = ({ lessons }: Props) => {
+const ActivityFormAI = ({ lessons, area, assignatureId, setOpen }: Props) => {
 
     const [markdown, setMarkdown] = useState('')
     const [category, setCategory] = useState('')
@@ -32,6 +36,9 @@ const ActivityFormAI = ({ lessons }: Props) => {
     const [activityForm, setActivityForm] = useState(false)
     const lessonIds = lessons.map(lesson => lesson.id)
     const color = 'bg-blue-700'
+    const quarter = getCurrentQuarter()
+
+    const createActivity = useCreateActivity({assignatureId: '1', quarter})
 
     const toggleClassroom = (id: number) => {
         setSelectedLessons((prev) =>
@@ -41,22 +48,22 @@ const ActivityFormAI = ({ lessons }: Props) => {
 
   return (
     <>
-    <>{console.log('activityForm', activityForm)}</>
+    {/* <>{console.log('activityForm', activityForm)}</> */}
     {markdown 
     ? 
     <>
     {activityForm 
     ? 
     <ActivityForm 
-        area={1}
-        assignatureId={'1'}
+        area={area}
+        assignatureId={assignatureId}
         descriptionAI={markdown}
         categoryAI={category}
         titleAI={''}
-        // createActivity={createActivity}
+        createActivity={createActivity}
         lesson={lessonIds}
         setOpen={setActivityForm}
-        setAIPromptOpen={() => {}}
+        setAIPromptOpen={setOpen}
     /> 
     : 
     <>  

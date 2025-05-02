@@ -59,7 +59,9 @@ const CreateActivity = ({ area, assignatureId, selectedQuarter }: Props) => {
             />}
             {selected === 1 && <ActivityFormAI 
                 lessons={lessons}
-
+                area={area}
+                assignatureId={assignatureId}
+                setOpen={setOpen}
             />}
         </Modal>
     </>
