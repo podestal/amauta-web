@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import useGetProfileStore from "../hooks/store/useGetProfileStore";
 import { Profile } from "../services/api/profileService";
 import Logout from "../components/auth/Logout";
-import { BookUser, Boxes, ChartColumnStacked, ChartNoAxesCombined, HomeIcon, IdCard, LibraryBig, MessagesSquare, PanelRightClose, PanelRightOpen, SquareTerminal, Sunrise } from "lucide-react";
+import { BookUser, Boxes, ChartColumnStacked, ChartNoAxesCombined, HomeIcon, IdCard, LibraryBig, MessagesSquare, PanelRightClose, PanelRightOpen, School, SquareTerminal, Sunrise } from "lucide-react";
 import logo from '../assets/icons/amautapp.png'
 import { motion } from "framer-motion";
 import getTitleCase from "../utils/getTitleCase";
@@ -38,6 +38,7 @@ const SideBar = ({ profile, isOpen, setIsOpen }: Props) => {
       { name: 'Notas', path: 'grades-summary', icon: <ChartNoAxesCombined /> },
       { name: 'Categorías', path: 'categories', icon: <ChartColumnStacked /> },
       { name: "Alumnos", path: "student-admin", icon: <BookUser /> },
+      { name: 'Colegio', path: 'school', icon: <School />},
       // { name: "Descargar", path: "/downloadapp" },
     ]
 
@@ -51,6 +52,7 @@ const SideBar = ({ profile, isOpen, setIsOpen }: Props) => {
         { name: "Alumnos", path: "student-admin", icon: <BookUser /> },
         { name: 'Administrativo', path: 'admin', icon: <SquareTerminal /> },
         { name: 'Anuncios', path: 'announcements-admin', icon: <MessagesSquare /> },
+        { name: 'Colegio', path: 'school', icon: <School />},
         // { name: 'Servicios', path: 'whatsapp' },
         // { name: 'Tarjeta de Notas', path: 'grades-report'},
       ]

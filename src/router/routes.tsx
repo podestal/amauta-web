@@ -36,6 +36,7 @@ import WhatsappDashboard from "../pages/WhatsappPage";
 import GradesReportPage from "../pages/GradesReportPage";
 import LessonPage from "../pages/LessonPage";
 import PricesPage from "../pages/PricesPage";
+import SchoolPage from "../pages/SchoolPage";
 
 const routes = createBrowserRouter([
     {
@@ -267,6 +268,13 @@ const routes = createBrowserRouter([
                     <GradesReportPage />
                 </PrivateRoutes>
             },
+            {
+                path: 'school',
+                element: 
+                    <PrivateRoutes>
+                        <SchoolPage />
+                    </PrivateRoutes>
+            }
         ]
     }
 ])
