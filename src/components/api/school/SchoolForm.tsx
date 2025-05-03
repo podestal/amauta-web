@@ -4,6 +4,10 @@ import TimePicker from "react-time-picker";
 import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
 import Input from "../../ui/Input";
+import { UseMutationResult } from "@tanstack/react-query";
+import { UpdateSchoolData } from "../../../hooks/api/school/useUpdateSchool";
+import useAuthStore from "../../../hooks/store/useAuthStore";
+import useNotificationsStore from "../../../hooks/store/useNotificationsStore";
 
 export interface School {
   name: string;
@@ -14,12 +18,14 @@ export interface School {
 
 interface Props {
   school: School;
-  onSave: (updated: School) => void;
+  updateSchool: UseMutationResult<School, Error, UpdateSchoolData>
 }
 
-const SchoolForm: React.FC<Props> = ({ school, onSave }) => {
+const SchoolForm: React.FC<Props> = ({ school, updateSchool }) => {
 
   const [form, setForm] = useState<School>(school);
+  const access = useAuthStore((s) => s.access) || "";
+  const { setMessage, setShow, setType } = useNotificationsStore()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -34,7 +40,22 @@ const SchoolForm: React.FC<Props> = ({ school, onSave }) => {
     e.preventDefault();
     console.log('new school', form);
     
-    onSave(form);
+    updateSchool.mutate({
+        access,
+        school: {
+            ...form,
+        }
+    }, {
+        onSuccess: () => {
+            setMessage("Cambios guardados")
+            setShow(true)
+            setType("success")
+        }, onError: () => {
+            setMessage("Error al guardar los cambios")
+            setShow(true)
+            setType("error")
+        }
+    })
   };
 
   return (
@@ -51,6 +72,7 @@ const SchoolForm: React.FC<Props> = ({ school, onSave }) => {
             value={form.name}
             placeholder="Nombre de la institución"
             onChange={handleChange}
+            name="name"
           />
         </div>
 
@@ -60,6 +82,7 @@ const SchoolForm: React.FC<Props> = ({ school, onSave }) => {
             value={form.type_of_institution}
             placeholder="Tipo de institución"
             onChange={handleChange}
+            name="type_of_institution"
           />
         </div>
 
@@ -71,19 +94,11 @@ const SchoolForm: React.FC<Props> = ({ school, onSave }) => {
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-slate-50">Hora de tardanza automática</label>
           <div className="mt-1">
-            {/* <TimePicker
-              onChange={handleTimeChange}
-              value={form.automatic_late}
-              disableClock
-              className="w-full"
-              format="HH:mm"
-              clearIcon={null}
-            /> */}
             <TimePicker 
                 onChange={handleTimeChange}
                 value={form.automatic_late}
                 disableClock
-                className="w-full bg-slate-950"
+                className="w-full dark:bg-slate-950 bg-slate-50"
                 format="HH:mm"
                 clearIcon={null}
                 amPmAriaLabel="Select AM/PM"

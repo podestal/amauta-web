@@ -2,7 +2,7 @@ import { useMutation, UseMutationResult, useQueryClient } from "@tanstack/react-
 import getSchoolService, {School, CreateUpdateSchool} from "../../../services/api/schoolService"
 import useSchoolStore from "../../store/useSchoolStore"
 
-interface UpdateSchoolData {
+export interface UpdateSchoolData {
     access: string
     school: CreateUpdateSchool
 }
