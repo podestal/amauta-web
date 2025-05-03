@@ -6,6 +6,7 @@ export interface School {
     type_of_institution: string,
     picture_name: string,
     payment_status: string,
+    automatic_late: string,
 }
 
 interface Props {

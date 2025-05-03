@@ -1,8 +1,12 @@
+import useSchoolStore from "../hooks/store/useSchoolStore"
 
 
 const SchoolPage = () => {
+
+    const school = useSchoolStore(s => s.school)
+
   return (
-    <div>SchoolPage</div>
+    <div>{school.name}</div>
   )
 }
 
