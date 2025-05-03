@@ -21,7 +21,7 @@ const AttendancePage = () => {
       <div
           className={`mb-2 px-6 py-1 rounded-lg shadow-lg flex items-center bg-yellow-100 text-gray-700 border-l-8 border-yellow-500 text-center`}
         >
-          <span className="font-medium">Asistencias se marcarán como tardanza a partir de las {school.automatic_late.slice(0,5)} am</span>
+          <span className="font-medium">Asistencias se marcarán como tardanza a partir de las {school.automatic_late?.slice(0,5)} am</span>
       </div>
       <h2 className="mb-20 text-4xl">{lan === 'EN' ? 'Scann Attendance' : 'Scanear Asistencia'}</h2>
       <AttendanceScanForm 

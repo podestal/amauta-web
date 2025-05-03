@@ -9,12 +9,16 @@ export interface School {
     automatic_late: string,
 }
 
+export type CreateUpdateSchool = Omit<School, 'id' | 'picture_name'> & {
+
+}
+
 interface Props {
     schoolId?: number
 }
 
 const getSchoolService = ({schoolId}: Props) => {
     const url = schoolId ? `school/${schoolId}/` : 'school/'
-    return new APIClient<School>(url)
+    return new APIClient<School, CreateUpdateSchool>(url)
 }
 export default getSchoolService
