@@ -64,25 +64,12 @@ const AttendanceScanForm = ({ createAttendance }: Props) => {
     
     const [studentUid, studentName] = decodedText.split("-");
     pauseScanner();
-    // setAlreadyScannedError("");
-
-    // const alreadyScanned = attendances && isAttendanceCreated(attendances, studentUid, selectedKind);
-    // if (alreadyScanned) {
-    //   setAlreadyScannedError(lan === "EN" ? "Student already scanned" : "Estudiante ya fué escaneado");
-    //   setTimeout(() => {
-    //     setAlreadyScannedError("");
-    //     resumeScanner();
-    //   }, 1000);
-    //   return;
-    // }
-    
-    
 
     setIsLoading(true);
     createAttendance.mutate(
       {
         attendance: {
-          status: selectedStatus,
+          status: 'O',
           student: studentUid,
           created_by: `${instructor?.first_name} ${instructor?.last_name}`,
           attendance_type: "A",
@@ -122,10 +109,15 @@ const AttendanceScanForm = ({ createAttendance }: Props) => {
 
   return (
     <div className="w-full h-full flex flex-col justify-start items-center">
+      <div>
+
+
+
+      </div>
       <div className="w-full flex justify-center">
         {successMsg && <div className="text-green-600 font-semibold mb-4 absolute top-10 text-center">{successMsg}</div>}
       </div>
-      <Selector
+      {/* <Selector
         values={kind}
         setter={setSelectedKind}
         defaultValue={selectedKind}
@@ -138,7 +130,7 @@ const AttendanceScanForm = ({ createAttendance }: Props) => {
         setter={setSelectedStatus}
         defaultValue={selectedStatus}
         label="Status"
-      />
+      /> */}
       {/* {classrooms.length > 2 && (
         <Selector
           values={classrooms}
@@ -149,7 +141,6 @@ const AttendanceScanForm = ({ createAttendance }: Props) => {
       )} */}
         <AttendanceScanner
           onScanSuccess={handleSuccess}
-          selectedStatus={selectedStatus}
           classroomId={selectedClassroom}
           setAttendances={setAttendances}
           errorMessage={alreadyScannedError}

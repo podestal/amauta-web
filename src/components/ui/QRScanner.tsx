@@ -6,11 +6,10 @@ import Button from './Button';
 type QRScannerProps = {
   onScanSuccess: (decodedText: string, pauseScanner: any, resumeScanner: any, stopScanner: any) => void;
   onScanFailure?: (error: string) => void;
-  selectedStatus?: string;
   errorMessage?: string;
 };
 
-const QRScanner: React.FC<QRScannerProps> = ({ onScanSuccess, onScanFailure, selectedStatus, errorMessage }) => {
+const QRScanner: React.FC<QRScannerProps> = ({ onScanSuccess, onScanFailure, errorMessage }) => {
   const scannerRef = useRef<HTMLDivElement | null>(null);
   const html5QrcodeRef = useRef<Html5Qrcode | null>(null);
   const [isScannerActive, setIsScannerActive] = useState(false);
@@ -130,7 +129,7 @@ const QRScanner: React.FC<QRScannerProps> = ({ onScanSuccess, onScanFailure, sel
             onClick={toggleScanner}
             loading={isLoading}
             minWidth
-            disable={!selectedStatus || selectedStatus === '0'}
+            // disable={!selectedStatus || selectedStatus === '0'}
             label={
               isScannerActive
                 ? lan === 'EN'
