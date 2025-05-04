@@ -6,6 +6,7 @@ import DifficultySelector from "../../../ui/AIForms/DifficultySelector"
 import { Lesson } from "../../../../services/api/lessonService"
 import getAIResponse from "../../../../utils/getAiResponse"
 import LoaderAI from "../../../ui/LoaderAI"
+import useNotificationsStore from "../../../../hooks/store/useNotificationsStore"
 
 interface Props {
     lessons: Lesson[]
@@ -32,6 +33,7 @@ const ActivityAIFormClassActivity = ({ lessons, age, markdown, setMarkdown, setA
     const [loading, setLoading] = useState(false)
     const lessonTopics = lessons?.map(lesson => lesson.subject).join(', ') || ''
     const lessonContent = lessons?.map(lesson => lesson.content).join('\n') || ''
+    const { setMessage, setShow, setType } = useNotificationsStore()
 
     useEffect(() => {
         if (markdown) {
@@ -41,6 +43,14 @@ const ActivityAIFormClassActivity = ({ lessons, age, markdown, setMarkdown, setA
 
     const handleSubmit =  async (e: React.FormEvent) => {
         e.preventDefault()
+
+        if (lessons.length === 0) {
+            setMessage('No hay lecciones seleccionadas')
+            setShow(true)
+            setType('error')
+            return
+        }
+
         setLoading(true)
         await getAIResponse({
             category: 'trabajo en clase',

@@ -74,6 +74,7 @@ const ActivityAIFormFinal = ({ lessons, age, markdown, setMarkdown, setAITitle }
             numberOfQuestions,
             skillsToEvaluate,
             difficulty: selectedDifficulty,
+            context: finalContext,
             setAITitle
         })
     }

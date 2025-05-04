@@ -7,6 +7,7 @@ import AIButton from "../../../ui/AIForms/AIButton"
 import getAIResponse from "../../../../utils/getAiResponse"
 import { Lesson } from "../../../../services/api/lessonService"
 import LoaderAI from "../../../ui/LoaderAI"
+import useNotificationsStore from "../../../../hooks/store/useNotificationsStore"
 
 interface Props {
     lessons: Lesson[]
@@ -33,6 +34,7 @@ const ActivityAIFormHomework = ({ lessons, age, markdown, setMarkdown, setAITitl
     const [loading, setLoading] = useState(false)
     const lessonTopics = lessons?.map(lesson => lesson.subject).join(', ') || ''
     const lessonContent = lessons?.map(lesson => lesson.content).join('\n') || ''
+    const { setMessage, setShow, setType } = useNotificationsStore()
 
     useEffect(() => {
         if (markdown) {
@@ -42,6 +44,14 @@ const ActivityAIFormHomework = ({ lessons, age, markdown, setMarkdown, setAITitl
 
     const handleSubmit =  async (e: React.FormEvent) => {
         e.preventDefault()
+
+        if (lessons.length === 0) {
+            setMessage('No hay lecciones seleccionadas')
+            setShow(true)
+            setType('error')
+            return
+        }
+
         console.log('lessonTopics', lessonTopics)
         console.log('lessonContent', lessonContent)
         console.log('lessons', lessons)
