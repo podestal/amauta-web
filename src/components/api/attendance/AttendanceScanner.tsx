@@ -7,14 +7,16 @@ interface Props {
     classroomId: string
     setAttendances: React.Dispatch<React.SetStateAction<Attendance[]>>
     errorMessage: string
+    leftEarly: boolean
 }
 
-const AttendanceScanner = ({ onScanSuccess, errorMessage }: Props) => {
+const AttendanceScanner = ({ onScanSuccess, errorMessage, leftEarly }: Props) => {
 
   return (
     <QRScanner 
         onScanSuccess={onScanSuccess}
         errorMessage={errorMessage}
+        leftEarly={leftEarly}
     />
   )
 }

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Html5Qrcode, Html5QrcodeScannerState } from 'html5-qrcode';
 import useLanguageStore from '../../hooks/store/useLanguageStore';
 import Button from './Button';
@@ -7,9 +7,10 @@ type QRScannerProps = {
   onScanSuccess: (decodedText: string, pauseScanner: any, resumeScanner: any, stopScanner: any) => void;
   onScanFailure?: (error: string) => void;
   errorMessage?: string;
+  leftEarly?: boolean;
 };
 
-const QRScanner: React.FC<QRScannerProps> = ({ onScanSuccess, onScanFailure, errorMessage }) => {
+const QRScanner: React.FC<QRScannerProps> = ({ onScanSuccess, onScanFailure, errorMessage, leftEarly }) => {
   const scannerRef = useRef<HTMLDivElement | null>(null);
   const html5QrcodeRef = useRef<Html5Qrcode | null>(null);
   const [isScannerActive, setIsScannerActive] = useState(false);
@@ -112,9 +113,12 @@ const QRScanner: React.FC<QRScannerProps> = ({ onScanSuccess, onScanFailure, err
     }
   };
 
-  // const toggleScanner = () => {
-  //   isScannerActive ? stopScanner() : startScanner();
-  // }
+  useEffect(() => {
+
+    if (isScannerActive) {
+      stopScanner()
+    }
+  }, [leftEarly, isScannerActive])
 
   return (
     <div className='w-full'>

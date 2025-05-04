@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import useLanguageStore from "../../../hooks/store/useLanguageStore";
-import { getAttendanceStatus } from "../../../utils/data";
+// import { getAttendanceStatus } from "../../../utils/data";
 import useAuthStore from "../../../hooks/store/useAuthStore";
 import { CreateAttendanceData } from "../../../hooks/api/attendance/useCreateAttendance";
 import { Attendance } from "../../../services/api/attendanceService";
@@ -28,24 +28,6 @@ const AttendanceScanForm = ({ createAttendance }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const lan = useLanguageStore((s) => s.lan);
   const [leftEarly, setLeftEarly] = useState(false);
-  const attendanceStatus = getAttendanceStatus(lan);
-  const kind = [
-    {
-      id:'I',
-      name: lan === 'EN' ? 'Entrance' : 'Entrada',
-    },
-    {
-      id:'O',
-      name: lan === 'EN' ? 'Exit' : 'Salida',
-    }
-  ]
-  // const classrooms = [
-  //   {
-  //     id: "0",
-  //     name: lan === "EN" ? "Select" : "Selecionar",
-  //   },
-  //   ...(instructor ? getInstructorClassrooms(instructor.clases_details, lan) : []),
-  // ];
   const access = useAuthStore((s) => s.access) || "";
 
   const [alreadyScannedError, setAlreadyScannedError] = useState("");
@@ -88,13 +70,10 @@ const AttendanceScanForm = ({ createAttendance }: Props) => {
           setMessage(`${studentName} escaneado con éxito`)
           setSuccessMsg('')
         },
-        onError: () => {
-          // setAlreadyScannedError(error.message)
-          // setAlreadyScannedError(`${studentName} ya fué escaneado`);
+        onError: (err:any) => {          
           setType('error')
           setShow(true)
-          setMessage(`${studentName} ya fué escaneado`)
-
+          setMessage(lan === 'EN' ? 'Error registering attendance' : err?.response?.data.error || 'Error registrando asistencia')
         },
         onSettled: () => {
           setIsLoading(false);
@@ -110,16 +89,10 @@ const AttendanceScanForm = ({ createAttendance }: Props) => {
   return (
     <div className="w-full h-full flex flex-col justify-start items-center">
       <div>
-
-
-
       </div>
       <div className="w-full flex justify-center">
         {successMsg && <div className="text-green-600 font-semibold mb-4 absolute top-10 text-center">{successMsg}</div>}
       </div>
-      <>{console.log('kind', selectedKind)}</>
-      <>{console.log('status', selectedStatus)}</>
-      <>{console.log()}</>
       <button 
         onDoubleClick={() => {
           if (leftEarly) {
@@ -135,33 +108,12 @@ const AttendanceScanForm = ({ createAttendance }: Props) => {
         className={`w-[50%] cursor-pointer py-4 px-6 text-center font-semibold text-sm rounded-xl  shadow-lg transition-transform duration-300 ease-in-out hover:scale-105   ${leftEarly ? 'bg-yellow-400 shadow-yellow-500 text-white' : 'bg-gradient-to-r dark:text-slate-50 dark:from-gray-700 dark:via-gray-800 dark:to-gray-900 from-gray-100 via-gray-200 to-gray-300'}`}>
         Salida Temprano
       </button>
-      {/* <Selector
-        values={kind}
-        setter={setSelectedKind}
-        defaultValue={selectedKind}
-        label={lan === "EN" ? "Kind" : "Tipo"}
-      />
-      <Selector
-        values={selectedKind === 'I' 
-          ? attendanceStatus.filter( status => status.id !== 'T')
-          : attendanceStatus.filter( status => status.id !== 'L' && status.id !== 'O')}
-        setter={setSelectedStatus}
-        defaultValue={selectedStatus}
-        label="Status"
-      /> */}
-      {/* {classrooms.length > 2 && (
-        <Selector
-          values={classrooms}
-          setter={setSelectedClassroom}
-          defaultValue={selectedClassroom}
-          label={lan === "EN" ? "Classroom" : "Salón"}
-        />
-      )} */}
         <AttendanceScanner
           onScanSuccess={handleSuccess}
           classroomId={selectedClassroom}
           setAttendances={setAttendances}
           errorMessage={alreadyScannedError}
+          leftEarly={leftEarly}
         />
       {isLoading && (
         <div className="text-blue-600 font-semibold mt-4">

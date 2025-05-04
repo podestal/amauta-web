@@ -51,10 +51,10 @@ const AttendanceForm = ({ createAttendance, updateAttendance, studentId, attenda
                     setShow(true)
                     setMessage(lan === 'EN' ? 'Attendance registered successfully!' : 'Asistencia registrada exitosamente!')
                 },
-                onError: () => {
+                onError: (err :any) => {                    
                     setType('error')
                     setShow(true)
-                    setMessage(lan === 'EN' ? 'Error registering attendance' : 'Error registrando asistencia')
+                    setMessage(lan === 'EN' ? 'Error registering attendance' : err?.response?.data.error || 'Error registrando asistencia')
                 }
             }
         )
@@ -79,6 +79,7 @@ const AttendanceForm = ({ createAttendance, updateAttendance, studentId, attenda
                     setType('error')
                     setShow(true)
                     setMessage(lan === 'EN' ? 'Error updating attendance' : 'Error actualizando asistencia')
+
                 }
             }
         )
