@@ -35,7 +35,7 @@ const MainPage = () => {
           ⚠️ {unpaidMessage}
         </span>
       </div>
-      <div className="pt-8"></div>
+      <div className={`${school.payment_status === 'N' && 'max-md:pt-12 pt-8'}`}></div>
       </>}
         {profile && access ? 
           <SideBar 
@@ -55,7 +55,9 @@ const MainPage = () => {
           {isLoading && 
             <div className="w-full relative"><Loader /></div>
           }
-          <Outlet />
+          <div>
+            <Outlet />
+          </div>
         </div>
         
         {profile && access && <Navigator />}

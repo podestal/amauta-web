@@ -12,6 +12,7 @@ import { getDeviceType } from "../../utils/getDeviceType";
 import useGetSchool from "../../hooks/api/school/useGetSchool";
 import useSchoolStore from "../../hooks/store/useSchoolStore";
 import useRefreshToken from "../../hooks/auth/useRefreshToken";
+import getUnpaidInfo from "../../utils/getUnpaidInfo";
 
 interface Props {
   children: React.ReactElement;
@@ -110,7 +111,11 @@ const PrivateRoutes = ({ children }: Props) => {
 
 
   if (school?.payment_status === 'N') {
-    return <p></p>
+    const unpaidInfo = getUnpaidInfo({ paymentStatus: school.payment_status })
+    if (!unpaidInfo.active) {
+      return <p></p>
+    }
+
   }
 
   if (isSuccess) {
