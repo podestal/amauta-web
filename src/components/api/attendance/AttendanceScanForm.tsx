@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Selector from "../../ui/Selector";
 import useLanguageStore from "../../../hooks/store/useLanguageStore";
 import { getAttendanceStatus } from "../../../utils/data";
 import useAuthStore from "../../../hooks/store/useAuthStore";
@@ -28,6 +27,7 @@ const AttendanceScanForm = ({ createAttendance }: Props) => {
   const [selectedClassroom, setSelectedClassroom] = useState("0");
   const [isLoading, setIsLoading] = useState(false);
   const lan = useLanguageStore((s) => s.lan);
+  const [leftEarly, setLeftEarly] = useState(false);
   const attendanceStatus = getAttendanceStatus(lan);
   const kind = [
     {
@@ -69,7 +69,7 @@ const AttendanceScanForm = ({ createAttendance }: Props) => {
     createAttendance.mutate(
       {
         attendance: {
-          status: 'O',
+          status: selectedStatus,
           student: studentUid,
           created_by: `${instructor?.first_name} ${instructor?.last_name}`,
           attendance_type: "A",
@@ -117,6 +117,24 @@ const AttendanceScanForm = ({ createAttendance }: Props) => {
       <div className="w-full flex justify-center">
         {successMsg && <div className="text-green-600 font-semibold mb-4 absolute top-10 text-center">{successMsg}</div>}
       </div>
+      <>{console.log('kind', selectedKind)}</>
+      <>{console.log('status', selectedStatus)}</>
+      <>{console.log()}</>
+      <button 
+        onDoubleClick={() => {
+          if (leftEarly) {
+            setLeftEarly(false);
+            setSelectedKind("I");
+            setSelectedStatus('O');
+          } else {
+            setLeftEarly(true);
+            setSelectedKind("O");
+            setSelectedStatus('T')
+          }
+        }}
+        className={`w-[50%] cursor-pointer py-4 px-6 text-center font-semibold text-sm rounded-xl  shadow-lg transition-transform duration-300 ease-in-out hover:scale-105   ${leftEarly ? 'bg-yellow-400 shadow-yellow-500 text-white' : 'bg-gradient-to-r dark:text-slate-50 dark:from-gray-700 dark:via-gray-800 dark:to-gray-900 from-gray-100 via-gray-200 to-gray-300'}`}>
+        Salida Temprano
+      </button>
       {/* <Selector
         values={kind}
         setter={setSelectedKind}
