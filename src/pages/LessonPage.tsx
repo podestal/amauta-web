@@ -47,6 +47,7 @@ const LessonPage = () => {
     const quarter = getCurrentQuarter()
     const createActivity = useCreateActivity({ assignatureId: assignature, quarter, lessonId: lesson.id })
     
+    console.log('loading', loading);
     
 
     useEffect(() => {
@@ -67,7 +68,7 @@ const LessonPage = () => {
         >
             <GoBack 
                 path={`/app/assignatures/${lesson.assignature}`}
-                state={{ assignature, classroom, area }}
+                state={{ assignatureId: assignature, classroom, area }}
             />
             <h1 
                 className="text-3xl font-bold mb-4 text-slate-800 dark:text-white"
