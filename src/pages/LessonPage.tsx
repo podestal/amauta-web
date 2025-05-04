@@ -44,8 +44,6 @@ const LessonPage = () => {
     const [titleAI, setTitleAI] = useState('')
     const age = getAgeFromClassroom(classroom)
 
-    console.log('loading', loading);
-
     const quarter = getCurrentQuarter()
     const createActivity = useCreateActivity({ assignatureId: assignature, quarter, lessonId: lesson.id })
     
@@ -158,9 +156,9 @@ const LessonPage = () => {
         : 
         <>
         {category === 'tarea' && <ActivityAIFormHomework lessons={[lesson]} age={age} markdown={markdown} setMarkdown={setMarkdown} setAITitle={setTitleAI}/>}
-        {category === 'trabajo en clase' && <ActivityAIFormClassActivity lesson={lesson} age={age} markdown={markdown} setMarkdown={setMarkdown} setAITitle={setTitleAI}/>}
-        {category === 'evaluación' && <ActivityAIFormTest lesson={lesson} age={age} markdown={markdown} setMarkdown={setMarkdown} setAITitle={setTitleAI}/>}
-        {category === 'proyecto' && <ActivityAIFormProject lesson={lesson} age={age} markdown={markdown} setMarkdown={setMarkdown} setAITitle={setTitleAI}/>}
+        {category === 'trabajo en clase' && <ActivityAIFormClassActivity lessons={[lesson]} age={age} markdown={markdown} setMarkdown={setMarkdown} setAITitle={setTitleAI}/>}
+        {category === 'evaluación' && <ActivityAIFormTest lessons={[lesson]} age={age} markdown={markdown} setMarkdown={setMarkdown} setAITitle={setTitleAI}/>}
+        {category === 'proyecto' && <ActivityAIFormProject lessons={[lesson]} age={age} markdown={markdown} setMarkdown={setMarkdown} setAITitle={setTitleAI}/>}
 
         </>}
     </Modal>}

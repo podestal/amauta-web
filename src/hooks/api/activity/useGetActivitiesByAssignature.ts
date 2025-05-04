@@ -11,6 +11,7 @@ interface Props {
 const useGetActivitiesByAssignature = ({ access, assignatureId, competence, quarter }: Props): UseQueryResult<Activity[]> => {
     const activityService = getActivityService({ byAssignature: true })
     const ACTIVITY_QUERY_KEY = competence ? [`activities ${assignatureId} ${quarter} ${competence}`] : [`activities ${quarter} ${assignatureId}`] 
+    console.log('assignatureId', assignatureId)
     let params: { assignature: string; quarter: string; competence?: string } = { assignature: assignatureId, quarter }
     if (competence) {
         params = { ...params, competence }
