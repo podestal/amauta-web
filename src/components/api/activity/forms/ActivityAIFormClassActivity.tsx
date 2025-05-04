@@ -8,7 +8,7 @@ import getAIResponse from "../../../../utils/getAiResponse"
 import LoaderAI from "../../../ui/LoaderAI"
 
 interface Props {
-    lesson: Lesson
+    lessons: Lesson[]
     age: number
     markdown: string
     setMarkdown: React.Dispatch<React.SetStateAction<string>>
@@ -24,12 +24,14 @@ const typeOfActivityOptions = [
     'Debate/Discusión',
 ]
 
-const ActivityAIFormClassActivity = ({ lesson, age, markdown, setMarkdown, setAITitle }: Props) => {
+const ActivityAIFormClassActivity = ({ lessons, age, markdown, setMarkdown, setAITitle }: Props) => {
 
     const [typeOfActivity, setTypeOfActivity] = useState('Individual')
     const [durationOfActivity, setDurationOfActivity] = useState(15)
     const [levelOfInteraction, setLevelOfInteraction] = useState('Medio')
     const [loading, setLoading] = useState(false)
+    const lessonTopics = lessons?.map(lesson => lesson.subject).join(', ') || ''
+    const lessonContent = lessons?.map(lesson => lesson.content).join('\n') || ''
 
     useEffect(() => {
         if (markdown) {
@@ -42,9 +44,9 @@ const ActivityAIFormClassActivity = ({ lesson, age, markdown, setMarkdown, setAI
         setLoading(true)
         await getAIResponse({
             category: 'trabajo en clase',
-            topic: lesson.subject,
+            topic: lessonTopics,
             age: age,
-            lesson: lesson.content,
+            lesson: lessonContent,
             setMarkdown,
             typeOfActivity,
             durationOfActivity,

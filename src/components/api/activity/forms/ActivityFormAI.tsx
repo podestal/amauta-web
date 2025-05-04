@@ -131,14 +131,14 @@ const ActivityFormAI = ({ lessons, area, assignatureId, setOpen, classroom }: Pr
             setAITitle={() => {}}
         />}
         {category === 'trabajo en clase' && <ActivityAIFormClassActivity 
-            lesson={lessons[0]}
+            lessons={lessons.filter(lesson => selectedLessons.includes(lesson.id))}
             age={age}
             markdown={markdown}
             setMarkdown={setMarkdown}
             setAITitle={() => {}}
         />}
         {category === 'evaluación' && <ActivityAIFormTest 
-            lesson={lessons[0]}
+            lessons={lessons.filter(lesson => selectedLessons.includes(lesson.id))}
             age={age}
             markdown={markdown}
             setMarkdown={setMarkdown}
@@ -146,7 +146,7 @@ const ActivityFormAI = ({ lessons, area, assignatureId, setOpen, classroom }: Pr
         />}
         {category === 'examen' && <p>Examen form</p>}
         {category === 'proyecto' && <ActivityAIFormProject 
-            lesson={lessons[0]}
+            lessons={lessons.filter(lesson => selectedLessons.includes(lesson.id))}
             age={age}
             markdown={markdown}
             setMarkdown={setMarkdown}

@@ -9,7 +9,7 @@ import getAIResponse from "../../../../utils/getAiResponse"
 import LoaderAI from "../../../ui/LoaderAI"
 
 interface Props {
-    lesson: Lesson
+    lessons: Lesson[]
     age: number
     markdown: string
     setMarkdown: React.Dispatch<React.SetStateAction<string>>
@@ -31,13 +31,15 @@ const skillsToEvaluateOptions = [
     'Liderazgo',
 ]
 
-const ActivityAIFormProject = ({ lesson, age, markdown, setMarkdown, setAITitle }: Props) => {
+const ActivityAIFormProject = ({ lessons, age, markdown, setMarkdown, setAITitle }: Props) => {
 
     const [selectedDifficulty, setSelectedDifficulty] = useState('Media')
     const [selectedProjectType, setSelectedProjectType] = useState('Individual')
     const [selectedSkillsToEvaluate, setSelectedSkillsToEvaluate] = useState(['Creatividad'])
     const [toolsAndResources, setToolsAndResources] = useState('')
     const [loading, setLoading] = useState(false)
+    const lessonTopics = lessons?.map(lesson => lesson.subject).join(', ') || ''
+    const lessonContent = lessons?.map(lesson => lesson.content).join('\n') || ''
 
     useEffect(() => {
         if (markdown) {
@@ -50,9 +52,9 @@ const ActivityAIFormProject = ({ lesson, age, markdown, setMarkdown, setAITitle 
         setLoading(true)
         await getAIResponse({
             category: 'proyecto',
-            topic: lesson.subject,
+            topic: lessonTopics,
             age: age,
-            lesson: lesson.content,
+            lesson: lessonContent,
             setMarkdown,
             difficulty: selectedDifficulty,
             projectType: selectedProjectType,
