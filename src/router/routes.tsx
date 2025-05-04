@@ -38,6 +38,7 @@ import LessonPage from "../pages/LessonPage";
 import PricesPage from "../pages/PricesPage";
 import SchoolPage from "../pages/SchoolPage";
 
+
 const routes = createBrowserRouter([
     {
         path: "/",

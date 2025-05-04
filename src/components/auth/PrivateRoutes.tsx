@@ -28,7 +28,7 @@ const PrivateRoutes = ({ children }: Props) => {
   const deviceToken = useFirebaseMessaging()
   const {data: user, isLoading: isLoadingUser, isError: isErrorUser, error: errorUser} = useGetUser({ access });
   const {data: profile, isLoading: isLoadingProfile, isError: isErrorProfile, error: errorProfile, isSuccess} = useGetProfile({ access, profileName: user?.groups[0] || user?.profile || '' });
-  const { data: school } = useGetSchool({ access, profile })
+  const { data: school, isLoading: isLoadingSchool, isError: isErrorSchool, error: errorSchool } = useGetSchool({ access, profile })
 
   useLoader(isPending)
   
@@ -97,15 +97,20 @@ const PrivateRoutes = ({ children }: Props) => {
   }, [])
   
 
-  useLoader(isLoadingUser || isLoadingProfile)
+  useLoader(isLoadingUser || isLoadingProfile || isLoadingSchool)
   
   // if (tokenExpired) {
   //   return <Navigate to="/" replace />
   // }
 
-  if (isErrorUser || isErrorProfile) {
-    console.log('error', errorUser || errorProfile);
+  if (isErrorUser || isErrorProfile || isErrorSchool) {
+    console.log('error', errorUser || errorProfile || errorSchool);
     return <Navigate to="/" replace />
+  }
+
+
+  if (school?.payment_status === 'N') {
+    return <p></p>
   }
 
   if (isSuccess) {

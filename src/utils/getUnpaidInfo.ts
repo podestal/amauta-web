@@ -14,7 +14,7 @@ const getUnpaidInfo = ({ paymentStatus }: Props): {active:boolean, unpaidMessage
         unpaidMessage: ""
     }
 
-    if (daysPassed < 3) {
+    if (daysPassed < 8) {
         return  {
             active: true,
             unpaidMessage: "Recuerda que tu suscripción está a punto de caducar. Por favor, actualiza tu suscripción para seguir usando la plataforma."

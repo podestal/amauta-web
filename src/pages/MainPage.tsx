@@ -13,7 +13,7 @@ import useSchoolStore from "../hooks/store/useSchoolStore"
 import getUnpaidInfo from "../utils/getUnpaidInfo"
 
 const MainPage = () => {
-
+    
     const { type, message, reset, show } = useNotificationsStore()
     const isLoading = useLoadingStore(s => s.isLoading)
     const access = useAuthStore(s => s.access)
@@ -23,14 +23,14 @@ const MainPage = () => {
     const {active, unpaidMessage} = getUnpaidInfo({ paymentStatus: school.payment_status })
 
     useEffect(() => {
-      document.querySelector('html')?.classList.add('dark')
+      document.querySelector('html')?.classList.add('dark')      
     }, [])
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-950 dark:bg-gray-950 dark:text-slate-50 mx-auto relative">
       {school.payment_status === 'N' && 
       <>
-      <div className={`w-full ${active ? 'bg-amber-500' : 'bg-red-600'} text-white px-4 h-8 text-sm flex items-center justify-center z-50 fixed top-0`}>
+      <div className={`w-full ${active ? 'bg-amber-500' : 'bg-red-600'} text-white px-4 max-md:h-20 h-8 text-sm flex items-center justify-center z-50 fixed top-0`}>
         <span className="font-semibold text-center">
           ⚠️ {unpaidMessage}
         </span>
@@ -55,7 +55,7 @@ const MainPage = () => {
           {isLoading && 
             <div className="w-full relative"><Loader /></div>
           }
-          {active &&  <Outlet />}
+          <Outlet />
         </div>
         
         {profile && access && <Navigator />}
