@@ -13,6 +13,7 @@ import ActivityForm from "../ActivityForm";
 import useCreateActivity from "../../../../hooks/api/activity/useCreateActivity";
 import getCurrentQuarter from "../../../../utils/getCurrentCuarter";
 import getAgeFromClassroom from "../../../../utils/getAgeFromClassroom";
+import ActivityAIFormFinal from "./ActivityAIFormFinal";
 
 const iconMap = [
     { name: 'Tarea', icon: FileText, color: 'blue-500' },
@@ -144,7 +145,13 @@ const ActivityFormAI = ({ lessons, area, assignatureId, setOpen, classroom }: Pr
             setMarkdown={setMarkdown}
             setAITitle={() => {}}
         />}
-        {category === 'examen' && <p>Examen form</p>}
+        {category === 'examen' && <ActivityAIFormFinal
+            lessons={lessons.filter(lesson => selectedLessons.includes(lesson.id))}
+            age={age}
+            markdown={markdown}
+            setMarkdown={setMarkdown}
+            setAITitle={() => {}}
+        />}
         {category === 'proyecto' && <ActivityAIFormProject 
             lessons={lessons.filter(lesson => selectedLessons.includes(lesson.id))}
             age={age}
