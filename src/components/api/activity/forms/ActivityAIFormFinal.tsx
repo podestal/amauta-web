@@ -64,6 +64,16 @@ const ActivityAIFormFinal = ({ lessons, age, markdown, setMarkdown, setAITitle }
             return
         }
         setLoading(true)
+        // category: 'evaluación',
+        // topic: lessonTopics,
+        // age: age,
+        // lesson: lessonContent,
+        // setMarkdown,
+        // typeOfQuestions,
+        // numberOfQuestions,
+        // skillsToEvaluate,
+        // difficulty: selectedDifficulty,
+        // setAITitle
         await getAIResponse({
             category: 'examen',
             topic: lessonTopics,

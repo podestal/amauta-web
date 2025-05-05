@@ -142,7 +142,7 @@ const SideBar = ({ profile, isOpen, setIsOpen }: Props) => {
         icon
         isOpen={isOpen}
       />
-      <div className={`${isOpen ? 'w-[14%]' : 'w-[23%]'} h-[25%] top-0 left-0 bg-gradient-to-r from-purple-900 to-purple-950 blur-3xl  z-0 absolute`} />
+      <div className={`${isOpen ? 'w-[14%]' : 'w-[23%]'} h-[25%] top-0 left-0 bg-gradient-to-r from-purple-900 to-purple-950 blur-3xl  z-0 absolute hidden dark:block`} />
     </motion.div>
   );
 };

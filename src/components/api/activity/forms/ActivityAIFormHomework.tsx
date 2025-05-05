@@ -51,10 +51,6 @@ const ActivityAIFormHomework = ({ lessons, age, markdown, setMarkdown, setAITitl
             setType('error')
             return
         }
-
-        console.log('lessonTopics', lessonTopics)
-        console.log('lessonContent', lessonContent)
-        console.log('lessons', lessons)
         
         setLoading(true)
         await getAIResponse({

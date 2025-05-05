@@ -126,6 +126,39 @@ const getPromptProject = ({ topic, age, lesson, projectType, difficulty, skillsT
 ${lesson}`
 }
 
+interface GetPromptFinalProps {
+    topic: string
+    age: number
+    lesson: string
+    typeOfQuestions: string[]
+    numberOfQuestions: number
+    skillsToEvaluate: string[]
+    difficulty: string
+    context: string
+}
+
+const getPromptFinal = ({ topic, age, lesson, typeOfQuestions, numberOfQuestions, skillsToEvaluate, difficulty, context }: GetPromptFinalProps) => {
+    return `Genera una prueba sobre el tema "${topic}", basada en la siguiente lección, dirigida a estudiantes de ${age} años.
+
+    📝 Especificaciones:
+    - Tipo de preguntas: ${typeOfQuestions}
+    - Número de preguntas: ${numberOfQuestions}
+    - Habilidades a evaluar: ${skillsToEvaluate}
+    - Dificultad: ${difficulty}
+    - Contexto de la lección: ${context}
+
+    📋 Requisitos:
+    - La prueba debe consistir únicamente en las preguntas, sin introducciones ni saludos.
+    - Cada pregunta debe ser clara, precisa y alineada con los contenidos y objetivos de la lección.
+    - Utiliza el tipo de preguntas especificado, manteniendo coherencia y variedad si corresponde.
+    - Asegúrate de que el nivel de dificultad corresponda al indicado y a la edad del estudiante.
+    - No incluir instrucciones adicionales, explicaciones ni comentarios. Solo mostrar las preguntas generadas.
+    - El título de la tarea debe ser breve y claro, debe de estar ubicado en la parte superior, y no agregues nada más como título del proyecto, o título de la tarea, el título y ya.   
+    📚 Lección:
+
+    ${lesson}`
+}
+
 interface AIResponseProps {
     category: string,
     topic: string, 
@@ -176,6 +209,8 @@ const getAIResponse = async ({
             prompt = (numberOfQuestions && difficulty && typeOfQuestions && skillsToEvaluate) ? getPromptTest({ topic, age, lesson, typeOfQuestions, numberOfQuestions, skillsToEvaluate, difficulty }) : ''
         } else if (category === 'proyecto') {            
             prompt = (projectType && difficulty && skillsToEvaluate) ? getPromptProject({ topic, age, lesson, projectType, difficulty, skillsToEvaluate, toolsAndResources }) : ''
+        } else if (category === 'examen') {
+            prompt = (numberOfQuestions && difficulty && typeOfQuestions && skillsToEvaluate) ? getPromptFinal({ topic, age, lesson, typeOfQuestions, numberOfQuestions, skillsToEvaluate, difficulty, context }) : ''
         }
         
         const response = await googleGenAI.models.generateContent({
