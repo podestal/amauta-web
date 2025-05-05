@@ -13,6 +13,7 @@ const useSchoolStore = create<SchoolState>(set => ({
         type_of_institution: '',
         picture_name: '',
         payment_status: '',
+        automatic_late: '',
     },
     setSchool: (school) => {
         set({ school })

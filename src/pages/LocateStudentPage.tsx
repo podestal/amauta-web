@@ -114,7 +114,7 @@ const LocateStudentPage = () => {
                         {searchMode === 'qr' ? (
                          <QRScanner 
                             onScanSuccess={onScanSuccess}
-                            selectedStatus='1'
+                            // selectedStatus='1'
                         />
                         ) : (
                             <motion.div

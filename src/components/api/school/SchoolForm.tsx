@@ -62,7 +62,7 @@ const SchoolForm: React.FC<Props> = ({ school, updateSchool }) => {
     <motion.div 
       initial={{ opacity: 0, y: 10 }} 
       animate={{ opacity: 1, y: 0 }} 
-      className="max-w-xl mx-auto p-6 bg-slate-200 dark:bg-slate-900 shadow-xl rounded-2xl"
+      className="w-full mx-auto p-6 bg-slate-200 dark:bg-slate-900 shadow-xl rounded-2xl"
     >
       <h2 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-slate-50">Información del colegio</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -86,10 +86,10 @@ const SchoolForm: React.FC<Props> = ({ school, updateSchool }) => {
           />
         </div>
 
-        <div>
+        {/* <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-slate-50">Estado de pago</label>
           <p>{form.payment_status}</p>
-        </div>
+        </div> */}
 
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-slate-50">Hora de tardanza automática</label>
@@ -111,7 +111,7 @@ const SchoolForm: React.FC<Props> = ({ school, updateSchool }) => {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           type="submit"
-          className="w-full py-2 px-4 bg-blue-600 text-white rounded-xl shadow hover:bg-blue-700"
+          className="w-48 py-2 px-4 bg-blue-600 text-white rounded-xl shadow hover:bg-blue-700"
         >
           Guardar cambios
         </motion.button>

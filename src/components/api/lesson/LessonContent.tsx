@@ -8,6 +8,7 @@ import { BookOpenText } from "lucide-react"
 import useCreateLesson from "../../../hooks/api/lesson/useCreateLesson"
 import useAuthStore from "../../../hooks/store/useAuthStore"
 import useGetProfileStore from "../../../hooks/store/useGetProfileStore"
+import getCurrentQuarter from "../../../utils/getCurrentCuarter"
 
 interface LessonContentProps {
     markdown: string
@@ -22,9 +23,10 @@ interface LessonContentProps {
   const LessonContent = ({ markdown, setMarkdown, loading, setLoading, assignature, classroom, topic }: LessonContentProps) => {
 
     const access = useAuthStore(s => s.access) || ''
+    const quarter = getCurrentQuarter()
     const profile = useGetProfileStore(s => s.profile)
     const [update, setUpdate] = useState(true)
-    const createLesson = useCreateLesson({ assignatureId: assignature})
+    const createLesson = useCreateLesson({ assignatureId: assignature, quarter})
 
     useEffect(() => {
         if (markdown) {

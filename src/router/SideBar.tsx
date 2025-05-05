@@ -90,6 +90,11 @@ const SideBar = ({ profile, isOpen, setIsOpen }: Props) => {
         <img className="mx-1" src={logo} width={50} alt="Amautapp" />
         {isOpen && <p className="text-lg font-bold font-poppins">Amautapp</p>}
       </div>
+      {/* <div className="relative w-full h-full">
+
+      </div> */}
+      
+      
       <nav className="flex flex-col space-y-2 mb-auto">
           {navItems.map(item => (
               <NavLink
@@ -142,6 +147,7 @@ const SideBar = ({ profile, isOpen, setIsOpen }: Props) => {
         icon
         isOpen={isOpen}
       />
+            <div className={`${isOpen ? 'w-[14%]' : 'w-[23%]'} h-[65%] top-0 left-0 bg-gradient-to-b from-purple-900 to-purple-950 blur-3xl  z-0 absolute`} />
     </motion.div>
   );
 };
