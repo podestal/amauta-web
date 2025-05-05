@@ -14,6 +14,8 @@ interface Props {
 const useCreateLesson = ({ assignatureId, quarter }: Props): UseMutationResult<Lesson, Error, CreateLessonData> => {
     
     const lessonService = getLessonService({})
+    console.log('quarter in create lesson', quarter);
+    
     const queryClient = useQueryClient()
     return useMutation({
         mutationFn: (data: CreateLessonData) => lessonService.post(data.lesson, data.access),
