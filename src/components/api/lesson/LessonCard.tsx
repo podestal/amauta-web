@@ -10,9 +10,10 @@ interface Props {
     classroom: string
     assignature: string
     area: string
+    quarter: string
 }
 
-const LessonCard = ({ lesson, classroom, assignature, area }: Props) => {
+const LessonCard = ({ lesson, classroom, assignature, area, quarter }: Props) => {
 
     const navigate = useNavigate()
 
@@ -42,7 +43,9 @@ const LessonCard = ({ lesson, classroom, assignature, area }: Props) => {
                             className='hover:opacity-70'/>
                     </button>
                     <UpdateLesson 
-                        content={lesson.content}
+                        lesson={lesson}
+                        assignatureId={assignature}
+                        quarter={quarter}
                     />
                 </div>
             </div>

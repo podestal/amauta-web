@@ -36,7 +36,14 @@ const LessonList = ({ classroom, assignature, area, quarter }: Props) => {
           className="text-center text-gray-500 dark:text-gray-400">No hay lecciones disponibles</motion.p>}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 p-4">
           {lessons.map( lesson => (
-              <LessonCard key={lesson.id} lesson={lesson} classroom={classroom} assignature={assignatureId} area={area} />
+              <LessonCard 
+                key={lesson.id} 
+                lesson={lesson} 
+                classroom={classroom} 
+                assignature={assignatureId} 
+                area={area} 
+                quarter={quarter}  
+              />
           ))}
       </div>
     </div>
