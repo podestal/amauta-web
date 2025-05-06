@@ -36,6 +36,7 @@ const UpdateActivity = ({ activity, area, assignatureId, classroom }: Props) => 
         <Modal
             isOpen={open}
             onClose={() => setOpen(false)}
+            whole
         >
             <ActivityForm 
                 activity={activity}

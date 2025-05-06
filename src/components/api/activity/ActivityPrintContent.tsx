@@ -5,6 +5,7 @@ import Modal from "../../ui/Modal"
 import MarkDownFormat from "../../ui/MarkDownFormat"
 import { useReactToPrint } from "react-to-print"
 import Button from "../../ui/Button"
+import MDEditor from "@uiw/react-md-editor"
 
 
 interface Props {
@@ -15,6 +16,7 @@ interface Props {
 const ActivityPrintContent = ({ content, title }: Props) => {
 
   const [open, setOpen] = useState(false)
+  const [update, setUpdate] = useState(false)
 
   const printRef = useRef<HTMLDivElement>(null)
     
@@ -47,12 +49,29 @@ const ActivityPrintContent = ({ content, title }: Props) => {
         >
 
           <>
-            <Button 
-              label="Imprimir"
-              onClick={() => {
-                handlePrint()
-              }}
-            />
+            <div className="flex justify-between items-center mb-4">
+              <Button 
+                label="Imprimir"
+                onClick={() => {
+                  handlePrint()
+                }}
+              />
+              {/* <Button 
+                label="Modificar"
+                onClick={() => {
+                  setUpdate(true)
+                }}
+              /> */}
+            </div>
+            {update 
+            ? 
+            <MDEditor
+                value={content}
+                // onChange={e => setContent(e || "")}
+                onChange={e => console.log('e', e)}
+                height={600}
+            /> 
+            : 
             <div
               ref={printRef}
               className="print:px-8 print:py-8 print:w-full print:h-full print:bg-white "
@@ -60,7 +79,7 @@ const ActivityPrintContent = ({ content, title }: Props) => {
               <MarkDownFormat 
                 content={content}
               />
-            </div>
+            </div>}
           </>
 
         </Modal>

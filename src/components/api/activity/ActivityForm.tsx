@@ -18,6 +18,7 @@ import remarkGfm from "remark-gfm";
 import { BookOpenText } from "lucide-react";
 import getTitleCase from "../../../utils/getTitleCase";
 import getCurrentQuarter from "../../../utils/getCurrentCuarter";
+import MDEditor from "@uiw/react-md-editor";
 
 interface Props {
     area: number;
@@ -50,9 +51,7 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, updateAct
   
     const [titleError, setTitleError] = useState("");
     const [descriptionError, setDescriptionError] = useState("");
-    const [categoryError, setCategoryError] = useState("");
-
-    console.log('createActivity', createActivity)    
+    const [categoryError, setCategoryError] = useState("");  
 
     // REFS
     const titleRef = useRef<HTMLInputElement>(null);
@@ -349,6 +348,16 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, updateAct
               </ReactMarkdown>
             </div>
             : 
+            <>
+            {activity && activity?.lessons.length > 0 
+            ? 
+            <MDEditor
+                value={description}
+                onChange={() => {}}
+                height={600}
+                preview="edit"
+            /> 
+            : 
             <TextArea
               placeholder="Descripción"
               value={description}
@@ -358,8 +367,10 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, updateAct
               }}
               error={descriptionError}
               tall
-            />}
-
+            /> 
+            }
+            </>
+            }
             {/* Submit Button */}
             <div className="sm:col-span-2 flex justify-center">
               <Button loading={loading} label="✅ Crear Tarea" />
