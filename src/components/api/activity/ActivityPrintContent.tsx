@@ -2,6 +2,8 @@ import { motion } from "framer-motion"
 import { Printer } from "lucide-react"
 import { useState } from "react"
 import Modal from "../../ui/Modal"
+import MarkDownFormat from "../../ui/MarkDownFormat"
+
 
 interface Props {
   content: string
@@ -32,7 +34,10 @@ const ActivityPrintContent = ({ content }: Props) => {
             onClose={() => setOpen(false)}
             whole
         >
-          <p>Printing</p>
+          <MarkDownFormat 
+            content={content}
+          />
+
         </Modal>
     </>
   )
