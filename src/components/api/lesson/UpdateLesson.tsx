@@ -4,8 +4,9 @@ import { useState } from "react"
 import Modal from "../../ui/Modal"
 import useUpdateLesson from "../../../hooks/api/lesson/useUpdateLesson"
 import { Lesson } from "../../../services/api/lessonService"
-import Button from "../../ui/Button"
 import useAuthStore from "../../../hooks/store/useAuthStore"
+import useNotificationsStore from "../../../hooks/store/useNotificationsStore"
+import { Loader } from "lucide-react"
 
 interface Props {
     lesson: Lesson
@@ -20,12 +21,31 @@ const UpdateLesson = ({ lesson, assignatureId, quarter }: Props) => {
     const updateLesson = useUpdateLesson({ assignatureId, quarter, lessonId: (lesson.id).toString() })
     const [content, setContent] = useState(lesson.content)
 
+    const { setMessage, setShow, setType } = useNotificationsStore()
+    const [loading, setLoading] = useState(false)
+
     const handleUpdateLesson = () => {
         updateLesson.mutate({
             access,
             lesson: {
                 ...lesson,
                 content
+            }
+        }, {
+            onSuccess: () => {
+                setMessage('Lección actualizada')
+                setShow(true)
+                setType('success')
+                setUpdate(false)
+            },
+            onError: (err) => {
+                console.error('Error al actualizar la lección', err)
+                setMessage('Error al actualizar la lección')
+                setShow(true)
+                setType('error')
+            },
+            onSettled: () => {
+                setLoading(false)
             }
         })
     }
@@ -45,13 +65,20 @@ const UpdateLesson = ({ lesson, assignatureId, quarter }: Props) => {
         >
 
             <div className="flex flex-col justify-between items-center gap-8 mb-4">
-                <Button 
-                    label="Actualizar lección"
+                <button
                     onClick={() => {
+                        setLoading(true)
                         handleUpdateLesson()
-                        setUpdate(false)
                     }}
-                />
+                    className="text-sm font-bold bg-blue-600 text-white px-2 py-2 rounded-md shadow-md hover:bg-blue-700 transition duration-200"
+                >
+                    {loading
+                    ?
+                    <Loader className="animate-spin" />
+                    :
+                    <span>Actualizar lección</span>
+                    }
+                </button>
                 <MDEditor
                     value={content}
                     onChange={e => setContent(e || "")}

@@ -84,7 +84,7 @@ const ActivityAIFormProject = ({ lessons, age, markdown, setMarkdown, setAITitle
         onSubmit={handleSubmit}
         className="w-full flex flex-col gap-6 p-6 "
     >
-        <h2 className="text-center mb-8 text-2xl font-bold">Nuevo Projecto</h2>
+        <h2 className="text-center mb-8 text-2xl font-bold">Nuevo Proyecto</h2>
         <div className="flex justify-center items-start gap-4 mb-6">
             <SelectorNew 
                 value={selectedProjectType}

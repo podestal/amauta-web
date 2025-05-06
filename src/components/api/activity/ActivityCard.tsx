@@ -4,6 +4,8 @@ import moment from 'moment';
 import { capacities, competencies } from '../../../data/mockdataForGrades';
 import { useNavigate } from 'react-router-dom';
 import UpdateActivity from './UpdateActivity';
+import { ChartColumnDecreasing } from 'lucide-react';
+import ActivityPrintContent from './ActivityPrintContent';
 
 interface Props {
     activity: Activity
@@ -78,12 +80,33 @@ const ActivityCard = ({ activity, isPastDue, assignatureId, area, classroom, des
             </div>
         )}
         </motion.li>
+        <div className='flex-col'>
+        <>{console.log('activity', activity.lessons.length)}</>
         <UpdateActivity 
             activity={activity} 
             assignatureId={assignatureId} 
             area={parseInt(area)}
             classroom={classroom}
         />
+        {activity.lessons.length > 0 &&
+            <ActivityPrintContent 
+                content={activity.description}
+            />}
+        <motion.div 
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.2 }}
+            className="">
+            <ChartColumnDecreasing 
+                className="text-white transition-transform duration-200 transform hover:scale-110 cursor-pointer p-2 rounded-full bg-blue-500 shadow-md"
+                size={32}
+                onClick={(e) => {
+                    e.stopPropagation()
+                    // setOpen(true)
+                }}
+            />
+        </motion.div>
+        </div>
     </div>
 
   )

@@ -119,7 +119,7 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, updateAct
             return;
         }
 
-        if (!lesson) {
+        if (!lesson && descriptionAI) {
             setMessage("Selecciona al menos una lección");
             setType("error");
             setShow(true);
