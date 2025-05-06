@@ -91,6 +91,7 @@ const ActivityCard = ({ activity, isPastDue, assignatureId, area, classroom, des
         {activity.lessons.length > 0 &&
             <ActivityPrintContent 
                 content={activity.description}
+                title={activity.title}
             />}
         <motion.div 
             initial={{ opacity: 0, x: 50 }}

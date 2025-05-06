@@ -1,17 +1,28 @@
 import { motion } from "framer-motion"
 import { Printer } from "lucide-react"
-import { useState } from "react"
+import { useRef, useState } from "react"
 import Modal from "../../ui/Modal"
 import MarkDownFormat from "../../ui/MarkDownFormat"
+import { useReactToPrint } from "react-to-print"
+import Button from "../../ui/Button"
 
 
 interface Props {
   content: string
+  title: string
 }
 
-const ActivityPrintContent = ({ content }: Props) => {
+const ActivityPrintContent = ({ content, title }: Props) => {
 
   const [open, setOpen] = useState(false)
+
+  const printRef = useRef<HTMLDivElement>(null)
+    
+  const handlePrint = useReactToPrint({ 
+    contentRef: printRef,
+    documentTitle: `Actividad_${title}`,
+    onAfterPrint: () => console.log("Impresión completada.")
+  })
 
   return (
     <>
@@ -34,9 +45,23 @@ const ActivityPrintContent = ({ content }: Props) => {
             onClose={() => setOpen(false)}
             whole
         >
-          <MarkDownFormat 
-            content={content}
-          />
+
+          <>
+            <Button 
+              label="Imprimir"
+              onClick={() => {
+                handlePrint()
+              }}
+            />
+            <div
+              ref={printRef}
+              className="print:px-8 print:py-8 print:w-full print:h-full print:bg-white "
+            >
+              <MarkDownFormat 
+                content={content}
+              />
+            </div>
+          </>
 
         </Modal>
     </>
