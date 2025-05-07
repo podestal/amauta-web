@@ -32,9 +32,10 @@ interface Props {
     titleAI?: string
     lesson?: number[]
     setAIPromptOpen?: React.Dispatch<React.SetStateAction<boolean>>
+    setMarkdown?: React.Dispatch<React.SetStateAction<string>>
 }
 
-const ActivityForm = ({ area, assignatureId, activity, createActivity, updateActivity, setOpen, descriptionAI, categoryAI, titleAI, lesson, setAIPromptOpen }: Props) => {
+const ActivityForm = ({ area, assignatureId, activity, createActivity, updateActivity, setOpen, descriptionAI, categoryAI, titleAI, lesson, setAIPromptOpen, setMarkdown }: Props) => {
 
     const { setMessage, setShow, setType } = useNotificationsStore();
     const access =useAuthStore(state => state.access) || '';
@@ -143,11 +144,12 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, updateAct
             },
         }, {
             onSuccess: () => {
-                setMessage("Tarea creada");
+                setMessage("Actividad creada");
                 setType("success");
                 setShow(true);
                 setOpen && setOpen(false);
                 setAIPromptOpen && setAIPromptOpen(false);
+                setMarkdown && setMarkdown("");
             },
             onError: () => {
                 setMessage("Error al crear la tarea");
@@ -353,7 +355,7 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, updateAct
             ? 
             <MDEditor
                 value={description}
-                onChange={() => {}}
+                onChange={e => setDescription(e || "")}
                 height={600}
                 preview="edit"
             /> 

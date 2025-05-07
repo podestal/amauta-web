@@ -118,6 +118,7 @@ const LessonPage = () => {
             lesson={[lesson.id]}
             setOpen={setActivityForm}
             setAIPromptOpen={setOpen}
+            setMarkdown={setMarkdown}
         />
     </Modal>
     : 
