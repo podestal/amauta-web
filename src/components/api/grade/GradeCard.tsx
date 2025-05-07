@@ -2,6 +2,9 @@ import { motion } from "framer-motion"
 import { GradeByActivity } from "../../../services/api/gradeService"
 import useUpdateGrade from "../../../hooks/api/grade/useUpdateGrade";
 import useAuthStore from "../../../hooks/store/useAuthStore";
+import { Loader } from "lucide-react";
+import { useState } from "react";
+import useNotificationsStore from "../../../hooks/store/useNotificationsStore";
 
 interface Props {
     grade: GradeByActivity
@@ -22,13 +25,26 @@ const GradeCard = ({ grade, index, activityId }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
     const updateGrade = useUpdateGrade({ gradeId: grade.id, activityId, studentUid: (grade.student.uid).toString() })
+    const [loading, setLoading] = useState(false)
+    const { setMessage, setShow, setType } = useNotificationsStore()
 
     const handleUpdateGrade = (newGrade: string) => {
+        setLoading(true)
         updateGrade.mutate({
             access,
             grade: {
                 calification: newGrade,
                 observations: ''
+            }
+        }, {
+            onError: () => {
+                setMessage('Error al actualizar la calificación')
+                setShow(true)
+                setType('error')
+                setLoading(false)
+            },
+            onSettled: () => {
+                setLoading(false)
             }
         })
     }
@@ -52,11 +68,21 @@ const GradeCard = ({ grade, index, activityId }: Props) => {
         <div className="py-3 px-4 text-center col-span-5">
             <div className="w-full flex justify-evenly gap-2">
             {gradeOptions.map( optionGrade => (
-                <>
-                <p 
-                  onClick={() => handleUpdateGrade(optionGrade)}
-                    className={` w-16 rounded-3xl cursor-pointer hover:opacity-80 transition-all duration-300 ${optionGrade === grade.calification ? `${gradeStyles[grade.calification]}` : 'bg-gray-300 text-gray-700'}`}>{optionGrade}</p>
-                </>
+                <div 
+                    onClick={() => handleUpdateGrade(optionGrade)}
+                    className={` w-16 rounded-3xl cursor-pointer hover:opacity-80 transition-all duration-300 ${optionGrade === grade.calification ? `${gradeStyles[grade.calification]}` : 'bg-gray-300 text-gray-700'}`}>
+                        {loading 
+                        ? 
+                        <div className="flex justify-center items-center h-full">
+                            <Loader 
+                                className="animate-spin text-white text-center"
+                                size={20}
+                            />
+                        </div> 
+                        : 
+                        <p>{optionGrade}</p>
+                        }
+                </div>
             ))}
             </div>
         </div>
