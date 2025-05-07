@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import getTitleCase from "../utils/getTitleCase";
 import Modal from "../components/ui/Modal";
 import { Lesson } from "../services/api/lessonService";
-// import getAIResponse from "../utils/getAiResponse";
 import ActivityAIResponse from "../components/api/activity/ActivityAIResponse";
 import ActivityAIFormHomework from "../components/api/activity/forms/ActivityAIFormHomework";
 import ActivityAIFormClassActivity from "../components/api/activity/forms/ActivityAIFormClassActivity";
@@ -168,7 +167,6 @@ const LessonPage = () => {
             assignatureId={assignature} 
             quarter={getCurrentQuarter()} 
             area={area} 
-            classroom={classroom.split('-')[classroom.split('-').length - 1]} 
             lessonId={lesson.id}   
             descriptionAi
         />

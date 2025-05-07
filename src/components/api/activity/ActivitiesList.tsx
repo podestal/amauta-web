@@ -10,12 +10,11 @@ interface Props {
     assignatureId: string
     quarter: string
     area: string
-    classroom: string
     lessonId?: number
     descriptionAi?: boolean
 }
 
-const ActivitiesList = ({ assignatureId, quarter, area, classroom, lessonId }: Props) => {
+const ActivitiesList = ({ assignatureId, quarter, area, lessonId }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
     const { data: activities, isLoading, isError, error, isSuccess } = lessonId ? useGetActivitiesByLesson({access, lessonId: lessonId.toString()}) : useGetActivitiesByAssignature({ access, assignatureId, quarter })
@@ -55,7 +54,6 @@ const ActivitiesList = ({ assignatureId, quarter, area, classroom, lessonId }: P
                     isPastDue={moment(assignment.due_date).isBefore(moment(), "day")}
                     assignatureId={assignatureId}
                     area={area}
-                    classroom={classroom}
                     descriptionAi
                 />
         ))}

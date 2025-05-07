@@ -12,11 +12,10 @@ interface Props {
     isPastDue: boolean
     assignatureId: string
     area: string
-    classroom: string
     descriptionAi?: boolean
 }
 
-const ActivityCard = ({ activity, isPastDue, assignatureId, area, classroom, descriptionAi }: Props) => {
+const ActivityCard = ({ activity, isPastDue, assignatureId, area, descriptionAi }: Props) => {
 
     const navigate = useNavigate()
 
@@ -86,7 +85,6 @@ const ActivityCard = ({ activity, isPastDue, assignatureId, area, classroom, des
             activity={activity} 
             assignatureId={assignatureId} 
             area={parseInt(area)}
-            classroom={classroom}
         />
         {activity.lessons.length > 0 &&
             <ActivityPrintContent 

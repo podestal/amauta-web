@@ -10,13 +10,12 @@ interface Props {
     activity: Activity
     area: number
     assignatureId: string
-    classroom: string
 }
 
-const UpdateActivity = ({ activity, area, assignatureId, classroom }: Props) => {
+const UpdateActivity = ({ activity, area, assignatureId }: Props) => {
 
     const [open, setOpen] = useState(false)
-    const updateActivity  = useUpdateActivity({ activityId: activity.id.toString(), assignatureId, quarter: activity.quarter, classroom })
+    const updateActivity  = useUpdateActivity({ activityId: activity.id.toString(), assignatureId, quarter: activity.quarter })
   return (
     <>
         <motion.div 

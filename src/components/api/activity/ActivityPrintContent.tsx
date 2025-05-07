@@ -18,6 +18,9 @@ const ActivityPrintContent = ({ content, title }: Props) => {
   const [open, setOpen] = useState(false)
   const [update, setUpdate] = useState(false)
 
+  console.log(setUpdate)
+  
+
   const printRef = useRef<HTMLDivElement>(null)
     
   const handlePrint = useReactToPrint({ 
