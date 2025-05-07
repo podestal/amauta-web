@@ -28,6 +28,9 @@ const Clasrooms = () => {
 
   return (
     <div className="mb-32">
+        {classrooms.length > 1 
+        ?
+        <>
         <motion.h2 
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -35,8 +38,6 @@ const Clasrooms = () => {
             className="text-4xl font-bold text-center mb-10">
             Clases
         </motion.h2>
-        {classrooms.length > 1 
-        ?
         <motion.div 
             initial="hidden"
             animate="visible"
@@ -49,7 +50,8 @@ const Clasrooms = () => {
                     classroom={clasroom}
                 />
             ))}
-        </motion.div> 
+        </motion.div>
+        </> 
     : 
         <Students 
             classroom={classrooms[0].split('-').pop()}
