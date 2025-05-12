@@ -34,12 +34,12 @@ const Lessons = ({ classroom, assignature, area }: Props) => {
         transition={{ duration: 0.5 }}
     >
 
-        <div className="w-full grid grid-cols-3 gap-12 px-4">
-        <div className="flex justify-start items-center">
-        <GoBack 
-            path={`/app/assignatures/`}
-            state={{}}
-        />
+        <div className="w-full grid  grid-cols-1 lg:grid-cols-3 gap-12 px-4">
+        <div className="flex justify-start items-center max-lg:hidden">
+            <GoBack 
+                path={`/app/assignatures/`}
+                state={{}}
+            />
         </div>
         <div className="flex justify-center items-center">
         <CreateLesson 

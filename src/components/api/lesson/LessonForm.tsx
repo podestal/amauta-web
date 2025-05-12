@@ -63,7 +63,7 @@ const LessonForm = ({ classroom, assignature, getAIResponse }: Props) => {
         : 
         <form
             onSubmit={handleSubmit}
-            className="flex flex-col items-center gap-4 h-full p-4 w-[50%] mx-auto dark:bg-gray-900 bg-slate-200 rounded-2xl shadow-lg"
+            className="flex flex-col items-center gap-4 h-full p-4 lg:w-[50%] mx-auto dark:bg-gray-900 bg-slate-200 rounded-2xl shadow-lg"
         >
             <h2 className="text-3xl font-bold text-white text-center">Preparar Clase</h2>
             <Input 

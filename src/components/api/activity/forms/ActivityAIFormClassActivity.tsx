@@ -73,7 +73,7 @@ const ActivityAIFormClassActivity = ({ lessons, age, markdown, setMarkdown, setA
     : 
     <form
         onSubmit={handleSubmit}
-        className="w-full flex flex-col gap-6 p-6 "
+        className="w-full flex flex-col gap-6 p-6  "
     >
         <h2 className="text-center mb-8 text-2xl font-bold">Nuevo Trabajo en Clase</h2>
         <div className="w-full flex gap-10 justify-between items-start">

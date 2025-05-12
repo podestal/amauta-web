@@ -78,27 +78,26 @@ const ActivityAIFormHomework = ({ lessons, age, markdown, setMarkdown, setAITitl
         className="w-full flex flex-col gap-6 p-6 "
     >
         <h2 className="text-center mb-8 text-2xl font-bold">Nueva Tarea</h2>
-        <div className="w-full flex gap-10 justify-between items-start">
-        <SelectorNew 
-            value={selectedHomeworkType}
-            setValue={setSelectedHomeworkType}
-            options={options}
-            label="Tipo de Tarea"
-        />  
-        <div className="flex flex-col gap-4">
-        <NumberSelector 
-            value={numberOfQuestions}
-            setValue={setNumberOfQuestions}
-            label="Número de Preguntas"
-        />
-        <DifficultySelector 
-            value={selectedDifficulty}
-            setValue={setSelectedDifficulty}
-            options={['Fácil', 'Media', 'Díficil']}
-            label="Dificultad"
-        />
-        </div>
-
+        <div className="w-full lg:flex flex-col gap-12 justify-between items-start">
+            <SelectorNew 
+                value={selectedHomeworkType}
+                setValue={setSelectedHomeworkType}
+                options={options}
+                label="Tipo de Tarea"
+            />  
+            <div className="flex flex-col gap-4 max-lg:mt-10">
+                <NumberSelector 
+                    value={numberOfQuestions}
+                    setValue={setNumberOfQuestions}
+                    label="Número de Preguntas"
+                />
+                <DifficultySelector 
+                    value={selectedDifficulty}
+                    setValue={setSelectedDifficulty}
+                    options={['Fácil', 'Media', 'Díficil']}
+                    label="Dificultad"
+                />
+            </div>
         </div>
         <div className="w-full flex gap-10 mt-6">
             <ContextInput 

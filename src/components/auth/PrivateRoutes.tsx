@@ -110,13 +110,13 @@ const PrivateRoutes = ({ children }: Props) => {
   }
 
 
-  if (school?.payment_status === 'N') {
-    const unpaidInfo = getUnpaidInfo({ paymentStatus: school.payment_status })
-    if (!unpaidInfo.active) {
-      return <p></p>
-    }
+  // if (school?.payment_status === 'N') {
+  //   const unpaidInfo = getUnpaidInfo({ paymentStatus: school.payment_status })
+  //   if (!unpaidInfo.active) {
+  //     return <p></p>
+  //   }
 
-  }
+  // }
 
   if (isSuccess) {
     return children;

@@ -25,10 +25,12 @@ const GradesPage = () => {
         <h2 className="text-3xl font-bold text-center mb-2">📊 Calificaciones</h2>
       </div>
       <div className="grid grid-cols-3 lg:hidden ">
-      <GoBack 
-          path={`/app/assignatures/${assignatureId}/`}
-          state={{area, assignatureId }}
-        />
+      <div className="flex items-center">
+          <GoBack 
+            path={`/app/assignatures/${assignatureId}/`}
+            state={{area, assignatureId }}
+          />
+        </div>
         <h2 className="flex-1 text-2xl font-bold text-center mb-2">📊 Calificaciones</h2>
         <div></div>
       </div>
