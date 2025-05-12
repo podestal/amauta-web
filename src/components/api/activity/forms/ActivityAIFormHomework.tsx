@@ -78,7 +78,7 @@ const ActivityAIFormHomework = ({ lessons, age, markdown, setMarkdown, setAITitl
         className="w-full flex flex-col gap-6 p-6 "
     >
         <h2 className="text-center mb-8 text-2xl font-bold">Nueva Tarea</h2>
-        <div className="w-full lg:flex flex-col gap-12 justify-between items-start">
+        <div className="w-full lg:flex max-lg:flex-col gap-12 justify-between items-start">
             <SelectorNew 
                 value={selectedHomeworkType}
                 setValue={setSelectedHomeworkType}

@@ -76,14 +76,14 @@ const ActivityAIFormClassActivity = ({ lessons, age, markdown, setMarkdown, setA
         className="w-full flex flex-col gap-6 p-6  "
     >
         <h2 className="text-center mb-8 text-2xl font-bold">Nuevo Trabajo en Clase</h2>
-        <div className="w-full flex gap-10 justify-between items-start">
+        <div className="w-full lg:flex flex-col gap-10 justify-between items-start">
         <SelectorNew 
             value={typeOfActivity}
             setValue={setTypeOfActivity}
             options={typeOfActivityOptions}
             label="Tipo de Actividad"
         />  
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 max-lg:mt-10">
             <NumberSelector 
                 value={durationOfActivity}
                 setValue={setDurationOfActivity}

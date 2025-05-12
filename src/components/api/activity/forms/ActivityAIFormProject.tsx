@@ -85,13 +85,14 @@ const ActivityAIFormProject = ({ lessons, age, markdown, setMarkdown, setAITitle
         className="w-full flex flex-col gap-6 p-6 "
     >
         <h2 className="text-center mb-8 text-2xl font-bold">Nuevo Proyecto</h2>
-        <div className="flex justify-center items-start gap-4 mb-6">
+        <div className="lg:flex max-lg:flex-col justify-center items-start gap-4 mb-6">
             <SelectorNew 
                 value={selectedProjectType}
                 setValue={setSelectedProjectType}
                 options={projectTypeOptions}
                 label="Tipo de Proyecto"
             />
+            <div className="w-full h-8 lg:hidden"></div>
             <MultiSelectorNew 
                 value={selectedSkillsToEvaluate}
                 setValue={setSelectedSkillsToEvaluate}
@@ -99,7 +100,7 @@ const ActivityAIFormProject = ({ lessons, age, markdown, setMarkdown, setAITitle
                 label="Tipo de Preguntas"
             />
         </div>
-        <div className="w-full grid grid-cols-3 gap-10">
+        <div className="w-full lg:grid lg:grid-cols-3 max-lg:flex-col gap-10">
 
             <div>
                 <DifficultySelector 
@@ -109,6 +110,7 @@ const ActivityAIFormProject = ({ lessons, age, markdown, setMarkdown, setAITitle
                     label="Dificultad"
                 />
             </div>
+            <div className="w-full h-8 lg:hidden"></div>
             <div className="col-span-2">
                 <ContextInput 
                     value={toolsAndResources}

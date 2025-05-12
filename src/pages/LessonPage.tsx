@@ -63,7 +63,7 @@ const LessonPage = () => {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="flex items-center justify-between mb-6"
+            className="flex items-center justify-between mb-6 max-lg:gap-8"
         >
             <GoBack 
                 path={`/app/assignatures/${lesson.assignature}`}

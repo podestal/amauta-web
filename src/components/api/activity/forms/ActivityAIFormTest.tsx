@@ -86,14 +86,14 @@ const ActivityAIFormTest = ({ lessons, age, markdown, setMarkdown, setAITitle }:
         className="w-full flex flex-col gap-6 p-6 "
     >
         <h2 className="text-center mb-8 text-2xl font-bold">Nueva Evaluación</h2>
-        <div className="w-full flex gap-10 justify-between items-start">
+        <div className="w-full lg:flex max-lg:flex-col  gap-10 justify-between items-start">
             <MultiSelectorNew 
                 value={typeOfQuestions}
                 setValue={setTypeOfQuestions}
                 options={typeOfQuestionsOptions}
                 label="Tipo de Preguntas"
             />  
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4 max-lg:mt-6">
                 <MultiSelectorNew 
                     value={skillsToEvaluate}
                     setValue={setSkillsToEvaluate}
@@ -102,12 +102,13 @@ const ActivityAIFormTest = ({ lessons, age, markdown, setMarkdown, setAITitle }:
                 /> 
             </div>
         </div>
-        <div className="w-full flex gap-10 mt-6">
+        <div className="w-full lg:flex max-lg:flex-col gap-10 mt-6">
             <NumberSelector 
                 value={numberOfQuestions}
                 setValue={setNumberOfQuestions}
                 label="Número de Preguntas"
             />
+            <div className="w-full h-8 lg:hidden"></div>
             <DifficultySelector 
                 value={selectedDifficulty}
                 setValue={setSelectedDifficulty}
