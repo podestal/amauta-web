@@ -13,8 +13,14 @@ interface Props {
 const ActivitiesHeader = ({ area, assignatureId, setSelectedQuarter, selectedQuarter, classroom }: Props) => {
   return (
     <div>
-      <div className='flex justify-center w-full mx-auto gap-6'>
-        <h2 className="text-2xl font-bold mb-8 text-center text-gray-800 dark:text-gray-200">📌 Tareas Asignadas</h2>
+      <div className='max-lg:grid max-lg:grid-cols-3 lg:flex lg:justify-center lg:items-center w-full mx-auto mb-8 lg:gap-8'>
+        <div className='w-fit lg:hidden'>
+          <GoBack 
+            path={'/app/assignatures/'}
+            state={{}}
+          />
+        </div>
+        <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-gray-200">Actividades</h2>
       </div>
       <div className="lg:grid lg:grid-cols-3 gap-12 mb-8">
         <div className='max-lg:hidden w-full flex justify-start items-center'>
