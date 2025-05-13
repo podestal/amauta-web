@@ -82,6 +82,7 @@ const ActivityFormAI = ({ lessons, area, assignatureId, setOpen, classroom }: Pr
             />
             <Button 
                 label='Descartar'
+                color="red"
                 onClick={() => {
                     setMarkdown('')
                     setActivityForm(false)

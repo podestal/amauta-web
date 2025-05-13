@@ -13,6 +13,7 @@ const ActivityAIResponse = ({ markdown, setMarkdown }: Props) => {
         value={markdown}
         onChange={(value) => setMarkdown(value || "")}
         height={600}
+        preview="edit"
     /> 
   )
 }

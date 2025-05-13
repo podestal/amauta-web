@@ -21,11 +21,11 @@ const AssignaturePage = () => {
   // />}
 
   return (
-    <div className="w-full max-w-[95%] sm:max-w-[600px] md:max-w-[800px] lg:max-w-[1024px] xl:max-w-[1200px] 2xl:max-w-[1380px] mx-auto overflow-hidden pt-10 pb-20">
+    <div className="w-full max-w-[95%] sm:max-w-[600px] md:max-w-[800px] lg:max-w-[1024px] xl:max-w-[1200px] 2xl:max-w-[1380px] mx-auto overflow-hidden pt-10">
       <Tabs 
         tabs={[
           { label: 'Lecciones', content:       
-            <div className='w-full min-h-screen flex justify-center items-center'>
+            <div className='w-full min-h-screen flex justify-center items-start'>
               <Lessons 
                 classroom={classroom}
                 assignature={assignature}

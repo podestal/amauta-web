@@ -85,6 +85,7 @@ interface LessonContentProps {
                 value={markdown}
                 onChange={(value) => setMarkdown(value || "")}
                 height={600}
+                preview="edit"
             /> 
             : 
             <ReactMarkdown
