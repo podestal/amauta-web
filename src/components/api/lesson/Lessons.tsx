@@ -27,7 +27,7 @@ const Lessons = ({ classroom, assignature, area }: Props) => {
     
   return (
     <motion.div
-        className="flex flex-col gap-4 w-full h-full p-4 justify-start items-center pt-10 "
+        className="flex flex-col gap-4 w-full h-full p-4 justify-start items-center pt-10"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
