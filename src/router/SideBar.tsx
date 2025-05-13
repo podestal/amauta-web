@@ -54,7 +54,8 @@ const SideBar = ({ profile, isOpen, setIsOpen }: Props) => {
         { name: 'Anuncios', path: 'announcements-admin', icon: <MessagesSquare /> },
         { name: 'Colegio', path: 'school', icon: <School />},
         // { name: 'Servicios', path: 'whatsapp' },
-        // { name: 'Tarjeta de Notas', path: 'grades-report'},
+        { name: 'Tarjeta de Notas', path: 'grades-report', icon: <IdCard />},
+        { name: 'Ranking', path: 'ranking', icon: <ChartNoAxesCombined /> },
       ]
     } else if (group === 'instructor') {
       navItems = [
