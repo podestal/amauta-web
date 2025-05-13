@@ -38,6 +38,7 @@ import LessonPage from "../pages/LessonPage";
 import PricesPage from "../pages/PricesPage";
 import SchoolPage from "../pages/SchoolPage";
 import RankingPage from "../pages/RankingPage";
+import RankingStudentInfo from "../pages/RankingStudentInfo";
 
 
 const routes = createBrowserRouter([
@@ -284,6 +285,13 @@ const routes = createBrowserRouter([
                         <RankingPage />
                     </PrivateRoutes>
             },
+            {
+                path: 'ranking/:studentId',
+                element:
+                    <PrivateRoutes>
+                        <RankingStudentInfo />
+                    </PrivateRoutes>
+            }
         ]
     }
 ])

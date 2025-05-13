@@ -1,7 +1,204 @@
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronDownIcon, ChevronUpIcon, ArrowUpIcon, ArrowDownIcon, MinusIcon } from '@heroicons/react/24/solid';
+import gsap from 'gsap';
+import Flip from 'gsap/Flip';
+import { useNavigate } from 'react-router-dom';
+
+type Grade = 'C' | 'B' | 'A' | 'AD';
+
+interface Student {
+  id: number;
+  name: string;
+  grade: Grade;
+  trend: 'up' | 'down' | 'stable';
+}
+
+interface Classroom {
+  id: number;
+  name: string;
+  students: Student[];
+}
+
+const gradeOrder: Grade[] = ['C', 'B', 'A', 'AD'];
+
+const dummyData: Classroom[] = [
+  {
+    id: 1,
+    name: '1ro A Secundaria',
+    students: [
+      { id: 1, name: 'Juan Perez', grade: 'AD', trend: 'up' },
+      { id: 2, name: 'Maria Gomez', grade: 'AD', trend: 'down' },
+      { id: 3, name: 'Luis Torres', grade: 'AD', trend: 'stable' },
+      { id: 4, name: 'Ana Salas', grade: 'A', trend: 'up' },
+      { id: 5, name: 'Carlos Diaz', grade: 'A', trend: 'up' },
+      { id: 6, name: 'Fernanda Ruiz', grade: 'A', trend: 'up' },
+      { id: 7, name: 'Diego Marquez', grade: 'B', trend: 'down' },
+      { id: 8, name: 'Elena Flores', grade: 'B', trend: 'stable' },
+      { id: 9, name: 'Sofia Castro', grade: 'B', trend: 'up' },
+      { id: 10, name: 'Andres Morales', grade: 'B', trend: 'down' },
+      { id: 11, name: 'Valeria Ortega', grade: 'B', trend: 'stable' },
+      { id: 12, name: 'Javier Soto', grade: 'B', trend: 'up' },
+      { id: 13, name: 'Camila Rios', grade: 'B', trend: 'up' },
+      { id: 14, name: 'Sebastian Herrera', grade: 'C', trend: 'up' },
+      { id: 15, name: 'Natalia Vargas', grade: 'C', trend: 'down' },
+      { id: 16, name: 'Mateo Jimenez', grade: 'C', trend: 'stable' },
+    ],
+  },
+  {
+    id: 2,
+    name: '2do A Secundaria',
+    students: [
+        { id: 17, name: 'Lucas Mendoza', grade: 'AD', trend: 'up' },
+        { id: 18, name: 'Isabella Paredes', grade: 'AD', trend: 'down' },
+        { id: 19, name: 'Gabriel Salinas', grade: 'AD', trend: 'stable' },
+        { id: 20, name: 'Victoria Aguirre', grade: 'AD', trend: 'up' },
+        { id: 21, name: 'Samuel Castro', grade: 'A', trend: 'up' },
+        { id: 22, name: 'Emilia Rojas', grade: 'A', trend: 'up' },
+        { id: 23, name: 'Nicolas Silva', grade: 'A', trend: 'down' },
+        { id: 24, name: 'Lucia Morales', grade: 'A', trend: 'stable' },
+        { id: 25, name: 'Diego Torres', grade: 'A', trend: 'up' },
+        { id: 26, name: 'Camila Soto', grade: 'A', trend: 'down' },
+        { id: 27, name: 'Andres Herrera', grade: 'A', trend: 'stable' },
+        { id: 28, name: 'Valentina Castro', grade: 'B', trend: 'up' },
+        { id: 29, name: 'Mateo Vargas', grade: 'B', trend: 'up' },
+        { id: 30, name: 'Sofia Jimenez', grade: 'B', trend: 'up' },
+        { id: 31, name: 'Sebastian Rios', grade: 'B', trend: 'down' },
+        { id: 32, name: 'Natalia Mendoza', grade: 'B', trend: 'stable' },
+        { id: 33, name: 'Lucas Aguirre', grade: 'C', trend: 'up' },
+        { id: 34, name: 'Isabella Salinas', grade: 'C', trend: 'down' },
+    ],
+  },
+];
+
 const RankingPage = () => {
-  return (
-    <div>RankingPage</div>
-  )
+    gsap.registerPlugin(Flip);
+    const navigate = useNavigate()
+
+    const [selectedClassroom, setSelectedClassroom] = useState<Classroom>(dummyData[0]);
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [showDetailed, setshowDetailed] = useState(false)
+  
+    const sortedStudents = [...selectedClassroom.students].sort(
+      (a, b) => gradeOrder.indexOf(b.grade) - gradeOrder.indexOf(a.grade)
+    );
+
+
+    const handleStudentClick = (student: Student) => {
+        const ctx = gsap.context(() => {
+        const listElements = gsap.utils.toArray('.student-card');
+        const dropdown = document.querySelector('.dropdown-classroom');
+        const title = document.querySelector('.ranking-title');
+        const clickedCard = document.getElementById(`student-${student.id}`);
+    
+        const flipState = Flip.getState(clickedCard);
+    
+        // Animate list & dropdown out
+        gsap.to(listElements, { opacity: 0, y: -50, stagger: 0.05, duration: 0.5 });
+        gsap.to(dropdown, { opacity: 0, y: -20, duration: 0.3 });
+        gsap.to(title, { opacity: 0, y: -20, duration: 0.3 });
+    
+        // Animate clicked card to top position
+        Flip.from(flipState, {
+        scale: true,
+        duration: 0.6,
+        ease: 'power2.inOut',
+        // onComplete: () => {
+        //     // navigate(`${student.id}`, { state: { student } });
+        //     setshowDetailed(true)
+        // },
+        });
+    })}
+
+    const trendIcon = (trend: Student['trend']) => {
+      switch (trend) {
+        case 'up':
+          return <ArrowUpIcon className="h-5 w-5 text-green-500" />;
+        case 'down':
+          return <ArrowDownIcon className="h-5 w-5 text-red-500" />;
+        case 'stable':
+          return <MinusIcon className="h-5 w-5 text-gray-400" />;
+      }
+    };
+  
+    return (
+<div className="w-full mx-auto p-4 min-h-screen">
+        <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4 ranking-title">Ranking de Estudiantes</h1>
+        
+        <div className="relative mb-6 max-w-md">
+          <button
+            onClick={() => {
+                setDropdownOpen(!dropdownOpen)
+
+            }}
+            className="dropdown-classroom w-full flex justify-between items-center bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md px-4 py-2 shadow-sm text-gray-700 dark:text-gray-200"
+          >
+            {selectedClassroom.name}
+            {dropdownOpen ? <ChevronUpIcon className="h-5 w-5" /> : <ChevronDownIcon className="h-5 w-5" />}
+          </button>
+  
+          <AnimatePresence>
+            {dropdownOpen && (
+              <motion.ul
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="absolute z-10 mt-2 w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-lg"
+              >
+                {dummyData.map((classroom) => (
+                  <li
+                    key={classroom.id}
+                    onClick={() => {
+                      setSelectedClassroom(classroom);
+                      setDropdownOpen(false);
+                    }}
+                    className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer text-gray-700 dark:text-gray-200"
+                  >
+                    {classroom.name}
+                  </li>
+                ))}
+              </motion.ul>
+            )}
+          </AnimatePresence>
+        </div>
+  
+        <div className="space-y-8">
+          {sortedStudents.map((student, idx) => (
+            <motion.div
+              key={student.id}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              onClick={() => { 
+                handleStudentClick(student)
+                setTimeout(() => {
+                    navigate(`${student.id}`, { state: { student } });
+                }, 700);
+            }}
+              className="student-card grid grid-cols-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md shadow-sm cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition duration-200"
+            >
+                <div className='flex items-center gap-2 col-span-3'>
+                    <p className="text-sm text-slate-50 bg-blue-600 h-full w-10 flex justify-center items-center">{idx + 1}.</p>
+                    <div className="mx-1 w-12 h-12 bg-gray-900  rounded-full flex items-center justify-center text-white text-lg font-bold">
+                        {/* {student.name?.[0]}{student.name?.[1].toLocaleUpperCase()} */}
+                        {student.name.split(' ').map((n) => n[0]).join('').toLocaleUpperCase()}
+                    </div>
+                    <div>
+                        <p className="text-lg font-medium text-gray-900 dark:text-gray-100">{student.name}</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">Promedio: {student.grade}</p>
+                    </div>
+                </div>
+                <div className=' flex justify-start items-center gap-2 col-span-2'>
+                    
+                </div>
+                <div className='flex justify-center items-center col-span-1'>
+                    {trendIcon(student.trend)}
+                </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    );
 }
 
 export default RankingPage
