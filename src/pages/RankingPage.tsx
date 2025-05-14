@@ -4,6 +4,12 @@ import { ChevronDownIcon, ChevronUpIcon, ArrowUpIcon, ArrowDownIcon, MinusIcon }
 import gsap from 'gsap';
 import Flip from 'gsap/Flip';
 import { useNavigate } from 'react-router-dom';
+import useGetClassroom from '../hooks/api/classroom/useGetClassroom';
+import useSchoolStore from '../hooks/store/useSchoolStore';
+import useAuthStore from '../hooks/store/useAuthStore';
+import useLoader from '../hooks/ui/useLoader';
+import getClassroomDescription from '../utils/getClassroomDescription';
+import SelectorNew from '../components/ui/SelectorNew';
 
 type Grade = 'C' | 'B' | 'A' | 'AD';
 
@@ -78,6 +84,7 @@ const RankingPage = () => {
     const [selectedClassroom, setSelectedClassroom] = useState<Classroom>(dummyData[0]);
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [showDetailed, setshowDetailed] = useState(false)
+    const [selectedClassroomId, setSelectedClassroomId] = useState(0);
   
     const sortedStudents = [...selectedClassroom.students].sort(
       (a, b) => gradeOrder.indexOf(b.grade) - gradeOrder.indexOf(a.grade)
@@ -103,10 +110,6 @@ const RankingPage = () => {
         scale: true,
         duration: 0.6,
         ease: 'power2.inOut',
-        // onComplete: () => {
-        //     // navigate(`${student.id}`, { state: { student } });
-        //     setshowDetailed(true)
-        // },
         });
     })}
 
@@ -120,47 +123,28 @@ const RankingPage = () => {
           return <MinusIcon className="h-5 w-5 text-gray-400" />;
       }
     };
+
+    const school = useSchoolStore((state) => state.school)
+    const access = useAuthStore(s => s.access) || ''
+
+    const { data: classrooms, isLoading, isError, error, isSuccess } = useGetClassroom({ access, school: (school.id).toString() })
+
+    useLoader(isLoading)
+
+    if (isError) return <p>{error.message}</p>
+    if (isSuccess) 
+
+
   
     return (
 <div className="w-full mx-auto p-4 min-h-screen">
         <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4 ranking-title">Ranking de Estudiantes</h1>
-        
-        <div className="relative mb-6 max-w-md">
-          <button
-            onClick={() => {
-                setDropdownOpen(!dropdownOpen)
-
-            }}
-            className="dropdown-classroom w-full flex justify-between items-center bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md px-4 py-2 shadow-sm text-gray-700 dark:text-gray-200"
-          >
-            {selectedClassroom.name}
-            {dropdownOpen ? <ChevronUpIcon className="h-5 w-5" /> : <ChevronDownIcon className="h-5 w-5" />}
-          </button>
-  
-          <AnimatePresence>
-            {dropdownOpen && (
-              <motion.ul
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="absolute z-10 mt-2 w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-lg"
-              >
-                {dummyData.map((classroom) => (
-                  <li
-                    key={classroom.id}
-                    onClick={() => {
-                      setSelectedClassroom(classroom);
-                      setDropdownOpen(false);
-                    }}
-                    className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer text-gray-700 dark:text-gray-200"
-                  >
-                    {classroom.name}
-                  </li>
-                ))}
-              </motion.ul>
-            )}
-          </AnimatePresence>
-        </div>
+        <SelectorNew 
+            items={classrooms.map( classroom => ({ id: classroom.id, name: getClassroomDescription({ lan: 'ES', grade: classroom.grade, section: classroom.section, level: classroom.level }) }))}
+            selectedItem={selectedClassroomId}
+            setSelectedItem={setSelectedClassroomId}
+            label='Selecciona un Aula'
+        />
   
         <div className="space-y-8">
           {sortedStudents.map((student, idx) => (
@@ -175,10 +159,10 @@ const RankingPage = () => {
                     navigate(`${student.id}`, { state: { student } });
                 }, 700);
             }}
-              className="student-card grid grid-cols-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md shadow-sm cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition duration-200"
+              className="student-card grid grid-cols-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition duration-200"
             >
                 <div className='flex items-center gap-2 col-span-3'>
-                    <p className="text-sm text-slate-50 bg-blue-600 h-full w-10 flex justify-center items-center">{idx + 1}.</p>
+                    <p className="text-sm text-slate-50 bg-blue-600 h-full w-10 flex justify-center items-center rounded-l-2xl">{idx + 1}.</p>
                     <div className="mx-1 w-12 h-12 bg-gray-900  rounded-full flex items-center justify-center text-white text-lg font-bold">
                         {/* {student.name?.[0]}{student.name?.[1].toLocaleUpperCase()} */}
                         {student.name.split(' ').map((n) => n[0]).join('').toLocaleUpperCase()}

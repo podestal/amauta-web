@@ -62,7 +62,7 @@ const RankingStudentInfo = () => {
       animate={{ opacity: 1, y: 0 }}
       initial={{ opacity: 0, y: 20 }}
       transition={{ duration: 0.5 }}
-      className="w-full mx-auto max-w-3xl px-6 py-8"
+      className="w-full max-w-[95%] sm:max-w-[600px] md:max-w-[800px] lg:max-w-[1024px] xl:max-w-[1200px] 2xl:max-w-[1380px] mx-auto py-10"
     >
       {/* Back Button */}
       <button
