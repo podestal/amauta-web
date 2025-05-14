@@ -34,3 +34,28 @@
     background: linear-gradient(90deg, #f4c4f3 0%, #fc67fa 100%);
     filter: blur(900px);
   }
+
+.gradient-shadow {
+    position: absolute;
+    top: -0.5rem;
+    right: -0.5rem;
+    bottom: -0.5rem;
+    left: -0.5rem;
+    background: linear-gradient(to right, #8ab1ff, #a855f7, #ffb6ff, #8ab1ff);
+    border-radius: 0.5rem;
+    opacity: 0.8;
+    filter: blur(20px);
+}
+
+.content {
+    position: relative;
+    display: flex;
+    padding: 20px;
+    /* height: 16rem;
+    width: 16rem; */
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    background-color: #0f172a;
+    color: #cbd5e1;
+}

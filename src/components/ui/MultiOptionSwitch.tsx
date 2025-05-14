@@ -12,7 +12,7 @@ const MultiOptionSwitch = ({ options, selected, setSelected }: Props) => {
 //   const [selected, setSelected] = useState(0);
 
   return (
-    <div className="w-full max-w-md mx-auto p-4">
+    <div className="w-full max-w-md mx-auto p-4 quarter-selector">
       <div
         className="relative flex bg-gray-200 dark:bg-gray-800 rounded-full overflow-hidden shadow-inner"
         style={{ height: "3rem" }}
