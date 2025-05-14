@@ -10,6 +10,7 @@ import useAuthStore from '../hooks/store/useAuthStore';
 import useLoader from '../hooks/ui/useLoader';
 import getClassroomDescription from '../utils/getClassroomDescription';
 import SelectorNew from '../components/ui/SelectorNew';
+import RankingHeader from '../components/api/ranking/RankingHeader';
 
 type Grade = 'C' | 'B' | 'A' | 'AD';
 
@@ -137,13 +138,11 @@ const RankingPage = () => {
 
   
     return (
-<div className="w-full mx-auto p-4 min-h-screen">
-        <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4 ranking-title">Ranking de Estudiantes</h1>
-        <SelectorNew 
-            items={classrooms.map( classroom => ({ id: classroom.id, name: getClassroomDescription({ lan: 'ES', grade: classroom.grade, section: classroom.section, level: classroom.level }) }))}
-            selectedItem={selectedClassroomId}
-            setSelectedItem={setSelectedClassroomId}
-            label='Selecciona un Aula'
+<div className="w-full max-w-[95%] sm:max-w-[600px] md:max-w-[800px] lg:max-w-[1024px] xl:max-w-[1200px] 2xl:max-w-[1380px] mx-auto overflow-hidden min-h-screen py-10">
+        <RankingHeader 
+            classrooms={classrooms}
+            selectedClassroomId={selectedClassroomId}
+            setSelectedClassroomId={setSelectedClassroomId}
         />
   
         <div className="space-y-8">
