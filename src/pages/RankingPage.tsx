@@ -11,6 +11,7 @@ import useLoader from '../hooks/ui/useLoader';
 import getClassroomDescription from '../utils/getClassroomDescription';
 import SelectorNew from '../components/ui/SelectorNew';
 import RankingHeader from '../components/api/ranking/RankingHeader';
+import getCurrentQuarter from '../utils/getCurrentCuarter';
 
 type Grade = 'C' | 'B' | 'A' | 'AD';
 
@@ -78,6 +79,13 @@ const dummyData: Classroom[] = [
   },
 ];
 
+const quarters: Record<string, number> = {
+    'Q1': 0,
+    'Q2': 1,
+    'Q3': 2,
+    'Q4': 3,
+}
+
 const RankingPage = () => {
     gsap.registerPlugin(Flip);
     const navigate = useNavigate()
@@ -86,6 +94,8 @@ const RankingPage = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [showDetailed, setshowDetailed] = useState(false)
     const [selectedClassroomId, setSelectedClassroomId] = useState(0);
+    const currentQuarter = getCurrentQuarter()
+    const [quarter, setQuarter] = useState(quarters[currentQuarter]);
   
     const sortedStudents = [...selectedClassroom.students].sort(
       (a, b) => gradeOrder.indexOf(b.grade) - gradeOrder.indexOf(a.grade)
@@ -143,6 +153,8 @@ const RankingPage = () => {
             classrooms={classrooms}
             selectedClassroomId={selectedClassroomId}
             setSelectedClassroomId={setSelectedClassroomId}
+            quarter={quarter}
+            setQuarter={setQuarter}
         />
   
         <div className="space-y-8">

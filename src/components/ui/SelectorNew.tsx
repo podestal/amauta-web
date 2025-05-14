@@ -20,7 +20,7 @@ const SelectorNew = ({ items, setSelectedItem, selectedItem, label }: Props) => 
     const [dropdownOpen, setDropdownOpen] = useState(false)
 
   return (
-    <div className="relative mb-6 max-w-md">
+    <div className="relative mb-6 mt-6 max-w-md">
     <button
       onClick={() => {
           setDropdownOpen(!dropdownOpen)
