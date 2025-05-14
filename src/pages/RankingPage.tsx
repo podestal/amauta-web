@@ -12,6 +12,7 @@ import getClassroomDescription from '../utils/getClassroomDescription';
 import SelectorNew from '../components/ui/SelectorNew';
 import RankingHeader from '../components/api/ranking/RankingHeader';
 import getCurrentQuarter from '../utils/getCurrentCuarter';
+import RankingStudents from '../components/api/ranking/RankingStudents';
 
 type Grade = 'C' | 'B' | 'A' | 'AD';
 
@@ -160,39 +161,10 @@ const RankingPage = () => {
         />
   
         <div className="space-y-8">
-          {sortedStudents.map((student, idx) => (
-            <motion.div
-              key={student.id}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              onClick={() => { 
-                handleStudentClick(student)
-                setTimeout(() => {
-                    navigate(`${student.id}`, { state: { student } });
-                }, 700);
-            }}
-              className="student-card grid grid-cols-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition duration-200"
-            >
-                    <div className='flex items-center gap-2 col-span-3 '>
-                        <p className="text-sm text-slate-50 bg-blue-600 h-full w-10 flex justify-center items-center rounded-l-2xl">{idx + 1}.</p>
-                        <div className="mx-1 w-12 h-12 bg-gray-900  rounded-full flex items-center justify-center text-white text-lg font-bold">
-                            {/* {student.name?.[0]}{student.name?.[1].toLocaleUpperCase()} */}
-                            {student.name.split(' ').map((n) => n[0]).join('').toLocaleUpperCase()}
-                        </div>
-                        <div>
-                            <p className="text-lg font-medium text-gray-900 dark:text-gray-100">{student.name}</p>
-                            <p className="text-sm text-gray-500 dark:text-gray-400">Promedio: {student.grade}</p>
-                        </div>
-                    </div>
-                    <div className=' flex justify-start items-center gap-2 col-span-2'>
-                        
-                    </div>
-                    <div className='flex justify-center items-center col-span-1'>
-                        {trendIcon(student.trend)}
-                    </div>
-            </motion.div>
-          ))}
+            <RankingStudents 
+                classroomId={(selectedClassroomId).toString()}
+                quarter={quarter === 0 ? 'Q1' : quarter === 1 ? 'Q2' : quarter === 2 ? 'Q3' : 'Q4'}
+            />
         </div>
       </div>
     );
