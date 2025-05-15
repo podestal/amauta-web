@@ -1,7 +1,5 @@
-import useGetStudentsByQuarterGrade from "../../../hooks/api/student/useGetStudentsByQuarterGrade"
 import useAuthStore from "../../../hooks/store/useAuthStore"
-import { competencies } from "../../../data/mockdataForGrades"
-import getFinalGrade from "../../../utils/getFinalGrade"
+import useGetStudentsByTotalScore from "../../../hooks/api/student/useGetStudentsByTotalScore"
 
 // access: string
 // classroomId : string
@@ -17,8 +15,7 @@ interface Props {
 const RankingStudents = ({ classroomId, quarter }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
-    const competenciesIds = competencies.map(competency => (competency.id).toString())
-    const {data: students, isLoading, isError, error, isSuccess} = useGetStudentsByQuarterGrade({ access, classroomId, quarter, competencies: competenciesIds, assignatureId: '' })
+    const {data: students, isLoading, isError, error, isSuccess} = useGetStudentsByTotalScore({ access, classroomId, quarter })
 
     if (isLoading) return <p className="text-center animate-pulse">Cargando...</p>
     if (isError) return <p className="text-center text-red-500">Error: {error.message}</p>
@@ -28,16 +25,15 @@ const RankingStudents = ({ classroomId, quarter }: Props) => {
     <div>
         {/* <>{console.log('students', students)}</>s */}
         {students && students.map(student => {
-            const finalGrade = getFinalGrade({ student })
             return (
                 <div key={student.uid} className="flex flex-col justify-center items-center bg-white dark:bg-slate-800 shadow-md rounded-lg p-4 mb-4">
                     <div className="flex items-center gap-2">
-                        <div className="w-12 h-12 bg-gray-900 rounded-full flex items-center justify-center text-white text-lg font-bold">
+                        {/* <div className="w-12 h-12 bg-gray-900 rounded-full flex items-center justify-center text-white text-lg font-bold">
                             {student.first_name}
-                        </div>
+                        </div> */}
                         <div>
                             <p className="text-lg font-medium text-gray-900 dark:text-gray-100">{student.first_name}</p>
-                            <p>{finalGrade}</p>
+                            <p>{student.total_score}</p>
                         </div>
                     </div>
                 </div>

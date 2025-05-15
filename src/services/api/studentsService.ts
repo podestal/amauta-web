@@ -28,6 +28,15 @@ export interface StudentByQuarterGrade {
     averages: Average[]
 }
 
+export interface StudentByTotalScore {
+    uid: number
+    first_name: string
+    last_name: string
+    total_score: number
+    average_numeric: number
+    average_alphabetical: string
+}
+
 export interface StudentGrade{
     id: number
     calification: string
@@ -145,10 +154,11 @@ interface Props {
     byQuarterGrade?: Boolean
     byGrade?: Boolean
     byAgendas?: Boolean
+    byTotalScore?: Boolean
     
 }
 
-const getStudentService = ({ tutor, all, studentId, byName, byDni, byLastTen, byQuarterGrade, byGrade, byAgendas }: Props) => {
+const getStudentService = ({ tutor, all, studentId, byName, byDni, byLastTen, byQuarterGrade, byGrade, byAgendas, byTotalScore }: Props) => {
 
     let url = `student/byClassroom/`
     if (tutor) {
@@ -165,6 +175,8 @@ const getStudentService = ({ tutor, all, studentId, byName, byDni, byLastTen, by
         url = `student/${studentId}/`
     } else if (byQuarterGrade) {
         url = `student/byQuarterGrade/`
+    } else if (byTotalScore) {
+        url = `student/byTotalScore/`
     } else if (byAgendas) {
         url = `student/byAgendas/`
     } else if (byGrade) {
