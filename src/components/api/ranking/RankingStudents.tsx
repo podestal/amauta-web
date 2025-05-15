@@ -50,10 +50,10 @@ const RankingStudents = ({ classroomId, quarter }: Props) => {
     <div className="space-y-4">
         {students && students
         .sort((a, b) => {
-            if (a.total_score === b.total_score) {
+            if (a.average_numeric === b.average_numeric) {
                 return a.first_name.localeCompare(b.first_name)
             }
-            return b.total_score - a.total_score
+            return b.average_numeric - a.average_numeric
         })
         .map((student, idx) => {
             return (
@@ -78,7 +78,7 @@ const RankingStudents = ({ classroomId, quarter }: Props) => {
                                 </div>
                                 <div>
                                     <p className="text-lg font-medium text-gray-900 dark:text-gray-100">{student.first_name} {student.last_name}</p>
-                                    <p className="text-sm text-gray-500 dark:text-gray-400">Promedio: {student.total_score} {student.average_numeric} {student.average_alphabetical}</p>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">Promedio: {student.average_alphabetical}</p>
                                 </div>
                             </div>
                             <div className=' flex justify-start items-center gap-2 col-span-2'>

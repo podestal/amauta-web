@@ -1,30 +1,7 @@
-// import { motion } from "framer-motion"
-// import { useLocation } from "react-router-dom"
-
-// const RankingStudentInfo = () => {
-
-//     const state = useLocation().state
-//     const student = state.student
-//     console.log('state', state)
-    
-
-//   return (
-//     <motion.div
-//         animate={{ opacity: 1, y: 0 }}
-//         initial={{ opacity: 0, y: 20 }}
-//         transition={{ duration: 0.5 }}
-//         className="w-full mx-auto px-6 py-8"
-//     >
-//         <h2 className="">{student.name}</h2>
-//     </motion.div>
-//   )
-// }
-
-// export default RankingStudentInfo
-
 import { motion } from "framer-motion";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ArrowLeftIcon } from '@heroicons/react/24/solid';
+import { StudentByTotalScore } from "../services/api/studentsService";
 
 interface Activity {
   id: number;
@@ -43,15 +20,15 @@ const dummyActivities: Activity[] = [
 
 const gradeColors: Record<string, string> = {
   'C': 'bg-red-500 text-white',
-  'B': 'bg-yellow-400 text-black',
-  'A': 'bg-green-500 text-white',
-  'AD': 'bg-blue-600 text-white',
+  'B': 'bg-yellow-500 text-white',
+  'A': 'bg-blue-500 text-white',
+  'AD': 'bg-green-600 text-white',
 };
 
 const RankingStudentInfo = () => {
   const navigate = useNavigate();
   const state = useLocation().state;
-  const student = state?.student;
+  const student: StudentByTotalScore = state?.student;
 
   if (!student) {
     return <div>No student data</div>;
@@ -76,13 +53,13 @@ const RankingStudentInfo = () => {
       {/* Student Header */}
       <div className="flex items-center gap-4 mb-6">
         <div className="w-16 h-16 bg-gray-900 text-white rounded-full flex items-center justify-center text-2xl font-bold">
-          {student.name.split(' ').map((n: string) => n[0]).join('').toUpperCase()}
+          {student.first_name.split(' ').map((n) => n[0]).join('').toLocaleUpperCase()}
         </div>
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">{student.name}</h1>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">{student.first_name} {student.last_name}</h1>
           <p className="text-sm text-gray-500 dark:text-gray-400">Promedio actual: 
-            <span className={`ml-2 px-2 py-0.5 rounded-full ${gradeColors[student.grade]}`}>
-              {student.grade}
+            <span className={`ml-2 px-2 py-0.5 rounded-full ${gradeColors[student.average_alphabetical]}`}>
+              {student.average_alphabetical}
             </span>
           </p>
         </div>
