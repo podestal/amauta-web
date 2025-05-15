@@ -1,3 +1,4 @@
+import { motion } from "framer-motion"
 import { Classroom } from "../../../services/api/classroomService"
 import getClassroomDescription from "../../../utils/getClassroomDescription"
 import MultiOptionSwitch from "../../ui/MultiOptionSwitch"
@@ -13,7 +14,12 @@ interface Props {
 
 const RankingHeader = ({ classrooms, selectedClassroomId, setSelectedClassroomId, quarter, setQuarter }: Props) => {
   return (
-    <>
+    <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+    >
         <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4 ranking-title">Ranking de Estudiantes</h1>
         <div className="w-full grid grid-cols-2 mb-4">
             <SelectorNew 
@@ -28,7 +34,7 @@ const RankingHeader = ({ classrooms, selectedClassroomId, setSelectedClassroomId
                 setSelected={setQuarter}
             />
         </div>
-    </>
+    </motion.div>
   )
 }
 
