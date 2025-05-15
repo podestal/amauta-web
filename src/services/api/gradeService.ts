@@ -20,6 +20,15 @@ export interface GradeByActivity {
     observations: string
 }
 
+export interface GradeByStudent {
+    id: number
+    calification: string
+    activity: number
+    assignature: number
+    observations: string
+    due_date: Date
+}
+
 export interface Grade {
     id: number
     calification: string
@@ -35,12 +44,14 @@ export type UpdateCreateGrade = Omit<Grade, 'id' | 'created_at' | 'student' | 'a
 interface Props {
     gradeId?: string
     byActivity?: boolean
+    byStudent?: boolean
 }
 
-const getGradeService = ({ gradeId, byActivity }: Props) => {
+const getGradeService = ({ gradeId, byActivity, byStudent }: Props) => {
     let url = 'grade/'
     if (gradeId) url = `grade/${gradeId}/`
     if (byActivity) url = 'grade/byActivity/'
+    if (byStudent) url = 'grade/byStudent/'
     return new APIClient<Grade, UpdateCreateGrade>(url)
 }
 

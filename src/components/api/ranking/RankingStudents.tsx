@@ -31,6 +31,7 @@ const RankingStudents = ({ classroomId, quarter }: Props) => {
                     key={student.uid}
                     student={student}
                     idx={idx}
+                    quarter={quarter}
                 />
             )
         })}

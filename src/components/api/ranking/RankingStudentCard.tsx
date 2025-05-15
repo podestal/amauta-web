@@ -7,9 +7,10 @@ import Flip from 'gsap/Flip';
 interface Props {
     student: StudentByTotalScore
     idx: number
+    quarter: string
 }
 
-const RankingStudentCard = ({ student, idx }: Props) => {
+const RankingStudentCard = ({ student, idx, quarter }: Props) => {
 
     const navigate = useNavigate()
 
@@ -46,7 +47,7 @@ const RankingStudentCard = ({ student, idx }: Props) => {
         onClick={() => { 
             handleStudentClick(student)
             setTimeout(() => {
-                navigate(`${student.uid}`, { state: { student } });
+                navigate(`${student.uid}`, { state: { student, quarter } });
             }, 700);
         }}
         className="student-card grid grid-cols-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition duration-200"

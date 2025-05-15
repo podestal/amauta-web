@@ -2,6 +2,9 @@ import { motion } from "framer-motion";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ArrowLeftIcon } from '@heroicons/react/24/solid';
 import { StudentByTotalScore } from "../services/api/studentsService";
+import useGetGradesByStudent from "../hooks/api/grade/useGetGradesByStudent";
+import useAuthStore from "../hooks/store/useAuthStore";
+import getCurrentQuarter from "../utils/getCurrentCuarter";
 
 interface Activity {
   id: number;
@@ -26,13 +29,22 @@ const gradeColors: Record<string, string> = {
 };
 
 const RankingStudentInfo = () => {
-  const navigate = useNavigate();
-  const state = useLocation().state;
-  const student: StudentByTotalScore = state?.student;
+    const navigate = useNavigate();
+    const state = useLocation().state;
+    const student: StudentByTotalScore = state?.student;
+    const quarter: string = state?.quarter || getCurrentQuarter();
 
-  if (!student) {
-    return <div>No student data</div>;
-  }
+    if (!student) {
+        return <div>No student data</div>;
+    }
+
+    const access = useAuthStore(s => s.access) || ''
+    const { data: grades, isLoading, isError, error, isSuccess } = useGetGradesByStudent({ access, student: (student.uid).toString(), quarter })
+
+    if (isLoading) return <p className="text-center animate-pulse">Un Momento...</p>
+
+    if (isError) return <p className="text-center text-red-500">Error: {error.message}</p>
+    if (isSuccess) 
 
   return (
     <motion.div
@@ -51,6 +63,7 @@ const RankingStudentInfo = () => {
       </button>
 
       {/* Student Header */}
+      <>{console.log('grades', grades)}</>
       <div className="flex items-center gap-4 mb-6">
         <div className="w-16 h-16 bg-gray-900 text-white rounded-full flex items-center justify-center text-2xl font-bold">
           {student.first_name.split(' ').map((n) => n[0]).join('').toLocaleUpperCase()}
