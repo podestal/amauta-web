@@ -1,36 +1,12 @@
 import { motion } from "framer-motion";
-import { useLocation, useNavigate } from "react-router-dom";
-import { ArrowLeftIcon } from '@heroicons/react/24/solid';
+import { useLocation } from "react-router-dom";
 import { StudentByTotalScore } from "../services/api/studentsService";
-import useGetGradesByStudent from "../hooks/api/grade/useGetGradesByStudent";
-import useAuthStore from "../hooks/store/useAuthStore";
 import getCurrentQuarter from "../utils/getCurrentCuarter";
-import RankingStudentActivities from "../components/api/ranking/RankingStudentActivities";
-
-interface Activity {
-  id: number;
-  title: string;
-  date: string;
-  grade: 'C' | 'B' | 'A' | 'AD';
-}
-
-const dummyActivities: Activity[] = [
-  { id: 1, title: 'Matemáticas - Examen 1', date: '2025-04-10', grade: 'B' },
-  { id: 2, title: 'Historia - Proyecto', date: '2025-04-17', grade: 'A' },
-  { id: 3, title: 'Ciencias - Práctica', date: '2025-04-25', grade: 'AD' },
-  { id: 4, title: 'Inglés - Tarea', date: '2025-05-03', grade: 'B' },
-  { id: 5, title: 'Educación Física - Prueba', date: '2025-05-10', grade: 'A' },
-];
-
-const gradeColors: Record<string, string> = {
-  'C': 'bg-red-500 text-white',
-  'B': 'bg-yellow-500 text-white',
-  'A': 'bg-blue-500 text-white',
-  'AD': 'bg-green-600 text-white',
-};
+import RankingStudentActivities from "../components/api/ranking/singleStudent/RankingStudentActivities";
+import SingleStudentHeader from "../components/api/ranking/singleStudent/SingleStudentHeader";
+import SingleStudentBody from "../components/api/ranking/singleStudent/SingleStudentBody";
 
 const RankingStudentInfo = () => {
-    const navigate = useNavigate();
     const state = useLocation().state;
     const student: StudentByTotalScore = state?.student;
     const quarter: string = state?.quarter || getCurrentQuarter();
@@ -39,14 +15,6 @@ const RankingStudentInfo = () => {
         return <div>No student data</div>;
     }
 
-    const access = useAuthStore(s => s.access) || ''
-    const { data: grades, isLoading, isError, error, isSuccess } = useGetGradesByStudent({ access, student: (student.uid).toString(), quarter })
-
-    if (isLoading) return <p className="text-center animate-pulse">Un Momento...</p>
-
-    if (isError) return <p className="text-center text-red-500">Error: {error.message}</p>
-    if (isSuccess) 
-
   return (
     <motion.div
       animate={{ opacity: 1, y: 0 }}
@@ -54,45 +22,24 @@ const RankingStudentInfo = () => {
       transition={{ duration: 0.5 }}
       className="w-full max-w-[95%] sm:max-w-[600px] md:max-w-[800px] lg:max-w-[1024px] xl:max-w-[1200px] 2xl:max-w-[1380px] mx-auto py-10"
     >
-      {/* Back Button */}
-      <button
-        onClick={() => navigate(-1)}
-        className="flex items-center gap-2 text-gray-600 dark:text-gray-300 mb-6 hover:underline"
-      >
-        <ArrowLeftIcon className="h-5 w-5" />
-        Volver al Ranking
-      </button>
-
-      {/* Student Header */}
-      <>{console.log('grades', grades)}</>
-      <div className="flex items-center gap-4 mb-6">
-        <div className="w-16 h-16 bg-gray-900 text-white rounded-full flex items-center justify-center text-2xl font-bold">
-          {student.first_name.split(' ').map((n) => n[0]).join('').toLocaleUpperCase()}
-        </div>
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">{student.first_name} {student.last_name}</h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400">Promedio actual: 
-            <span className={`ml-2 px-2 py-0.5 rounded-full ${gradeColors[student.average_alphabetical]}`}>
-              {student.average_alphabetical}
-            </span>
-          </p>
-        </div>
-      </div>
+      <SingleStudentHeader 
+        student={student} 
+      />
 
       {/* Performance Graph Placeholder */}
-      <div className="mb-8">
+      {/* <div className="mb-8">
         <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2">Evolución Académica</h2>
         <div className="w-full h-48 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-white">
-          {/* Replace this div with a real chart library later */}
+
           <p>📊 Gráfica de rendimiento (evolución de notas)</p>
         </div>
-      </div>
+      </div> */}
 
       {/* Activities List */}
-      <RankingStudentActivities 
-        studentUid={student.uid.toString()}
-        quarter={quarter}
-      />
+        <SingleStudentBody 
+          student={student}
+          quarter={quarter}
+        />
 
       {/* Stats Section */}
       <div>

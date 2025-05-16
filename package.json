@@ -21,6 +21,7 @@
     "@uiw/react-md-editor": "^4.0.5",
     "axios": "^1.7.9",
     "chart.js": "^4.4.7",
+    "chartjs-adapter-date-fns": "^3.0.0",
     "firebase": "^11.1.0",
     "framer-motion": "^11.15.0",
     "gsap": "^3.13.0",
