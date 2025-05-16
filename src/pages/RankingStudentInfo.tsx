@@ -5,6 +5,7 @@ import { StudentByTotalScore } from "../services/api/studentsService";
 import useGetGradesByStudent from "../hooks/api/grade/useGetGradesByStudent";
 import useAuthStore from "../hooks/store/useAuthStore";
 import getCurrentQuarter from "../utils/getCurrentCuarter";
+import RankingStudentActivities from "../components/api/ranking/RankingStudentActivities";
 
 interface Activity {
   id: number;
@@ -88,28 +89,10 @@ const RankingStudentInfo = () => {
       </div>
 
       {/* Activities List */}
-      <div className="mb-8">
-        <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2">Actividades Recientes</h2>
-        <div className="space-y-4">
-          {dummyActivities.map((activity) => (
-            <motion.div
-              key={activity.id}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: activity.id * 0.05 }}
-              className="flex justify-between items-center bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md px-4 py-3 shadow-sm"
-            >
-              <div>
-                <p className="text-md font-medium text-gray-900 dark:text-gray-100">{activity.title}</p>
-                <p className="text-sm text-gray-500 dark:text-gray-400">{activity.date}</p>
-              </div>
-              <div className={`px-3 py-1 rounded-full text-sm font-semibold ${gradeColors[activity.grade]}`}>
-                {activity.grade}
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
+      <RankingStudentActivities 
+        studentUid={student.uid.toString()}
+        quarter={quarter}
+      />
 
       {/* Stats Section */}
       <div>
