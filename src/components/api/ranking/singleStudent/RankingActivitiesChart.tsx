@@ -34,26 +34,7 @@ const colorPalette = [
 ];
 
 const RankingActivitiesChart: React.FC<Props> = ({ grades }) => {
-  // const gradeToNumeric: Record<string, number | null> = { C: 1, B: 2, A: 3, AD: 4, NA: null };
-  // const numericToGrade: Record<number, string> = { 1: 'C', 2: 'B', 3: 'A', 4: 'AD' };
 
-  // const sortedGrades = [...grades]
-  //   .filter(g => gradeToNumeric[g.calification] !== null)
-  //   .sort((a, b) => new Date(a.due_date).getTime() - new Date(b.due_date).getTime());
-
-  // const data = {
-  //   labels: sortedGrades.map(g => g.due_date),
-  //   datasets: [
-  //     {
-  //       label: 'Progreso de Calificaciones',
-  //       data: sortedGrades.map(g => gradeToNumeric[g.calification]!),
-  //       fill: false,
-  //       borderColor: '#3b82f6',
-  //       backgroundColor: '#3b82f6',
-  //       tension: 0.3,
-  //     },
-  //   ],
-  // };
   const gradeToNumeric: Record<string, number | null> = { C: 1, B: 2, A: 3, AD: 4, NA: null };
   const numericToGrade: Record<number, string> = { 1: 'C', 2: 'B', 3: 'A', 4: 'AD' };
 
