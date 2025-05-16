@@ -9,7 +9,51 @@ interface Props {
   grades:  GradeByStudent[];
 };
 
+
+const colorPalette = [
+  '#3b82f6', // blue
+  '#10b981', // emerald
+  '#f59e0b', // amber
+  '#ef4444', // red
+  '#8b5cf6', // violet
+  '#ec4899', // pink
+  '#14b8a6', // teal
+  '#eab308', // yellow
+  '#6366f1', // indigo
+  '#f97316', // orange
+  '#22d3ee', // cyan
+  '#84cc16', // lime
+  '#a855f7', // purple
+  '#0ea5e9', // sky
+  '#d946ef', // fuchsia
+  '#4ade80', // green
+  '#f43f5e', // rose
+  '#7c3aed', // deep purple
+  '#06b6d4', // light blue
+  '#b91c1c', // dark red
+];
+
 const RankingActivitiesChart: React.FC<Props> = ({ grades }) => {
+  // const gradeToNumeric: Record<string, number | null> = { C: 1, B: 2, A: 3, AD: 4, NA: null };
+  // const numericToGrade: Record<number, string> = { 1: 'C', 2: 'B', 3: 'A', 4: 'AD' };
+
+  // const sortedGrades = [...grades]
+  //   .filter(g => gradeToNumeric[g.calification] !== null)
+  //   .sort((a, b) => new Date(a.due_date).getTime() - new Date(b.due_date).getTime());
+
+  // const data = {
+  //   labels: sortedGrades.map(g => g.due_date),
+  //   datasets: [
+  //     {
+  //       label: 'Progreso de Calificaciones',
+  //       data: sortedGrades.map(g => gradeToNumeric[g.calification]!),
+  //       fill: false,
+  //       borderColor: '#3b82f6',
+  //       backgroundColor: '#3b82f6',
+  //       tension: 0.3,
+  //     },
+  //   ],
+  // };
   const gradeToNumeric: Record<string, number | null> = { C: 1, B: 2, A: 3, AD: 4, NA: null };
   const numericToGrade: Record<number, string> = { 1: 'C', 2: 'B', 3: 'A', 4: 'AD' };
 
@@ -17,19 +61,31 @@ const RankingActivitiesChart: React.FC<Props> = ({ grades }) => {
     .filter(g => gradeToNumeric[g.calification] !== null)
     .sort((a, b) => new Date(a.due_date).getTime() - new Date(b.due_date).getTime());
 
-  const data = {
-    labels: sortedGrades.map(g => g.due_date),
-    datasets: [
-      {
-        label: 'Progreso de Calificaciones',
-        data: sortedGrades.map(g => gradeToNumeric[g.calification]!),
-        fill: false,
-        borderColor: '#3b82f6',
-        backgroundColor: '#3b82f6',
-        tension: 0.3,
-      },
-    ],
-  };
+  const gradesByAssignature: Record<string, GradeByStudent[]> = {};
+  for (const grade of sortedGrades) {
+    if (!gradesByAssignature[grade.assignature]) {
+      gradesByAssignature[grade.assignature] = [];
+    }
+    gradesByAssignature[grade.assignature].push(grade);
+  }
+  const assignatureColors: Record<string, string> = {};
+  Object.keys(gradesByAssignature).forEach((assignature, i) => {
+    assignatureColors[assignature] = colorPalette[i % colorPalette.length];
+  });
+
+  const datasets = Object.entries(gradesByAssignature).map(([assignature, g]) => ({
+    label: assignature,
+    data: g.map(entry => ({
+      x: entry.due_date,
+      y: gradeToNumeric[entry.calification]!,
+    })),
+    borderColor: assignatureColors[assignature],
+    backgroundColor: assignatureColors[assignature],
+    fill: false,
+    tension: 0.3,
+  }));
+
+const data = { datasets };
 
   const options = {
     responsive: true,
