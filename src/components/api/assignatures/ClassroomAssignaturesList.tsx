@@ -1,58 +1,30 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, Plus } from 'lucide-react';
-
-interface Assignature {
-  id: number;
-  title: string;
-}
-
-interface Classroom {
-  id: number;
-  name: string;
-  assignatures: Assignature[];
-}
-
-const mockClassrooms: Classroom[] = [
-  {
-    id: 1,
-    name: '1st Grade A',
-    assignatures: [
-      { id: 1, title: 'Mathematics' },
-      { id: 2, title: 'Science' },
-    ],
-  },
-  {
-    id: 2,
-    name: '2nd Grade B',
-    assignatures: [
-      { id: 3, title: 'Language' },
-    ],
-  },
-  {
-    id: 3,
-    name: '3rd Grade C',
-    assignatures: [],
-  },
-];
+import useGetClassroom from '../../../hooks/api/classroom/useGetClassroom';
+import useSchoolStore from '../../../hooks/store/useSchoolStore';
+import useAuthStore from '../../../hooks/store/useAuthStore';
+import getClassroomDescription from '../../../utils/getClassroomDescription';
 
 const ClassroomAssignaturesList: React.FC = () => {
-  const [expanded, setExpanded] = useState<number | null>(null);
+    const [expanded, setExpanded] = useState<number | null>(null);
+    const school = useSchoolStore(s => s.school)
+    const access = useAuthStore(s => s.access) || ''
+    const { data: classrooms, isLoading, isError, error, isSuccess } = useGetClassroom({school: (school.id).toString(), access} )
+    const toggleExpand = (id: number) => {
+        setExpanded(prev => (prev === id ? null : id));
+    };
 
+    if (isLoading) return <p className='text-center animate-pulse text-xs my-4'>Cargando...</p>
 
-  const toggleExpand = (id: number) => {
-    setExpanded(prev => (prev === id ? null : id));
-  };
+    if (isError) return <p className='text-center text-red-500 text-xs my-4'>Error: {error.message}</p>
+
+    if (isSuccess)
 
   return (
-    <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="w-full mx-auto px-4 py-6 text-gray-800 dark:text-gray-100">
-        <h2 className="text-2xl font-bold mb-4">Clases</h2>
-        <div className="space-y-6">
-            {mockClassrooms.map(classroom => (
+<div className="space-y-6">
+        {/* <>{console.log('classroom', classrooms)}</> */}
+            {classrooms.map(classroom => (
             <div key={classroom.id} className="bg-white dark:bg-gray-800 shadow-md rounded-xl">
                 <button className="text-sm bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded flex items-center gap-1">
                     <Plus size={16} /> <span className="hidden sm:inline">Agregar Curso</span>
@@ -62,7 +34,7 @@ const ClassroomAssignaturesList: React.FC = () => {
                 onClick={() => toggleExpand(classroom.id)}
                 >
                     
-                <div className="text-lg font-medium">{classroom.name}</div>
+                <div className="text-lg font-medium">{getClassroomDescription({ lan: 'ES', grade: classroom.grade, level: classroom.level, section: classroom.section })}</div>
                 <div className="flex items-center space-x-3">
                     <ChevronDown
                     size={20}
@@ -79,7 +51,7 @@ const ClassroomAssignaturesList: React.FC = () => {
                     transition={{ duration: 0.3 }}
                     className="px-4 py-2 overflow-hidden border-t border-gray-200 dark:border-gray-700"
                     >
-                    {classroom.assignatures.length > 0 ? (
+                    {/* {classroom.assignatures.length > 0 ? (
                         <ul className="list-disc list-inside">
                         {classroom.assignatures.map(a => (
                             <li key={a.id}>{a.title}</li>
@@ -89,14 +61,13 @@ const ClassroomAssignaturesList: React.FC = () => {
                         <p className="text-sm italic text-gray-500 dark:text-gray-400">
                         Aún no hay cursos.
                         </p>
-                    )}
+                    )} */}
                     </motion.div>
                 )}
                 </AnimatePresence>
             </div>
             ))}
         </div>
-    </motion.div>
   );
 };
 
