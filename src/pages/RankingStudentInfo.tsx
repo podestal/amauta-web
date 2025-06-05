@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useLocation } from "react-router-dom";
 import { StudentByTotalScore } from "../services/api/studentsService";
 import getCurrentQuarter from "../utils/getCurrentCuarter";
-import RankingStudentActivities from "../components/api/ranking/singleStudent/RankingStudentActivities";
+// import RankingStudentActivities from "../components/api/ranking/singleStudent/RankingStudentActivities";
 import SingleStudentHeader from "../components/api/ranking/singleStudent/SingleStudentHeader";
 import SingleStudentBody from "../components/api/ranking/singleStudent/SingleStudentBody";
 

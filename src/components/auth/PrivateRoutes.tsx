@@ -12,7 +12,7 @@ import { getDeviceType } from "../../utils/getDeviceType";
 import useGetSchool from "../../hooks/api/school/useGetSchool";
 import useSchoolStore from "../../hooks/store/useSchoolStore";
 import useRefreshToken from "../../hooks/auth/useRefreshToken";
-import getUnpaidInfo from "../../utils/getUnpaidInfo";
+// import getUnpaidInfo from "../../utils/getUnpaidInfo";
 
 interface Props {
   children: React.ReactElement;

@@ -28,7 +28,7 @@ const Students = ({ classroom, level }: Props) => {
     const group = useGetProfileStore(s => s.user?.groups[0])
     const profile = useGetProfileStore(s => s.profile)
     const instructor = group === 'instructor' && profile as Instructor
-    const canModifyAttendance = instructor && currentLevel === 'P'
+    const canModifyAttendance = instructor && currentLevel !== 'S' 
 
     const [open, setOpen] = useState(false)
 
