@@ -1,3 +1,4 @@
+import AssignaturesAdmin from "../components/api/assignatures/AssignaturesAdmin"
 import ClassroomsAdmin from "../components/api/ClassRooms/ClassroomsAdmin"
 import Staff from "../components/api/staff/Staff"
 import Tabs from "../components/ui/Tabs"
@@ -10,6 +11,7 @@ const AdminPage = () => {
           tabs={[
             { label: "Clases", content: <ClassroomsAdmin /> },
             { label: "Staff", content: <Staff /> },
+            { label: 'Cursos', content: <AssignaturesAdmin />}
           ]}
         />
     </div>
