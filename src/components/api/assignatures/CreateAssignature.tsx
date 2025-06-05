@@ -2,6 +2,7 @@ import { Plus } from "lucide-react"
 import Slider from "../../ui/Slider"
 import { useState } from "react"
 import AssignatureForm from "./AssignatureForm"
+import useCreateAssignature from "../../../hooks/api/assignature/useCreateAssignature"
 
 interface Props {
     classroomId: number
@@ -11,6 +12,7 @@ const CreateAssignature = ({ classroomId }: Props) => {
 
 
     const [open, setOpen] = useState(false)
+    const createAssignature = useCreateAssignature()
 
   return (
     <>
@@ -25,6 +27,7 @@ const CreateAssignature = ({ classroomId }: Props) => {
         >
             <AssignatureForm 
                 classroomId={classroomId}
+                createAssignature={createAssignature}
             />
         </Slider>
     </>

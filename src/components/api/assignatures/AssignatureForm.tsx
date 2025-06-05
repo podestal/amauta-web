@@ -8,16 +8,21 @@ import SearchableDropdownInput, { Option } from "../../ui/SearchableDropdownInpu
 import { areas } from "../../../data/mockdataForGrades"
 import { motion } from "framer-motion"
 import Button from "../../ui/Button"
+import useNotificationsStore from "../../../hooks/store/useNotificationsStore"
+import { UseMutationResult } from "@tanstack/react-query"
+import { CreateAssignatureData } from "../../../hooks/api/assignature/useCreateAssignature"
 
 interface Props {
     classroomId: number
     assignature?: Assignature
+    createAssignature?: UseMutationResult<Assignature, Error, CreateAssignatureData>
 }
 
-const AssignatureForm = ({ classroomId, assignature }: Props) => {
+const AssignatureForm = ({ classroomId, assignature, createAssignature }: Props) => {
 
     const school = useSchoolStore(s => s.school)
     const access = useAuthStore(s => s.access) || ''
+    const { setMessage, setShow, setType } = useNotificationsStore()
 
     const [title, setTitle] = useState(assignature ? assignature.title : '')
     const [selectedInstructor, setSelectedInstructor] = useState<Option | null>(null)
@@ -28,6 +33,61 @@ const AssignatureForm = ({ classroomId, assignature }: Props) => {
     const [titleError, setTitleError] = useState('')
 
     const handleSubmit = (e: React.FormEvent) => {
+
+        e.preventDefault()
+
+
+        
+
+        if (!title) {
+            setTitleError('Este campo es requerido')
+            return
+        }
+
+        if (title.length < 2) {
+            setTitleError('El título debe tener al menos 2 caracteres')
+            return
+        }
+
+        if (!selectedInstructor) {
+            setShow(true)
+            setType('error')
+            setMessage('Debe seleccionar un instructor')
+            return
+        }
+
+        if (selectedArea <= 0) {
+            setShow(true)
+            setType('error')
+            setMessage('Debe seleccionar un área')
+            return
+        }
+        console.log('submitting form');
+
+        createAssignature && createAssignature.mutate({
+            access,
+            assignature: {
+                title,
+                clase: classroomId,
+                instructor: selectedInstructor.id,
+                area: selectedArea
+            }
+        }, {
+            onSuccess: () => {
+                setShow(true)
+                setType('success')
+                setMessage('Curso creado exitosamente')
+                setTitle('')
+                setSelectedInstructor(null)
+                setSelectedArea(0)
+            },
+            onError: (error) => {
+                setShow(true)
+                setType('error')
+                setMessage(`Error al crear el curso: ${error.message}`)
+            }
+        })
+
         e.preventDefault()
     }
 
@@ -115,6 +175,7 @@ const AssignatureForm = ({ classroomId, assignature }: Props) => {
         >
             <Button 
                 label="Guardar Curso"
+                type="submit"
             />
         </motion.div>}
     </form>
