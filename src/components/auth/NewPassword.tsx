@@ -37,6 +37,16 @@ const NewPassword = ({ uid, token }: Props) => {
             return
         }
 
+        if (password.length < 8) {
+            setPasswordError('La contraseña debe tener al menos 8 caracteres')
+            return
+        }
+
+        if (!/^(?!\d+$).+/.test(password)) {
+            setPasswordError('La contraseña debe contener al menos un carácter alfabético')
+            return
+        }
+        
         if (!confirmPassword) {
             setConfirmPasswordError('Este campo es requerido')
             return
@@ -67,7 +77,9 @@ const NewPassword = ({ uid, token }: Props) => {
             },
             onError: (error) => {
                 setLoading(false)
-                console.log(error)
+                setType('error')
+                setShow(true)
+                setMessage(error.message || 'Error al cambiar la contraseña')
             },
             onSettled: () => {
                 setLoading(false)
