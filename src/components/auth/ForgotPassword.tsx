@@ -19,6 +19,18 @@ const ForgotPassword = () => {
     const handleForgotPassword = (e:React.FormEvent) => {
         e.preventDefault()
         setLoading(true)
+
+        if (!email) {
+            setLoading(false)
+            setEmailError(lan === 'EN' ? 'Email is required' : 'El correo electrónico es obligatorio')
+            return
+        }
+        if (!/\S+@\S+\.\S+/.test(email)) {
+            setLoading(false)
+            setEmailError(lan === 'EN' ? 'Invalid email format' : 'Formato de correo electrónico inválido')
+            return
+        }
+
         recoverPassword.mutate(
             { credentials: { email } },
             { onSuccess: () => {
