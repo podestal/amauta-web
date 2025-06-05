@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, Plus } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import useGetClassroom from '../../../hooks/api/classroom/useGetClassroom';
 import useSchoolStore from '../../../hooks/store/useSchoolStore';
 import useAuthStore from '../../../hooks/store/useAuthStore';
 import getClassroomDescription from '../../../utils/getClassroomDescription';
 import AssignaturesAdminList from './AssignaturesAdminList';
+import CreateAssignature from './CreateAssignature';
 
 const ClassroomAssignaturesList: React.FC = () => {
     const [expanded, setExpanded] = useState<number | null>(null);
@@ -27,9 +28,9 @@ const ClassroomAssignaturesList: React.FC = () => {
         {/* <>{console.log('classroom', classrooms)}</> */}
             {classrooms.map(classroom => (
             <div key={classroom.id} className="bg-white dark:bg-gray-800 shadow-md rounded-xl">
-                <button className="text-sm bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded flex items-center gap-1">
-                    <Plus size={16} /> <span className="hidden sm:inline">Agregar Curso</span>
-                </button>
+                <CreateAssignature 
+                    classroomId={classroom.id}
+                />
                 <div
                     className="flex justify-between items-center px-4 py-3 cursor-pointer select-none hover:bg-gray-100 dark:hover:bg-gray-700 rounded-t-xl"
                     onClick={() => toggleExpand(classroom.id)}

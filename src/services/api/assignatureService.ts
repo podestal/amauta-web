@@ -22,6 +22,8 @@ interface Props {
     byClassroom?: boolean
 }
 
+export type CreateUpdateAssignature = Omit<Assignature, 'id' | 'classroom_description'>
+
 const getAssignatureService = ({ byInstructor, byTutor, byClassroom }: Props) => {
 
     let url = 'assignature/'
@@ -33,7 +35,7 @@ const getAssignatureService = ({ byInstructor, byTutor, byClassroom }: Props) =>
         url = 'assignature/byClassroom/'
     }
 
-    return new APIClient<Assignature>(url)
+    return new APIClient<Assignature, CreateUpdateAssignature>(url)
 }
 
 export default getAssignatureService
