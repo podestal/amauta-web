@@ -5,6 +5,7 @@ import useGetClassroom from '../../../hooks/api/classroom/useGetClassroom';
 import useSchoolStore from '../../../hooks/store/useSchoolStore';
 import useAuthStore from '../../../hooks/store/useAuthStore';
 import getClassroomDescription from '../../../utils/getClassroomDescription';
+import AssignaturesAdminList from './AssignaturesAdminList';
 
 const ClassroomAssignaturesList: React.FC = () => {
     const [expanded, setExpanded] = useState<number | null>(null);
@@ -30,8 +31,8 @@ const ClassroomAssignaturesList: React.FC = () => {
                     <Plus size={16} /> <span className="hidden sm:inline">Agregar Curso</span>
                 </button>
                 <div
-                className="flex justify-between items-center px-4 py-3 cursor-pointer select-none hover:bg-gray-100 dark:hover:bg-gray-700 rounded-t-xl"
-                onClick={() => toggleExpand(classroom.id)}
+                    className="flex justify-between items-center px-4 py-3 cursor-pointer select-none hover:bg-gray-100 dark:hover:bg-gray-700 rounded-t-xl"
+                    onClick={() => toggleExpand(classroom.id)}
                 >
                     
                 <div className="text-lg font-medium">{getClassroomDescription({ lan: 'ES', grade: classroom.grade, level: classroom.level, section: classroom.section })}</div>
@@ -51,17 +52,9 @@ const ClassroomAssignaturesList: React.FC = () => {
                     transition={{ duration: 0.3 }}
                     className="px-4 py-2 overflow-hidden border-t border-gray-200 dark:border-gray-700"
                     >
-                    {/* {classroom.assignatures.length > 0 ? (
-                        <ul className="list-disc list-inside">
-                        {classroom.assignatures.map(a => (
-                            <li key={a.id}>{a.title}</li>
-                        ))}
-                        </ul>
-                    ) : (
-                        <p className="text-sm italic text-gray-500 dark:text-gray-400">
-                        Aún no hay cursos.
-                        </p>
-                    )} */}
+                        <AssignaturesAdminList 
+                            classroomId={classroom.id}
+                        />
                     </motion.div>
                 )}
                 </AnimatePresence>
