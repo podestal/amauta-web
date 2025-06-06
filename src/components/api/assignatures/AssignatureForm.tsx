@@ -11,6 +11,7 @@ import Button from "../../ui/Button"
 import useNotificationsStore from "../../../hooks/store/useNotificationsStore"
 import { UseMutationResult } from "@tanstack/react-query"
 import { CreateAssignatureData } from "../../../hooks/api/assignature/useCreateAssignature"
+import getInstructorFullName from "../../../utils/getInstructorFullName"
 
 interface Props {
     classroomId: number
@@ -25,7 +26,7 @@ const AssignatureForm = ({ classroomId, assignature, createAssignature }: Props)
     const { setMessage, setShow, setType } = useNotificationsStore()
 
     const [title, setTitle] = useState(assignature ? assignature.title : '')
-    const [selectedInstructor, setSelectedInstructor] = useState<Option | null>(null)
+    const [selectedInstructor, setSelectedInstructor] = useState<Option | null>(assignature ? {id: assignature.id, label: ''} : null)
     const [selectedArea, setSelectedArea] = useState(assignature ? assignature.area : 0)
 
 
@@ -127,7 +128,7 @@ const AssignatureForm = ({ classroomId, assignature, createAssignature }: Props)
             <p className="text-lg lg:text-xl dark:text-slate-50 text-center mb-4">Selecciona un Profesor</p>
             <SearchableDropdownInput 
                 options={instructors.map(instructor => ({ id: instructor.id, label: `${instructor.first_name} ${instructor.last_name}` }))}
-                selected={selectedInstructor ? { id: selectedInstructor.id, label: selectedInstructor.label || '' } : null}
+                selected={selectedInstructor ? { id: selectedInstructor.id, label: selectedInstructor.label || getInstructorFullName({ instructors, instructorId: assignature?.instructor }) } : null}
                 setSelected={setSelectedInstructor}
                 placeholder="Seleccione un Instructor"
             />

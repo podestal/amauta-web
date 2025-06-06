@@ -1,5 +1,6 @@
 import useGetAssignaturesByClassroom from "../../../hooks/api/assignature/useGetAssignaturesByClassroom"
 import useAuthStore from "../../../hooks/store/useAuthStore"
+import AssignatureAdminCard from "./AssignatureAdminCard"
 
 interface Props {
     classroomId: number
@@ -22,10 +23,10 @@ const AssignaturesAdminList = ({ classroomId }: Props) => {
         {assignatures.length > 0 ? (
             <ul className="space-y-2">
                 {assignatures.map(assignature => (
-                    <li key={assignature.id} className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4">
-                        <h3 className="text-sm font-semibold">{assignature.title}</h3>
-                        {/* <p className="text-sm text-gray-600 dark:text-gray-400">{assignature.description}</p> */}
-                    </li>
+                    <AssignatureAdminCard 
+                        key={assignature.id}
+                        assignature={assignature}
+                    />
                 ))}
             </ul>
         ) : (
