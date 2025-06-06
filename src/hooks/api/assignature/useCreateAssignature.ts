@@ -6,17 +6,22 @@ export interface CreateAssignatureData {
     assignature: CreateUpdateAssignature
 }
 
-const useCreateAssignature = (): UseMutationResult<Assignature, Error, CreateAssignatureData> => {
+interface Props {
+    classroomId: number
+}
+
+const useCreateAssignature = ({ classroomId }: Props): UseMutationResult<Assignature, Error, CreateAssignatureData> => {
     const assignatureService = getAssignatureService({})
     const queryClient = useQueryClient()
     
     return useMutation({
         mutationFn: (data: CreateAssignatureData) => assignatureService.post(data.assignature, data.access),
-        onSuccess: res => {
-            queryClient.setQueryData<Assignature[]>(['assignatures'], (oldData) => {
-                if (!oldData) return [res]
-                return [...oldData, res]
-            })
+        onSuccess: () => {
+            // queryClient.setQueryData<Assignature[]>(['assignatures'], (oldData) => {
+            //     if (!oldData) return [res]
+            //     return [...oldData, res]
+            // })
+            queryClient.invalidateQueries({ queryKey: ['assignatures', classroomId]})
         },
         onError: err => {
             console.log(err)

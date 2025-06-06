@@ -13,7 +13,7 @@ interface Props {
 const AssignatureAdminCard = ({ assignature }: Props) => {
 
     const [open, setOpen] = useState(false)
-    const updateAssignature = useUpdateAssignature({ assignatureId: assignature.id })
+    const updateAssignature = useUpdateAssignature({ assignatureId: assignature.id, classroomId: assignature.clase })
 
   return (
     <>

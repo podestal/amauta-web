@@ -12,7 +12,7 @@ const CreateAssignature = ({ classroomId }: Props) => {
 
 
     const [open, setOpen] = useState(false)
-    const createAssignature = useCreateAssignature()
+    const createAssignature = useCreateAssignature({ classroomId })
 
   return (
     <>
