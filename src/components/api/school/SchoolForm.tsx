@@ -14,6 +14,7 @@ export interface School {
   type_of_institution: string;
   payment_status: string;
   automatic_late: string;
+  automatic_late_initial: string;
 }
 
 interface Props {
@@ -34,6 +35,10 @@ const SchoolForm: React.FC<Props> = ({ school, updateSchool }) => {
 
   const handleTimeChange = (value: string | null) => {
     setForm(prev => ({ ...prev, automatic_late: value || "" }));
+  };
+
+  const handleTimeChangeInitial = (value: string | null) => {
+    setForm(prev => ({ ...prev, automatic_late_initial: value || "" }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -97,6 +102,21 @@ const SchoolForm: React.FC<Props> = ({ school, updateSchool }) => {
             <TimePicker 
                 onChange={handleTimeChange}
                 value={form.automatic_late}
+                disableClock
+                className="w-full dark:bg-slate-950 bg-slate-50"
+                format="HH:mm"
+                clearIcon={null}
+                amPmAriaLabel="Select AM/PM"
+                clockAriaLabel="Toggle clock"
+            />
+          </div>
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-slate-50">Hora de tardanza automática para inicial</label>
+          <div className="mt-1">
+            <TimePicker 
+                onChange={handleTimeChangeInitial}
+                value={form.automatic_late_initial}
                 disableClock
                 className="w-full dark:bg-slate-950 bg-slate-50"
                 format="HH:mm"
