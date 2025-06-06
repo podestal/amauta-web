@@ -14,6 +14,7 @@ const useSchoolStore = create<SchoolState>(set => ({
         picture_name: '',
         payment_status: '',
         automatic_late: '',
+        automatic_late_initial: ''
     },
     setSchool: (school) => {
         set({ school })
