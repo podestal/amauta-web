@@ -12,21 +12,23 @@ import useNotificationsStore from "../../../hooks/store/useNotificationsStore"
 import { UseMutationResult } from "@tanstack/react-query"
 import { CreateAssignatureData } from "../../../hooks/api/assignature/useCreateAssignature"
 import getInstructorFullName from "../../../utils/getInstructorFullName"
+import { UpdateAssignatureData } from "../../../hooks/api/assignature/useUpdateAssignature"
 
 interface Props {
     classroomId: number
     assignature?: Assignature
     createAssignature?: UseMutationResult<Assignature, Error, CreateAssignatureData>
+    updateAssignature?: UseMutationResult<Assignature, Error, UpdateAssignatureData>
 }
 
-const AssignatureForm = ({ classroomId, assignature, createAssignature }: Props) => {
+const AssignatureForm = ({ classroomId, assignature, createAssignature, updateAssignature }: Props) => {
 
     const school = useSchoolStore(s => s.school)
     const access = useAuthStore(s => s.access) || ''
     const { setMessage, setShow, setType } = useNotificationsStore()
 
     const [title, setTitle] = useState(assignature ? assignature.title : '')
-    const [selectedInstructor, setSelectedInstructor] = useState<Option | null>(assignature ? {id: assignature.id, label: ''} : null)
+    const [selectedInstructor, setSelectedInstructor] = useState<Option | null>(assignature ? {id: assignature.instructor, label: ''} : null)
     const [selectedArea, setSelectedArea] = useState(assignature ? assignature.area : 0)
 
 
@@ -86,6 +88,30 @@ const AssignatureForm = ({ classroomId, assignature, createAssignature }: Props)
                 setShow(true)
                 setType('error')
                 setMessage(`Error al crear el curso: ${error.message}`)
+            }
+        })
+
+        console.log('selectedInstructor.id', selectedInstructor.id);
+        
+
+        updateAssignature && updateAssignature.mutate({
+            access,
+            assignatureUpdates: {
+                title,
+                clase: classroomId,
+                instructor: selectedInstructor.id,
+                area: selectedArea
+            }
+        }, {
+            onSuccess: () => {
+                setShow(true)
+                setType('success')
+                setMessage('Curso actualizado exitosamente')
+            },
+            onError: (error) => {
+                setShow(true)
+                setType('error')
+                setMessage(`Error al actualizar el curso: ${error.message}`)
             }
         })
 
@@ -175,7 +201,7 @@ const AssignatureForm = ({ classroomId, assignature, createAssignature }: Props)
             transition={{ duration: 0.3, delay: 0.1 }}
         >
             <Button 
-                label="Guardar Curso"
+                label={assignature ? 'Actualizar Curso' : 'Crear Curso'}
                 type="submit"
             />
         </motion.div>}

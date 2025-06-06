@@ -4,6 +4,7 @@ import Slider from "../../ui/Slider"
 import { useState } from "react"
 import AssignatureForm from "./AssignatureForm"
 import { Pen } from "lucide-react"
+import useUpdateAssignature from "../../../hooks/api/assignature/useUpdateAssignature"
 
 interface Props {
     assignature: Assignature
@@ -12,6 +13,7 @@ interface Props {
 const AssignatureAdminCard = ({ assignature }: Props) => {
 
     const [open, setOpen] = useState(false)
+    const updateAssignature = useUpdateAssignature({ assignatureId: assignature.id })
 
   return (
     <>
@@ -35,6 +37,7 @@ const AssignatureAdminCard = ({ assignature }: Props) => {
             <AssignatureForm 
                 classroomId={assignature.clase}
                 assignature={assignature}
+                updateAssignature={updateAssignature}
             />
         </Slider>
     </>

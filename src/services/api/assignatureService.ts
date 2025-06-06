@@ -17,6 +17,7 @@ export interface AssignatureByTutor {
 
 
 interface Props {
+    assignatureId?: number
     byInstructor?: boolean
     byTutor?: boolean
     byClassroom?: boolean
@@ -24,10 +25,12 @@ interface Props {
 
 export type CreateUpdateAssignature = Omit<Assignature, 'id' | 'classroom_description'>
 
-const getAssignatureService = ({ byInstructor, byTutor, byClassroom }: Props) => {
+const getAssignatureService = ({ byInstructor, byTutor, byClassroom, assignatureId }: Props) => {
 
     let url = 'assignature/'
-    if (byInstructor) {
+    if (assignatureId) {
+        url = `assignature/${assignatureId}/`
+    } else if (byInstructor) {
         url = 'assignature/byInstructor/'
     } else if (byTutor) {
         url = 'assignature/byTutor/'
