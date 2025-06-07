@@ -44,7 +44,9 @@ const GradesTableFilters = ({
  }: Props) => {
 
         const filteredCompetencies = competencies.filter(competency => competency.area.toString() === assignatures.find(assignature => assignature.id.toString() === selectedAssignature)?.area.toString());
-        
+        const filteredAreasIds = assignatures.map(assignature => assignature.area.toString());
+        const filteredAreas = areas.filter(area => filteredAreasIds.includes(area.id.toString()));
+
         useEffect(() => {
             if (selectedTableType === 1) {
                 setSelectedArea(assignatures.find(assignature => assignature.id.toString() === selectedAssignature)?.area.toString() || '0')
@@ -69,7 +71,7 @@ const GradesTableFilters = ({
         <div className="grid grid-cols-4 gap-12 mb-6">
             <Selector
                 label="Area"
-                values={[{id: '0', name: 'Todas'}, ...areas.map(area => ({id: area.id.toString(), name: area.title}))]}
+                values={[{id: '0', name: 'Todas'}, ...filteredAreas.map(area => ({id: area.id.toString(), name: area.title}))]}
                 setter={setSelectedArea}
                 defaultValue="0"
             />
