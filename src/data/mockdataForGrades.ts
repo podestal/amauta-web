@@ -444,6 +444,11 @@ export const categories = [
     },
 ]
 
+export interface Area  {
+    id: number
+    title: string
+}
+
 export const areas = [
 
     {

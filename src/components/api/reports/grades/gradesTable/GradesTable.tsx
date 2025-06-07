@@ -13,6 +13,7 @@ import getCurrentQuarter from "../../../../../utils/getCurrentCuarter";
 import GetQuarterGradesExcel from "./GetQuarterGradesExcel";
 import MultiOptionSwitch from "../../../../ui/MultiOptionSwitch";
 import useGetProfileStore from "../../../../../hooks/store/useGetProfileStore";
+import GradesTableHeaderAreas from "./byAreas/GradesTableHeaderAreas";
 
 const tableTypes = [
     { id: 0, label: 'Áreas' },
@@ -78,7 +79,8 @@ const GradesTable = () => {
             selectedClassroom={selectedClassroom}
             setSelectedClassroom={setSelectedClassroom}
         />
-        {selectedTableType === 1 && <>
+        {selectedTableType === 1 ? 
+        <>
             {selectedComeptency === '0' && <>
                 {selectedArea !== '0' && 
                 <GradesTableHeader 
@@ -112,7 +114,16 @@ const GradesTable = () => {
                     filterByName={filterByName}
                 />
             </>}
-        </>}
+        </>
+        :
+        <>
+            <GradesTableHeaderAreas 
+                filterByName={filterByName}
+                setFilterByName={setFilterByName}
+                assignatures={assignatures}
+            />
+        </>
+        }
 
     </div>
   )

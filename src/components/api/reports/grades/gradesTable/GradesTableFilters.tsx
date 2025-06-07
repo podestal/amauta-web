@@ -39,7 +39,7 @@ const GradesTableFilters = ({
     selectedArea,
     classrooms,
     selectedClassroom,
-    setSelectedClassroom
+    setSelectedClassroom,
 
  }: Props) => {
 
