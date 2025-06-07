@@ -1,6 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion"
 import Selector from "../../../../ui/Selector"
-// import Input from "../../../../ui/Input"
 import { Assignature } from "../../../../../services/api/assignatureService"
 import { competencies } from "../../../../../data/mockdataForGrades"
 import CategorySelector from "../../../category/CategorySelector"
@@ -58,6 +57,8 @@ const GradesTableFilters = ({
             }
         }, [selectedCompetency, selectedAssignature])
 
+        if (classrooms.length === 0) return <p className="text-center text-gray-500 text-xs my-4">No tiene clases asignadas aún.</p>
+
   return (
     <motion.div 
         initial={{ opacity: 0, y: -30 }}
@@ -66,7 +67,6 @@ const GradesTableFilters = ({
         className="w-full my-12">
         { selectedTableType === 0 && 
         <div className="grid grid-cols-4 gap-12 mb-6">
-            <>{console.log('selectedClassroom', selectedClassroom)}</>
             <Selector
                 label="Area"
                 values={[{id: '0', name: 'Todas'}, ...areas.map(area => ({id: area.id.toString(), name: area.title}))]}
@@ -90,6 +90,27 @@ const GradesTableFilters = ({
                         }
                         )]}
                         setter={setSelectedClassroom}
+                        lan="ES"
+                        defaultValue={'0'}
+                    />
+                </motion.div>}
+            </AnimatePresence>
+            <AnimatePresence>
+                {selectedClassroom !== '0' && 
+                <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    transition={{ duration: 0.3 }}
+                >
+                    <Selector 
+                        label={"Curso"}
+                        values={[{ id: '0', name: 'Seleccione un Curso'}, ...assignatures
+                            .filter(assignature => assignature.clase === parseInt(selectedClassroom))
+                            .filter(assignature => assignature.area.toString() === selectedArea)
+                            .map(assignature => ({ id: assignature.id.toString(), name: assignature.title }))]
+                        }
+                        setter={setSelectedAssignature}
                         lan="ES"
                         defaultValue={'0'}
                     />

@@ -21,11 +21,17 @@ interface Props {
     byInstructor?: boolean
     byTutor?: boolean
     byClassroom?: boolean
+    byAuxiliarRegister?: boolean
 }
 
 export type CreateUpdateAssignature = Omit<Assignature, 'id' | 'classroom_description'>
 
-const getAssignatureService = ({ byInstructor, byTutor, byClassroom, assignatureId }: Props) => {
+const getAssignatureService = ({ 
+    byInstructor, 
+    byTutor, 
+    byClassroom, 
+    assignatureId, 
+    byAuxiliarRegister }: Props) => {
 
     let url = 'assignature/'
     if (assignatureId) {
@@ -36,6 +42,8 @@ const getAssignatureService = ({ byInstructor, byTutor, byClassroom, assignature
         url = 'assignature/byTutor/'
     } else if (byClassroom) {
         url = 'assignature/byClassroom/'
+    } else if (byAuxiliarRegister) {
+        url = 'assignature/byAuxiliarRegister/'
     }
 
     return new APIClient<Assignature, CreateUpdateAssignature>(url)

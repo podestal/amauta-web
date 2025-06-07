@@ -36,8 +36,6 @@ const GradesTable = () => {
     const profile = useGetProfileStore(s => s.profile)
     const classrooms = profile?.clases_details || [];
 
-    if (classrooms.length === 0) return <p className="text-center text-gray-500 text-xs my-4">No tiene clases asignadas aún.</p>
-
     const { data: assignatures, isLoading, isError, error, isSuccess } = useGetAssignature({ access, byInstructor: true })
 
     useLoader(isLoading)
