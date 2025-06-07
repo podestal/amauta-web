@@ -11,47 +11,61 @@ import GradesTableActivitiesHeader from "./GradesTableActivitiesHeader";
 import GradesTableActivitiesBody from "./GradesTableActivitiesBody";
 import getCurrentQuarter from "../../../../../utils/getCurrentCuarter";
 import GetQuarterGradesExcel from "./GetQuarterGradesExcel";
+import MultiOptionSwitch from "../../../../ui/MultiOptionSwitch";
+import useGetProfileStore from "../../../../../hooks/store/useGetProfileStore";
+
+const tableTypes = [
+    { id: 0, label: 'Áreas' },
+    { id: 1, label: 'Competencias' }
+];
+
 
 const GradesTable = () => {
 
-        // const gradeStyles: Record<string, string> = {
-        //     "A": "bg-blue-500 text-white",
-        //     "B": "bg-yellow-500 text-white",
-        //     "C": "bg-red-500 text-white",
-        //     "AD": "bg-green-500 text-white",
-        //     "NA": "bg-gray-300 text-gray-700", 
-        // };
-        
-        // const [students, setStudents] = useState<StudentsTable[]>(initialStudents);
-        const [selectedAssignature, setSelectedAssignature] = useState('0');
-        const [selectedArea, setSelectedArea] = useState('0');
-        const [selectedComeptency, setSelectedCompetency] = useState('0');
-        const [selectedQuarter, setSelectedQuarter] = useState(getCurrentQuarter());
-        const [selectedCategory, setSelectedCategory] = useState('0');
-        const [filterByName, setFilterByName] = useState('');
+    const [selectedTableType, setSelectedTableType] = useState(0);
+    const [selectedAssignature, setSelectedAssignature] = useState('0');
+    const [selectedArea, setSelectedArea] = useState('0');
+    const [selectedComeptency, setSelectedCompetency] = useState('0');
+    const [selectedQuarter, setSelectedQuarter] = useState(getCurrentQuarter());
+    const [selectedCategory, setSelectedCategory] = useState('0');
+    const [selectedClassroom, setSelectedClassroom] = useState('0');
+    const [filterByName, setFilterByName] = useState('');
 
-        const access = useAuthStore(s => s.access) || ''
-        const { data: assignatures, isLoading, isError, error, isSuccess } = useGetAssignature({ access, byInstructor: true })
 
-        useLoader(isLoading)
+    const access = useAuthStore(s => s.access) || ''
+    const profile = useGetProfileStore(s => s.profile)
+    const classrooms = profile?.clases_details || [];
 
-        if (isError) return <p>Error: {error.message}</p>
+    if (classrooms.length === 0) return <p className="text-center text-gray-500 text-xs my-4">No tiene clases asignadas aún.</p>
 
-        if(isSuccess)
+    const { data: assignatures, isLoading, isError, error, isSuccess } = useGetAssignature({ access, byInstructor: true })
+
+    useLoader(isLoading)
+
+    if (isError) return <p>Error: {error.message}</p>
+
+    if (isSuccess)
 
   return (
     <div className="overflow-x-auto">
+        <>{console.log('profile', profile)}</>
          <motion.div 
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
             className="flex justify-between items-center gap-4 mb-6">
             <h2 className="text-3xl font-bold ">📊 Resumen de Calificaciones</h2>
+            <MultiOptionSwitch 
+                options={tableTypes.map(option => option.label)}
+                selected={selectedTableType}
+                setSelected={setSelectedTableType}
+            />
             <GetQuarterGradesExcel 
                 selectedQuarter={selectedQuarter}
             />
         </motion.div>
         <GradesTableFilters 
+            selectedTableType={selectedTableType}
             assignatures={assignatures}
             setSelectedAssignature={setSelectedAssignature}
             selectedAssignature={selectedAssignature}
@@ -62,7 +76,12 @@ const GradesTable = () => {
             selectedQuarter={selectedQuarter}
             selectedCategory={selectedCategory}
             setSelectedArea={setSelectedArea}
+            selectedArea={selectedArea}
+            classrooms={classrooms}
+            selectedClassroom={selectedClassroom}
+            setSelectedClassroom={setSelectedClassroom}
         />
+        <>{console.log('selectedArea', selectedArea)}</>
         {selectedComeptency === '0' && <>
             {selectedArea !== '0' && 
             <GradesTableHeader 

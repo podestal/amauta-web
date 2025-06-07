@@ -6,8 +6,10 @@ import { competencies } from "../../../../../data/mockdataForGrades"
 import CategorySelector from "../../../category/CategorySelector"
 import { useEffect } from "react"
 import getClassroomDescription from "../../../../../utils/getClassroomDescription"
+import { areas } from "../../../../../data/mockdataForGrades"
 
 interface Props {
+    selectedTableType: number
     assignatures: Assignature[]
     setSelectedAssignature: React.Dispatch<React.SetStateAction<string>>
     selectedAssignature: string
@@ -18,9 +20,14 @@ interface Props {
     selectedQuarter: string
     selectedCategory: string
     setSelectedArea: React.Dispatch<React.SetStateAction<string>>
+    selectedArea: string
+    classrooms: string[]
+    selectedClassroom: string
+    setSelectedClassroom: React.Dispatch<React.SetStateAction<string>>
 }
 
 const GradesTableFilters = ({ 
+    selectedTableType,
     assignatures,
     setSelectedAssignature,
     selectedAssignature,
@@ -30,12 +37,19 @@ const GradesTableFilters = ({
     setSelectedCategory,
     selectedQuarter,
     setSelectedArea,
+    selectedArea,
+    classrooms,
+    selectedClassroom,
+    setSelectedClassroom
+
  }: Props) => {
 
         const filteredCompetencies = competencies.filter(competency => competency.area.toString() === assignatures.find(assignature => assignature.id.toString() === selectedAssignature)?.area.toString());
         
         useEffect(() => {
-            setSelectedArea(assignatures.find(assignature => assignature.id.toString() === selectedAssignature)?.area.toString() || '0')
+            if (selectedTableType === 1) {
+                setSelectedArea(assignatures.find(assignature => assignature.id.toString() === selectedAssignature)?.area.toString() || '0')
+            }
         }, [filteredCompetencies])
 
         useEffect(() => {
@@ -50,6 +64,39 @@ const GradesTableFilters = ({
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         className="w-full my-12">
+        { selectedTableType === 0 && 
+        <div className="grid grid-cols-4 gap-12 mb-6">
+            <>{console.log('selectedClassroom', selectedClassroom)}</>
+            <Selector
+                label="Area"
+                values={[{id: '0', name: 'Todas'}, ...areas.map(area => ({id: area.id.toString(), name: area.title}))]}
+                setter={setSelectedArea}
+                defaultValue="0"
+            />
+            <AnimatePresence>
+                {selectedArea !== '0' && 
+                <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    transition={{ duration: 0.3 }}
+                >
+                    <Selector 
+                        label={"Clase"}
+                        values={[{id: '0', name: 'Seleccione una clase'}, ...classrooms.map(classroom => {
+                            const [grade, section, level, id] = classroom.split("-");
+                            const classRoomDescription = getClassroomDescription({ lan:'ES', grade, section, level, short: true });
+                            return {id, name: classRoomDescription}
+                        }
+                        )]}
+                        setter={setSelectedClassroom}
+                        lan="ES"
+                        defaultValue={'0'}
+                    />
+                </motion.div>}
+            </AnimatePresence>
+        </div>} 
+        { selectedTableType === 1 && 
         <div className="grid grid-cols-4 gap-12 mb-6">
             <Selector 
                 label={"Curso"}
@@ -115,14 +162,8 @@ const GradesTableFilters = ({
                     />
                 </motion.div>}
             </AnimatePresence>
-        </div>
-        {/* <Input 
-            placeholder="Buscar por nombre..."
-            onChange={e => {
-            setFilterByName(e.target.value)
-            }}
-            value={filterByName}
-        /> */}
+        </div>} 
+
     </motion.div>
   )
 }
