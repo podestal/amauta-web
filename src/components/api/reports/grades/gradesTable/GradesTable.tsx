@@ -46,7 +46,6 @@ const GradesTable = () => {
 
   return (
     <div className="overflow-x-auto">
-        <>{console.log('profile', profile)}</>
          <motion.div 
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
@@ -79,39 +78,40 @@ const GradesTable = () => {
             selectedClassroom={selectedClassroom}
             setSelectedClassroom={setSelectedClassroom}
         />
-        <>{console.log('selectedArea', selectedArea)}</>
-        {selectedComeptency === '0' && <>
-            {selectedArea !== '0' && 
-            <GradesTableHeader 
-                comptencies={competencies.filter(competency => competency.area.toString() === selectedArea)}
-                filterByName={filterByName}
-                setFilterByName={setFilterByName}
-            />}
-            {selectedAssignature !== '0' && 
-            <GradesTableBody 
-                classroomId={(assignatures.find(assignature => assignature.id.toString() === selectedAssignature)?.clase)?.toString() || '0'}
-                competencies={competencies.filter(competency => competency.area.toString() === selectedArea).map(competency => competency.id.toString())}
-                selectedQuarter={selectedQuarter}
-                filterByName={filterByName}
-            />}
-        </>}
-        {selectedComeptency !== '0' && <>
-            <GradesTableActivitiesHeader 
-                assignatureId={selectedAssignature}
-                competence={selectedComeptency}
-                quarter={selectedQuarter}
-                category={selectedCategory}
-                filterByName={filterByName}
-                setFilterByName={setFilterByName}
-            />
-            <GradesTableActivitiesBody 
-                classroomId={(assignatures.find(assignature => assignature.id.toString() === selectedAssignature)?.clase)?.toString() || '0'}
-                competence={selectedComeptency}
-                selectedAssignature={selectedAssignature}
-                quarter={selectedQuarter}
-                category={selectedCategory}
-                filterByName={filterByName}
-            />
+        {selectedTableType === 1 && <>
+            {selectedComeptency === '0' && <>
+                {selectedArea !== '0' && 
+                <GradesTableHeader 
+                    comptencies={competencies.filter(competency => competency.area.toString() === selectedArea)}
+                    filterByName={filterByName}
+                    setFilterByName={setFilterByName}
+                />}
+                {selectedAssignature !== '0' && 
+                <GradesTableBody 
+                    classroomId={(assignatures.find(assignature => assignature.id.toString() === selectedAssignature)?.clase)?.toString() || '0'}
+                    competencies={competencies.filter(competency => competency.area.toString() === selectedArea).map(competency => competency.id.toString())}
+                    selectedQuarter={selectedQuarter}
+                    filterByName={filterByName}
+                />}
+            </>}
+            {selectedComeptency !== '0' && <>
+                <GradesTableActivitiesHeader 
+                    assignatureId={selectedAssignature}
+                    competence={selectedComeptency}
+                    quarter={selectedQuarter}
+                    category={selectedCategory}
+                    filterByName={filterByName}
+                    setFilterByName={setFilterByName}
+                />
+                <GradesTableActivitiesBody 
+                    classroomId={(assignatures.find(assignature => assignature.id.toString() === selectedAssignature)?.clase)?.toString() || '0'}
+                    competence={selectedComeptency}
+                    selectedAssignature={selectedAssignature}
+                    quarter={selectedQuarter}
+                    category={selectedCategory}
+                    filterByName={filterByName}
+                />
+            </>}
         </>}
 
     </div>

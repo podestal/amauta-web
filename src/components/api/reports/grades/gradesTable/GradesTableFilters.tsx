@@ -68,15 +68,21 @@ const GradesTableFilters = ({
         transition={{ duration: 0.5 }}
         className="w-full my-12">
         { selectedTableType === 0 && 
-        <div className="grid grid-cols-4 gap-12 mb-6">
-            <Selector
-                label="Area"
-                values={[{id: '0', name: 'Todas'}, ...filteredAreas.map(area => ({id: area.id.toString(), name: area.title}))]}
-                setter={setSelectedArea}
-                defaultValue="0"
+        <div className="grid grid-cols-5 gap-12 mb-6">
+            <Selector 
+                label={"Bimestre"}
+                values={[
+                    {id: 'Q1', name: 'Bimestre 1'},
+                    {id: 'Q2', name: 'Bimestre 2'},
+                    {id: 'Q3', name: 'Bimestre 3'},
+                    {id: 'Q4', name: 'Bimestre 4'},
+                ]}
+                setter={setSelectedQuarter}
+                defaultValue={selectedQuarter}
+                lan="ES"
             />
             <AnimatePresence>
-                {selectedArea !== '0' && 
+                {selectedQuarter !== '0' && 
                 <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -105,6 +111,22 @@ const GradesTableFilters = ({
                     exit={{ opacity: 0, y: 10 }}
                     transition={{ duration: 0.3 }}
                 >
+                    <Selector
+                        label="Area"
+                        values={[{id: '0', name: 'Todas'}, ...filteredAreas.map(area => ({id: area.id.toString(), name: area.title}))]}
+                        setter={setSelectedArea}
+                        defaultValue="0"
+                    />
+                </motion.div>}
+            </AnimatePresence>
+            <AnimatePresence>
+                {selectedArea !== '0' && 
+                <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    transition={{ duration: 0.3 }}
+                >
                     <Selector 
                         label={"Curso"}
                         values={[{ id: '0', name: 'Seleccione un Curso'}, ...assignatures
@@ -115,6 +137,20 @@ const GradesTableFilters = ({
                         setter={setSelectedAssignature}
                         lan="ES"
                         defaultValue={'0'}
+                    />
+                </motion.div>}
+            </AnimatePresence>
+            <AnimatePresence>
+                {selectedAssignature !== '0' && 
+                <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    transition={{ duration: 0.3 }}
+                >
+                    <CategorySelector 
+                        setSelectedCategory={setSelectedCategory}
+                        all
                     />
                 </motion.div>}
             </AnimatePresence>
