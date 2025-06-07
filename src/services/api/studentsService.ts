@@ -11,7 +11,20 @@ export interface Average {
     competence: number
     conclusion: string
 }
-// ['uid', 'first_name', 'last_name', 'tutor_phone', 'read_agendas']
+
+export interface AreaGrade {
+    id: number
+    calification: string
+    area: number
+}
+
+export interface StudentByAreaGrade {
+    uid: number
+    first_name: string
+    last_name: string
+    area_grades: AreaGrade[]
+}
+
 export interface StudentByAgendas {
     uid: number
     first_name: string
@@ -155,10 +168,21 @@ interface Props {
     byGrade?: Boolean
     byAgendas?: Boolean
     byTotalScore?: Boolean
-    
+    byAreaGrade?: Boolean
 }
 
-const getStudentService = ({ tutor, all, studentId, byName, byDni, byLastTen, byQuarterGrade, byGrade, byAgendas, byTotalScore }: Props) => {
+const getStudentService = ({ 
+    tutor, 
+    all, 
+    studentId, 
+    byName, 
+    byDni, 
+    byLastTen, 
+    byQuarterGrade, 
+    byGrade, 
+    byAgendas, 
+    byTotalScore, 
+    byAreaGrade }: Props) => {
 
     let url = `student/byClassroom/`
     if (tutor) {
@@ -181,6 +205,8 @@ const getStudentService = ({ tutor, all, studentId, byName, byDni, byLastTen, by
         url = `student/byAgendas/`
     } else if (byGrade) {
         url = `student/byGrade/`
+    } else if (byAreaGrade) {
+        url = `student/byAreaGrade/`
     }
 
     return new APIClient<Student, StudentCreateUpdate>(url)

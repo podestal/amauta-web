@@ -14,6 +14,7 @@ import GetQuarterGradesExcel from "./GetQuarterGradesExcel";
 import MultiOptionSwitch from "../../../../ui/MultiOptionSwitch";
 import useGetProfileStore from "../../../../../hooks/store/useGetProfileStore";
 import GradesTableHeaderAreas from "./byAreas/GradesTableHeaderAreas";
+import GradesTableBodyAreas from "./byAreas/GradesTableBodyAreas";
 
 const tableTypes = [
     { id: 0, label: 'Áreas' },
@@ -121,6 +122,12 @@ const GradesTable = () => {
                 filterByName={filterByName}
                 setFilterByName={setFilterByName}
                 assignatures={assignatures}
+            />
+            <GradesTableBodyAreas 
+                // areas={assignatures.map(assignature => assignature.area.toString())}
+                areas={['9', '6']}
+                quarter={selectedQuarter}
+                clase={selectedClassroom}
             />
         </>
         }
