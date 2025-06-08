@@ -44,7 +44,7 @@ const GradesTableFilters = ({
  }: Props) => {
 
         const filteredCompetencies = competencies.filter(competency => competency.area.toString() === assignatures.find(assignature => assignature.id.toString() === selectedAssignature)?.area.toString());
-        const filteredAreasIds = assignatures.map(assignature => assignature.area.toString());
+        const filteredAreasIds = assignatures.filter(assignature => assignature.clase === parseInt(selectedClassroom)).map(assignature => assignature.area.toString());
         const filteredAreas = areas.filter(area => filteredAreasIds.includes(area.id.toString()));
 
         useEffect(() => {
@@ -136,7 +136,6 @@ const GradesTableFilters = ({
                         }
                         setter={setSelectedAssignature}
                         lan="ES"
-                        defaultValue={'0'}
                     />
                 </motion.div>}
             </AnimatePresence>

@@ -15,6 +15,8 @@ import MultiOptionSwitch from "../../../../ui/MultiOptionSwitch";
 import useGetProfileStore from "../../../../../hooks/store/useGetProfileStore";
 import GradesTableHeaderAreas from "./byAreas/GradesTableHeaderAreas";
 import GradesTableBodyAreas from "./byAreas/GradesTableBodyAreas";
+import GradesTableHeaderAssignatures from "./byAreas/GradesTableHeaderAssignatures";
+import GradesTableBodyAssignatures from "./byAreas/GradesTableBodyAssignatures";
 
 const tableTypes = [
     { id: 0, label: 'Áreas' },
@@ -48,6 +50,7 @@ const GradesTable = () => {
 
   return (
     <div className="overflow-x-auto">
+        <>{console.log('selectedAssignature', selectedAssignature)}</>
          <motion.div 
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
@@ -118,17 +121,44 @@ const GradesTable = () => {
         </>
         :
         <>
+            {selectedClassroom !== '0' &&
+            <>
+            {selectedArea === '0' 
+            ? 
+            <>
             <GradesTableHeaderAreas 
                 filterByName={filterByName}
                 setFilterByName={setFilterByName}
                 assignatures={assignatures}
-            />
-            <GradesTableBodyAreas 
-                // areas={assignatures.map(assignature => assignature.area.toString())}
-                areas={['9', '6']}
-                quarter={selectedQuarter}
                 clase={selectedClassroom}
             />
+            <GradesTableBodyAreas 
+                areas={assignatures.map(assignature => assignature.area.toString())}
+                quarter={selectedQuarter}
+                clase={selectedClassroom}
+                filterByName={filterByName}
+                assignatures={assignatures}
+            />
+            </>
+            : 
+            <>
+                <GradesTableHeaderAssignatures 
+                    filterByName={filterByName}
+                    setFilterByName={setFilterByName}
+                    assignatures={assignatures}
+                    clase={selectedClassroom}
+                    area={selectedArea}
+                />
+                <GradesTableBodyAssignatures 
+                    area={selectedArea}
+                    quarter={selectedQuarter}
+                    clase={selectedClassroom}
+                    // filterByName={filterByName}
+                    assignatures={assignatures}
+                />
+            </>}
+            </>
+            }
         </>
         }
 
