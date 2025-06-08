@@ -12,9 +12,10 @@ interface Props {
     quarter: string
     category: string
     filterByName: string
+    byAssignature?: boolean
 }
 
-const GradesTableActivitiesBody = ({ classroomId, competence, selectedAssignature, quarter, category, filterByName }: Props) => {
+const GradesTableActivitiesBody = ({ classroomId, competence, selectedAssignature, quarter, category, filterByName, byAssignature }: Props) => {
 
     const [gradeChanged, setGradeChanged] = useState(false)
     
@@ -54,6 +55,7 @@ const GradesTableActivitiesBody = ({ classroomId, competence, selectedAssignatur
                         gradeChanged={gradeChanged}
                         classroomId={classroomId}
                         quarter={quarter}
+                        byAssignature={byAssignature}
                     />}
                     {student.filtered_grades
                     .filter(grade => category === '0' || grade.category.toString() === category)

@@ -176,6 +176,7 @@ const GradesTable = () => {
                     quarter={selectedQuarter}
                     category={selectedCategory}
                     filterByName={filterByName}
+                    byAssignature={true}
                 />
             </>}
             </>}
