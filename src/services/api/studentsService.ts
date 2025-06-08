@@ -35,7 +35,7 @@ export interface StudentByAssignatureGrade {
     uid: number
     first_name: string
     last_name: string
-    area_grade: AreaGrade
+    area_grades: AreaGrade[]
     assignature_grades: AssignatureGrade[]
 }
 

@@ -153,7 +153,7 @@ const GradesTable = () => {
                     area={selectedArea}
                     quarter={selectedQuarter}
                     clase={selectedClassroom}
-                    // filterByName={filterByName}
+                    filterByName={filterByName}
                     assignatures={assignatures}
                 />
             </>}
