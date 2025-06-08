@@ -60,7 +60,13 @@ const AverageSelector = ({
   const access = useAuthStore(s => s.access) || ''
   const [averageGrade, setAverageGrade] = useState('NA');
 
-  const savedAvarageGrade = student.averages.length > 0 ? (byAssignature ? {id: student.averages[0].id || 0, calification: student.averages[0].calification || 'NA', competence: 0, conclusion:''} : student.averages.find(average => (average.competence).toString() === selectedCompetency)) : undefined
+  const savedAvarageGrade = student.averages.length > 0 
+    ? (
+        byAssignature 
+        ? {id: student.averages[0].id || 0, calification: student.averages[0].calification || 'NA', competence: 0, conclusion:''} 
+        : student.averages.find(average => (average.competence).toString() === selectedCompetency)) 
+    : undefined
+
   const gradeQueryKey = [`students ${classroomId} ${selectedCompetency} ${quarter}`]
   const createQuarterGrade = useCreateQuarterGrade({ updateCacheKey: gradeQueryKey })
   const createAssignatureGrade = useCreateAssignatureGrade({ cacheKey: gradeQueryKey })
@@ -120,7 +126,6 @@ const AverageSelector = ({
     console.log('selectedCompetency', selectedCompetency);
 
     if (selectedCompetency === '0' ) {
-      console.log('No competency selected')
       createAssignatureGrade.mutate({
         access,
         assignatureGrade: {
@@ -198,6 +203,7 @@ const AverageSelector = ({
         studentId={student.uid}
         competency={selectedCompetency}
         assignature={selectedAssignature}
+        quarter={quarter}
       /> 
       : 
       <CreateAverageGrade 
@@ -209,6 +215,9 @@ const AverageSelector = ({
         studentId={student.uid}
         competency={selectedCompetency}
         assignature={selectedAssignature}
+        createAssignatureGrade={createAssignatureGrade}
+        quarter={quarter}
+        byAssignature={byAssignature}
       />}
       </>
       }

@@ -1,7 +1,7 @@
 import { UseMutationResult, useMutation, useQueryClient } from "@tanstack/react-query"
 import getAssignatureGradeService, {AssignatureGrade, CreateUpdateAssignatureGrade} from "../../../services/api/assignatureGrade"
 
-interface CreateAssignatureGradeData {
+export interface CreateAssignatureGradeData {
     access: string
     assignatureGrade: CreateUpdateAssignatureGrade
 }

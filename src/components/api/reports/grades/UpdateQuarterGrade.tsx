@@ -15,6 +15,7 @@ interface Props{
     studentId: number
     competency: string
     assignature: string
+    quarter: string
 }
 
 const gradeOptions = ["A", "B", "C", "AD", "NA"]
@@ -27,7 +28,8 @@ const UpdateQuarterGrade = ({
     setAverageGrade,
     studentId,
     competency,
-    assignature
+    assignature,
+    quarter
 }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
@@ -50,7 +52,7 @@ const UpdateQuarterGrade = ({
             student: studentId,
             competence: parseInt(competency),
             assignature: parseInt(assignature),
-            quarter: 'Q1'
+            quarter
           }
         }, {
         
