@@ -10,6 +10,7 @@ import CreateAverageGrade from "./CreateAverageGrade";
 import UpdateQuarterGrade from "./UpdateQuarterGrade";
 import RemoveQuarterGrade from "./RemoveQuarterGrade";
 import useCreateAssignatureGrade from "../../../../hooks/api/assignatureGrade/useCreateAssignatureGrade";
+import useUpdateAssignatureGrade from "../../../../hooks/api/assignatureGrade/useUpdateAssignatureGrade";
 
 const gradeValues: Record<string, number> = {
   "A": 3,
@@ -80,7 +81,17 @@ const AverageSelector = ({
       quarterGradeId: (savedAvarageGrade.id).toString(), 
       updateCacheKey: gradeQueryKey 
     });
+    
   };
+
+  const getUpdateAssignatureGrade = () => {
+    if (!savedAvarageGrade) return null;
+    return useUpdateAssignatureGrade({
+      assignatureGradeId: savedAvarageGrade.id,
+      cacheKey: gradeQueryKey
+    })
+  }
+
   // const updateQuarterGrade = getUpdateQuarterGrade()
   const { setShow, setType, setMessage } = useNotificationsStore()
   const [isLoading, setIsLoading] = useState(false)
@@ -196,6 +207,7 @@ const AverageSelector = ({
       ? 
       <UpdateQuarterGrade 
         getUpdateQuarterGrade={getUpdateQuarterGrade}
+        getUpdateAssignatureGrade={getUpdateAssignatureGrade}
         savedAvarageGrade={savedAvarageGrade}
         averageGrade={averageGrade}
         setIsLoading={setIsLoading}
@@ -204,6 +216,7 @@ const AverageSelector = ({
         competency={selectedCompetency}
         assignature={selectedAssignature}
         quarter={quarter}
+        byAssignature={byAssignature}
       /> 
       : 
       <CreateAverageGrade 
