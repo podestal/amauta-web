@@ -142,6 +142,9 @@ const GradesTable = () => {
             </>
             : 
             <>
+            {selectedAssignature === '0'
+            ? 
+            <>
                 <GradesTableHeaderAssignatures 
                     filterByName={filterByName}
                     setFilterByName={setFilterByName}
@@ -156,6 +159,25 @@ const GradesTable = () => {
                     filterByName={filterByName}
                     assignatures={assignatures}
                 />
+            </>
+            : 
+            <>
+                <GradesTableActivitiesHeader 
+                    assignatureId={selectedAssignature}
+                    quarter={selectedQuarter}
+                    category={selectedCategory}
+                    filterByName={filterByName}
+                    setFilterByName={setFilterByName}
+                />
+                <GradesTableActivitiesBody 
+                    classroomId={selectedClassroom}
+                    competence={'0'}
+                    selectedAssignature={selectedAssignature}
+                    quarter={selectedQuarter}
+                    category={selectedCategory}
+                    filterByName={filterByName}
+                />
+            </>}
             </>}
             </>
             }

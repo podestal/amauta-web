@@ -6,7 +6,7 @@ import Input from "../../../../ui/Input"
 
 interface Props {
     assignatureId: string
-    competence: string
+    competence?: string
     quarter: string
     category: string
     filterByName: string
@@ -44,7 +44,7 @@ const GradesTableActivitiesHeader = ({ assignatureId, competence, quarter, categ
             <h2 className="min-w-[360px] max-w-[360px] py-3 px-4">Nombres</h2>
             {category === '0' && <h2 className="min-w-[160px] max-w-[160px] py-3 px-4 text-center">Promedio</h2>}
             {activities
-            .filter(assignment => category === '0' || assignment.category.toString() === category)
+            .filter(activity => category === '0' || activity.category.toString() === category)
             .sort((a, b) => a.id - b.id)
             .map((activity) => (
                 <h2 

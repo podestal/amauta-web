@@ -54,15 +54,9 @@ const GradesTableBodyAreas = ({ areas, quarter, clase, filterByName, assignature
                 <h2 className="min-w-[360px] max-w-[360px] py-3 px-4">
                     {student.first_name} {student.last_name}
                 </h2>
-                {student.area_grades
-                    .sort((a, b) => a.area - b.area)
-                    .map( areaGrade => (
-                        <p>{areaGrade ? areaGrade.calification : 'NA'}</p>
-                    ))
-                }
                 {filteredAreas
                 .sort((a, b) => a.id - b.id)
-                .map((area) => {
+                .map((area, idx) => {
                     let areaGrade = student.area_grades.find(areaGrade => areaGrade.area.toString() === area.id.toString())
                     if (!areaGrade) {
                         areaGrade = {
@@ -73,7 +67,7 @@ const GradesTableBodyAreas = ({ areas, quarter, clase, filterByName, assignature
                     }
                     return (
                         <div
-                            key={area.id}
+                            key={idx}
                             className="min-w-[160px] max-w-[160px] text-center p-[1px]"
                         >
                             <p className={`w-full min-h-[46px] max-h-[46px] flex justify-center items-center text-center font-semibold outline-none transition-all duration-300 ${gradeStyles[areaGrade.calification]}`}>{areaGrade.calification}</p>

@@ -10,7 +10,10 @@ interface Props {
 
 const useGetStudentsByGrade = ({ access, classroomId, competence, quarter }: Props): UseQueryResult<StudentByGrade[]> => {
     const studentService = getStudentService({ byGrade: true })
-    const params = { clase: classroomId, competence, quarter }
+    let params: { clase: string; quarter: string; competence?: string } = { clase: classroomId, quarter }
+    if (competence !== '0') {
+        params = { ...params, competence }
+    }
     return useQuery({
         queryKey: [`students ${classroomId} ${competence} ${quarter}`],
         queryFn: () => studentService.get(access, params),

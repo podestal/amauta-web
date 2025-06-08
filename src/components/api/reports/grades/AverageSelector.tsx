@@ -9,6 +9,7 @@ import useAuthStore from "../../../../hooks/store/useAuthStore";
 import CreateAverageGrade from "./CreateAverageGrade";
 import UpdateQuarterGrade from "./UpdateQuarterGrade";
 import RemoveQuarterGrade from "./RemoveQuarterGrade";
+import useCreateAssignatureGrade from "../../../../hooks/api/assignatureGrade/useCreateAssignatureGrade";
 
 const gradeValues: Record<string, number> = {
   "A": 3,
@@ -59,6 +60,7 @@ const AverageSelector = ({
   const savedAvarageGrade = student.averages.find(average => (average.competence).toString() === selectedCompetency)
   const gradeQueryKey = [`students ${classroomId} ${selectedCompetency} ${quarter}`]
   const createQuarterGrade = useCreateQuarterGrade({ updateCacheKey: gradeQueryKey })
+  const createAssignatureGrade = useCreateAssignatureGrade({ cacheKey: gradeQueryKey })
   
 
   // console.log('selectedCategory', selectedCategory);
@@ -112,31 +114,61 @@ const AverageSelector = ({
 
   const handleApprove = () => {
     setIsLoading(true)
-    createQuarterGrade.mutate({
-      access,
-      quarterGrade: {
-        calification: averageGrade,
-        conclusion: '',
-        student: student.uid,
-        competence: parseInt(selectedCompetency),
-        assignature: parseInt(selectedAssignature),
-        quarter: 'Q1'
-      }
-    }, {
-      onSuccess: () => {
-        setShow(true)
-        setType('success')
-        setMessage('Nota aprobada exitosamente')
-      },
-      onError: () => {
-        setShow(true)
-        setType('error')
-        setMessage('Error al aprobar la nota')
-      },
-      onSettled: () => {
-        setIsLoading(false)
-      }
-    })
+    console.log('selectedCompetency', selectedCompetency);
+
+    if (selectedCompetency === '0' ) {
+      console.log('No competency selected')
+      createAssignatureGrade.mutate({
+        access,
+        assignatureGrade: {
+          calification: averageGrade,
+          assignature: parseInt(selectedAssignature),
+          student: student.uid,
+          quarter
+      }}, {
+        onSuccess: () => {
+          setShow(true)
+          setType('success')
+          setMessage('Nota aprobada exitosamente')
+        },
+        onError: () => {
+          setShow(true)
+          setType('error')
+          setMessage('Error al aprobar la nota')
+        },
+        onSettled: () => {
+          setIsLoading(false)
+        }
+      })
+      
+    }else {
+      createQuarterGrade.mutate({
+        access,
+        quarterGrade: {
+          calification: averageGrade,
+          conclusion: '',
+          student: student.uid,
+          competence: parseInt(selectedCompetency),
+          assignature: parseInt(selectedAssignature),
+          quarter: 'Q1'
+        }
+      }, {
+        onSuccess: () => {
+          setShow(true)
+          setType('success')
+          setMessage('Nota aprobada exitosamente')
+        },
+        onError: () => {
+          setShow(true)
+          setType('error')
+          setMessage('Error al aprobar la nota')
+        },
+        onSettled: () => {
+          setIsLoading(false)
+        }
+      })
+    }
+
   }
 
   return (
