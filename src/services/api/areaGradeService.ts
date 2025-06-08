@@ -16,7 +16,7 @@ export interface AreaGrade {
 export type CreateUpdateAreaGrade = Omit<AreaGrade, 'id'> 
 
 interface Props {
-    areaGradeId?: string
+    areaGradeId?: number
 }
 
 const getAreaGradeService = ({ areaGradeId }: Props) => {

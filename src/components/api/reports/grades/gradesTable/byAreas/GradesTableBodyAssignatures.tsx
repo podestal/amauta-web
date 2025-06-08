@@ -25,7 +25,10 @@ const GradesTableBodyAssignatures = ({ area, assignatures, clase, quarter, filte
     // console.log('assignature', assignature)
 
     const access = useAuthStore(s => s.access) || ''
-    const filteredAssignaturesIds = assignatures.filter(assignature => assignature.clase === parseInt(clase) && assignature.area.toString() === area).map(assignature => assignature.id.toString());
+    const filteredAssignaturesIds = assignatures
+        .filter(assignature => assignature.clase === parseInt(clase) && assignature.area.toString() === area)
+        .sort((a, b) => a.id - b.id)
+        .map(assignature => assignature.id.toString());
     const { data: students, isLoading, isError, error, isSuccess } = useGetStudentsByAssignatureGrade({ access, assignatures: filteredAssignaturesIds, clase, quarter, area })
 
     if (isLoading) return <p className="animate-pulse text-center my-8 text-xl">Cargando...</p>
@@ -57,6 +60,8 @@ const GradesTableBodyAssignatures = ({ area, assignatures, clase, quarter, filte
                     quarter={quarter}
                     studentId={student.uid}
                     areaId={parseInt(area)}
+                    clase={clase}
+                    assignatures={filteredAssignaturesIds}
                 />
                 {filteredAssignaturesIds
                 .sort((a, b) => parseInt(a) - parseInt(b))

@@ -1,4 +1,5 @@
 import useCreateAreaGrade from "../../../../../../hooks/api/areaGrade/useCreateAreaGrade"
+import useUpdateAreaGrade from "../../../../../../hooks/api/areaGrade/useUpdateAreaGrade"
 import useAuthStore from "../../../../../../hooks/store/useAuthStore"
 import { AreaGrade } from "../../../../../../services/api/studentsService"
 
@@ -7,27 +8,42 @@ interface Props {
     quarter: string
     studentId: number
     areaId: number
+    clase: string
+    assignatures: string[]
 }
 
 const gradeOptions = ["A", "B", "C", "AD", "NA"]
 
-const AreaGradeSelector = ({ areaGrade, quarter, studentId, areaId }: Props) => {
+const AreaGradeSelector = ({ areaGrade, quarter, studentId, areaId, clase, assignatures }: Props) => {
 
     const access = useAuthStore(s => s.access) || ''
-    const createAreaGrade = useCreateAreaGrade()
+    const createAreaGrade = useCreateAreaGrade({  assignatures, clase })
+    const updateAreaGrade = useUpdateAreaGrade({ assignatures, clase, areaGradeId: areaGrade?.id })
 
     const handleCreate = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        console.log('areaGrade exists', areaGrade);
         
-        !areaGrade && createAreaGrade.mutate({
-            access,
-            areaGrade: {
-                calification: e.target.value,
-                student: studentId,
-                quarter,
-                area: areaId
-            }
-        })
+        areaGrade ? console.log('areaGrade exists') : console.log('areaGrade does not exist')
+        if (areaGrade) {
+            updateAreaGrade.mutate({
+                access,
+                areaGrade: {
+                    calification: e.target.value,
+                    student: studentId,
+                    quarter,
+                    area: areaId,
+                }
+            })
+        } else {
+            createAreaGrade.mutate({
+                access,
+                areaGrade: {
+                    calification: e.target.value,
+                    student: studentId,
+                    quarter,
+                    area: areaId
+                }
+            })
+        }
     }
 
   return (
