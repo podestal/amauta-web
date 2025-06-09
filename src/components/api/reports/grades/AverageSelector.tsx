@@ -253,13 +253,15 @@ const AverageSelector = ({
           className={`${isLoading && 'hidden'} absolute bottom-1 right-1 flex items-center gap-1 text-xs  text-gray-600 bg-yellow-200 hover:bg-yellow-300 dark:bg-yellow-800 dark:hover:bg-yellow-700 dark:text-gray-200 rounded-md shadow-md transition`}
           onClick={handleApprove}
         >
-         Aprobar
+         Guardar
         </button>
       : <RemoveQuarterGrade 
           isLoading={isLoading} 
           updateCacheKey={gradeQueryKey}
           quarterGradeId={(savedAvarageGrade.id).toString()}
           setIsLoading={setIsLoading}
+          assignatureId={savedAvarageGrade.id}
+          byAssignature={byAssignature}
         />}
     </div> 
     : 
