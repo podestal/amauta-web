@@ -134,7 +134,6 @@ const AverageSelector = ({
 
   const handleApprove = () => {
     setIsLoading(true)
-    console.log('selectedCompetency', selectedCompetency);
 
     if (selectedCompetency === '0' ) {
       createAssignatureGrade.mutate({

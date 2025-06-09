@@ -58,11 +58,21 @@ const GradesTableBodyAssignatures = ({ area, assignatures, clase, quarter, filte
                 <AreaGradeSelector 
                     areaGrade={student.area_grades[0]}
                     quarter={quarter}
-                    studentId={student.uid}
+                    student={student}
                     areaId={parseInt(area)}
                     clase={clase}
                     assignatures={filteredAssignaturesIds}
                 />
+                {/* <AverageSelector 
+                    student={student}
+                    selectedAssignature={selectedAssignature}
+                    selectedCategory={category}
+                    selectedCompetency={competence}
+                    gradeChanged={gradeChanged}
+                    classroomId={classroomId}
+                    quarter={quarter}
+                    byAssignature={byAssignature}
+                /> */}
                 {filteredAssignaturesIds
                 .sort((a, b) => parseInt(a) - parseInt(b))
                 .map((assignatureId) => {
