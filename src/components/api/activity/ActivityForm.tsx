@@ -105,19 +105,19 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, updateAct
         //     return;
         // }
 
-        if (selectedCompetencies.length === 0) {
-            setMessage("Selecciona al menos una competencia");
-            setType("error");
-            setShow(true);
-            return;
-        }
+        // if (selectedCompetencies.length === 0) {
+        //     setMessage("Selecciona al menos una competencia");
+        //     setType("error");
+        //     setShow(true);
+        //     return;
+        // }
 
-        if (selectedCapacities.length === 0) {
-            setMessage("Selecciona al menos una capacidad");
-            setType("error");
-            setShow(true);
-            return;
-        }
+        // if (selectedCapacities.length === 0) {
+        //     setMessage("Selecciona al menos una capacidad");
+        //     setType("error");
+        //     setShow(true);
+        //     return;
+        // }
 
         if (!lesson && descriptionAI) {
             setMessage("Selecciona al menos una lección");
@@ -135,8 +135,6 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, updateAct
                 title: title,
                 description: descriptionAI ? descriptionAI : description,
                 category: parseInt(selectedCategory),
-                competences: selectedCompetencies,
-                capacities: selectedCapacities,
                 due_date: moment(dueDate).format('YYYY-MM-DD'),
                 quarter: getCurrentQuarter(),
                 assignature: parseInt(assignatureId),
@@ -165,8 +163,6 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, updateAct
                 title: title,
                 description: description,
                 category: parseInt(selectedCategory),
-                competences: selectedCompetencies,
-                capacities: selectedCapacities,
                 due_date: moment(dueDate).format('YYYY-MM-DD'),
                 quarter: getCurrentQuarter(),
                 assignature: parseInt(assignatureId),
@@ -236,7 +232,7 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, updateAct
               </p>
             <Calendar selectedDate={dueDate} setSelectedDate={setDueDate} />
 
-            <div className="w-full">
+            {/* <div className="w-full">
               <h3 className="text-lg font-semibold text-gray-100 mb-2">
                 📌 Competencias
               </h3>
@@ -262,10 +258,10 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, updateAct
                   </motion.button>
                 ))}
               </div>
-            </div>
+            </div> */}
 
             {/* Capacity Selector with Smooth Transitions */}
-            <AnimatePresence>
+            {/* <AnimatePresence>
               {selectedCompetencies.length > 0 &&
                 selectedCompetencies.map((competency) => (
                   <motion.div
@@ -311,7 +307,7 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, updateAct
                     </AnimatePresence>
                   </motion.div>
                 ))}
-            </AnimatePresence>
+            </AnimatePresence> */}
             
             {descriptionAI 
             ? 

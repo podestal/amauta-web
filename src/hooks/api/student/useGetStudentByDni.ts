@@ -4,12 +4,13 @@ import getStudentService, {Student} from "../../../services/api/studentsService"
 interface Props {
     dni: string
     access: string
+    school: string
     validator?: boolean
 }
 
-const useGetStudentByDni = ({ dni, access, validator }: Props): UseQueryResult<Student, Error> => {
+const useGetStudentByDni = ({ dni, access, validator, school }: Props): UseQueryResult<Student, Error> => {
     const studentService = getStudentService({byDni: true})
-    const params = { dni }
+    const params = { dni, school }
 
     return useQuery({
         queryKey: [`student ${dni}`],

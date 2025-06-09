@@ -116,7 +116,7 @@ const StudentAdminCard = ({ student, classrooms, classroomId, studentDni, studen
                         <AlertTriangle className="text-red-500 w-5 h-5" />
                     )}
                     <p className={`font-medium text-sm lg:text-lg ${!student.is_active && 'line-through text-slate-400'}`}>
-                        {student.first_name && getTitleCase(student.first_name.toLocaleLowerCase())} 
+                        <span>{student.first_name && getTitleCase(student.first_name.toLocaleLowerCase())} </span>
                         {student.last_name && getTitleCase(student.last_name.toLocaleLowerCase())}
                     </p>
                 </div>

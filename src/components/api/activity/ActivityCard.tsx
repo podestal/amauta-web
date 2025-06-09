@@ -46,7 +46,7 @@ const ActivityCard = ({ activity, isPastDue, assignatureId, area, descriptionAi 
         </p>
 
         {/* Competencies Tags */}
-        {activity.competences.length > 0 && (
+        {/* {activity.competences.length > 0 && (
             <div className="mt-3 flex flex-wrap gap-2">
             {activity.competences.map((competenceId) => {
                 const competence = competencies.find((c) => c.id === competenceId);
@@ -60,10 +60,10 @@ const ActivityCard = ({ activity, isPastDue, assignatureId, area, descriptionAi 
                 ) : null;
             })}
             </div>
-        )}
+        )} */}
 
         {/* Capacities Tags */}
-        {activity.capacities?.length > 0 && (
+        {/* {activity.capacities?.length > 0 && (
             <div className="mt-3 flex flex-wrap gap-2">
             {activity.capacities.map((capacityId) => {
                 const capacity = capacities.find((c) => c.id === capacityId);
@@ -77,7 +77,7 @@ const ActivityCard = ({ activity, isPastDue, assignatureId, area, descriptionAi 
                 ) : null;
             })}
             </div>
-        )}
+        )} */}
         </motion.li>
         <div className='flex-col'>
         <>{console.log('activity', activity.lessons.length)}</>

@@ -16,7 +16,7 @@ const gradeStyles: Record<string, string> = {
     "C": "bg-red-500 text-white",
     "AD": "bg-green-500 text-white",
     "NA": "bg-gray-300 text-gray-700", 
-  };
+};
 
 const GradesTableBody = ({ classroomId, competencies, selectedQuarter, filterByName }: Props) => {
     

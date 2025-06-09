@@ -204,33 +204,34 @@ const AverageSelector = ({
       <>
       {savedAvarageGrade 
       ? 
-      <UpdateQuarterGrade 
-        getUpdateQuarterGrade={getUpdateQuarterGrade}
-        getUpdateAssignatureGrade={getUpdateAssignatureGrade}
-        savedAvarageGrade={savedAvarageGrade}
-        averageGrade={averageGrade}
-        setIsLoading={setIsLoading}
-        setAverageGrade={setAverageGrade}
-        studentId={student.uid}
-        competency={selectedCompetency}
-        assignature={selectedAssignature}
-        quarter={quarter}
-        byAssignature={byAssignature}
-      /> 
+        <UpdateQuarterGrade 
+          getUpdateQuarterGrade={getUpdateQuarterGrade}
+          getUpdateAssignatureGrade={getUpdateAssignatureGrade}
+          savedAvarageGrade={savedAvarageGrade}
+          averageGrade={averageGrade}
+          setIsLoading={setIsLoading}
+          setAverageGrade={setAverageGrade}
+          studentId={student.uid}
+          competency={selectedCompetency}
+          assignature={selectedAssignature}
+          quarter={quarter}
+          byAssignature={byAssignature}
+        /> 
       : 
-      <CreateAverageGrade 
-        savedAvarageGrade={savedAvarageGrade}
-        averageGrade={averageGrade}
-        createQuarterGrade={createQuarterGrade}
-        setIsLoading={setIsLoading}
-        setAverageGrade={setAverageGrade}
-        studentId={student.uid}
-        competency={selectedCompetency}
-        assignature={selectedAssignature}
-        createAssignatureGrade={createAssignatureGrade}
-        quarter={quarter}
-        byAssignature={byAssignature}
-      />}
+        <CreateAverageGrade 
+          savedAvarageGrade={savedAvarageGrade}
+          averageGrade={averageGrade}
+          createQuarterGrade={createQuarterGrade}
+          setIsLoading={setIsLoading}
+          setAverageGrade={setAverageGrade}
+          studentId={student.uid}
+          competency={selectedCompetency}
+          assignature={selectedAssignature}
+          createAssignatureGrade={createAssignatureGrade}
+          quarter={quarter}
+          byAssignature={byAssignature}
+        />
+      }
       </>
       }
       {/* Status Icon with Tooltip */}

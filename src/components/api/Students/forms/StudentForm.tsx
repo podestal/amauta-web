@@ -168,7 +168,7 @@ const StudentForm = ({
   //   retry: false
   // })
 
-  const { data: studentExists} = useGetStudentByDni({ dni, access, validator: true })
+  const { data: studentExists} = useGetStudentByDni({ dni, access, school: (school.id).toString(), validator: true })
 
   useEffect(() => {
     if (studentExists && !student?.dni || student?.dni !== dni) {

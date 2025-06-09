@@ -1,5 +1,6 @@
 import useGetStudentByDni from "../../../hooks/api/student/useGetStudentByDni"
 import useAuthStore from "../../../hooks/store/useAuthStore"
+import useSchoolStore from "../../../hooks/store/useSchoolStore"
 import { Classroom } from "../../../services/api/classroomService"
 import StudentAdminCard from "./StudentAdminCard"
 
@@ -13,7 +14,8 @@ interface Props {
 const StudentByDniInfo = ({ studentDni, classrooms, classroomId, showIcons=false }: Props) => {
 
     const access = useAuthStore (s => s.access) || ''
-    const { data: student, isLoading, isError, error, isSuccess } = useGetStudentByDni({ dni: studentDni, access })
+    const school = useSchoolStore(s => s.school) || '0'
+    const { data: student, isLoading, isError, error, isSuccess } = useGetStudentByDni({ dni: studentDni, access, school:(school.id).toString()})
 
     if (isLoading) return <p className="animate-pulse text-2xl text-center py-20">Un Momento ...</p>
 

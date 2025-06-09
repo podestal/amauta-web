@@ -14,6 +14,8 @@ import useCreateActivity from "../../../../hooks/api/activity/useCreateActivity"
 import getCurrentQuarter from "../../../../utils/getCurrentCuarter";
 import getAgeFromClassroom from "../../../../utils/getAgeFromClassroom";
 import ActivityAIFormFinal from "./ActivityAIFormFinal";
+import useGetCategories from "../../../../hooks/api/category/useGetCategories";
+import useAuthStore from "../../../../hooks/store/useAuthStore";
 
 const iconMap = [
     { name: 'Tarea', icon: FileText, color: 'blue-500' },
@@ -33,6 +35,7 @@ interface Props {
 
 const ActivityFormAI = ({ lessons, area, assignatureId, setOpen, classroom }: Props) => {
 
+    const access = useAuthStore(state => state.access) || ''
     const [markdown, setMarkdown] = useState('')
     const [category, setCategory] = useState('')
     const [selectedLessons, setSelectedLessons] = useState<number[]>([])
@@ -50,6 +53,12 @@ const ActivityFormAI = ({ lessons, area, assignatureId, setOpen, classroom }: Pr
         );
     }
     
+    const { data: categories, isLoading, isError, error, isSuccess } = useGetCategories({ access })
+
+    if (isLoading) return <p className="animate-pulse text-center my-8 text-xl">Cargando...</p>
+    if (isError) return <p>Error: {error.message}</p>
+
+    if (isSuccess)
 
   return (
     <>
@@ -119,11 +128,12 @@ const ActivityFormAI = ({ lessons, area, assignatureId, setOpen, classroom }: Pr
             ))}
         </div>
         <CategoryAISelector 
-            markdown={''}
+            markdown={markdown}
             category={category}
             setCategory={setCategory}
-            setOpen={() => {}}
-            iconMap={iconMap}
+            setOpen={setOpen}
+            lesson={true}
+            categories={categories}
         />
         {category === 'tarea' && <ActivityAIFormHomework 
             lessons={lessons.filter(lesson => selectedLessons.includes(lesson.id))}
