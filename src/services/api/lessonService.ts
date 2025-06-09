@@ -9,6 +9,7 @@ export interface Lesson {
     created_at: Date
     updated_at: Date
     content: string
+    quarter: string
 }
 
 export type CreateUpdateLesson = Omit<Lesson, 'id' | 'created_at' | 'updated_at'>

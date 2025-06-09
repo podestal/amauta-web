@@ -18,15 +18,18 @@ import useCreateActivity from "../hooks/api/activity/useCreateActivity";
 import getCurrentQuarter from "../utils/getCurrentCuarter";
 import ActivitiesList from "../components/api/activity/ActivitiesList";
 import CategoryAISelector from "../components/api/category/CategoryAISelector";
-import { ClipboardList, FilePenLine, FileText, FlaskConical } from "lucide-react";
+// import { ClipboardList, FilePenLine, FileText, FlaskConical } from "lucide-react";
+// import useGetProfileStore from "../hooks/store/useGetProfileStore";
+import useGetCategories from "../hooks/api/category/useGetCategories";
+import useAuthStore from "../hooks/store/useAuthStore";
 
-const iconMap = [
-    { name: 'Tarea', icon: FileText, color: 'blue-500' },
-    { name: 'Trabajo en clase', icon: ClipboardList, color: 'green-500' },
-    { name: 'Evaluación', icon: FilePenLine, color: 'red-500' },
-    // { name: 'Examen', icon: BookOpen, color: 'yellow-500' },
-    { name: 'Proyecto', icon: FlaskConical, color: 'yellow-500' },
-  ];
+// const iconMap = [
+//     { name: 'Tarea', icon: FileText, color: 'blue-500' },
+//     { name: 'Trabajo en clase', icon: ClipboardList, color: 'green-500' },
+//     { name: 'Evaluación', icon: FilePenLine, color: 'red-500' },
+//     // { name: 'Examen', icon: BookOpen, color: 'yellow-500' },
+//     { name: 'Proyecto', icon: FlaskConical, color: 'yellow-500' },
+//   ];
 
 const LessonPage = () => {
 
@@ -43,6 +46,9 @@ const LessonPage = () => {
     const [titleAI, setTitleAI] = useState('')
     const age = getAgeFromClassroom(classroom)
 
+    const access =  useAuthStore(s => s.access) || ''
+
+
     const quarter = getCurrentQuarter()
     const createActivity = useCreateActivity({ assignatureId: assignature, quarter, lessonId: lesson.id })
     
@@ -54,6 +60,13 @@ const LessonPage = () => {
             setLoading(false)
         }
     }, [markdown])
+
+    const { data: categories, isLoading, isError, error, isSuccess } = useGetCategories({ access })
+
+    if (isLoading) return <p className="text-center animate-pulse">Cargando...</p>
+    if (isError) return <p className="text-center text-red-500">Error: {error.message}</p>
+
+    if (isSuccess)
 
   return (
     <>
@@ -91,8 +104,9 @@ const LessonPage = () => {
             category={category}
             setCategory={setCategory}
             setOpen={setOpen}
-            iconMap={iconMap}
+            // iconMap={iconMap}
             lesson={true}
+            categories={categories}
         />
     </div>
     <h2 className="text-2xl my-6 text-center font-semibold">Actividades</h2>

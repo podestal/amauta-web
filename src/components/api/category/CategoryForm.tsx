@@ -130,6 +130,7 @@ const CategoryForm = ({ category, editing, createCategory, updateCategory, setOp
                 name && setNameError('')
                 setName(e.target.value)}}
             error={nameError}
+            disable
         />
         <Input 
             name="weight"

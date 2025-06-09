@@ -45,7 +45,8 @@ interface LessonContentProps {
                 assignature: parseInt(assignature),
                 classroom: parseInt(classroom),
                 subject: topic,
-                content: markdown
+                content: markdown,
+                quarter,
             }
         }, {
             onSuccess: (res) => {
