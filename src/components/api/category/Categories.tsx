@@ -5,7 +5,7 @@ import useLoader from "../../../hooks/ui/useLoader"
 import CategoriesHeader from "./CategoriesHeader"
 import { useState } from "react"
 import CategoryChart from "./CategoryChart"
-import CreateCategory from "./CreateCategory"
+// import CreateCategory from "./CreateCategory"
 import CategoryCard from "./CategoryCard"
 
 const Categories = () => {
@@ -27,7 +27,7 @@ const Categories = () => {
             setTotalWeight={setTotalWeight}
             totalWeight={totalWeight}
         />
-        <CreateCategory />
+        {/* <CreateCategory /> */}
         <motion.div 
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}

@@ -135,7 +135,7 @@ const GradesTableFilters = ({
                             .map(assignature => ({ id: assignature.id.toString(), name: assignature.title }))]
                         }
                         setter={setSelectedAssignature}
-                        lan="ES"
+                        defaultValue="0"
                     />
                 </motion.div>}
             </AnimatePresence>

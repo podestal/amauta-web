@@ -14,6 +14,16 @@ import { UseMutationResult } from "@tanstack/react-query"
 import { ProfileData } from "../../../hooks/api/profile/useUpdateProfile"
 import { SignUpUser } from "../../../services/auth/signUpService"
 
+interface ErrorDjango {
+    status: number
+    message: string
+    response:{
+        data: {
+            email: string[]
+        }
+    }
+}
+
 
 interface Props {
     group: string
@@ -135,17 +145,21 @@ const StaffForm = ({ group, name, setOpen, open, profile, signUp, createProfile,
                         setPhone('')
                         setSelectedClassrooms([])
                     },
-                    onError: err => {
-                        console.log(err)
-                        setMessage('Error al crear el perfil')
+                    onError: (error) => {
+                        console.log(error)
+                        setEmailError('Error al crear el perfil')
                         setType('error')
                         setShow(true)
                     }
                 })
             },
-            onError: (err) => {
-                console.log(err)
-                setMessage('Error al crear el usuario')
+            onError: (error) => {
+                const err = error as unknown as ErrorDjango;
+                if (err.status === 400 && err.response.data.email) {
+                    setEmailError('Correo electrónico ya registrado')
+                }  else {
+                    setMessage('Error al crear el usuario')
+                }
                 setType('error')
                 setShow(true)
             },
