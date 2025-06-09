@@ -9,7 +9,7 @@ interface UpdateAreaGradeData {
 interface Props {
     assignatures: string[]
     clase: string
-    areaGradeId?: number
+    areaGradeId: number
 }
 
 const useUpdateAreaGrade = ({ assignatures, clase, areaGradeId }: Props): UseMutationResult<AreaGrade, Error, UpdateAreaGradeData> => {

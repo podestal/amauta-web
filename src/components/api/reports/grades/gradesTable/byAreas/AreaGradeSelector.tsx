@@ -5,6 +5,8 @@ import useAuthStore from "../../../../../../hooks/store/useAuthStore"
 import { AreaGrade, StudentByAssignatureGrade } from "../../../../../../services/api/studentsService"
 import { Tooltip } from "../../../../../ui/Tooltip"
 import { useEffect, useState } from "react"
+import useNotificationsStore from "../../../../../../hooks/store/useNotificationsStore"
+import useRemoveAreaGrade from "../../../../../../hooks/api/areaGrade/useRemoveAreaGrade"
 
 interface Props {
     areaGrade: AreaGrade
@@ -32,18 +34,12 @@ const gradeValues: Record<string, number> = {
     4: "AD",
     0: "NA",
   };
-  
-  const gradeStyles: Record<string, string> = {
-    "A": "bg-blue-500 text-white",
-    "B": "bg-yellow-500 text-white",
-    "C": "bg-red-500 text-white",
-    "AD": "bg-green-500 text-white",
-    "NA": "bg-gray-300 text-gray-700", 
-  };
 
 const AreaGradeSelector = ({ areaGrade, quarter, student, areaId, clase, assignatures }: Props) => {
 
+    const { setMessage, setShow, setType } = useNotificationsStore()
     const access = useAuthStore(s => s.access) || ''
+    const removeAreaGrade = useRemoveAreaGrade({  assignatures, clase, areaGradeId: areaGrade?.id, quarter, areaId })
     const createAreaGrade = useCreateAreaGrade({  assignatures, clase })
     const updateAreaGrade = useUpdateAreaGrade({ assignatures, clase, areaGradeId: areaGrade?.id })
     const [averageGrade, setAverageGrade] = useState('NA')
@@ -66,18 +62,60 @@ const AreaGradeSelector = ({ areaGrade, quarter, student, areaId, clase, assigna
     }, [student])
 
     const handleRemove = () => {
-
+        setIsLoading(true)
+        removeAreaGrade.mutate({
+            access,
+        }, {
+            onSuccess: () => {
+                setShow(true)
+                setType('success')
+                setMessage('Nota eliminada exitosamente')
+            },
+            onError: err => {
+                console.log('error', err);
+                setShow(true)
+                setType('error')
+                setMessage('Error al eliminar la nota')
+            },
+            onSettled: () => {
+                setIsLoading(false)
+            }
+        })
 
     }
 
     const handleApprove = () => {
-
+        setIsLoading(true)
+        createAreaGrade.mutate({
+            access,
+            areaGrade: {
+                calification: averageGrade,
+                student: student.uid,
+                quarter,
+                area: areaId
+            }
+        }, {
+            onSuccess: () => {
+                setShow(true)
+                setType('success')
+                setMessage('Nota aprobada exitosamente')
+            },
+            onError: err => {
+                console.log('error', err);
+                setShow(true)
+                setType('error')
+                setMessage('Error al aprobar la nota')
+            },
+            onSettled: () => {
+                setIsLoading(false)
+            }
+        })
     }
     
 
     const handleCreate = (e: React.ChangeEvent<HTMLSelectElement>) => {
         
-        areaGrade ? console.log('areaGrade exists') : console.log('areaGrade does not exist')
+        setIsLoading(true)
         if (areaGrade) {
             updateAreaGrade.mutate({
                 access,
@@ -86,6 +124,21 @@ const AreaGradeSelector = ({ areaGrade, quarter, student, areaId, clase, assigna
                     student: student.uid,
                     quarter,
                     area: areaId,
+                }
+            }, {
+                onSuccess: () => {
+                    setShow(true)
+                    setType('success')
+                    setMessage('Nota actualizada exitosamente')
+                },
+                onError: err => {
+                    console.log('error', err);
+                    setShow(true)
+                    setType('error')
+                    setMessage('Error al actualizar la nota')
+                },
+                onSettled: () => {
+                    setIsLoading(false)
                 }
             })
         } else {
@@ -97,12 +150,35 @@ const AreaGradeSelector = ({ areaGrade, quarter, student, areaId, clase, assigna
                     quarter,
                     area: areaId
                 }
+            }, {
+                onSuccess: () => {
+                    setShow(true)
+                    setType('success')
+                    setMessage('Nota guardad exitosamente')
+                },
+                onError: err => {
+                    console.log('error', err);
+                    setShow(true)
+                    setType('error')
+                    setMessage('Error al guardar la nota')
+                },
+                onSettled: () => {
+                    setIsLoading(false)
+                }
             })
         }
     }
 
   return (
     <div className="relative min-w-[160px] max-w-[160px] text-center p-[1px]">
+        {isLoading 
+        ? 
+        <div className={`w-full min-h-[46px] max-h-[46px] text-center font-semibold cursor-pointer outline-none transition-all duration-300 
+        ${savedAvarageGrade ? "border-green-500 bg-green-100 dark:bg-green-900 dark:border-green-300" : 
+            "border-yellow-500 bg-yellow-100 dark:bg-yellow-900 dark:border-yellow-300"}
+        `}>...</div> 
+        : 
+        <>
         <select
             className={`min-w-[160px] max-w-[160px] min-h-[46px] max-h-[46px] text-center font-semibold cursor-pointer outline-none transition-all duration-300 
                 ${areaGrade ? "border-green-500 bg-green-100 dark:bg-green-900 dark:border-green-300" : 
@@ -145,6 +221,7 @@ const AreaGradeSelector = ({ areaGrade, quarter, student, areaId, clase, assigna
                 Calcular
             </button>
         }
+        </>}
     </div>
   )
 }
