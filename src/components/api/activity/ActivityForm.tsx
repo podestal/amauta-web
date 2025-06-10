@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 // import useNotificationsStore from "../../../hooks/store/useNotificationsStore";
 import Input from "../../ui/Input";
 import Calendar from "../../ui/Calendar";
-import { capacities, competencies } from "../../../data/mockdataForGrades";
-import { AnimatePresence, motion } from "framer-motion";
+// import { capacities } from "../../../data/mockdataForGrades";
+import { motion } from "framer-motion";
 import TextArea from "../../ui/TextArea";
 import Button from "../../ui/Button";
 import CategorySelector from "../category/CategorySelector";
@@ -35,20 +35,20 @@ interface Props {
     setMarkdown?: React.Dispatch<React.SetStateAction<string>>
 }
 
-const ActivityForm = ({ area, assignatureId, activity, createActivity, updateActivity, setOpen, descriptionAI, categoryAI, titleAI, lesson, setAIPromptOpen, setMarkdown }: Props) => {
+const ActivityForm = ({ assignatureId, activity, createActivity, updateActivity, setOpen, descriptionAI, categoryAI, titleAI, lesson, setAIPromptOpen, setMarkdown }: Props) => {
 
     const { setMessage, setShow, setType } = useNotificationsStore();
     const access =useAuthStore(state => state.access) || '';
     const [title, setTitle] = useState(activity ? activity.title : titleAI ? getTitleCase(titleAI) : "");
     const [description, setDescription] = useState(activity ? activity.description : "");
     const [selectedCategory, setSelectedCategory] = useState( activity ? activity.category.toString() : "0");
-    const [removedCompetency, setRemovedCompetency] = useState(0);
+    // const [removedCompetency, setRemovedCompetency] = useState(0);
     const [dueDate, setDueDate] = useState<Date | undefined>(
       activity ? new Date(activity.due_date + "T00:00:00") : undefined
   )
 
-    const [selectedCompetencies, setSelectedCompetencies] = useState<number[]>(activity ? activity.competences : []);
-    const [selectedCapacities, setSelectedCapacities] = useState<number[]>(activity ? activity.capacities : []);
+    // const [selectedCompetencies, setSelectedCompetencies] = useState<number[]>(activity ? activity.competences : []);
+    // const [selectedCapacities, setSelectedCapacities] = useState<number[]>(activity ? activity.capacities : []);
   
     const [titleError, setTitleError] = useState("");
     const [descriptionError, setDescriptionError] = useState("");
@@ -67,16 +67,16 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, updateAct
       }
     };
 
-    useEffect(() => {
-      if (selectedCompetencies.length === 0) {
-        setSelectedCapacities([]);
-      }
-      if (!selectedCompetencies.includes(removedCompetency)) {
-        const capacitiesToExclude = capacities.filter( capacity => (capacity.competence === removedCompetency)).map(capacity => capacity.id)
-        const filteredCapacities = selectedCapacities.filter( capacity => !capacitiesToExclude.includes(capacity))
-        setSelectedCapacities(filteredCapacities);
-      }
-    }, [selectedCompetencies])
+    // useEffect(() => {
+    //   if (selectedCompetencies.length === 0) {
+    //     setSelectedCapacities([]);
+    //   }
+    //   if (!selectedCompetencies.includes(removedCompetency)) {
+    //     const capacitiesToExclude = capacities.filter( capacity => (capacity.competence === removedCompetency)).map(capacity => capacity.id)
+    //     const filteredCapacities = selectedCapacities.filter( capacity => !capacitiesToExclude.includes(capacity))
+    //     setSelectedCapacities(filteredCapacities);
+    //   }
+    // }, [selectedCompetencies])
 
     const handleCreateActivity = (e: React.FormEvent<HTMLFormElement>) => {
 
@@ -177,19 +177,19 @@ const ActivityForm = ({ area, assignatureId, activity, createActivity, updateAct
         })
     }
 
-    // Toggle Competency Selection
-  const toggleCompetency = (id: number) => {
-    setSelectedCompetencies((prev) =>
-      prev.includes(id) ? prev.filter((c) => c !== id) : [...prev, id]
-    );
-  };
+  //   // Toggle Competency Selection
+  // const toggleCompetency = (id: number) => {
+  //   setSelectedCompetencies((prev) =>
+  //     prev.includes(id) ? prev.filter((c) => c !== id) : [...prev, id]
+  //   );
+  // };
 
-  // Toggle Capacity Selection
-  const toggleCapacity = (id: number) => {
-    setSelectedCapacities((prev) =>
-      prev.includes(id) ? prev.filter((c) => c !== id) : [...prev, id]
-    );
-  };
+  // // Toggle Capacity Selection
+  // const toggleCapacity = (id: number) => {
+  //   setSelectedCapacities((prev) =>
+  //     prev.includes(id) ? prev.filter((c) => c !== id) : [...prev, id]
+  //   );
+  // };
 
   return (
     <motion.div

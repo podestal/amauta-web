@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Activity } from '../../../services/api/activityService';
 import moment from 'moment';
-import { capacities, competencies } from '../../../data/mockdataForGrades';
+// import { capacities, competencies } from '../../../data/mockdataForGrades';
 import { useNavigate } from 'react-router-dom';
 import UpdateActivity from './UpdateActivity';
 import { ChartColumnDecreasing } from 'lucide-react';

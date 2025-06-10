@@ -3,7 +3,7 @@ import useNotificationsStore from "../../../hooks/store/useNotificationsStore";
 import { useState } from "react";
 import { Category } from "../../../services/api/categoryService";
 import getCategoriesIconMap from "../../../utils/getCategoriesIconMap";
-import { Icon } from "lucide-react";
+// import { Icon } from "lucide-react";
 import React from "react";
 
 interface Props {

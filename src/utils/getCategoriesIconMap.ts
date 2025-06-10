@@ -12,7 +12,7 @@ const getCategoriesIconMap = ({ categories, exam }: Props) => {
         { name: 'Tarea', icon: FileText, color: 'blue-500' },
         { name: 'Trabajo en clase', icon: ClipboardList, color: 'green-500' },
         { name: 'Evaluación', icon: FilePenLine, color: 'red-500' },
-        // { name: 'Examen', icon: BookOpen, color: 'purple-500' },
+        { name: 'Examen', icon: BookOpen, color: 'purple-500' },
         { name: 'Proyecto', icon: FlaskConical, color: 'yellow-500' },
     ];
     console.log('exam', exam);
