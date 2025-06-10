@@ -20,18 +20,17 @@ const useCreateActivity = ({ assignatureId, quarter, lessonId }: Props): UseMuta
         mutationFn: (data: CreateActivityData) => activityService.post(data.activity, data.access),
         onSuccess: res => {
             console.log('new activity',res);
-            console.log([`activities ${lessonId}`]);
+            console.log([`key ${[`activities ${quarter} ${assignatureId}`]}`]);
             
             if (lessonId) {
+                console.log('With lessonId', lessonId);
                 queryClient.setQueryData<Activity[]>([`activities ${lessonId}`] , (oldData) => {
                     if (!oldData) return [res]
                     return [res, ...oldData]
                 })
             } else {
-                queryClient.setQueryData<Activity[]>([`activities ${quarter} ${assignatureId}`], (oldData) => {
-                    if (!oldData) return [res]
-                    return [res, ...oldData]
-                })
+                console.log('Without lessonId', assignatureId, quarter);
+                queryClient.invalidateQueries({ queryKey: [`activities ${quarter} ${assignatureId}`] })
             }
        
         },

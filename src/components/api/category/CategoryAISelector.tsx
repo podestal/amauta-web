@@ -3,7 +3,6 @@ import useNotificationsStore from "../../../hooks/store/useNotificationsStore";
 import { useState } from "react";
 import { Category } from "../../../services/api/categoryService";
 import getCategoriesIconMap from "../../../utils/getCategoriesIconMap";
-// import { Icon } from "lucide-react";
 import React from "react";
 
 interface Props {
@@ -11,16 +10,16 @@ interface Props {
     category: string
     setCategory: (category: string) => void
     setOpen: (open: boolean) => void
-    // iconMap: { name: string; icon: React.FC<{ className?: string }>; color: string }[]
     lesson?: boolean
     categories: Category[]
+    exam?:boolean
 }
 
-const CategoryAISelector = ({ markdown, category, setCategory, setOpen, lesson=false, categories }: Props) => {
+const CategoryAISelector = ({ markdown, category, setCategory, setOpen, lesson=false, categories, exam=false }: Props) => {
 
     const { setMessage, setShow, setType } = useNotificationsStore()
     const [active, setActive] = useState('')
-    const iconMap = getCategoriesIconMap({ categories, exam: false });
+    const iconMap = getCategoriesIconMap({ categories, exam });
 
   return (
     <motion.div
@@ -34,7 +33,7 @@ const CategoryAISelector = ({ markdown, category, setCategory, setOpen, lesson=f
         },
         }}
     >
-        <div className={`grid grid-cols-2 sm:grid-cols-3 ${lesson ? 'md:grid-cols-4' : 'md:grid-cols-5'}  gap-4`}>
+        <div className={`grid grid-cols-2 sm:grid-cols-3 ${!exam ? 'md:grid-cols-4' : 'md:grid-cols-5'}  gap-4`}>
             {iconMap.map((icon) => (
                 <>
                 <>{console.log('icon', icon)}</>

@@ -134,6 +134,7 @@ const ActivityFormAI = ({ lessons, area, assignatureId, setOpen, classroom }: Pr
             setOpen={setOpen}
             lesson={true}
             categories={categories}
+            exam
         />
         {category === 'tarea' && <ActivityAIFormHomework 
             lessons={lessons.filter(lesson => selectedLessons.includes(lesson.id))}
