@@ -15,7 +15,7 @@ const TutorAgendaDateSelector = ({ selectedDate, setSelectedDate }: Props) => {
       };
 
   return (
-    <div className="grid grid-cols-6 w-full gap-8 p-4 mb-8 bg-white shadow-lg rounded-2xl mx-auto text-center">
+    <div className="grid grid-cols-6 w-full gap-8 p-4 mb-4 bg-white shadow-lg rounded-2xl mx-auto text-center">
         <div 
         className="mx-auto"
         onClick={() => changeDate(-1)}>

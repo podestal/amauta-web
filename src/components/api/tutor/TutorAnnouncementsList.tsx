@@ -24,7 +24,7 @@ const TutorAnnouncementsList = ({ studentId, selectedDate }: Props) => {
 
   return (
 
-    <div>
+    <div className="w-full flex flex-col">
         {announcements.length === 0 
         ? 
         <h2 className="lg:text-3xl text-center font-bold bg-slate-800 px-8 py-4 rounded-2xl mx-8">Sin Anuncios</h2> 

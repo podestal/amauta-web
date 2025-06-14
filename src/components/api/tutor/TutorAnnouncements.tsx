@@ -13,7 +13,7 @@ const TutorAnnouncements = ({ studentId }: Props) => {
 
 
   return (
-    <div>
+    <div className='flex flex-col pb-10 mb-10'>
         <TutorAgendaDateSelector 
             selectedDate={selectedDate}
             setSelectedDate={setSelectedDate}
