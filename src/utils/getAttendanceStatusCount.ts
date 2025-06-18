@@ -2,7 +2,6 @@ import { SimpleAttendance } from "../services/api/studentsService";
 
 export const getAttendanceStatusCount = (attendances: SimpleAttendance[]) => {
     return attendances && attendances.reduce((acc, attendance) => {
-        console.log('attendances', attendance);
         switch (attendance.status) {
             case 'O':
                 if (attendance.kind === 'I') {

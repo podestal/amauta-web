@@ -28,6 +28,8 @@ const PrivateRoutes = ({ children }: Props) => {
   const setSchool = useSchoolStore(s => s.setSchool)
   const deviceToken = useFirebaseMessaging()
   const {data: user, isLoading: isLoadingUser, isError: isErrorUser, error: errorUser} = useGetUser({ access });
+  console.log('user', user);
+  
   const {data: profile, isLoading: isLoadingProfile, isError: isErrorProfile, error: errorProfile, isSuccess} = useGetProfile({ access, profileName: user?.groups[0] || user?.profile || '' });
   const { data: school, isLoading: isLoadingSchool, isError: isErrorSchool, error: errorSchool } = useGetSchool({ access, profile })
 

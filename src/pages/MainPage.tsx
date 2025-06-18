@@ -18,9 +18,10 @@ const MainPage = () => {
     const isLoading = useLoadingStore(s => s.isLoading)
     const access = useAuthStore(s => s.access)
     const profile = useGetProfileStore(s => s.profile)
+    const user = useGetProfileStore(s => s.user)
     const [isOpen, setIsOpen] = useState(true)
     const school = useSchoolStore(s => s.school)
-    const {active, unpaidMessage} = getUnpaidInfo({ paymentStatus: school.payment_status })
+    const {active, unpaidMessage} = getUnpaidInfo({ paymentStatus: school.payment_status, profile: user?.groups[0] || user?.profile || '' })
 
     useEffect(() => {
       document.querySelector('html')?.classList.add('dark')      
@@ -55,8 +56,9 @@ const MainPage = () => {
           {isLoading && 
             <div className="w-full relative"><Loader /></div>
           }
+          <>{console.log('active', active)}</>
           <div>
-            <Outlet />
+            {active && <Outlet />}
           </div>
         </div>
         
