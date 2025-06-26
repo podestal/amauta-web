@@ -4,6 +4,11 @@ import useAuthStore from "../../../../../hooks/store/useAuthStore"
 import useLanguageStore from "../../../../../hooks/store/useLanguageStore"
 import { statusStyles } from "../../../attendance/AttendanceStatus"
 import getTitleCase from "../../../../../utils/getTitleCase"
+import AttendanceCalendar from "../studentAdmin/AttendanceCalendar"
+import ShowAttendanceCalendar from "../studentAdmin/ShowAttendanceCalendar"
+import { useState } from "react"
+import Modal from "../../../../ui/Modal"
+import { Student } from "../../../../../services/api/studentsService"
 
 interface Props {
     weekDays: moment.Moment[]
@@ -14,10 +19,8 @@ interface Props {
 const WeeklyAttendanceReportBody = ({ weekDays, selectedClassroom, selectedWeek }: Props) => {
     const access = useAuthStore(s => s.access) || ''
     const lan = useLanguageStore(s => s.lan)
-    console.log(moment().week());
-    
-    console.log('weekDays', weekDays);
-    console.log('is same',moment('2025-01-01T00:00:00-05:00').isSame(weekDays[0], "day"));
+    const [open, setOpen] = useState(false)
+    const [selectedStudent, setSelectedStudent] = useState<Student| null>(null)
     
     
 
@@ -53,6 +56,15 @@ const WeeklyAttendanceReportBody = ({ weekDays, selectedClassroom, selectedWeek 
             </div> */}
             <div className="flex justify-start items-center">
                 <p>{student.dni}</p>
+                <ShowAttendanceCalendar 
+                    onClick={() => {
+                        setOpen(true);
+                        setSelectedStudent(student);
+                    }}
+                />
+                {/* <AttendanceCalendar 
+                    student={student}
+                /> */}
             </div>
             <div className="flex justify-start items-center col-span-2">
                 <p>{student.last_name && getTitleCase(student.last_name.toLocaleLowerCase())}</p>
@@ -105,6 +117,16 @@ const WeeklyAttendanceReportBody = ({ weekDays, selectedClassroom, selectedWeek 
             </div>
         </div>
     ))}
+    <Modal
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        whole
+    >
+
+        {selectedStudent && <AttendanceCalendar 
+            student={selectedStudent}
+        />}
+    </Modal>
     </>
   )
   else return <p className="text-2xl text-center my-10">{lan === 'EN' ? 'No students found in this classroom' : 'No se encontraron alumnos en esta clase'}</p>

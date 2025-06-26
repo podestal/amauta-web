@@ -1,9 +1,14 @@
+import { useState } from "react"
 import useGetStudents from "../../../../../hooks/api/student/useGetStudents"
 import useAuthStore from "../../../../../hooks/store/useAuthStore"
 import useLanguageStore from "../../../../../hooks/store/useLanguageStore"
 import getAttendanceLabel from "../../../../../utils/getAttendanceLabel"
 import getTitleCase from "../../../../../utils/getTitleCase"
 import AttendanceStatus from "../../../attendance/AttendanceStatus"
+import ShowAttendanceCalendar from "../studentAdmin/ShowAttendanceCalendar"
+import { Student } from "../../../../../services/api/studentsService"
+import Modal from "../../../../ui/Modal"
+import AttendanceCalendar from "../studentAdmin/AttendanceCalendar"
 
 interface Props {
     selectedClassroom: string
@@ -13,6 +18,8 @@ interface Props {
 
 const DailyAttendanceReportBody = ({ selectedClassroom, selectedDay, currentMonth }: Props) => {
 
+    const [open, setOpen] = useState(false)
+    const [selectedStudent, setSelectedStudent] = useState<Student | null>(null)
     const access = useAuthStore(s => s.access) || ''
     const lan = useLanguageStore(s => s.lan)
     
@@ -35,7 +42,12 @@ const DailyAttendanceReportBody = ({ selectedClassroom, selectedDay, currentMont
                 className="w-full grid grid-cols-12 px-2 py-6 font-palanquin text-left hover:bg-slate-200 dark:hover:bg-slate-900"
             >
                 <div className="flex justify-start items-start">
-                    <p>{student.uid}</p>
+                    <ShowAttendanceCalendar 
+                        onClick={() => {
+                            setOpen(true);
+                            setSelectedStudent(student);
+                        }}
+                    />
                 </div>
                 <div className="flex justify-start items-start col-span-2">
                     <p>{student.last_name && getTitleCase(student.last_name.toLocaleLowerCase())}</p>
@@ -85,6 +97,16 @@ const DailyAttendanceReportBody = ({ selectedClassroom, selectedDay, currentMont
                 </div>
             </div>
         ))}
+        <Modal
+            isOpen={open}
+            onClose={() => setOpen(false)}
+            whole
+        >
+            {selectedStudent &&
+            <AttendanceCalendar 
+                student={selectedStudent}
+            />}
+        </Modal>
     </div>
   )
 }

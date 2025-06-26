@@ -4,6 +4,11 @@ import useAuthStore from "../../../../../hooks/store/useAuthStore"
 import useLanguageStore from "../../../../../hooks/store/useLanguageStore"
 import { statusStyles } from "../../../attendance/AttendanceStatus"
 import getTitleCase from "../../../../../utils/getTitleCase"
+import { useState } from "react"
+import ShowAttendanceCalendar from "../studentAdmin/ShowAttendanceCalendar"
+import { Student } from "../../../../../services/api/studentsService"
+import Modal from "../../../../ui/Modal"
+import AttendanceCalendar from "../studentAdmin/AttendanceCalendar"
 
 interface Props {
     selectedClassroom: string
@@ -12,6 +17,8 @@ interface Props {
 
 const MonthlyAttendanceReportBody = ({ selectedClassroom, selectedMonth }: Props) => {
 
+    const [open, setOpen] = useState(false)
+    const [selectedStudent, setSelectedStudent] = useState<Student | null>(null)
     const access = useAuthStore(s => s.access) || ''
     const lan = useLanguageStore(s => s.lan)
     const year = new Date().getFullYear()
@@ -29,8 +36,7 @@ const MonthlyAttendanceReportBody = ({ selectedClassroom, selectedMonth }: Props
     if (isSuccess && students.length > 0)
 
   return (
-<div>
-        {/* <>{console.log('students', students)}</> */}
+    <div>
         {students
         .sort((a, b) => a.last_name.localeCompare(b.last_name))
         .map( student => (
@@ -39,7 +45,12 @@ const MonthlyAttendanceReportBody = ({ selectedClassroom, selectedMonth }: Props
                 className="w-full grid grid-cols-12 px-2 py-6 font-palanquin text-left hover:bg-slate-100 dark:hover:bg-slate-900"
             >
                 <div className="flex justify-start items-start">
-                    <p>{student.dni}</p>
+                    <ShowAttendanceCalendar 
+                        onClick={() => {
+                            setOpen(true);
+                            setSelectedStudent(student);
+                        }}
+                    />
                 </div>
                 <div className="flex justify-start items-start col-span-2">
                     <p>{student.last_name && getTitleCase(student.last_name.toLocaleLowerCase())}</p>
@@ -74,6 +85,16 @@ const MonthlyAttendanceReportBody = ({ selectedClassroom, selectedMonth }: Props
                 </div>
             </div>
         ))}
+        <Modal
+            isOpen={open}
+            onClose={() => setOpen(false)}
+            whole
+        >
+            {selectedStudent && 
+            <AttendanceCalendar 
+                student={selectedStudent}
+            />}
+        </Modal>
     </div>
   )
 }

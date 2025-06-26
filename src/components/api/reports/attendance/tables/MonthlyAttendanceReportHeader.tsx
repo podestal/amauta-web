@@ -32,7 +32,7 @@ const MonthlyAttendanceReportHeader = ({ selectedMonth, setSelectedMonth }: Prop
 <div className="w-full grid grid-cols-12 dark:bg-slate-900 bg-gray-200 font-bold px-2 pt-6">
 
         <div className="flex py-1 text-left hover:text-slate-700 dark:hover:text-slate-300 cursor-pointer">
-            <p>{lan === 'EN' ? 'UID' : 'UID'}</p> 
+            <p>{lan === 'EN' ? 'Rep' : 'Rep'}</p> 
         </div>
         <div className="flex py-1 text-left col-span-2 hover:text-slate-700 dark:hover:text-slate-300 cursor-pointer">
             <p>{lan === 'EN' ? 'Lastname' : 'Apellidos'}</p>
