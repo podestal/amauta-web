@@ -56,7 +56,14 @@ const AttendanceCalendarCard = ({ currentYear, currentMonth, attendances }: Prop
     const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
     const blanks = Array.from({ length: firstDay });
 
-    console.log('attendances', attendances);
+    const attendanceCounts: Record<keyof typeof statusInfo, number> = {
+      onTime: attendances.filter(att => att.status === 'O' && att.kind === 'I').length,
+      late: attendances.filter(att => att.status === 'L' && att.kind === 'I').length,
+      noShow: attendances.filter(att => att.status === 'N' && att.kind === 'I').length,
+      excused: attendances.filter(att => att.status === 'E' && att.kind === 'I').length,
+      absent: attendances.filter(att => att.status === 'T' && att.kind === 'O').length,
+    };
+    
     
 
     const transformAttendance = (attendances: Attendance[]) => {
@@ -98,9 +105,6 @@ const AttendanceCalendarCard = ({ currentYear, currentMonth, attendances }: Prop
         return { date: dateStr, ...match };
     });
 
-
-
-
   return (
 <>
     <div className="grid grid-cols-7 gap-2 bg-slate-100 dark:bg-gray-800 print:bg-white print:text-slate-950 p-4 rounded-2xl shadow">
@@ -128,7 +132,6 @@ const AttendanceCalendarCard = ({ currentYear, currentMonth, attendances }: Prop
                 <div className="flex items-center space-x-1">
                 {day.exit && statusInfo[day.exit.status as AttendanceStatus]?.icon}
                 {day.exit && <div className="w-full flex justify-between">
-                  <>{console.log('day.entry?.status', day.entry?.status)}</>
                     <span className="text-[10px] text-gray-700 dark:text-gray-400 print:text-slate-950">Salida</span>
                     <span className="text-[10px] text-gray-700 dark:text-gray-400 print:text-slate-950">{day.exit?.status === 'onTime' ? 'Normal' : day.exit?.time}</span>
                 </div>}
@@ -143,12 +146,13 @@ const AttendanceCalendarCard = ({ currentYear, currentMonth, attendances }: Prop
         </div>
             {/* Legend */}
             <div className="mt-8 pb-2 print:my-2 print:pb-0 w-full flex items-center justify-evenly text-sm text-gray-700 dark:text-gray-300 print:text-slate-950">
-                {Object.entries(statusInfo).map(([key, { label, icon }]) => (
-                <div key={key} className="flex items-center space-x-2">
-                    {icon}
-                    <span>{label}</span>
+              {Object.entries(statusInfo).map(([key, { label, icon }]) => (
+                <div key={key} className="flex items-center space-x-1">
+                  {icon}
+                  <span>{label}</span>
+                  <span className="text-xs font-semibold text-slate-400">({attendanceCounts[key as keyof typeof statusInfo]})</span>
                 </div>
-                ))}
+              ))}
             </div>
 </>
   )
