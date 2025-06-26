@@ -59,3 +59,19 @@
     background-color: #0f172a;
     color: #cbd5e1;
 }
+
+@media print {
+    * {
+      animation: none !important;
+      transition: none !important;
+      box-shadow: none !important;
+    }
+  
+    table {
+      border-collapse: collapse !important;
+    }
+  
+    th, td {
+      border: 1px solid black !important;
+    }
+  }

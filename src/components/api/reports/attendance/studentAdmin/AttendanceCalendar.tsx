@@ -50,6 +50,7 @@ const AttendanceCalendar: React.FC<AttendanceCalendarProps> = ({
     student
 }) => {
 
+    const [isPrinting, setIsPrinting] = useState(false);
     const access = useAuthStore((s) => s.access) || "";
     const today = new Date();
     const [currentMonth, setCurrentMonth] = useState(today.getMonth());
@@ -83,7 +84,12 @@ const AttendanceCalendar: React.FC<AttendanceCalendarProps> = ({
     const handlePrint = useReactToPrint({ 
       contentRef: printRef,
       documentTitle: `Reporte_asistencias_${monthLabel}_${student.first_name}_${student.last_name}`,
-      onAfterPrint: () => console.log("Impresión completada.")
+      onBeforePrint: () => {
+        setIsPrinting(true);
+        return Promise.resolve();
+      },
+      onAfterPrint: () => setIsPrinting(false),
+
     })
 
     const {data: attendances, isLoading, isError, error, isSuccess} = useGetAttendance({ access, studentId: student.uid, month: (currentMonth + 1).toString() })
@@ -109,8 +115,9 @@ const AttendanceCalendar: React.FC<AttendanceCalendarProps> = ({
             </div>
             <button 
                 onClick={() => handlePrint()}
-                className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-200 print:hidden text-sm font-bold">
-            🖨️ Imprimir
+                disabled={isPrinting}
+                className={`bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-200 print:hidden text-sm font-bold ${isPrinting ? 'opacity-50 cursor-not-allowed' : ''}`}>
+            {isPrinting ? ' Imprimiendo ' : '🖨️ Imprimir'}
             </button>
         </div>
         <motion.div
