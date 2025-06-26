@@ -55,7 +55,7 @@ const WeeklyAttendanceReportBody = ({ weekDays, selectedClassroom, selectedWeek 
                 )}
             </div> */}
             <div className="flex justify-start items-center">
-                <p>{student.dni}</p>
+                {/* <p>{student.dni}</p> */}
                 <ShowAttendanceCalendar 
                     onClick={() => {
                         setOpen(true);
